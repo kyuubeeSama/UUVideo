@@ -58,6 +58,7 @@ class Tool:NSObject {
         viewController.present(alert, animated: true, completion: nil)
     }
     // TODO:正则表达式筛选
+    // TODO:获取相册视频
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

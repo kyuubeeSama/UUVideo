@@ -27,6 +27,13 @@
 		A950E2C024E67356000CBB92 /* FileTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2BC24E67356000CBB92 /* FileTool.swift */; };
 		A950E2C124E67356000CBB92 /* config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2BD24E67356000CBB92 /* config.swift */; };
 		A950E2C424E6736F000CBB92 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2C324E6736F000CBB92 /* BaseViewController.swift */; };
+		A950E2CA24E674E4000CBB92 /* PhoneIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2C924E674E4000CBB92 /* PhoneIndexViewController.swift */; };
+		A950E2CD24E67515000CBB92 /* WebsiteTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2CC24E67515000CBB92 /* WebsiteTableView.swift */; };
+		A950E2CF24E677D9000CBB92 /* VideoListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2CE24E677D9000CBB92 /* VideoListCollectionView.swift */; };
+		A950E2D324E67871000CBB92 /* VideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2D224E67871000CBB92 /* VideoModel.swift */; };
+		A9FB284F24E67B6900F53E74 /* VideoListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FB284D24E67B6900F53E74 /* VideoListCollectionViewCell.swift */; };
+		A9FB285024E67B6900F53E74 /* VideoListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9FB284E24E67B6900F53E74 /* VideoListCollectionViewCell.xib */; };
+		A9FB285224E67E9400F53E74 /* PhoneVideoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */; };
 		E3E64ED853A3FA7E3D6B354D /* Pods_UUVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21F46ABE3E603E7B9DE3EF7 /* Pods_UUVideo.framework */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +63,13 @@
 		A950E2BC24E67356000CBB92 /* FileTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileTool.swift; sourceTree = "<group>"; };
 		A950E2BD24E67356000CBB92 /* config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = config.swift; sourceTree = "<group>"; };
 		A950E2C324E6736F000CBB92 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		A950E2C924E674E4000CBB92 /* PhoneIndexViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneIndexViewController.swift; sourceTree = "<group>"; };
+		A950E2CC24E67515000CBB92 /* WebsiteTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteTableView.swift; sourceTree = "<group>"; };
+		A950E2CE24E677D9000CBB92 /* VideoListCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListCollectionView.swift; sourceTree = "<group>"; };
+		A950E2D224E67871000CBB92 /* VideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModel.swift; sourceTree = "<group>"; };
+		A9FB284D24E67B6900F53E74 /* VideoListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListCollectionViewCell.swift; sourceTree = "<group>"; };
+		A9FB284E24E67B6900F53E74 /* VideoListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoListCollectionViewCell.xib; sourceTree = "<group>"; };
+		A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVideoListViewController.swift; sourceTree = "<group>"; };
 		B21F46ABE3E603E7B9DE3EF7 /* Pods_UUVideo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UUVideo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -109,6 +123,7 @@
 		A950E29024E67157000CBB92 /* UUVideo */ = {
 			isa = PBXGroup;
 			children = (
+				A950E2C524E674B8000CBB92 /* UUVideo */,
 				A950E2C224E67361000CBB92 /* base */,
 				A950E2B924E67346000CBB92 /* Tool */,
 				A950E2A624E67318000CBB92 /* extension */,
@@ -159,6 +174,60 @@
 			path = base;
 			sourceTree = "<group>";
 		};
+		A950E2C524E674B8000CBB92 /* UUVideo */ = {
+			isa = PBXGroup;
+			children = (
+				A950E2C824E674D0000CBB92 /* Controller */,
+				A950E2CB24E674E8000CBB92 /* View */,
+				A950E2D024E6781E000CBB92 /* Model */,
+			);
+			path = UUVideo;
+			sourceTree = "<group>";
+		};
+		A950E2C624E674C2000CBB92 /* Phone */ = {
+			isa = PBXGroup;
+			children = (
+				A950E2C924E674E4000CBB92 /* PhoneIndexViewController.swift */,
+				A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */,
+			);
+			path = Phone;
+			sourceTree = "<group>";
+		};
+		A950E2C724E674C7000CBB92 /* Pad */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Pad;
+			sourceTree = "<group>";
+		};
+		A950E2C824E674D0000CBB92 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A950E2C624E674C2000CBB92 /* Phone */,
+				A950E2C724E674C7000CBB92 /* Pad */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A950E2CB24E674E8000CBB92 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A950E2CC24E67515000CBB92 /* WebsiteTableView.swift */,
+				A950E2CE24E677D9000CBB92 /* VideoListCollectionView.swift */,
+				A9FB284D24E67B6900F53E74 /* VideoListCollectionViewCell.swift */,
+				A9FB284E24E67B6900F53E74 /* VideoListCollectionViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A950E2D024E6781E000CBB92 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A950E2D224E67871000CBB92 /* VideoModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -188,7 +257,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1160;
-				LastUpgradeCheck = 1160;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = qykj;
 				TargetAttributes = {
 					A950E28D24E67157000CBB92 = {
@@ -221,6 +290,7 @@
 			files = (
 				A950E29E24E6715A000CBB92 /* LaunchScreen.storyboard in Resources */,
 				A950E29B24E6715A000CBB92 /* Assets.xcassets in Resources */,
+				A9FB285024E67B6900F53E74 /* VideoListCollectionViewCell.xib in Resources */,
 				A950E29924E67157000CBB92 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -274,17 +344,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9FB284F24E67B6900F53E74 /* VideoListCollectionViewCell.swift in Sources */,
 				A950E2B624E6733F000CBB92 /* UIView+extension.swift in Sources */,
 				A950E29624E67157000CBB92 /* ViewController.swift in Sources */,
+				A950E2CD24E67515000CBB92 /* WebsiteTableView.swift in Sources */,
 				A950E29224E67157000CBB92 /* AppDelegate.swift in Sources */,
+				A9FB285224E67E9400F53E74 /* PhoneVideoListViewController.swift in Sources */,
 				A950E2B124E6733F000CBB92 /* Date+extension.swift in Sources */,
 				A950E2B224E6733F000CBB92 /* UIImage+extension.swift in Sources */,
 				A950E2B824E6733F000CBB92 /* UIButton+extension.swift in Sources */,
 				A950E2B324E6733F000CBB92 /* NSObject+extension.swift in Sources */,
 				A950E2C424E6736F000CBB92 /* BaseViewController.swift in Sources */,
 				A950E2BE24E67356000CBB92 /* Tool.swift in Sources */,
+				A950E2D324E67871000CBB92 /* VideoModel.swift in Sources */,
+				A950E2CF24E677D9000CBB92 /* VideoListCollectionView.swift in Sources */,
 				A950E2B424E6733F000CBB92 /* UITextField+extension.swift in Sources */,
 				A950E29424E67157000CBB92 /* SceneDelegate.swift in Sources */,
+				A950E2CA24E674E4000CBB92 /* PhoneIndexViewController.swift in Sources */,
 				A950E2B724E6733F000CBB92 /* UIColor+extension.swift in Sources */,
 				A950E2B024E6733F000CBB92 /* Dictionary+extension.swift in Sources */,
 				A950E2B524E6733F000CBB92 /* String+extension.swift in Sources */,
@@ -342,6 +418,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -402,6 +479,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -445,7 +523,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.qystudio.UUVideo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -466,7 +544,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.qystudio.UUVideo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
