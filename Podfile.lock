@@ -5,15 +5,82 @@ PODS:
   - Kingfisher (5.14.1):
     - Kingfisher/Core (= 5.14.1)
   - Kingfisher/Core (5.14.1)
+  - Masonry (1.1.0)
+  - Reachability (3.2)
+  - SJBaseVideoPlayer (3.3.8):
+    - Masonry
+    - Reachability
+    - SJBaseVideoPlayer/AVPlayer (= 3.3.8)
+    - SJBaseVideoPlayer/Common (= 3.3.8)
+    - SJUIKit/AttributesFactory (>= 0.0.0.38)
+    - SJUIKit/ObserverHelper
+    - SJUIKit/Queues
+    - SJUIKit/SQLite3
+  - SJBaseVideoPlayer/AVPlayer (3.3.8):
+    - Masonry
+    - Reachability
+    - SJBaseVideoPlayer/Common
+    - SJUIKit/AttributesFactory (>= 0.0.0.38)
+    - SJUIKit/ObserverHelper
+    - SJUIKit/Queues
+    - SJUIKit/SQLite3
+  - SJBaseVideoPlayer/Common (3.3.8):
+    - Masonry
+    - Reachability
+    - SJBaseVideoPlayer/ResourceLoader
+    - SJUIKit/AttributesFactory (>= 0.0.0.38)
+    - SJUIKit/ObserverHelper
+    - SJUIKit/Queues
+    - SJUIKit/SQLite3
+  - SJBaseVideoPlayer/ResourceLoader (3.3.8):
+    - Masonry
+    - Reachability
+    - SJUIKit/AttributesFactory (>= 0.0.0.38)
+    - SJUIKit/ObserverHelper
+    - SJUIKit/Queues
+    - SJUIKit/SQLite3
+  - SJUIKit/AttributesFactory (0.0.0.51):
+    - SJUIKit/AttributesFactory/Deprecated (= 0.0.0.51)
+    - SJUIKit/AttributesFactory/UIKitText (= 0.0.0.51)
+  - SJUIKit/AttributesFactory/Deprecated (0.0.0.51)
+  - SJUIKit/AttributesFactory/UIKitText (0.0.0.51)
+  - SJUIKit/ObserverHelper (0.0.0.51)
+  - SJUIKit/Queues (0.0.0.51)
+  - SJUIKit/SQLite3 (0.0.0.51):
+    - SJUIKit/SQLite3/Core (= 0.0.0.51)
+    - SJUIKit/SQLite3/Protocol (= 0.0.0.51)
+    - YYModel
+  - SJUIKit/SQLite3/Core (0.0.0.51):
+    - SJUIKit/SQLite3/Protocol
+    - YYModel
+  - SJUIKit/SQLite3/Protocol (0.0.0.51):
+    - YYModel
+  - SJVideoPlayer (3.2.6):
+    - SJBaseVideoPlayer (>= 3.3.3)
+    - SJVideoPlayer/Common (= 3.2.6)
+    - SJVideoPlayer/ControlLayers (= 3.2.6)
+    - SJVideoPlayer/ResourceLoader (= 3.2.6)
+  - SJVideoPlayer/Common (3.2.6):
+    - Masonry
+    - SJBaseVideoPlayer (>= 3.3.3)
+    - SJUIKit/AttributesFactory
+    - SJVideoPlayer/ResourceLoader
+  - SJVideoPlayer/ControlLayers (3.2.6):
+    - SJBaseVideoPlayer (>= 3.3.3)
+    - SJVideoPlayer/Common
+  - SJVideoPlayer/ResourceLoader (3.2.6):
+    - SJBaseVideoPlayer (>= 3.3.3)
   - SnapKit (5.0.1)
   - SwiftyJSON (5.0.0)
   - Toast-Swift (5.0.1)
+  - YYModel (1.0.4)
 
 DEPENDENCIES:
   - Alamofire
   - HandyJSON
   - IQKeyboardManagerSwift
   - Kingfisher
+  - SJVideoPlayer
   - SnapKit
   - SwiftyJSON
   - Toast-Swift
@@ -24,19 +91,31 @@ SPEC REPOS:
     - HandyJSON
     - IQKeyboardManagerSwift
     - Kingfisher
+    - Masonry
+    - Reachability
+    - SJBaseVideoPlayer
+    - SJUIKit
+    - SJVideoPlayer
     - SnapKit
     - SwiftyJSON
     - Toast-Swift
+    - YYModel
 
 SPEC CHECKSUMS:
   Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
   Kingfisher: 8050bc6f7f68cbf3908bd04df7ccbac188f6d6d6
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  SJBaseVideoPlayer: 85f98136ab7b1d9595d8f85e3baee3801feb733e
+  SJUIKit: bdf86af3648e70483c57e2bfe2fcc7531337fa54
+  SJVideoPlayer: fb53250dbf0ad2f95c963e9a42efb2057b9e9f27
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
+  YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 937a0ba944fb40580346d5d83130d2243ffe9636
+PODFILE CHECKSUM: af35b934503e0c51351843dd38d693f81089ed24
 
 COCOAPODS: 1.9.3

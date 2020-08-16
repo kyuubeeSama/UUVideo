@@ -55,7 +55,39 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
+    // 文件转入提醒
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else {
+            return
+        }
+        print("音乐文件只是\(url.absoluteString)")
+        let fileName = url.lastPathComponent
+        var path = url.absoluteString
+        if path.contains("file://"){
+            print("\(path)")
+            path = path.replacingOccurrences(of: "file:///private", with: "")
+//            path = path.replacingOccurrences(of: "%20", with: " ")
+            let localPath = FileTool.init().getDocumentPath()+"/video/"+fileName
+            print("目标保存位置是:\(localPath)")
+            let dic = ["fileName":fileName,"filePath":path]
+            let fileManager = FileManager.default
+            if fileManager.fileExists(atPath: localPath) {
+                // 文件不存在，重新拷贝
+                print("文件已存在")
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FileExistsNotification"), object: nil, userInfo: dic)
+            }else{
+                // 文件已存在
+                print("本地没有该文件，文件原始位置是\(path),目标位置是\(localPath)")
+                do{
+                    try fileManager.copyItem(atPath: path, toPath: localPath)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FileSaveSuccessNotification"), object: nil, userInfo: dic)
+                }catch let error{
+                    print("外部文件本地保存失败，\(error)");
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FileSaveFieldFileNotification"), object: nil, userInfo: dic)
+                }
+            }
+        }
+    }
 
 }
 

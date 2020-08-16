@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import AVFoundation
 class FileTool: NSObject {
     /// 获取document文件夹
     func getDocumentPath()->String{
@@ -57,26 +57,31 @@ class FileTool: NSObject {
             return false
         }
     }
-    // TODO:获取本地视频
-    func getAudioFileList()->Array<VideoModel>{
-        // TODO:获取本地音乐文件
+    // TODO:获取本地视频相关信息
+    func getVideoFileList()->Array<VideoModel>{
         var array:[VideoModel] = []
         let path = self.getDocumentPath().appending("/video")
-        print("路径是\(path)")
+//        print("路径是\(path)")
         //        let dirEnum = fileManager.enumerator(atPath: path)
-        
+
         let enumerator = FileManager.default.enumerator(atPath: path)
         while let fileName = enumerator?.nextObject() as? String {
             print(fileName)
-            
             if let fType = enumerator?.fileAttributes?[FileAttributeKey.type] as? FileAttributeType{
                 switch fType{
                 case .typeRegular:
                     print("文件")
-                    if fileName.contains(".mp4") || fileName.contains(".avi"){
+                    // 简化文件名截取功能
+                    let fileType = fileName.split(separator: ".")[1]
+                    print(fileType)
+                    let typeArr:[String] = ["MP4","mp4","AVI","avi"]
+                    if typeArr.contains(String(fileType)){
                         let model:VideoModel = VideoModel.init()
-                        //                            model.fileName = fileName
-                        //                            model.filePath = path+"/"+fileName
+                        let filePath = path+"/"+fileName
+                        model.name = fileName
+                        model.filePath = filePath
+                        model.time = self.getVideoTime(path: filePath)
+                        model.pic = self.getVideoImage(path: filePath)
                         array.append(model)
                     }
                 case .typeDirectory:
@@ -85,8 +90,31 @@ class FileTool: NSObject {
                     print("未知类型")
                 }
             }
-            
         }
         return array
+    }
+    // 获取视频时长
+    func getVideoTime(path:String) -> Int {
+        let asset = AVURLAsset.init(url: URL.init(fileURLWithPath: path))
+        let time:CMTime = asset.duration
+        let second:Int = Int(Int(time.value)/Int(time.timescale))
+        return second
+    }
+    // 获取视频缩略图
+    func getVideoImage(path:String)->UIImage{
+        let asset = AVURLAsset.init(url: URL.init(fileURLWithPath: path))
+        let gen = AVAssetImageGenerator.init(asset: asset)
+        gen.appliesPreferredTrackTransform = true
+        gen.apertureMode = .encodedPixels
+        let time:CMTime = CMTimeMakeWithSeconds(1.0, preferredTimescale: 600)
+        var image:CGImage
+        do {
+            image = try gen.copyCGImage(at: time, actualTime: nil)
+            let thumb = UIImage.init(cgImage: image)
+            return thumb
+        } catch let error {
+            print(error)
+            return UIImage.init(named: "默认图片")!
+        }
     }
 }

@@ -15,6 +15,8 @@ class WebsiteTableView: UITableView,UITableViewDelegate,UITableViewDataSource {
         }
     }
     
+    var cellItemDidSelect:((_ indexPath:IndexPath)->())?
+    
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         self.delegate = self
@@ -36,7 +38,9 @@ class WebsiteTableView: UITableView,UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        if self.cellItemDidSelect != nil {
+            self.cellItemDidSelect!(indexPath)
+        }
     }
     
     /*

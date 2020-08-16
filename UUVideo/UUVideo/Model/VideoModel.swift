@@ -9,5 +9,8 @@
 import UIKit
 
 class VideoModel: NSObject {
-
+    var name:String?
+    var filePath:String?
+    var time:Int?
+    var pic:UIImage?
 }

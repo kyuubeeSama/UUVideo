@@ -31,6 +31,9 @@
 		A950E2CD24E67515000CBB92 /* WebsiteTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2CC24E67515000CBB92 /* WebsiteTableView.swift */; };
 		A950E2CF24E677D9000CBB92 /* VideoListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2CE24E677D9000CBB92 /* VideoListCollectionView.swift */; };
 		A950E2D324E67871000CBB92 /* VideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2D224E67871000CBB92 /* VideoModel.swift */; };
+		A9B9CE1924E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CE1724E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.swift */; };
+		A9B9CE1A24E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9B9CE1824E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.xib */; };
+		A9B9CE1C24E9569700CFBE69 /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CE1B24E9569700CFBE69 /* VideoPlayerViewController.swift */; };
 		A9FB284F24E67B6900F53E74 /* VideoListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FB284D24E67B6900F53E74 /* VideoListCollectionViewCell.swift */; };
 		A9FB285024E67B6900F53E74 /* VideoListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9FB284E24E67B6900F53E74 /* VideoListCollectionViewCell.xib */; };
 		A9FB285224E67E9400F53E74 /* PhoneVideoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */; };
@@ -67,6 +70,11 @@
 		A950E2CC24E67515000CBB92 /* WebsiteTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteTableView.swift; sourceTree = "<group>"; };
 		A950E2CE24E677D9000CBB92 /* VideoListCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListCollectionView.swift; sourceTree = "<group>"; };
 		A950E2D224E67871000CBB92 /* VideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModel.swift; sourceTree = "<group>"; };
+		A9B9CE1524E933E000CFBE69 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		A9B9CE1624E933E100CFBE69 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		A9B9CE1724E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
+		A9B9CE1824E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoListHeaderCollectionReusableView.xib; sourceTree = "<group>"; };
+		A9B9CE1B24E9569700CFBE69 /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewController.swift; sourceTree = "<group>"; };
 		A9FB284D24E67B6900F53E74 /* VideoListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListCollectionViewCell.swift; sourceTree = "<group>"; };
 		A9FB284E24E67B6900F53E74 /* VideoListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoListCollectionViewCell.xib; sourceTree = "<group>"; };
 		A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVideoListViewController.swift; sourceTree = "<group>"; };
@@ -189,6 +197,7 @@
 			children = (
 				A950E2C924E674E4000CBB92 /* PhoneIndexViewController.swift */,
 				A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */,
+				A9B9CE1B24E9569700CFBE69 /* VideoPlayerViewController.swift */,
 			);
 			path = Phone;
 			sourceTree = "<group>";
@@ -216,6 +225,8 @@
 				A950E2CE24E677D9000CBB92 /* VideoListCollectionView.swift */,
 				A9FB284D24E67B6900F53E74 /* VideoListCollectionViewCell.swift */,
 				A9FB284E24E67B6900F53E74 /* VideoListCollectionViewCell.xib */,
+				A9B9CE1724E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.swift */,
+				A9B9CE1824E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -272,6 +283,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = A950E28524E67157000CBB92;
 			productRefGroup = A950E28F24E67157000CBB92 /* Products */;
@@ -289,6 +301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A950E29E24E6715A000CBB92 /* LaunchScreen.storyboard in Resources */,
+				A9B9CE1A24E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.xib in Resources */,
 				A950E29B24E6715A000CBB92 /* Assets.xcassets in Resources */,
 				A9FB285024E67B6900F53E74 /* VideoListCollectionViewCell.xib in Resources */,
 				A950E29924E67157000CBB92 /* Main.storyboard in Resources */,
@@ -346,8 +359,10 @@
 			files = (
 				A9FB284F24E67B6900F53E74 /* VideoListCollectionViewCell.swift in Sources */,
 				A950E2B624E6733F000CBB92 /* UIView+extension.swift in Sources */,
+				A9B9CE1C24E9569700CFBE69 /* VideoPlayerViewController.swift in Sources */,
 				A950E29624E67157000CBB92 /* ViewController.swift in Sources */,
 				A950E2CD24E67515000CBB92 /* WebsiteTableView.swift in Sources */,
+				A9B9CE1924E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.swift in Sources */,
 				A950E29224E67157000CBB92 /* AppDelegate.swift in Sources */,
 				A9FB285224E67E9400F53E74 /* PhoneVideoListViewController.swift in Sources */,
 				A950E2B124E6733F000CBB92 /* Date+extension.swift in Sources */,
@@ -377,6 +392,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				A950E29824E67157000CBB92 /* Base */,
+				A9B9CE1524E933E000CFBE69 /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -385,6 +401,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				A950E29D24E6715A000CBB92 /* Base */,
+				A9B9CE1624E933E100CFBE69 /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -396,6 +413,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -457,6 +475,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -523,7 +542,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.qystudio.UUVideo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -544,7 +563,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.qystudio.UUVideo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

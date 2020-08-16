@@ -16,7 +16,8 @@ class PhoneIndexViewController: BaseViewController {
         // Do any additional setup after loading the view.
         // 创建video文件夹
         do{
-            _ = try FileTool.init().createDirectory(path: "/video")
+            let path = FileTool.init().getDocumentPath().appending("/video")
+            _ = try FileTool.init().createDirectory(path: path)
         }catch (let error){
             print(error)
         }
@@ -29,6 +30,13 @@ class PhoneIndexViewController: BaseViewController {
         self.view.addSubview(table)
         table.snp.makeConstraints { (make) in
             make.left.right.top.bottom.equalToSuperview()
+        }
+        table.cellItemDidSelect = { indexPath in
+            let string = table.listArr![indexPath.row]
+            if(string == "本地视频"){
+                let VC = PhoneVideoListViewController.init()
+                self.navigationController?.pushViewController(VC, animated: true)
+            }
         }
         return table
     }()

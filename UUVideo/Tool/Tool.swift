@@ -59,6 +59,14 @@ class Tool:NSObject {
     }
     // TODO:正则表达式筛选
     // TODO:获取相册视频
+    // TODO:是否是ipad
+    static func isPad()->Bool{
+        if UIDevice.current.userInterfaceIdiom == .pad{
+            return true
+        }else{
+            return false
+        }
+    }
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
