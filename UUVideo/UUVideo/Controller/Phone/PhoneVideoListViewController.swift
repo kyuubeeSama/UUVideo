@@ -9,15 +9,24 @@
 import UIKit
 
 class PhoneVideoListViewController: BaseViewController {
-
+    // 1.本地视频  2.哈利tv
+    var website:Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.getVideo()
+        if website == 1 {
+            self.getVideo()
+        }else if website == 2{
+            
+        }else if website == 3{
+            self.getHaliVideo()
+        }
 //        self.getVideo()
+//        self.getHaliVideo()
     }
-    //获取所有的视频
+    //获取所有的本地视频
     func getVideo(){
         // 视频分为本地视频和相册视频
         // 本地视频
@@ -37,7 +46,16 @@ class PhoneVideoListViewController: BaseViewController {
             }
         }
     }
-
+    
+    func getHaliVideo(){
+        // 获取哈利tv的视频
+        QYRequestData.shared.getHtmlContent(urlStr: "https://www.halitv.com/", params: nil, success: { (result) in
+            print(result)
+        }) { (error) in
+            print(error)
+        }
+    }
+    
     lazy var mainCollect: VideoListCollectionView = {
         let layout = UICollectionViewFlowLayout.init()
         let mainCollection = VideoListCollectionView.init(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH), collectionViewLayout: layout)

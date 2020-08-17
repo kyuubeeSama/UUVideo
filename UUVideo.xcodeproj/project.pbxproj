@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A906DB0C24EA575700C070E4 /* PadIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB0B24EA575700C070E4 /* PadIndexViewController.swift */; };
+		A906DB0E24EA680B00C070E4 /* BangumiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB0D24EA680B00C070E4 /* BangumiViewController.swift */; };
+		A906DB1024EA695900C070E4 /* CategoryChooseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB0F24EA695900C070E4 /* CategoryChooseView.swift */; };
 		A950E29224E67157000CBB92 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E29124E67157000CBB92 /* AppDelegate.swift */; };
 		A950E29424E67157000CBB92 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E29324E67157000CBB92 /* SceneDelegate.swift */; };
 		A950E29624E67157000CBB92 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E29524E67157000CBB92 /* ViewController.swift */; };
@@ -45,6 +47,8 @@
 		2B8785959F9D24685D39BCEB /* Pods-UUVideo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UUVideo.debug.xcconfig"; path = "Target Support Files/Pods-UUVideo/Pods-UUVideo.debug.xcconfig"; sourceTree = "<group>"; };
 		A873C20C17BCF9F74FB8D914 /* Pods-UUVideo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UUVideo.release.xcconfig"; path = "Target Support Files/Pods-UUVideo/Pods-UUVideo.release.xcconfig"; sourceTree = "<group>"; };
 		A906DB0B24EA575700C070E4 /* PadIndexViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadIndexViewController.swift; sourceTree = "<group>"; };
+		A906DB0D24EA680B00C070E4 /* BangumiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BangumiViewController.swift; sourceTree = "<group>"; };
+		A906DB0F24EA695900C070E4 /* CategoryChooseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryChooseView.swift; sourceTree = "<group>"; };
 		A950E28E24E67157000CBB92 /* UUVideo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UUVideo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A950E29124E67157000CBB92 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A950E29324E67157000CBB92 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -200,6 +204,7 @@
 				A950E2C924E674E4000CBB92 /* PhoneIndexViewController.swift */,
 				A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */,
 				A9B9CE1B24E9569700CFBE69 /* VideoPlayerViewController.swift */,
+				A906DB0D24EA680B00C070E4 /* BangumiViewController.swift */,
 			);
 			path = Phone;
 			sourceTree = "<group>";
@@ -230,6 +235,7 @@
 				A9FB284E24E67B6900F53E74 /* VideoListCollectionViewCell.xib */,
 				A9B9CE1724E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.swift */,
 				A9B9CE1824E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.xib */,
+				A906DB0F24EA695900C070E4 /* CategoryChooseView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -381,9 +387,11 @@
 				A950E29424E67157000CBB92 /* SceneDelegate.swift in Sources */,
 				A950E2CA24E674E4000CBB92 /* PhoneIndexViewController.swift in Sources */,
 				A950E2B724E6733F000CBB92 /* UIColor+extension.swift in Sources */,
+				A906DB1024EA695900C070E4 /* CategoryChooseView.swift in Sources */,
 				A950E2B024E6733F000CBB92 /* Dictionary+extension.swift in Sources */,
 				A950E2B524E6733F000CBB92 /* String+extension.swift in Sources */,
 				A950E2C124E67356000CBB92 /* config.swift in Sources */,
+				A906DB0E24EA680B00C070E4 /* BangumiViewController.swift in Sources */,
 				A950E2C024E67356000CBB92 /* FileTool.swift in Sources */,
 				A950E2BF24E67356000CBB92 /* QYRequestData.swift in Sources */,
 			);
