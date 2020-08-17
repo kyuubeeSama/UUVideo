@@ -9,9 +9,10 @@
 import UIKit
 import SJVideoPlayer
 import SnapKit
+import Photos
 class VideoPlayerViewController: BaseViewController {
     
-    var model:VideoModel?
+    var model:videoModel?
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -32,12 +33,22 @@ class VideoPlayerViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(fileURLWithPath: (model?.filePath)!))
+        if model?.type == 1 {
+            // 本地视频
+            self.player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(fileURLWithPath: (model?.filePath)!))
+        }else if model?.type == 2{
+            // 相册视频
+            PHImageManager.default().requestAVAsset(forVideo: (model?.asset)!, options: PHVideoRequestOptions.init()) { (avasset, mix, info) in
+                DispatchQueue.main.async {
+                    self.player.urlAsset = SJVideoPlayerURLAsset.init(avAsset: avasset!)
+                }
+            }
+        }
     }
     
     // 播放器，默认全屏播放
-    lazy var player: SJBaseVideoPlayer = {
-        let player = SJBaseVideoPlayer.init()
+    lazy var player: SJVideoPlayer = {
+        let player = SJVideoPlayer.init()
         self.view.addSubview(player.view)
         player.view.snp.makeConstraints { (make) in
             make.left.right.top.bottom.equalToSuperview()

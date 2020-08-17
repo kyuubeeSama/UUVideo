@@ -14,20 +14,28 @@ class PhoneVideoListViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.mainCollect.listArr = self.getVideo()
+        self.getVideo()
 //        self.getVideo()
     }
     //获取所有的视频
-    func getVideo()->[[String:Any]]{
+    func getVideo(){
         // 视频分为本地视频和相册视频
         // 本地视频
-        let localArr:[VideoModel] = FileTool.init().getVideoFileList()
+        let ftool = FileTool.init()
+        let localArr:[videoModel] = ftool.getVideoFileList()
+        var videoArr:[[String:Any]] = [["title":"本地视频","list":localArr]]
+        self.mainCollect.listArr = videoArr
 //        for item:VideoModel in localArr {
 //            print("视频名字是\(item.name),时长是\(item.time)")
 //        }
         // 相册视频
-        let videoArr:[[String:Any]] = [["title":"本地视频","list":localArr]]
-        return videoArr
+        ftool.getPhoneVideo()
+        ftool.getPhoneVideoComplete = { result in
+            videoArr.append(["title":"相册视频","list":result])
+            DispatchQueue.main.async {
+                self.mainCollect.listArr = videoArr
+            }
+        }
     }
 
     lazy var mainCollect: VideoListCollectionView = {
@@ -39,7 +47,7 @@ class PhoneVideoListViewController: BaseViewController {
         }
         mainCollection.cellItemSelected = { indexPath in
             let dic = mainCollection.listArr![indexPath.section]
-            let listArr:[VideoModel] = dic["list"] as! [VideoModel]
+            let listArr:[videoModel] = dic["list"] as! [videoModel]
             let VC = VideoPlayerViewController.init()
             VC.model = listArr[indexPath.row]
             VC.modalPresentationStyle = .fullScreen

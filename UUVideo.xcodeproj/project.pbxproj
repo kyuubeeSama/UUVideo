@@ -30,7 +30,7 @@
 		A950E2CA24E674E4000CBB92 /* PhoneIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2C924E674E4000CBB92 /* PhoneIndexViewController.swift */; };
 		A950E2CD24E67515000CBB92 /* WebsiteTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2CC24E67515000CBB92 /* WebsiteTableView.swift */; };
 		A950E2CF24E677D9000CBB92 /* VideoListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2CE24E677D9000CBB92 /* VideoListCollectionView.swift */; };
-		A950E2D324E67871000CBB92 /* VideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2D224E67871000CBB92 /* VideoModel.swift */; };
+		A950E2D324E67871000CBB92 /* videoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2D224E67871000CBB92 /* videoModel.swift */; };
 		A9B9CE1924E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CE1724E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.swift */; };
 		A9B9CE1A24E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9B9CE1824E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.xib */; };
 		A9B9CE1C24E9569700CFBE69 /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CE1B24E9569700CFBE69 /* VideoPlayerViewController.swift */; };
@@ -69,7 +69,7 @@
 		A950E2C924E674E4000CBB92 /* PhoneIndexViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneIndexViewController.swift; sourceTree = "<group>"; };
 		A950E2CC24E67515000CBB92 /* WebsiteTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteTableView.swift; sourceTree = "<group>"; };
 		A950E2CE24E677D9000CBB92 /* VideoListCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListCollectionView.swift; sourceTree = "<group>"; };
-		A950E2D224E67871000CBB92 /* VideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModel.swift; sourceTree = "<group>"; };
+		A950E2D224E67871000CBB92 /* videoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = videoModel.swift; sourceTree = "<group>"; };
 		A9B9CE1524E933E000CFBE69 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		A9B9CE1624E933E100CFBE69 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		A9B9CE1724E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -234,7 +234,7 @@
 		A950E2D024E6781E000CBB92 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A950E2D224E67871000CBB92 /* VideoModel.swift */,
+				A950E2D224E67871000CBB92 /* videoModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -371,7 +371,7 @@
 				A950E2B324E6733F000CBB92 /* NSObject+extension.swift in Sources */,
 				A950E2C424E6736F000CBB92 /* BaseViewController.swift in Sources */,
 				A950E2BE24E67356000CBB92 /* Tool.swift in Sources */,
-				A950E2D324E67871000CBB92 /* VideoModel.swift in Sources */,
+				A950E2D324E67871000CBB92 /* videoModel.swift in Sources */,
 				A950E2CF24E677D9000CBB92 /* VideoListCollectionView.swift in Sources */,
 				A950E2B424E6733F000CBB92 /* UITextField+extension.swift in Sources */,
 				A950E29424E67157000CBB92 /* SceneDelegate.swift in Sources */,

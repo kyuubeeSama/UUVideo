@@ -31,21 +31,21 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func numberOfItems(inSection section: Int) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         self.listArr!.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let dictionary = self.listArr![section]
-        let list:[VideoModel] = dictionary["list"] as! [VideoModel]
+        let list:[videoModel] = dictionary["list"] as! [videoModel]
         return list.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell:VideoListCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! VideoListCollectionViewCell
         let dic = self.listArr![indexPath.section]
-        let listArr:[VideoModel] = dic["list"] as! [VideoModel]
-        let model:VideoModel = listArr[indexPath.row]
+        let listArr:[videoModel] = dic["list"] as! [videoModel]
+        let model:videoModel = listArr[indexPath.row]
         cell.titleLab.text = model.name
         cell.picImage.image = model.pic
         return cell
@@ -81,6 +81,10 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize(width: screenW, height: 0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
