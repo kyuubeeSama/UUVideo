@@ -21,8 +21,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let windowScene = scene as! UIWindowScene
         self.window = UIWindow.init(windowScene: windowScene)
-        self.window?.backgroundColor = .white
-        let index = PhoneIndexViewController.init()
+        self.window?.backgroundColor = .systemBackground
+        var index = BaseViewController.init()
+        if Tool.isPad() {
+            index = PadIndexViewController.init()
+        }else{
+           index = PhoneIndexViewController.init()
+        }
         let nav = UINavigationController.init(rootViewController: index)
         self.window?.rootViewController = nav
         self.window?.makeKeyAndVisible()

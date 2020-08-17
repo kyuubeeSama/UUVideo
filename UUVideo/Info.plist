@@ -4,6 +4,8 @@
 <dict>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>保存图片到本地</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>用于您上传用户头像</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>保存图片到本地</string>
 	<key>NSCameraUsageDescription</key>

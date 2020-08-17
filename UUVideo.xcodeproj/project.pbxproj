@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A906DB0C24EA575700C070E4 /* PadIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB0B24EA575700C070E4 /* PadIndexViewController.swift */; };
 		A950E29224E67157000CBB92 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E29124E67157000CBB92 /* AppDelegate.swift */; };
 		A950E29424E67157000CBB92 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E29324E67157000CBB92 /* SceneDelegate.swift */; };
 		A950E29624E67157000CBB92 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E29524E67157000CBB92 /* ViewController.swift */; };
@@ -43,6 +44,7 @@
 /* Begin PBXFileReference section */
 		2B8785959F9D24685D39BCEB /* Pods-UUVideo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UUVideo.debug.xcconfig"; path = "Target Support Files/Pods-UUVideo/Pods-UUVideo.debug.xcconfig"; sourceTree = "<group>"; };
 		A873C20C17BCF9F74FB8D914 /* Pods-UUVideo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UUVideo.release.xcconfig"; path = "Target Support Files/Pods-UUVideo/Pods-UUVideo.release.xcconfig"; sourceTree = "<group>"; };
+		A906DB0B24EA575700C070E4 /* PadIndexViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadIndexViewController.swift; sourceTree = "<group>"; };
 		A950E28E24E67157000CBB92 /* UUVideo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UUVideo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A950E29124E67157000CBB92 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A950E29324E67157000CBB92 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 		A950E2C724E674C7000CBB92 /* Pad */ = {
 			isa = PBXGroup;
 			children = (
+				A906DB0B24EA575700C070E4 /* PadIndexViewController.swift */,
 			);
 			path = Pad;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9FB284F24E67B6900F53E74 /* VideoListCollectionViewCell.swift in Sources */,
+				A906DB0C24EA575700C070E4 /* PadIndexViewController.swift in Sources */,
 				A950E2B624E6733F000CBB92 /* UIView+extension.swift in Sources */,
 				A9B9CE1C24E9569700CFBE69 /* VideoPlayerViewController.swift in Sources */,
 				A950E29624E67157000CBB92 /* ViewController.swift in Sources */,
