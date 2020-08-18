@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import Photos
 class FileTool: NSObject {
-    var getPhoneVideoComplete:((_ videoArr:[videoModel])->())?
+    var getPhoneVideoComplete:((_ videoArr:[VideoModel])->())?
     
     /// 获取document文件夹
     func getDocumentPath()->String{
@@ -61,8 +61,8 @@ class FileTool: NSObject {
         }
     }
     // TODO:获取本地视频相关信息
-    func getVideoFileList()->Array<videoModel>{
-        var array:[videoModel] = []
+    func getVideoFileList()->Array<VideoModel>{
+        var array:[VideoModel] = []
         let path = self.getDocumentPath().appending("/video")
 //        print("路径是\(path)")
         //        let dirEnum = fileManager.enumerator(atPath: path)
@@ -79,7 +79,7 @@ class FileTool: NSObject {
                     print(fileType)
                     let typeArr:[String] = ["MP4","mp4","AVI","avi"]
                     if typeArr.contains(String(fileType)){
-                        let model:videoModel = videoModel.init()
+                        let model:VideoModel = VideoModel.init()
                         let filePath = path+"/"+fileName
                         model.type = 1
                         model.name = fileName
@@ -121,9 +121,9 @@ class FileTool: NSObject {
             return UIImage.init(named: "默认图片")!
         }
     }
-    // 获取相册图片
+    // 获取相册视频
     func getPhoneVideo(){
-        var result:[videoModel] = []
+        var result:[VideoModel] = []
         PHPhotoLibrary.requestAuthorization { (status) in
             if status == .authorized{
                 // 通过请求
@@ -138,7 +138,7 @@ class FileTool: NSObject {
                         let fileType:String = String(fileName.split(separator: ".")[1])
                         let typeArr:[String] = ["MP4","mp4","AVI","avi"]
                         if typeArr.contains(fileType) {
-                            let model = videoModel.init()
+                            let model = VideoModel.init()
                             model.type = 2
                             model.name = fileName
                             model.asset = item

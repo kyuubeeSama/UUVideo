@@ -10,6 +10,10 @@
 		A906DB0C24EA575700C070E4 /* PadIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB0B24EA575700C070E4 /* PadIndexViewController.swift */; };
 		A906DB0E24EA680B00C070E4 /* BangumiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB0D24EA680B00C070E4 /* BangumiViewController.swift */; };
 		A906DB1024EA695900C070E4 /* CategoryChooseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB0F24EA695900C070E4 /* CategoryChooseView.swift */; };
+		A906DB1224EB7E5C00C070E4 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB1124EB7E5C00C070E4 /* DataManager.swift */; };
+		A906DB1524EBB08300C070E4 /* VideoTableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB1324EBB08300C070E4 /* VideoTableCollectionViewCell.swift */; };
+		A906DB1624EBB08300C070E4 /* VideoTableCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A906DB1424EBB08300C070E4 /* VideoTableCollectionViewCell.xib */; };
+		A906DB1824EBCDDB00C070E4 /* NetVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB1724EBCDDB00C070E4 /* NetVideoPlayerViewController.swift */; };
 		A950E29224E67157000CBB92 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E29124E67157000CBB92 /* AppDelegate.swift */; };
 		A950E29424E67157000CBB92 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E29324E67157000CBB92 /* SceneDelegate.swift */; };
 		A950E29624E67157000CBB92 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E29524E67157000CBB92 /* ViewController.swift */; };
@@ -33,10 +37,10 @@
 		A950E2CA24E674E4000CBB92 /* PhoneIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2C924E674E4000CBB92 /* PhoneIndexViewController.swift */; };
 		A950E2CD24E67515000CBB92 /* WebsiteTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2CC24E67515000CBB92 /* WebsiteTableView.swift */; };
 		A950E2CF24E677D9000CBB92 /* VideoListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2CE24E677D9000CBB92 /* VideoListCollectionView.swift */; };
-		A950E2D324E67871000CBB92 /* videoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2D224E67871000CBB92 /* videoModel.swift */; };
+		A950E2D324E67871000CBB92 /* VideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2D224E67871000CBB92 /* VideoModel.swift */; };
 		A9B9CE1924E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CE1724E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.swift */; };
 		A9B9CE1A24E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9B9CE1824E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.xib */; };
-		A9B9CE1C24E9569700CFBE69 /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CE1B24E9569700CFBE69 /* VideoPlayerViewController.swift */; };
+		A9B9CE1C24E9569700CFBE69 /* LocalVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CE1B24E9569700CFBE69 /* LocalVideoPlayerViewController.swift */; };
 		A9FB284F24E67B6900F53E74 /* VideoListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FB284D24E67B6900F53E74 /* VideoListCollectionViewCell.swift */; };
 		A9FB285024E67B6900F53E74 /* VideoListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9FB284E24E67B6900F53E74 /* VideoListCollectionViewCell.xib */; };
 		A9FB285224E67E9400F53E74 /* PhoneVideoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */; };
@@ -49,6 +53,10 @@
 		A906DB0B24EA575700C070E4 /* PadIndexViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadIndexViewController.swift; sourceTree = "<group>"; };
 		A906DB0D24EA680B00C070E4 /* BangumiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BangumiViewController.swift; sourceTree = "<group>"; };
 		A906DB0F24EA695900C070E4 /* CategoryChooseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryChooseView.swift; sourceTree = "<group>"; };
+		A906DB1124EB7E5C00C070E4 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		A906DB1324EBB08300C070E4 /* VideoTableCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTableCollectionViewCell.swift; sourceTree = "<group>"; };
+		A906DB1424EBB08300C070E4 /* VideoTableCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoTableCollectionViewCell.xib; sourceTree = "<group>"; };
+		A906DB1724EBCDDB00C070E4 /* NetVideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoPlayerViewController.swift; sourceTree = "<group>"; };
 		A950E28E24E67157000CBB92 /* UUVideo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UUVideo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A950E29124E67157000CBB92 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A950E29324E67157000CBB92 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,12 +83,12 @@
 		A950E2C924E674E4000CBB92 /* PhoneIndexViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneIndexViewController.swift; sourceTree = "<group>"; };
 		A950E2CC24E67515000CBB92 /* WebsiteTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteTableView.swift; sourceTree = "<group>"; };
 		A950E2CE24E677D9000CBB92 /* VideoListCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListCollectionView.swift; sourceTree = "<group>"; };
-		A950E2D224E67871000CBB92 /* videoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = videoModel.swift; sourceTree = "<group>"; };
+		A950E2D224E67871000CBB92 /* VideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModel.swift; sourceTree = "<group>"; };
 		A9B9CE1524E933E000CFBE69 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		A9B9CE1624E933E100CFBE69 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		A9B9CE1724E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		A9B9CE1824E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoListHeaderCollectionReusableView.xib; sourceTree = "<group>"; };
-		A9B9CE1B24E9569700CFBE69 /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewController.swift; sourceTree = "<group>"; };
+		A9B9CE1B24E9569700CFBE69 /* LocalVideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalVideoPlayerViewController.swift; sourceTree = "<group>"; };
 		A9FB284D24E67B6900F53E74 /* VideoListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListCollectionViewCell.swift; sourceTree = "<group>"; };
 		A9FB284E24E67B6900F53E74 /* VideoListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoListCollectionViewCell.xib; sourceTree = "<group>"; };
 		A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVideoListViewController.swift; sourceTree = "<group>"; };
@@ -176,6 +184,7 @@
 				A950E2BC24E67356000CBB92 /* FileTool.swift */,
 				A950E2BB24E67356000CBB92 /* QYRequestData.swift */,
 				A950E2BA24E67356000CBB92 /* Tool.swift */,
+				A906DB1124EB7E5C00C070E4 /* DataManager.swift */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -203,7 +212,6 @@
 			children = (
 				A950E2C924E674E4000CBB92 /* PhoneIndexViewController.swift */,
 				A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */,
-				A9B9CE1B24E9569700CFBE69 /* VideoPlayerViewController.swift */,
 				A906DB0D24EA680B00C070E4 /* BangumiViewController.swift */,
 			);
 			path = Phone;
@@ -220,6 +228,8 @@
 		A950E2C824E674D0000CBB92 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A9B9CE1B24E9569700CFBE69 /* LocalVideoPlayerViewController.swift */,
+				A906DB1724EBCDDB00C070E4 /* NetVideoPlayerViewController.swift */,
 				A950E2C624E674C2000CBB92 /* Phone */,
 				A950E2C724E674C7000CBB92 /* Pad */,
 			);
@@ -236,6 +246,8 @@
 				A9B9CE1724E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.swift */,
 				A9B9CE1824E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.xib */,
 				A906DB0F24EA695900C070E4 /* CategoryChooseView.swift */,
+				A906DB1324EBB08300C070E4 /* VideoTableCollectionViewCell.swift */,
+				A906DB1424EBB08300C070E4 /* VideoTableCollectionViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -243,7 +255,7 @@
 		A950E2D024E6781E000CBB92 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A950E2D224E67871000CBB92 /* videoModel.swift */,
+				A950E2D224E67871000CBB92 /* VideoModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -311,6 +323,7 @@
 			files = (
 				A950E29E24E6715A000CBB92 /* LaunchScreen.storyboard in Resources */,
 				A9B9CE1A24E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.xib in Resources */,
+				A906DB1624EBB08300C070E4 /* VideoTableCollectionViewCell.xib in Resources */,
 				A950E29B24E6715A000CBB92 /* Assets.xcassets in Resources */,
 				A9FB285024E67B6900F53E74 /* VideoListCollectionViewCell.xib in Resources */,
 				A950E29924E67157000CBB92 /* Main.storyboard in Resources */,
@@ -366,10 +379,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A906DB1224EB7E5C00C070E4 /* DataManager.swift in Sources */,
 				A9FB284F24E67B6900F53E74 /* VideoListCollectionViewCell.swift in Sources */,
 				A906DB0C24EA575700C070E4 /* PadIndexViewController.swift in Sources */,
 				A950E2B624E6733F000CBB92 /* UIView+extension.swift in Sources */,
-				A9B9CE1C24E9569700CFBE69 /* VideoPlayerViewController.swift in Sources */,
+				A9B9CE1C24E9569700CFBE69 /* LocalVideoPlayerViewController.swift in Sources */,
 				A950E29624E67157000CBB92 /* ViewController.swift in Sources */,
 				A950E2CD24E67515000CBB92 /* WebsiteTableView.swift in Sources */,
 				A9B9CE1924E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.swift in Sources */,
@@ -381,17 +395,19 @@
 				A950E2B324E6733F000CBB92 /* NSObject+extension.swift in Sources */,
 				A950E2C424E6736F000CBB92 /* BaseViewController.swift in Sources */,
 				A950E2BE24E67356000CBB92 /* Tool.swift in Sources */,
-				A950E2D324E67871000CBB92 /* videoModel.swift in Sources */,
+				A950E2D324E67871000CBB92 /* VideoModel.swift in Sources */,
 				A950E2CF24E677D9000CBB92 /* VideoListCollectionView.swift in Sources */,
 				A950E2B424E6733F000CBB92 /* UITextField+extension.swift in Sources */,
 				A950E29424E67157000CBB92 /* SceneDelegate.swift in Sources */,
 				A950E2CA24E674E4000CBB92 /* PhoneIndexViewController.swift in Sources */,
 				A950E2B724E6733F000CBB92 /* UIColor+extension.swift in Sources */,
 				A906DB1024EA695900C070E4 /* CategoryChooseView.swift in Sources */,
+				A906DB1824EBCDDB00C070E4 /* NetVideoPlayerViewController.swift in Sources */,
 				A950E2B024E6733F000CBB92 /* Dictionary+extension.swift in Sources */,
 				A950E2B524E6733F000CBB92 /* String+extension.swift in Sources */,
 				A950E2C124E67356000CBB92 /* config.swift in Sources */,
 				A906DB0E24EA680B00C070E4 /* BangumiViewController.swift in Sources */,
+				A906DB1524EBB08300C070E4 /* VideoTableCollectionViewCell.swift in Sources */,
 				A950E2C024E67356000CBB92 /* FileTool.swift in Sources */,
 				A950E2BF24E67356000CBB92 /* QYRequestData.swift in Sources */,
 			);

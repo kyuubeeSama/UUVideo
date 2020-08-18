@@ -58,7 +58,21 @@ class Tool:NSObject {
         viewController.present(alert, animated: true, completion: nil)
     }
     // TODO:正则表达式筛选
-    // TODO:获取相册视频
+    static func getRegularData(regularExpress:String,content:String)->[String]{
+        var array:[String] = []
+        do{
+            let reg = try NSRegularExpression.init(pattern: regularExpress, options: [.caseInsensitive,.dotMatchesLineSeparators])
+            let matches = reg.matches(in: content, options: [], range: NSMakeRange(0, content.count))
+            for match:NSTextCheckingResult in matches {
+                let range = match.range
+                let article:String = String(content[Range.init(range, in: content)!])
+                array.append(article)
+            }
+        }catch let error{
+            print(error)
+        }
+        return array;
+    }
     // TODO:是否是ipad
     static func isPad()->Bool{
         if UIDevice.current.userInterfaceIdiom == .pad{

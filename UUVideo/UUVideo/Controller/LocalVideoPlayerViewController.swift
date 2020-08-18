@@ -10,9 +10,9 @@ import UIKit
 import SJVideoPlayer
 import SnapKit
 import Photos
-class VideoPlayerViewController: BaseViewController {
+class LocalVideoPlayerViewController: BaseViewController {
     
-    var model:videoModel?
+    var model:VideoModel?
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

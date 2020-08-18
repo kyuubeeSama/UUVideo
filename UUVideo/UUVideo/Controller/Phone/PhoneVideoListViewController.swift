@@ -21,7 +21,7 @@ class PhoneVideoListViewController: BaseViewController {
         }else if website == 2{
             
         }else if website == 3{
-            self.getHaliVideo()
+
         }
 //        self.getVideo()
 //        self.getHaliVideo()
@@ -31,7 +31,7 @@ class PhoneVideoListViewController: BaseViewController {
         // 视频分为本地视频和相册视频
         // 本地视频
         let ftool = FileTool.init()
-        let localArr:[videoModel] = ftool.getVideoFileList()
+        let localArr:[VideoModel] = ftool.getVideoFileList()
         var videoArr:[[String:Any]] = [["title":"本地视频","list":localArr]]
         self.mainCollect.listArr = videoArr
 //        for item:VideoModel in localArr {
@@ -47,15 +47,6 @@ class PhoneVideoListViewController: BaseViewController {
         }
     }
     
-    func getHaliVideo(){
-        // 获取哈利tv的视频
-        QYRequestData.shared.getHtmlContent(urlStr: "https://www.halitv.com/", params: nil, success: { (result) in
-            print(result)
-        }) { (error) in
-            print(error)
-        }
-    }
-    
     lazy var mainCollect: VideoListCollectionView = {
         let layout = UICollectionViewFlowLayout.init()
         let mainCollection = VideoListCollectionView.init(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH), collectionViewLayout: layout)
@@ -65,8 +56,8 @@ class PhoneVideoListViewController: BaseViewController {
         }
         mainCollection.cellItemSelected = { indexPath in
             let dic = mainCollection.listArr![indexPath.section]
-            let listArr:[videoModel] = dic["list"] as! [videoModel]
-            let VC = VideoPlayerViewController.init()
+            let listArr:[VideoModel] = dic["list"] as! [VideoModel]
+            let VC = LocalVideoPlayerViewController.init()
             VC.model = listArr[indexPath.row]
             VC.modalPresentationStyle = .fullScreen
             self.present(VC, animated: true, completion: nil)
