@@ -70,7 +70,27 @@ class DataManager: NSObject {
     // 获取视频播放界面相关数据
     func getVideoDetailData(urlStr:String,success:@escaping(_ dataDic:[String:Any])->(),failure:@escaping(_ error:Error)->()){
         QYRequestData.shared.getHtmlContent(urlStr: urlStr, params: nil) { (result) in
-            print(result)
+//            print(result)
+//            "url":([\s\S]+?)",
+//            获取请求值
+            var v:String = Tool.getRegularData(regularExpress: "\"url\":([\\s\\S]+?)\",", content: result)[0]
+            v = v.replacingOccurrences(of: "\"url\":", with: "")
+            v = v.replacingOccurrences(of: "\",", with: "")
+            v = v.replacingOccurrences(of: "\"", with: "")
+//            "name":([\s\S]+?)",
+//            获取那么属性
+            var name:String = Tool.getRegularData(regularExpress: "\"name\":([\\s\\S]+?)\",", content: result)[0]
+            name = name.replacingOccurrences(of: "\"name\":", with: "")
+            name = name.replacingOccurrences(of: "\",", with: "")
+            name = name.replacingOccurrences(of: "\"", with: "")
+//            根据这两个参数，请求新页面
+            let playerUrlStr = "https://www.halitv.com/api/haliapi.php?v="+v+"&name="+name
+            QYRequestData.shared.getHtmlContent(urlStr: playerUrlStr, params: nil) { (playerResult) in
+                print(playerResult)
+            } failure: { (error) in
+                failure(error)
+            }
+
         } failure: { (error) in
             failure(error)
         }

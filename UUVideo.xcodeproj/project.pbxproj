@@ -38,6 +38,7 @@
 		A950E2CD24E67515000CBB92 /* WebsiteTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2CC24E67515000CBB92 /* WebsiteTableView.swift */; };
 		A950E2CF24E677D9000CBB92 /* VideoListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2CE24E677D9000CBB92 /* VideoListCollectionView.swift */; };
 		A950E2D324E67871000CBB92 /* VideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2D224E67871000CBB92 /* VideoModel.swift */; };
+		A964116A24ECCB9700D19D92 /* QYWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A964116924ECCB9700D19D92 /* QYWebView.swift */; };
 		A9B9CE1924E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CE1724E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.swift */; };
 		A9B9CE1A24E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9B9CE1824E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.xib */; };
 		A9B9CE1C24E9569700CFBE69 /* LocalVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CE1B24E9569700CFBE69 /* LocalVideoPlayerViewController.swift */; };
@@ -84,6 +85,7 @@
 		A950E2CC24E67515000CBB92 /* WebsiteTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteTableView.swift; sourceTree = "<group>"; };
 		A950E2CE24E677D9000CBB92 /* VideoListCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListCollectionView.swift; sourceTree = "<group>"; };
 		A950E2D224E67871000CBB92 /* VideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModel.swift; sourceTree = "<group>"; };
+		A964116924ECCB9700D19D92 /* QYWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QYWebView.swift; sourceTree = "<group>"; };
 		A9B9CE1524E933E000CFBE69 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		A9B9CE1624E933E100CFBE69 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		A9B9CE1724E9475F00CFBE69 /* VideoListHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 				A906DB0F24EA695900C070E4 /* CategoryChooseView.swift */,
 				A906DB1324EBB08300C070E4 /* VideoTableCollectionViewCell.swift */,
 				A906DB1424EBB08300C070E4 /* VideoTableCollectionViewCell.xib */,
+				A964116924ECCB9700D19D92 /* QYWebView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 				A950E2B124E6733F000CBB92 /* Date+extension.swift in Sources */,
 				A950E2B224E6733F000CBB92 /* UIImage+extension.swift in Sources */,
 				A950E2B824E6733F000CBB92 /* UIButton+extension.swift in Sources */,
+				A964116A24ECCB9700D19D92 /* QYWebView.swift in Sources */,
 				A950E2B324E6733F000CBB92 /* NSObject+extension.swift in Sources */,
 				A950E2C424E6736F000CBB92 /* BaseViewController.swift in Sources */,
 				A950E2BE24E67356000CBB92 /* Tool.swift in Sources */,
