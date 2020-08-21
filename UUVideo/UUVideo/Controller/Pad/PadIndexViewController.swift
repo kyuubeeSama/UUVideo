@@ -46,8 +46,14 @@ class PadIndexViewController: BaseViewController {
     }()
 
     lazy var chooseView: CategoryChooseView = {
-        let chooseView = CategoryChooseView.init(frame: CGRect(x: 0, y: top_height, width: screenW, height: 40))
+        let chooseView = CategoryChooseView.init(frame: CGRect(x: 0, y: top_height, width: screenW-200, height: 40))
         self.view.addSubview(chooseView)
+        chooseView.snp.makeConstraints { (make) in
+            make.right.equalToSuperview()
+            make.left.equalTo(self.mainTable.snp.right)
+            make.top.equalToSuperview().offset(top_height)
+            make.height.equalTo(40)
+        }
         let config = CategoryChooseConfig.init()
         config.listArr = ["周一","周二","周三","周四","周五","周六","周日"]
         config.backColor = .white
@@ -58,12 +64,6 @@ class PadIndexViewController: BaseViewController {
             self.mainCollect.listArr = [["title":"","list":array]]
         }
         chooseView.isHidden = false
-        chooseView.snp.makeConstraints { (make) in
-            make.right.equalToSuperview()
-            make.left.equalTo(self.mainTable.snp.right)
-            make.top.equalToSuperview().offset(top_height)
-            make.height.equalTo(40)
-        }
         return chooseView
     }()
 
@@ -78,10 +78,19 @@ class PadIndexViewController: BaseViewController {
         mainCollection.cellItemSelected = { indexPath in
             let dic = mainCollection.listArr![indexPath.section]
             let listArr:[VideoModel] = dic["list"] as! [VideoModel]
-            let VC = LocalVideoPlayerViewController.init()
-            VC.model = listArr[indexPath.row]
-            VC.modalPresentationStyle = .fullScreen
-            self.present(VC, animated: true, completion: nil)
+            let model = listArr[indexPath.row]
+            if(model.type == 4){
+                // 番剧
+                let VC = PadNetVideoPlayerViewController.init()
+                VC.dataArr = (self.allVideoArr[1] as! [[VideoModel]])
+                VC.model = model
+                self.navigationController?.pushViewController(VC, animated: true)
+            }else{
+                let VC = LocalVideoPlayerViewController.init()
+                VC.model = listArr[indexPath.row]
+                VC.modalPresentationStyle = .fullScreen
+                self.present(VC, animated: true, completion: nil)
+            }
         }
         return mainCollection
     }()

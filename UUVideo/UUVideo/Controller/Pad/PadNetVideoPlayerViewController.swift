@@ -1,30 +1,55 @@
 //
-//  NetVideoPlayerViewController.swift
+//  PadNetVIdeoPlayerViewController.swift
 //  UUVideo
 //
-//  Created by Galaxy on 2020/8/18.
+//  Created by Galaxy on 2020/8/21.
 //  Copyright © 2020 qykj. All rights reserved.
 //
 
 import UIKit
 import WebKit
-import SnapKit
-class NetVideoPlayerViewController: BaseViewController {
-
+import SideMenu
+import ESPullToRefresh
+class PadNetVideoPlayerViewController: BaseViewController {
     var model:VideoModel?
+    var dataArr:[[VideoModel]]?
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.setNav()
+        self.reloadWebView()
+//        webView.scrollView.es.addPullToRefresh{ [self] in
+//            webView.reload()
+//            webView.scrollView.es.stopPullToRefresh()
+//        }
+    }
+    
+    func reloadWebView(){
         var urlStr = model?.detailUrl?.replacingOccurrences(of: ".html", with: "-1-1.html")
         urlStr = urlStr?.replacingOccurrences(of: "detail", with: "play")
-//        DataManager.init().getVideoDetailData(urlStr: "https://www.halitv.com/"+urlStr!) { (dataDic) in
-//
-//        } failure: { (error) in
-//            print(error)
-//        }
-//        webView.load(URLRequest.init(url: URL.init(string: "https://m.halitv.com/"+urlStr!)!))
-        webView.load(URLRequest.init(url: URL.init(string: "https://m.halitv.com/")!))
+        webView.makeToastActivity(.center)
+        webView.load(URLRequest.init(url: URL.init(string: "https://www.halitv.com/"+urlStr!)!))
+    }
+    
+    func setNav(){
+        let baritem = UIBarButtonItem.init(image: UIImage.init(systemName: "slider.horizontal.3"), style: .done, target: self, action: #selector(leftSideMenu))
+        self.navigationItem.rightBarButtonItem = baritem
+    }
+    
+    @objc func leftSideMenu(){
+        let VC = RightViewController.init()
+        VC.dataArr = self.dataArr
+        VC.cellIitemSelected = { indexPath in
+            let array:[VideoModel] = self.dataArr![indexPath.section]
+            let model = array[indexPath.row]
+            self.model = model
+            self.reloadWebView()
+            self.dismiss(animated: true, completion: nil)
+        }
+        let menu = SideMenuNavigationController(rootViewController: VC)
+        menu.presentationStyle = .menuSlideIn
+        present(menu, animated: true, completion: nil)
     }
     
     lazy var webView: QYWebView = {

@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.2.2)
+  - ESPullToRefresh (2.9.3)
   - HandyJSON (5.0.2)
   - IQKeyboardManagerSwift (6.5.6)
   - Kingfisher (5.14.1):
@@ -7,6 +8,7 @@ PODS:
   - Kingfisher/Core (5.14.1)
   - Masonry (1.1.0)
   - Reachability (3.2)
+  - SideMenu (6.4.9)
   - SJBaseVideoPlayer (3.3.8):
     - Masonry
     - Reachability
@@ -77,9 +79,11 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - ESPullToRefresh
   - HandyJSON
   - IQKeyboardManagerSwift
   - Kingfisher
+  - SideMenu
   - SJVideoPlayer
   - SnapKit
   - SwiftyJSON
@@ -88,11 +92,13 @@ DEPENDENCIES:
 SPEC REPOS:
   https://gitee.com/mirrors/CocoaPods-Specs.git:
     - Alamofire
+    - ESPullToRefresh
     - HandyJSON
     - IQKeyboardManagerSwift
     - Kingfisher
     - Masonry
     - Reachability
+    - SideMenu
     - SJBaseVideoPlayer
     - SJUIKit
     - SJVideoPlayer
@@ -103,11 +109,13 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
+  ESPullToRefresh: 0d68daa602b343c81753a1b95e09fd0bfcddfd40
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
   Kingfisher: 8050bc6f7f68cbf3908bd04df7ccbac188f6d6d6
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  SideMenu: 8ef57a3cfc024a2d3fc1c036c7fe98537baec9e0
   SJBaseVideoPlayer: 85f98136ab7b1d9595d8f85e3baee3801feb733e
   SJUIKit: bdf86af3648e70483c57e2bfe2fcc7531337fa54
   SJVideoPlayer: fb53250dbf0ad2f95c963e9a42efb2057b9e9f27
@@ -116,6 +124,6 @@ SPEC CHECKSUMS:
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: af35b934503e0c51351843dd38d693f81089ed24
+PODFILE CHECKSUM: a821af44e8977eb1b633b930a4bcbe110f0ab9f4
 
 COCOAPODS: 1.9.3

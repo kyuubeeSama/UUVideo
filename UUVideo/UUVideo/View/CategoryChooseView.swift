@@ -38,6 +38,7 @@ class CategoryChooseView: UIView {
             switch config?.type {
             case .equalWidth:
                 let backView = UIView.init(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
+                print("屏幕宽是\(screenW),要求的宽是\(screenW-200),实际的宽是\(frame.size.width)")
                 self.addSubview(backView)
                 backView.backgroundColor = config?.backColor
                 for (index,item) in config!.listArr.enumerated() {
