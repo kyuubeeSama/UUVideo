@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import FluentDarkModeKit
 class PadIndexViewController: BaseViewController {
     var allVideoArr:[[Any]] = [[],[]]
     var tableIndex:Int = 0
@@ -23,6 +24,12 @@ class PadIndexViewController: BaseViewController {
         }
         self.mainTable.listArr = ["本地视频","新番时间表"]
         self.getVideo()
+        NotificationCenter.default.addObserver(self, selector: #selector(didChangeRotate(notice:)), name: UIApplication.didChangeStatusBarFrameNotification, object: nil)
+    }
+    
+    @objc func didChangeRotate(notice:Notification){
+        chooseView.layoutIfNeeded()
+        chooseView.refreshView()
     }
     
     lazy var mainTable: WebsiteTableView = {
@@ -46,17 +53,20 @@ class PadIndexViewController: BaseViewController {
     }()
 
     lazy var chooseView: CategoryChooseView = {
-        let chooseView = CategoryChooseView.init(frame: CGRect(x: 0, y: top_height, width: screenW-200, height: 40))
+        let chooseView = CategoryChooseView.init()
         self.view.addSubview(chooseView)
         chooseView.snp.makeConstraints { (make) in
-            make.right.equalToSuperview()
-            make.left.equalTo(self.mainTable.snp.right)
+            make.right.equalTo(self.mainCollect.snp.right)
+            make.left.equalToSuperview().offset(200)
             make.top.equalToSuperview().offset(top_height)
             make.height.equalTo(40)
         }
+        chooseView.layoutIfNeeded()
         let config = CategoryChooseConfig.init()
         config.listArr = ["周一","周二","周三","周四","周五","周六","周日"]
-        config.backColor = .white
+        config.backColor = UIColor.init(.dm, light: .white, dark: .black)
+        config.titleColor = UIColor.init(.dm, light: .black, dark: .white)
+        config.highLightColor = UIColor.init(.dm, light: .white, dark: .black)
         chooseView.config = config
         chooseView.chooseBlock = { index in
             let listArr:[[VideoModel]] = self.allVideoArr[self.tableIndex] as! [[VideoModel]]
@@ -66,7 +76,7 @@ class PadIndexViewController: BaseViewController {
         chooseView.isHidden = false
         return chooseView
     }()
-
+    
     lazy var mainCollect: VideoListCollectionView = {
         let layout = UICollectionViewFlowLayout.init()
         let mainCollection = VideoListCollectionView.init(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH), collectionViewLayout: layout)
@@ -141,8 +151,8 @@ class PadIndexViewController: BaseViewController {
         let array:[[VideoModel]] = self.allVideoArr[1] as! [[VideoModel]]
         mainCollect.listArr = []
         mainCollect.reloadData()
-        mainCollect.makeToastActivity(.center)
         if array.count == 0 {
+            mainCollect.makeToastActivity(.center)
             let dataManager = DataManager.init()
             dataManager.getBangumiData { (dataArr) in
                 self.mainCollect.hideToastActivity()

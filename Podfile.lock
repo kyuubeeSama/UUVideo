@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (5.2.2)
   - ESPullToRefresh (2.9.3)
+  - FluentDarkModeKit (0.5.2)
   - HandyJSON (5.0.2)
   - IQKeyboardManagerSwift (6.5.6)
   - Kingfisher (5.14.1):
@@ -80,6 +81,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - ESPullToRefresh
+  - FluentDarkModeKit
   - HandyJSON
   - IQKeyboardManagerSwift
   - Kingfisher
@@ -93,6 +95,7 @@ SPEC REPOS:
   https://gitee.com/mirrors/CocoaPods-Specs.git:
     - Alamofire
     - ESPullToRefresh
+    - FluentDarkModeKit
     - HandyJSON
     - IQKeyboardManagerSwift
     - Kingfisher
@@ -110,6 +113,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
   ESPullToRefresh: 0d68daa602b343c81753a1b95e09fd0bfcddfd40
+  FluentDarkModeKit: 78109bdbfb87c515543c0a52319da017c3843aae
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
   Kingfisher: 8050bc6f7f68cbf3908bd04df7ccbac188f6d6d6
@@ -124,6 +128,6 @@ SPEC CHECKSUMS:
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: a821af44e8977eb1b633b930a4bcbe110f0ab9f4
+PODFILE CHECKSUM: 7adb4185cb5a15501c6f892445e10f7ade48220b
 
 COCOAPODS: 1.9.3

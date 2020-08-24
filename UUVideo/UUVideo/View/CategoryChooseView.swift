@@ -37,24 +37,29 @@ class CategoryChooseView: UIView {
             //创建界面
             switch config?.type {
             case .equalWidth:
-                let backView = UIView.init(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
-                print("屏幕宽是\(screenW),要求的宽是\(screenW-200),实际的宽是\(frame.size.width)")
+                let backView = UIView.init()
+                backView.tag = 4300
                 self.addSubview(backView)
+                backView.snp.makeConstraints { (make) in
+                    make.left.right.top.bottom.equalToSuperview()
+                }
+                backView.layoutIfNeeded()
                 backView.backgroundColor = config?.backColor
                 for (index,item) in config!.listArr.enumerated() {
                     let button = UIButton.init(type: .custom)
                     backView.addSubview(button)
-                    let btnWidth:CGFloat = frame.size.width/CGFloat((config?.listArr.count)!)
+                    let btnWidth:CGFloat = backView.frame.size.width/CGFloat((config?.listArr.count)!)
                     button.frame = CGRect(x: btnWidth*CGFloat(index), y: 0, width: btnWidth, height: frame.size.height-1)
                     button.setTitle(item, for: .normal)
                     button.tag = 4400+index
                     button.addTarget(self, action: #selector(buttonClick(button:)), for: .touchUpInside)
                     if index == 0 {
                         button.setTitleColor(config?.choosedColor, for: .normal)
+                        button.backgroundColor = config?.highLightColor
                     }else{
                         button.setTitleColor(config?.titleColor, for: .normal)
+                        button.backgroundColor = config?.backColor
                     }
-                    button.backgroundColor = config?.highLightColor
                     button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
                 }
                 break
@@ -72,13 +77,15 @@ class CategoryChooseView: UIView {
                     widthArr[index] = scrollWidth
                     if index == 0 {
                         button.setTitleColor(config?.choosedColor, for: .normal)
+                        button.backgroundColor = config?.highLightColor
                     }else{
                         button.setTitleColor(config?.titleColor, for: .normal)
+                        button.backgroundColor = config?.backColor
                     }
                     button.tag = 4400+index
                     scrollWidth = scrollWidth+size.width+40
                     backScrollView.contentSize = CGSize(width: scrollWidth, height: frame.size.height)
-                    button.backgroundColor = config?.highLightColor
+                    
                     button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
                 }
                 break
@@ -87,22 +94,19 @@ class CategoryChooseView: UIView {
             }
         }
     }
+    func refreshView(){
+        let view:UIView = self.viewWithTag(4300)!
+        view.snp.makeConstraints { (make) in
+            make.left.top.bottom.right.equalToSuperview()
+        }
+        for (index,_) in config!.listArr.enumerated() {
+            let button:UIButton = self.viewWithTag(4400+index) as! UIButton
+            let btnWidth:CGFloat = view.frame.size.width/CGFloat((config?.listArr.count)!)
+            button.frame = CGRect(x: btnWidth*CGFloat(index), y: 0, width: btnWidth, height: frame.size.height-1)
+        }
+    }
     var index:Int?{
         didSet{
-            // 重新定位
-//            for (int i= 0; i<self.titleArr.count; i++) {
-//                CategoryButton *btn = [self viewWithTag:4400+i];
-//                [btn setTitleColor:self.btnTitleColor forState:UIControlStateNormal];
-//                btn.backgroundColor = self.btnBackgroundColor;
-//                btn.bottomLineView.hidden = YES;
-//            }
-//            CategoryButton *button = [self viewWithTag:4400+index];
-//            [button setTitleColor:self.clickColor forState:UIControlStateNormal];
-//            button.backgroundColor = self.hightLightColor;
-//            button.bottomLineView.hidden = NO;
-//            if(self.chooseBlock){
-//                self.chooseBlock(index);
-//            }
             for (index,_) in config!.listArr.enumerated() {
                 let btn:UIButton = self.viewWithTag(4400+index)! as! UIButton
                 btn.setTitleColor(config?.titleColor, for: .normal)
@@ -136,19 +140,6 @@ class CategoryChooseView: UIView {
     var chooseBlock:((_ index:Int)->())?
     
     @objc func buttonClick(button:UIButton){
-//        for (int i= 0; i<self.titleArr.count; i++) {
-//            CategoryButton *btn = [self viewWithTag:4400+i];
-//            [btn setTitleColor:self.btnTitleColor forState:UIControlStateNormal];
-//            btn.backgroundColor = self.btnBackgroundColor;
-//            btn.bottomLineView.hidden = YES;
-//        }
-//        [button setTitleColor:self.clickColor forState:UIControlStateNormal];
-//        button.backgroundColor = self.hightLightColor;
-//        button.bottomLineView.hidden = NO;
-//        if(self.chooseBlock){
-//            self.chooseBlock((int)button.tag-4400);
-//        }
-//        [self moveToIndex:button.tag-4400];
         self.index = button.tag-4400
     }
         

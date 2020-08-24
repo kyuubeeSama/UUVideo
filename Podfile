@@ -28,7 +28,7 @@ target 'UUVideo' do
   # 侧滑菜单
   pod 'SideMenu'
   # 暗黑模式
-#  pod 'FluentDarkModeKit'
+  pod 'FluentDarkModeKit'
   
 end
 

@@ -28,11 +28,13 @@ class BangumiViewController: BaseViewController {
     
     // 头部时间，下面是tableview视频列表
     lazy var chooseView: CategoryChooseView = {
-        let chooseView = CategoryChooseView.init(frame: CGRect(x: 0, y: top_height, width: screenW, height: 40))
+        let chooseView = CategoryChooseView.init()
         self.view.addSubview(chooseView)
         let config = CategoryChooseConfig.init()
         config.listArr = ["周一","周二","周三","周四","周五","周六","周日"]
-        config.backColor = .white
+        config.backColor = UIColor.init(.dm, light: .white, dark: .black)
+        config.titleColor = UIColor.init(.dm, light: .black, dark: .white)
+        config.highLightColor = UIColor.init(.dm, light: .white, dark: .black)
         chooseView.config = config
         chooseView.chooseBlock = { index in
             print(index)
