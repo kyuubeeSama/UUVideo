@@ -7,66 +7,53 @@
 //
 
 import Foundation
+import Ji
 class DataManager: NSObject {
     // 获取新番数据
     func getBangumiData(success:@escaping(_ listArr:[[VideoModel]])->(),failure:@escaping(_ error:Error)->()) {
-        QYRequestData.shared.getHtmlContent(urlStr: "https://www.halitv.com/", params: nil) { (result) in
-//            print(result)
-            var array:[[VideoModel]] = []
-            //获取七天的内容
-//            layui-tab-item([\s\S]+?)<\/ul>
-//            按照顺序表示周一到周日
-            let gumiContentArr:[String] = Tool.getRegularData(regularExpress: "layui-tab-item([\\s\\S]+?)<\\/ul>", content: result)
-            for item in gumiContentArr{
-                var listArr:[VideoModel] = []
-                //            <li([\s\S]+?)<\/li>
-                //            获取其中一条
-                let gumiArr:[String] = Tool.getRegularData(regularExpress: "<li([\\s\\S]+?)<\\/li>", content: item)
-                for gumiStr in gumiArr {
-                    //            src="([\s\S]+?)"
-                    //            封面
-                    var picStr:String = Tool.getRegularData(regularExpress: "src=\"([\\s\\S]+?)\"", content: gumiStr)[0]
-                    picStr = picStr.replacingOccurrences(of: "src=\"", with: "")
-                    picStr = picStr.replacingOccurrences(of: "\"", with: "")
-                    if !picStr.contains("https") {
-                        // 不包含https
-                        picStr = "https:"+picStr
-                    }
-                    //            alt="([\s\S]+?)"
-                    //            标题
-                    var titleStr:String = Tool.getRegularData(regularExpress: "alt=\"([\\s\\S]+?)\"", content: gumiStr)[0]
-                    titleStr = titleStr.replacingOccurrences(of: "alt=\"", with: "")
-                    titleStr = titleStr.replacingOccurrences(of: "\"", with: "")
-                    //            更新至([\s\S]+?)集
-                    //            最新集
-                    let numStr:String
-                    let numArr:[String] = Tool.getRegularData(regularExpress: "更新至([\\s\\S]+?)集", content: gumiStr)
-                    if numArr.count>0 {
-                        numStr = numArr[0]
-                    }else{
-                        numStr = Tool.getRegularData(regularExpress: "第([\\s\\S]+?)集", content: gumiStr)[0]
-                    }
-                    //            href="([\s\S]+?)"
-                    //            视频详情页
-                    var urlStr:String = Tool.getRegularData(regularExpress: "href=\"([\\s\\S]+?)\"", content: gumiStr)[0]
-                    urlStr = urlStr.replacingOccurrences(of: "href=\"", with: "")
-                    urlStr = urlStr.replacingOccurrences(of: "\"", with: "")
-                    print("封面是\(picStr),标题是\(titleStr),最新集\(numStr),详情\(urlStr)")
-                    let model = VideoModel.init()
-                    model.name = titleStr
-                    model.detailUrl = urlStr
-                    model.picUrl = picStr
-                    model.type = 4
-                    model.num = numStr
-                    listArr.append(model)
-                }
-                array.append(listArr)
+        let jiDoc = Ji(htmlURL: URL.init(string: "https://www.halitv.com/")!)
+        //*[@id="bg-time"]/div[2]/ul[1]/li[x]/a/h4  获取标题
+        //*[@id="bg-time"]/div[2]/ul[1]/li[x]/a/div/img  获取图片
+        //*[@id="bg-time"]/div[2]/ul[1]/li[x]/a  详情地址
+        //*[@id="bg-time"]/div[2]/ul[1]/li[1]/p/a  更新信息
+        var array:[[VideoModel]] = []
+        for j in 1...7{
+            var listArr:[VideoModel] = []
+            // 获取标题
+            let titlePath = "//*[@id=\"bg-time\"]/div[2]/ul[\(j)]/li/a/h4"
+            let titleNodeArr = jiDoc?.xPath(titlePath)
+            // 获取封面
+            let imgPath = "//*[@id=\"bg-time\"]/div[2]/ul[\(j)]/li/a/div/img/@src"
+            let imgNodeArr = jiDoc?.xPath(imgPath)
+            // 获取详情地址
+            let urlPath = "//*[@id=\"bg-time\"]/div[2]/ul[\(j)]/li/a/@href"
+            let urlNodeArr = jiDoc?.xPath(urlPath)
+            // 获取更新信息
+            let updateInfoPath = "//*[@id=\"bg-time\"]/div[2]/ul[\(j)]/li/p/a"
+            let updateNodeArr = jiDoc?.xPath(updateInfoPath)
+            for (index,_) in titleNodeArr!.enumerated() {
+                let titleNode = titleNodeArr![index]
+                let urlNode = urlNodeArr![index]
+                let updateNode = updateNodeArr![index]
+                let imgNode = imgNodeArr![index]
+                let model = VideoModel.init()
+                model.name = titleNode.content
+                model.detailUrl = urlNode.content
+                model.picUrl = imgNode.content
+                model.type = 4
+                model.num = updateNode.content
+                listArr.append(model)
+                print("周\(j)")
+                print("更新信息是\(updateNode.content as Any)")
+                print("详情地址是\(urlNode.content as Any)")
+                print("图片地址是\(imgNode.content as Any)")
+                print("标题是\(titleNode.content as Any)")
             }
-            success(array)
-        } failure: { (error) in
-            print(error)
+            array.append(listArr)
         }
+        success(array)
     }
+    
     // 获取视频播放界面相关数据
     func getVideoDetailData(urlStr:String,success:@escaping(_ dataDic:[String:Any])->(),failure:@escaping(_ error:Error)->()){
         QYRequestData.shared.getHtmlContent(urlStr: urlStr, params: nil) { (result) in

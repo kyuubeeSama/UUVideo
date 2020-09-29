@@ -30,5 +30,7 @@ target 'UUVideo' do
   # 暗黑模式
   pod 'FluentDarkModeKit'
   
+  pod "Ji"
+  
 end
 
