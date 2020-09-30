@@ -71,7 +71,11 @@ class PadIndexViewController: BaseViewController {
         chooseView.chooseBlock = { index in
             let listArr:[[VideoModel]] = self.allVideoArr[self.tableIndex] as! [[VideoModel]]
             let array = listArr[index]
-            self.mainCollect.listArr = [["title":"","list":array]]
+            let listModel = ListModel.init()
+            listModel.title = ""
+            listModel.list = array
+            listModel.more = false
+            self.mainCollect.listArr = [listModel]
         }
         chooseView.isHidden = false
         return chooseView
@@ -86,9 +90,8 @@ class PadIndexViewController: BaseViewController {
             make.left.equalToSuperview().offset(200)
         }
         mainCollection.cellItemSelected = { indexPath in
-            let dic = mainCollection.listArr![indexPath.section]
-            let listArr:[VideoModel] = dic["list"] as! [VideoModel]
-            let model = listArr[indexPath.row]
+            let listModel = mainCollection.listArr![indexPath.section];
+            let model = listModel.list![indexPath.row]
             if(model.type == 4){
                 // 番剧
                 let VC = PadNetVideoPlayerViewController.init()
@@ -97,7 +100,7 @@ class PadIndexViewController: BaseViewController {
                 self.navigationController?.pushViewController(VC, animated: true)
             }else{
                 let VC = LocalVideoPlayerViewController.init()
-                VC.model = listArr[indexPath.row]
+                VC.model = model
                 VC.modalPresentationStyle = .fullScreen
                 self.present(VC, animated: true, completion: nil)
             }
@@ -119,7 +122,11 @@ class PadIndexViewController: BaseViewController {
             // 本地视频
             let ftool = FileTool.init()
             let localArr:[VideoModel] = ftool.getVideoFileList()
-            var videoArr:[[String:Any]] = [["title":"本地视频","list":localArr]]
+            let listModel1 = ListModel.init()
+            listModel1.title = "本地视频"
+            listModel1.more = false
+            listModel1.list = localArr
+            var videoArr:[ListModel] = [listModel1]
             self.allVideoArr [0] = videoArr
             self.mainCollect.listArr = videoArr
     //        for item:VideoModel in localArr {
@@ -128,14 +135,18 @@ class PadIndexViewController: BaseViewController {
             // 相册视频
             ftool.getPhoneVideo()
             ftool.getPhoneVideoComplete = { result in
-                videoArr.append(["title":"相册视频","list":result])
+                let listModel2 = ListModel.init()
+                listModel2.title = "相册视频"
+                listModel2.list = result
+                listModel2.more = false
+                videoArr.append(listModel2)
                 self.allVideoArr[0] = videoArr
                 DispatchQueue.main.async {
                     self.mainCollect.listArr = videoArr
                 }
             }
         }else{
-            let videoArr:[[String:Any]] = self.allVideoArr[0] as! [[String:Any]]
+            let videoArr:[ListModel] = self.allVideoArr[0] as! [ListModel]
             self.mainCollect.listArr = videoArr
         }
     }

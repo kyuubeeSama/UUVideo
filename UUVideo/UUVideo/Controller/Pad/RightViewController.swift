@@ -16,10 +16,13 @@ class RightViewController: BaseViewController {
 
         // Do any additional setup after loading the view.
         let dayArr = ["周一","周二","周三","周四","周五","周六","周日"]
-        var collectionArr:[[String:Any]] = []
+        var collectionArr:[ListModel] = []
         for (index,array) in self.dataArr!.enumerated() {
-            let dic = ["title":dayArr[index],"list":array] as [String : Any]
-            collectionArr.append(dic)
+            let listModel = ListModel.init()
+            listModel.title = dayArr[index]
+            listModel.list = array
+            listModel.more = false
+            collectionArr.append(listModel)
         }
         collectionView.listArr = collectionArr
     }

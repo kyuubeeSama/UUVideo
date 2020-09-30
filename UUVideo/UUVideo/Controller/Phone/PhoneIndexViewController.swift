@@ -36,10 +36,11 @@ class PhoneIndexViewController: BaseViewController {
             if(string == "新番时间表"){
                 let VC = BangumiViewController.init()
                 self.navigationController?.pushViewController(VC, animated: true)
-            }else{
+            }else if(string == "本地视频"){
                 let VC = PhoneVideoListViewController.init()
-                VC.website = indexPath.row+1
                 self.navigationController?.pushViewController(VC, animated: true)
+            }else if(string == "哈哩TV"){
+                
             }
         }
         return table

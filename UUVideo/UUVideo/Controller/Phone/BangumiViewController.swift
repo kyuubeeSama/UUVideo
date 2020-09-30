@@ -30,6 +30,12 @@ class BangumiViewController: BaseViewController {
     lazy var chooseView: CategoryChooseView = {
         let chooseView = CategoryChooseView.init()
         self.view.addSubview(chooseView)
+        chooseView.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview()
+            make.height.equalTo(50)
+            make.top.equalToSuperview().offset(top_height);
+        }
+        chooseView.layoutIfNeeded()
         let config = CategoryChooseConfig.init()
         config.listArr = ["周一","周二","周三","周四","周五","周六","周日"]
         config.backColor = UIColor.init(.dm, light: .white, dark: .black)
@@ -39,7 +45,11 @@ class BangumiViewController: BaseViewController {
         chooseView.chooseBlock = { index in
             print(index)
             let array = self.listArr[index]
-            self.mainCollection.listArr = [["title":"","list":array]]
+            let listModel = ListModel.init()
+            listModel.title = ""
+            listModel.list = array
+            listModel.more = false
+            self.mainCollection.listArr = [listModel]
         }
         return chooseView
     }()
@@ -53,10 +63,9 @@ class BangumiViewController: BaseViewController {
             make.top.equalTo(self.chooseView.snp.bottom)
         }
         collection.cellItemSelected = { indexPath in
-            let dic = collection.listArr![indexPath.section]
-            let listArr:[VideoModel] = dic["list"] as! [VideoModel]
+            let listModel = collection.listArr![indexPath.section]
             let VC = NetVideoPlayerViewController.init()
-            VC.model = listArr[indexPath.row]
+            VC.model = listModel.list![indexPath.row]
             self.navigationController?.pushViewController(VC, animated: true)
         }
         return collection

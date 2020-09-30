@@ -10,13 +10,14 @@ import UIKit
 import Kingfisher
 class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
-    var listArr:[[String:Any]]?{
+    var listArr:[ListModel]?{
         didSet{
             self.reloadData()
         }
     }
     
     var cellItemSelected:((_ indexPath:IndexPath)->())?
+    var headerRightClicked:((_ indexPath:IndexPath)->())?
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
@@ -25,7 +26,7 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
         self.backgroundColor = .systemBackground
         self.register(UINib.init(nibName: "VideoListCollectionViewCell", bundle:Bundle.main), forCellWithReuseIdentifier: "cell")
         self.register(UINib.init(nibName: "VideoTableCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "tableCell")
-        self.register(UINib.init(nibName: "VideoListHeaderCollectionReusableView", bundle: Bundle.main), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
+        self.register(UINib.init(nibName: "HeaderTitleCollectionReusableView", bundle: Bundle.main), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
     }
     
     required init?(coder: NSCoder) {
@@ -37,15 +38,13 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let dictionary = self.listArr![section]
-        let list:[VideoModel] = dictionary["list"] as! [VideoModel]
-        return list.count
+        let listModel = self.listArr![section]
+        return listModel.list!.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let dic = self.listArr![indexPath.section]
-        let listArr:[VideoModel] = dic["list"] as! [VideoModel]
-        let model:VideoModel = listArr[indexPath.row]
+        let listModel = self.listArr![indexPath.section]
+        let model = listModel.list![indexPath.row]
         if model.type == 4{
             // 番剧类似tableview的样式
             let cell:VideoTableCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "tableCell", for: indexPath) as! VideoTableCollectionViewCell
@@ -64,9 +63,8 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let dic = self.listArr![indexPath.section]
-        let listArr:[VideoModel] = dic["list"] as! [VideoModel]
-        let model:VideoModel = listArr[indexPath.row]
+        let listModel = self.listArr![indexPath.section]
+        let model = listModel.list![indexPath.row]
         if Tool.isPad() {
 //            340,230
             if model.type == 4 {
@@ -87,22 +85,30 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header:VideoListHeaderCollectionReusableView
+        let header:HeaderTitleCollectionReusableView
         if kind == UICollectionView.elementKindSectionHeader {
-            header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header", for: indexPath) as! VideoListHeaderCollectionReusableView
-            let dic = self.listArr![indexPath.section]
-            let titleStr:String = dic["title"] as! String
-            header.titleLab.text = titleStr
+            header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header", for: indexPath) as! HeaderTitleCollectionReusableView
+            let listModel = self.listArr![indexPath.section]
+            header.titleLab.text = listModel.title
+            if listModel.more! {
+                header.rightBtn.isHidden = false
+            }else{
+                header.rightBtn.isHidden = true
+            }
+            header.rightBtnBlock = {
+                if self.headerRightClicked != nil {
+                    self.headerRightClicked!(indexPath)
+                }
+            }
         }else{
-            header = VideoListHeaderCollectionReusableView.init()
+            header = HeaderTitleCollectionReusableView.init()
         }
         return header
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let dic = self.listArr![section]
-        let title:String = dic["title"] as! String
-        if (String.myStringIsNULL(string: title)){
+        let listModel = self.listArr![section]
+        if (String.myStringIsNULL(string: listModel.title!)){
             return CGSize(width: screenW, height: 0)
         }else {
             return CGSize(width: screenW, height: 60)

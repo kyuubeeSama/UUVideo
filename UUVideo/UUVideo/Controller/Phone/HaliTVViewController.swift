@@ -1,47 +1,22 @@
 //
-//  PhoneVideoListViewController.swift
+//  HaliTVViewController.swift
 //  UUVideo
 //
-//  Created by Galaxy on 2020/8/14.
+//  Created by Galaxy on 2020/9/30.
 //  Copyright © 2020 qykj. All rights reserved.
 //
 
 import UIKit
 
-class PhoneVideoListViewController: BaseViewController {
+class HaliTVViewController: BaseViewController {
+
+    var listArr:[ListModel]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-            self.getVideo()
-    }
-    //获取所有的本地视频
-    func getVideo(){
-        // 视频分为本地视频和相册视频
-        // 本地视频
-        let ftool = FileTool.init()
-        let localArr:[VideoModel] = ftool.getVideoFileList()
-        let listModel1 = ListModel.init()
-        listModel1.title = "本地视频"
-        listModel1.more = false
-        listModel1.list = localArr
-        var videoArr:[ListModel] = [listModel1]
-        self.mainCollect.listArr = videoArr
-//        for item:VideoModel in localArr {
-//            print("视频名字是\(item.name),时长是\(item.time)")
-//        }
-        // 相册视频
-        ftool.getPhoneVideo()
-        ftool.getPhoneVideoComplete = { result in
-            let listModel2 = ListModel.init()
-            listModel2.title = "相册视频"
-            listModel2.more = false
-            listModel2.list = result
-            videoArr.append(listModel2)
-            DispatchQueue.main.async {
-                self.mainCollect.listArr = videoArr
-            }
-        }
+        // 获取哈哩tv数据
     }
     
     lazy var mainCollect: VideoListCollectionView = {
@@ -58,9 +33,13 @@ class PhoneVideoListViewController: BaseViewController {
             VC.modalPresentationStyle = .fullScreen
             self.present(VC, animated: true, completion: nil)
         }
+        mainCollection.headerRightClicked = { indexPath in
+             // 根据选中的行跳转对应页面
+            
+        }
         return mainCollection
     }()
-    
+
     /*
     // MARK: - Navigation
 
