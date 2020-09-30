@@ -57,7 +57,11 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
             // 本地和相册,线上模式
             let cell:VideoListCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! VideoListCollectionViewCell
             cell.titleLab.text = model.name
-            cell.picImage.image = model.pic
+            if model.type == 3 {
+                cell.picImage.kf.setImage(with: URL.init(string: model.picUrl!))
+            }else{
+                cell.picImage.image = model.pic
+            }
             return cell
         }
     }

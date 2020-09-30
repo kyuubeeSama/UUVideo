@@ -40,7 +40,8 @@ class PhoneIndexViewController: BaseViewController {
                 let VC = PhoneVideoListViewController.init()
                 self.navigationController?.pushViewController(VC, animated: true)
             }else if(string == "哈哩TV"){
-                
+                let VC = HaliTVViewController.init()
+                self.navigationController?.pushViewController(VC, animated: true)
             }
         }
         return table

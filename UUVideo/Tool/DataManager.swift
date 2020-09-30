@@ -82,4 +82,47 @@ class DataManager: NSObject {
             failure(error)
         }
     }
+    // 获取哈哩tv数据
+    // type 页面类型 1.首页
+    func getHaliTVData(urlStr:String,type:NSInteger,success:@escaping(_ listData:[ListModel])->()){
+        // 获取首页数据
+        let jiDoc = Ji(htmlURL: URL.init(string: "https://www.halitv.com/")!)
+        // 详情地址
+//        /html/body/div[3]/div[2]/div/ul/li[1]/a
+        //封面
+//        /html/body/div[3]/div[2]/div/ul/li[1]/a/img
+        // 更新信息
+//        /html/body/div[3]/div[2]/div/ul/li[1]/a/span[3]
+        // 标题
+//        /html/body/div[3]/div[2]/div/ul/li[1]/div/h5/a
+        let divArr = [2,5,7,9,11]
+        let titleArr = ["热播推荐","tv动画","剧场版","电影","剧集"]
+        var resultArr:[ListModel] = []
+        for (index,value) in divArr.enumerated() {
+            let listModel = ListModel.init()
+            let titleNodeArr = jiDoc?.xPath("/html/body/div[3]/div[\(value)]/div/ul/li/div/h5/a")
+            let urlNodeArr = jiDoc?.xPath("/html/body/div[3]/div[\(value)]/div/ul/li/a/@href")
+            let imgNodeArr = jiDoc?.xPath("/html/body/div[3]/div[\(value)]/div/ul/li/a/img/@data-original")
+            let updateNodeArr = jiDoc?.xPath("/html/body/div[3]/div[\(value)]/div/ul/li/a/span[3]")
+            listModel.title = titleArr[index]
+            if index>0 {
+                listModel.more = true
+            }else{
+                listModel.more = false
+            }
+            print("当前分类是\(titleArr[index])")
+            listModel.list = []
+            for (i,_) in titleNodeArr!.enumerated() {
+                let videoModel = VideoModel.init()
+                videoModel.name = titleNodeArr![i].content
+                videoModel.detailUrl = urlNodeArr![i].content
+                videoModel.picUrl = imgNodeArr![i].content
+                videoModel.num = updateNodeArr![i].content
+                videoModel.type = 3
+                listModel.list?.append(videoModel)
+            }
+            resultArr.append(listModel)
+        }
+        success(resultArr)
+    }
 }

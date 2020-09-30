@@ -17,6 +17,13 @@ class HaliTVViewController: BaseViewController {
 
         // Do any additional setup after loading the view.
         // 获取哈哩tv数据
+        self.getVideoData()
+    }
+    
+    func getVideoData(){
+        DataManager.init().getHaliTVData(urlStr: "https://www.halitv.com/", type: 1) { (resultArr) in
+            self.mainCollect.listArr = resultArr
+        }
     }
     
     lazy var mainCollect: VideoListCollectionView = {
@@ -28,10 +35,9 @@ class HaliTVViewController: BaseViewController {
         }
         mainCollection.cellItemSelected = { indexPath in
             let listModel = mainCollection.listArr![indexPath.section]
-            let VC = LocalVideoPlayerViewController.init()
+            let VC = NetVideoPlayerViewController.init()
             VC.model = listModel.list![indexPath.row]
-            VC.modalPresentationStyle = .fullScreen
-            self.present(VC, animated: true, completion: nil)
+            self.navigationController?.pushViewController(VC, animated: true)
         }
         mainCollection.headerRightClicked = { indexPath in
              // 根据选中的行跳转对应页面
