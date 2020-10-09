@@ -79,6 +79,10 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
         }else{
             if model.type == 4 {
                 return CGSize(width: screenW, height: 100)
+            }else if model.type == 3{
+                let width:CGFloat = screenW/2-15
+                let height = (width-20)*379/270+50
+                return CGSize(width: width, height: height)
             }else{
                 // 一行2个
                 let width:CGFloat = screenW/2-15
