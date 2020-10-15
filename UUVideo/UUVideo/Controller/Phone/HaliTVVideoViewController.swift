@@ -14,6 +14,7 @@ class HaliTVVideoViewController: BaseViewController {
     var pageNum:Int = 1
     var videoType:String = ""
     var area:String = "__"
+    var listArr:[ListModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +28,7 @@ class HaliTVVideoViewController: BaseViewController {
 //        https://www.halitv.com/list/tvban______3.html
         self.setNav()
         self.getListData()
+        self.getMoreData()
     }
     
     func setNav(){
@@ -55,8 +57,21 @@ class HaliTVVideoViewController: BaseViewController {
         urlStr += "\(videoType)\(area)____\(pageNum).html"
         print(urlStr)
         DataManager.init().getHaliTVData(urlStr: urlStr,
-                                         type: 2) { (resultArr) in
-            
+                                         type: 2) { (resultArr, page) in
+            if(resultArr.count>0){
+                self.pageNum += 1
+                self.mainCollect.es.stopLoadingMore()
+            }else{
+                self.mainCollect.es.noticeNoMoreData()
+            }
+            self.listArr.append(contentsOf: resultArr)
+            self.mainCollect.listArr = self.listArr
+        }
+    }
+    
+    func getMoreData(){
+        self.mainCollect.es.addInfiniteScrolling {
+            self.getListData()
         }
     }
     

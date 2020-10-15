@@ -23,7 +23,7 @@ class HaliTVViewController: BaseViewController {
     
     func getVideoData(){
         DataManager.init().getHaliTVData(urlStr: "https://www.halitv.com/",
-                                         type: 1) { (resultArr) in
+                                         type: 1) { (resultArr, page) in
             self.mainCollect.listArr = resultArr
         }
     }

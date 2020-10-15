@@ -84,10 +84,10 @@ class DataManager: NSObject {
     }
     // 获取哈哩tv数据
     // type 页面类型 1.首页  2.具体分类页面
-    func getHaliTVData(urlStr:String,type:Int,success:@escaping(_ listData:[ListModel])->()){
+    func getHaliTVData(urlStr:String,type:Int,success:@escaping(_ listData:[ListModel],_ page:Int)->()){
+        let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if type == 1 {
             // 获取首页数据
-            let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
             // 详情地址
     //        /html/body/div[3]/div[2]/div/ul/li[1]/a
             //封面
@@ -123,8 +123,50 @@ class DataManager: NSObject {
                 }
                 resultArr.append(listModel)
             }
-            success(resultArr)
+            success(resultArr,1)
         }else{
+            // 获取是视频列表
+            // 标题
+            //*[@id="content"]/li[1]/div/h5/a
+            // 详情地址
+            //*[@id="content"]/li[1]/a/@href
+            // 封面
+            //*[@id="content"]/li[1]/a/img/@data-original
+            // 更新信息
+            //*[@id="content"]/li[1]/a/span[3]
+            // 尾页
+            //*[@id="long-page"]/ul/li[12]/a/@data  p-20
+            let listModel = ListModel.init()
+            let titleNodeArr = jiDoc?.xPath("//*[@id=\"content\"]/li/div/h5/a")
+            let urlNodeArr = jiDoc?.xPath("//*[@id=\"content\"]/li/a/@href")
+            let imgNodeArr = jiDoc?.xPath("//*[@id=\"content\"]/li/a/img/@data-original")
+            let updateNodeArr = jiDoc?.xPath("//*[@id=\"content\"]/li/a/span[3]")
+            listModel.title = ""
+            listModel.more = false
+            listModel.list = []
+            for (i,_) in titleNodeArr!.enumerated() {
+                let videoModel = VideoModel.init()
+                videoModel.name = titleNodeArr![i].content
+                videoModel.detailUrl = urlNodeArr![i].content
+                videoModel.picUrl = imgNodeArr![i].content
+                videoModel.num = updateNodeArr![i].content
+                videoModel.type = 3
+                listModel.list?.append(videoModel)
+//                print("封面是\(videoModel.picUrl),标提是\(videoModel.name) 更新信息是\(videoModel.num), 详情地址是\(videoModel.detailUrl)")
+            }
+            // 尾页
+            //FIXME:此处尾页获取有问题
+            let pageNodeArr = jiDoc?.xPath("//*[@id=\"long-page\"]/ul/li[last()]/a/@data")
+            var pageNumStr = pageNodeArr?.first?.content
+            pageNumStr = pageNumStr?.replacingOccurrences(of: "p-", with: "")
+//            print("尾页页码是\(pageNum)")
+            let pageNumInt = Int(pageNumStr!)
+            success([listModel],pageNumInt!)
         }
+    }
+    
+    // 获取哈哩tv分类信息
+    func getHaliTVCategoryData(urlStr:String,success:@escaping(_ categoryData:[CategoryModel])->()){
+        
     }
 }
