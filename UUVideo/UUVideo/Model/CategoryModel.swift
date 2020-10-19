@@ -8,9 +8,14 @@
 
 import UIKit
 
+class CategoryListModel:NSObject {
+    var name:String?
+    var list:[CategoryModel]?
+}
+
 class CategoryModel: NSObject {
     var name:String?
     var value:String?
 //    默认未选中
-    var ischoose:Bool?
+    var ischoose:Bool? = false
 }

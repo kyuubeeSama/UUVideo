@@ -157,16 +157,58 @@ class DataManager: NSObject {
             // 尾页
             //FIXME:此处尾页获取有问题
             let pageNodeArr = jiDoc?.xPath("//*[@id=\"long-page\"]/ul/li[last()]/a/@data")
-            var pageNumStr = pageNodeArr?.first?.content
-            pageNumStr = pageNumStr?.replacingOccurrences(of: "p-", with: "")
-//            print("尾页页码是\(pageNum)")
-            let pageNumInt = Int(pageNumStr!)
-            success([listModel],pageNumInt!)
+            var pageNumInt = 1
+            if pageNodeArr!.count>0 {
+                var pageNumStr = pageNodeArr?.first?.content
+                pageNumStr = pageNumStr?.replacingOccurrences(of: "p-", with: "")
+    //            print("尾页页码是\(pageNum)")
+                pageNumInt = Int(pageNumStr!)!
+            }
+            success([listModel],pageNumInt)
         }
     }
     
     // 获取哈哩tv分类信息
-    func getHaliTVCategoryData(urlStr:String,success:@escaping(_ categoryData:[CategoryModel])->()){
-        
+    func getHaliTVCategoryData(urlStr:String,success:@escaping(_ categoryData:[CategoryListModel])->()){
+        // 最后li需要去除第一行 最后ul只获取1，2，3
+//        /html/body/div[2]/div/div[1]/div[2]/ul[1]/li/a
+        let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
+        // 获取标题
+        // 获取value
+        var listArr:[CategoryListModel]=[]
+        let titleArr:[String] = ["按分类","按类型","按地区"]
+        let valueArr:[String] = ["id-","mcid-","area-"]
+        for item in 1...3 {
+            let titleNodeArr = jiDoc?.xPath("/html/body/div[2]/div/div[1]/div[2]/ul[\(item)]/li/a/@title")
+            let valueNodeArr = jiDoc?.xPath("/html/body/div[2]/div/div[1]/div[2]/ul[\(item)]/li/a/@data")
+            let chooseNodeArr = jiDoc?.xPath("/html/body/div[2]/div/div[1]/div[2]/ul[\(item)]/li/a[@class='active']")
+            let listModel = CategoryListModel.init()
+            listModel.name = titleArr[item-1]
+            listModel.list = []
+            for (index,_) in titleNodeArr!.enumerated() {
+                let categoryModel = CategoryModel.init()
+                let name = titleNodeArr![index].content
+                categoryModel.name = name
+                for chooseNode in chooseNodeArr! {
+                    if name == chooseNode.content {
+                        categoryModel.ischoose = true
+                    }
+                }
+                if item == 2 {
+                    // 按类型，需要使用id拼接
+                    var valueStr = valueNodeArr![index].content
+                    valueStr = valueStr?.replacingOccurrences(of: valueArr[item-1], with: "")
+                    categoryModel.value = valueStr
+                }else{
+                    // 按分类和按地区，使用拼音拼接
+                    var valueStr = titleNodeArr![index].content
+                    valueStr = valueStr!.transformToPinYin(yinbiao: false)
+                    categoryModel.value = valueStr
+                }
+                listModel.list?.append(categoryModel)
+            }
+            listArr.append(listModel)
+        }
+        success(listArr)
     }
 }

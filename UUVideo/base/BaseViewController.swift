@@ -21,6 +21,8 @@ class BaseViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(FileSaveFieldFileNotification(notification:)), name: NSNotification.Name(rawValue: "FileSaveFieldFileNotification"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(FileExistsNotification(notification:)), name: NSNotification.Name(rawValue: "FileExistsNotification"), object: nil)
         
+        self.view.backgroundColor = .white
+        
     }
     @objc func FileSaveSuccessNotification(notification:Notification){
         let info = notification.userInfo

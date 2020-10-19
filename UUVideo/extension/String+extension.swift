@@ -31,6 +31,20 @@ extension String {
         return text.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: att, context: nil).size
     }
     
+    // 获取拼音
+    func transformToPinYin(yinbiao:Bool)->String{
+        let mutableString = NSMutableString(string: self) as CFMutableString
+            //把汉字转为拼音
+            CFStringTransform(mutableString, nil, kCFStringTransformToLatin, false)
+        if yinbiao == false {
+            //去掉拼音的音标
+            CFStringTransform(mutableString, nil, kCFStringTransformStripDiacritics, false)
+        }
+        let string = String(mutableString)
+        //去掉空格
+        return string.replacingOccurrences(of: " ", with: "")
+    }
+    
     private func isValidateByRegex(regex:String)->Bool{
         let pre:NSPredicate = NSPredicate.init(format: " SELF MATCHES %@", regex)
         return pre.evaluate(with: self)
@@ -44,4 +58,3 @@ extension String {
         return (ret||ret1)
     }
 }
-
