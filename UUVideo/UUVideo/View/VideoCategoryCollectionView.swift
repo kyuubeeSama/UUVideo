@@ -47,8 +47,8 @@ class VideoCategoryCollectionView: UICollectionView,UICollectionViewDelegate,UIC
             cell.layer.borderColor = UIColor.red.cgColor
             cell.titleLab.textColor = UIColor.red
         }else{
-            cell.layer.borderColor = UIColor.colorWithHexString(hexString: "333333").cgColor
-            cell.titleLab.textColor = UIColor.colorWithHexString(hexString: "333333")
+            cell.layer.borderColor = UIColor.init(.dm, light: UIColor.colorWithHexString(hexString: "333333"), dark: .white).cgColor
+            cell.titleLab.textColor = UIColor.init(.dm, light: UIColor.colorWithHexString(hexString: "333333"), dark: .white)
         }
         return cell
     }

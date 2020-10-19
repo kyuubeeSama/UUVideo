@@ -19,7 +19,7 @@ target 'UUVideo' do
   # 下拉刷新
   pod 'ESPullToRefresh'
   #  空页面判断
-#  pod 'EmptyDataSet-Swift'
+  pod 'EmptyDataSet-Swift'
   #  json解析
   pod 'SwiftyJSON'
   pod 'HandyJSON'

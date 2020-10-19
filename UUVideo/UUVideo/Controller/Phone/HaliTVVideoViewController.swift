@@ -54,7 +54,7 @@ class HaliTVVideoViewController: BaseViewController {
         let rightItem = UIBarButtonItem.init(title: "筛选", style: .plain, target: self, action: #selector(rightBtnClick))
         self.navigationItem.rightBarButtonItem = rightItem
     }
-
+    // 右键筛选
     @objc func rightBtnClick(){
 //        HaliTVCategoryView
         if self.categoryListArr.count>0 {
@@ -78,7 +78,7 @@ class HaliTVVideoViewController: BaseViewController {
             }
         }
     }
-    
+//    获取列表信息
     func getListData(){
         DataManager.init().getHaliTVData(urlStr: urlStr+"\(videoCategory)\(videoType)\(area)____\(pageNum).html",
                                          type: 2) { (resultArr, page) in
@@ -92,7 +92,7 @@ class HaliTVVideoViewController: BaseViewController {
             self.mainCollect.listArr = self.listArr
         }
     }
-     
+//     获取分类信息
     func getCategoryData(){
         DataManager.init().getHaliTVCategoryData(urlStr: urlStr+"\(videoCategory)\(videoType)\(area)____\(pageNum).html") { (resultArr) in
             self.categoryListArr = resultArr

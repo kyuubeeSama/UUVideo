@@ -114,10 +114,10 @@ extension QYRequestData{
     }
     
     // 获取页面html内容
-    func getHtmlContent(urlStr:String,params:[String:AnyObject]?,success:@escaping(_ html:String)->(),failure:@escaping(_ error:Error)->()){
+    func getHtmlContent(urlStr:String,method:HTTPMethod,params:[String:String]?,success:@escaping(_ html:String)->(),failure:@escaping(_ error:Error)->()){
         let config = URLSessionConfiguration.af.default;
         config.httpAdditionalHeaders = ["User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0 Safari/605.1.15","Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"];
-        AF.request(urlStr, method: .get, parameters: params).responseData { (response) in
+        AF.request(urlStr, method: method, parameters: params).responseData { (response) in
             switch response.result{
             case .success(let result):
                 let htmlStr = String.init(data: result, encoding: .utf8)
