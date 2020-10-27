@@ -241,9 +241,7 @@
 				A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */,
 				A906DB0D24EA680B00C070E4 /* BangumiViewController.swift */,
 				A90F711C252411830000D1CF /* HaliTVViewController.swift */,
-				A9FAD14F25304066001A748C /* HaliTVVideoViewController.swift */,
-				A97F52022537EC93008B872A /* CategoryChooseViewController.swift */,
-				A9F44FE0253D379700224DA5 /* HaliTVSearchResultViewController.swift */,
+				A9B9CE1B24E9569700CFBE69 /* LocalVideoPlayerViewController.swift */,
 			);
 			path = Phone;
 			sourceTree = "<group>";
@@ -261,7 +259,9 @@
 		A950E2C824E674D0000CBB92 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				A9B9CE1B24E9569700CFBE69 /* LocalVideoPlayerViewController.swift */,
+				A9FAD14F25304066001A748C /* HaliTVVideoViewController.swift */,
+				A9F44FE0253D379700224DA5 /* HaliTVSearchResultViewController.swift */,
+				A97F52022537EC93008B872A /* CategoryChooseViewController.swift */,
 				A950E2C624E674C2000CBB92 /* Phone */,
 				A950E2C724E674C7000CBB92 /* Pad */,
 			);

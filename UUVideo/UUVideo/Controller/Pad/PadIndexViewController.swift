@@ -9,8 +9,8 @@
 import UIKit
 import SnapKit
 import FluentDarkModeKit
-class PadIndexViewController: BaseViewController {
-    var allVideoArr:[[Any]] = [[],[]]
+class PadIndexViewController: BaseViewController,UISearchBarDelegate {
+    var allVideoArr:[[Any]] = [[],[],[]]
     var tableIndex:Int = 0
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +22,7 @@ class PadIndexViewController: BaseViewController {
         }catch (let error){
             print(error)
         }
-        self.mainTable.listArr = ["本地视频","新番时间表"]
+        self.mainTable.listArr = ["本地视频","新番时间表","哈哩TV"]
         self.getVideo()
         NotificationCenter.default.addObserver(self, selector: #selector(didChangeRotate(notice:)), name: UIApplication.didChangeStatusBarFrameNotification, object: nil)
     }
@@ -47,11 +47,13 @@ class PadIndexViewController: BaseViewController {
                 self.getVideo()
             }else if(string == "新番时间表"){
                 self.getBangumi()
+            }else if(string == "哈哩TV"){
+                self.getHaliTVData()
             }
         }
         return mainTable
     }()
-
+    // 日期选择
     lazy var chooseView: CategoryChooseView = {
         let chooseView = CategoryChooseView.init()
         self.view.addSubview(chooseView)
@@ -81,6 +83,48 @@ class PadIndexViewController: BaseViewController {
         return chooseView
     }()
     
+    // 搜索界面
+    lazy var searchView:UIView = {
+        let searchView = UIView.init()
+        self.view.addSubview(searchView)
+        searchView.isHidden = true
+        searchView.snp.makeConstraints { (make) in
+            make.right.equalTo(self.mainCollect.snp.right)
+            make.left.equalToSuperview().offset(200)
+            make.top.equalToSuperview().offset(top_height)
+            make.height.equalTo(50)
+        }
+        
+        let searchBar = UISearchBar.init()
+        searchView.addSubview(searchBar)
+        searchBar.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.size.equalTo(CGSize(width: 200, height: 30))
+        }
+        searchBar.delegate = self
+        return searchView
+    }()
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if searchBar.text!.count>0 {
+            let VC = HaliTVSearchResultViewController.init()
+            VC.keyword = searchBar.text
+            self.navigationController?.pushViewController(VC, animated: true)
+        }else{
+            self.mainCollect.makeToast("请输入有效内容")
+        }
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        self.view.endEditing(true)
+    }
+    
     lazy var mainCollect: VideoListCollectionView = {
         let layout = UICollectionViewFlowLayout.init()
         let mainCollection = VideoListCollectionView.init(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH), collectionViewLayout: layout)
@@ -92,7 +136,7 @@ class PadIndexViewController: BaseViewController {
         mainCollection.cellItemSelected = { indexPath in
             let listModel = mainCollection.listArr![indexPath.section];
             let model = listModel.list![indexPath.row]
-            if(model.type == 4){
+            if(model.type == 4 || model.type == 3){
                 // 番剧
                 let VC = PadNetVideoPlayerViewController.init()
                 VC.dataArr = (self.allVideoArr[1] as! [[VideoModel]])
@@ -104,6 +148,12 @@ class PadIndexViewController: BaseViewController {
                 VC.modalPresentationStyle = .fullScreen
                 self.present(VC, animated: true, completion: nil)
             }
+        }
+        mainCollection.headerRightClicked = { indexPath in
+            let model = mainCollection.listArr![indexPath.section]
+            let VC = HaliTVVideoViewController.init()
+            VC.title = model.title
+            self.navigationController?.pushViewController(VC, animated: true)
         }
         return mainCollection
     }()
@@ -159,6 +209,7 @@ class PadIndexViewController: BaseViewController {
             make.left.equalTo(chooseView.snp.left)
         }
         self.chooseView.isHidden = false
+        self.searchView.isHidden = true
         let array:[[VideoModel]] = self.allVideoArr[1] as! [[VideoModel]]
         mainCollect.listArr = []
         mainCollect.reloadData()
@@ -176,8 +227,31 @@ class PadIndexViewController: BaseViewController {
             self.chooseView.index = 0
         }
     }
-
-
+    
+    // 获取哈哩tv数据
+    func getHaliTVData(){
+        mainCollect.snp.remakeConstraints { (make) in
+            make.right.bottom.equalToSuperview()
+            make.top.equalTo(searchView.snp.bottom)
+            make.left.equalTo(searchView.snp.left)
+        }
+        self.chooseView.isHidden = true
+        self.searchView.isHidden = false
+        let array:[ListModel] = self.allVideoArr[2] as! [ListModel]
+        mainCollect.listArr = []
+        mainCollect.reloadData()
+        if array.count == 0 {
+            mainCollect.makeToastActivity(.center)
+            DataManager.init().getHaliTVData(urlStr: "https://www.halitv.com/",
+                                             type: 1) { (resultArr, page) in
+                self.mainCollect.hideToastActivity()
+                self.allVideoArr[self.tableIndex] = resultArr
+                self.mainCollect.listArr = resultArr
+            }
+        }else{
+            mainCollect.listArr = array
+        }
+    }
 
     /*
     // MARK: - Navigation

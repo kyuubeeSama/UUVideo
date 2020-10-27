@@ -50,6 +50,7 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
             let cell:VideoTableCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "tableCell", for: indexPath) as! VideoTableCollectionViewCell
             cell.titleLab.text = model.name
             cell.titleLab.sizeToFit()
+            cell.titleLab.backgroundColor = UIColor.yellow
             cell.leftImg.kf.setImage(with: URL.init(string: model.picUrl!))
             cell.numLab.text = model.num
             return cell
@@ -73,6 +74,10 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
 //            340,230
             if model.type == 4 {
                 return CGSize(width: 250, height: 100)
+            }else if model.type == 3{
+                let width:CGFloat = 170
+                let height = (width-20)*379/270+50
+                return CGSize(width: width, height: height)
             }else{
                 return CGSize(width: 170, height: 115)
             }
@@ -122,12 +127,21 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
             return CGSize(width: screenW, height: 60)
         }
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         CGSize(width: screenW, height: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+        UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

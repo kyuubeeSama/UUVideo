@@ -95,7 +95,7 @@ class DataManager: NSObject {
             //        /html/body/div[3]/div[2]/div/ul/li[1]/a/span[3]
             // 标题
             //        /html/body/div[3]/div[2]/div/ul/li[1]/div/h5/a
-            let divArr = [2,5,7,9,11]
+            let divArr = [2,6,8,10,12]
             let titleArr = ["热播推荐","tv动画","剧场版","电影","剧集"]
             var resultArr:[ListModel] = []
             for (index,value) in divArr.enumerated() {

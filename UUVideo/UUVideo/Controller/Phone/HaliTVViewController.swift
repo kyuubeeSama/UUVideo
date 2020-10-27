@@ -56,12 +56,11 @@ class HaliTVViewController: BaseViewController,UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.showsCancelButton = false
+        searchBar.endEditing(true)
     }
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchBar.text!.count>0 {
-            searchBar.showsCancelButton = true
-        }
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
     }
         
     lazy var mainCollect: VideoListCollectionView = {
