@@ -1,52 +1,47 @@
 //
-//  HaliTVVideoViewController.swift
+//  ZdzyVideoViewController.swift
 //  UUVideo
 //
-//  Created by Galaxy on 2020/10/9.
+//  Created by Galaxy on 2020/11/3.
 //  Copyright © 2020 qykj. All rights reserved.
-//  halitv 具体分类视频列表
-// 右上角类型筛选按钮,上拉加载,总页码显示，以及页码跳转
+//  最大资源网视频列表
 
 import UIKit
 import SideMenu
-
-class HaliTVVideoViewController: BaseViewController {
-
+class LkbVideoViewController: BaseViewController {
+    
     var pageNum:Int = 1
-    // 电影类型
-    var videoType:String = "_"
-    // 电影地区
-    var area:String = "__"
-    // 电影分类
-    var videoCategory:String = ""
-    var urlStr = "https://www.halitv.com/list/"
+    // 类型
+    var videoType:String = "1"
+    // 地区
+    var area:String = ""
+    // 排序
+    var order:String = ""
+    var urlStr = "https://www.laikuaibo.com/"
     var listArr:[ListModel] = []
     var categoryListArr:[CategoryListModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
-        // 类型+地区+页码
-//        https://www.halitv.com/list/tvban_129__riben____3.html
-        // 类型+页码
-//        https://www.halitv.com/list/tvban_129______3.html
-        // 页码
-//        https://www.halitv.com/list/tvban______3.html
+        //        https://www.laikuaibo.com/list-select-id-\(id)-area-\(area)-order-\(order)-p-(\pagenum).html
         switch self.title {
-        case "tv动画":
-            videoCategory = "tvban"
-        case "剧场版":
-            videoCategory = "juchangban"
         case "电影":
-            videoCategory = "dianying"
+            videoType = "1"
+        case "剧集":
+            videoType = "2"
+        case "综艺":
+            videoType = "4"
+        case "动漫":
+            videoType = "3"
         default:
             //剧集
-            videoCategory = "dianshiju"
+            videoType = "19"
         }
-        self.setNav()
+//        self.setNav()
         self.getListData()
-        self.getCategoryData()
+//        self.getCategoryData()
         self.getMoreData()
     }
     
@@ -56,7 +51,7 @@ class HaliTVVideoViewController: BaseViewController {
     }
     // 右键筛选
     @objc func rightBtnClick(){
-//        HaliTVCategoryView
+        //        HaliTVCategoryView
         if self.categoryListArr.count>0 {
             // 滑出筛选界面
             let VC = CategoryChooseViewController.init()
@@ -67,10 +62,7 @@ class HaliTVVideoViewController: BaseViewController {
             present(menu, animated: true, completion: nil)
             VC.sureBtnReturn = { [self] resultDic in
                 print(resultDic)
-                //            videoCategory videoType area
-                videoCategory = resultDic["videoCategory"]!
-                videoType = "_"+resultDic["videoType"]!
-                area = "__"+resultDic["area"]!
+                
                 pageNum = 1
                 self.listArr = []
                 self.getListData()
@@ -78,10 +70,10 @@ class HaliTVVideoViewController: BaseViewController {
             }
         }
     }
-//    获取列表信息
+    //    获取列表信息
     func getListData(){
-        DataManager.init().getHaliTVData(urlStr: urlStr+"\(videoCategory)\(videoType)\(area)____\(pageNum).html",
-                                         type: 2) { (resultArr, page) in
+        DataManager.init().getLkbData(urlStr: urlStr+"list-select-id-\(videoType)-area-\(area)-order-\(order)-p-\(pageNum).html",
+                                      type: 2) { (resultArr, page) in
             if(resultArr.count>0){
                 self.pageNum += 1
                 self.mainCollect.es.stopLoadingMore()
@@ -92,13 +84,12 @@ class HaliTVVideoViewController: BaseViewController {
             self.mainCollect.listArr = self.listArr
         }
     }
-//     获取分类信息
+    //     获取分类信息
     func getCategoryData(){
-        DataManager.init().getHaliTVCategoryData(urlStr: urlStr+"\(videoCategory)\(videoType)\(area)____\(pageNum).html") { (resultArr) in
-            self.categoryListArr = resultArr
+        DataManager.init().getLkbCategoryData(urlStr: urlStr+"list-select-id-\(videoType)-area-\(area)-order-\(order)-p-\(pageNum).html)") { (resutlArr) in
+            self.categoryListArr = resutlArr
         }
     }
-    
     func getMoreData(){
         self.mainCollect.es.addInfiniteScrolling {
             self.getListData()
@@ -121,15 +112,15 @@ class HaliTVVideoViewController: BaseViewController {
         return mainCollection
     }()
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

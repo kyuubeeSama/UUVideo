@@ -64,7 +64,7 @@ class BangumiViewController: BaseViewController {
         }
         collection.cellItemSelected = { indexPath in
             let listModel = collection.listArr![indexPath.section]
-            let VC = NetVideoPlayerViewController.init()
+            let VC = WebVideoPlayerViewController.init()
             VC.model = listModel.list![indexPath.row]
             self.navigationController?.pushViewController(VC, animated: true)
         }

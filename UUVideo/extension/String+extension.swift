@@ -23,6 +23,12 @@ extension String {
             return false
         }
     }
+
+    func sizeWithFont(font:UIFont)->CGSize{
+        let att = [NSAttributedString.Key.font:font]
+        let text = self as NSString
+        return text.size(withAttributes: att)
+    }
     
     // 获取文字的大小
     func getStringSize(font:UIFont,size:CGSize) -> CGSize {

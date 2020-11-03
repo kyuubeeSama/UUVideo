@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 import SnapKit
-class NetVideoPlayerViewController: BaseViewController {
+class WebVideoPlayerViewController: BaseViewController {
 
     var model:VideoModel?
     override func viewDidLoad() {

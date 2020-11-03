@@ -248,4 +248,161 @@ class DataManager: NSObject {
             success([])
         }
     }
+    
+    //获取来快播
+    func getLkbData(urlStr:String,type:Int,success:@escaping(_ listData:[ListModel],_ page:Int)->()){
+        let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
+        if type == 1 {
+            // 获取首页数据
+            // 详情地址  不带域名
+//            /html/body/div[3]/div[2]/div[1]/ul/li[1]/p/a/@href
+            //封面  不带域名
+//            /html/body/div[3]/div[2]/div[1]/ul/li[1]/p/a/img/@src
+            // 更新信息
+//            /html/body/div[3]/div[2]/div[1]/ul/li[1]/p/a/span
+            // 标题
+//            /html/body/div[3]/div[2]/div[1]/ul/li[1]/h2/a
+            let divArr = [3,5,7,9,0]
+            let titleArr = ["电影","剧集","综艺","动漫","伦理"]
+            var resultArr:[ListModel] = []
+            for (index,value) in divArr.enumerated() {
+                let listModel = ListModel.init()
+                let titleNodeArr = jiDoc?.xPath("/html/body/div[\(value)]/div[2]/div[1]/ul/li/h2/a")
+                let urlNodeArr = jiDoc?.xPath("/html/body/div[\(value)]/div[2]/div[1]/ul/li/p/a/@href")
+                let imgNodeArr = jiDoc?.xPath("/html/body/div[\(value)]/div[2]/div[1]/ul/li/p/a/img/@data-original")
+                let updateNodeArr = jiDoc?.xPath("/html/body/div[\(value)]/div[2]/div[1]/ul/li/p/a/span")
+                listModel.title = titleArr[index]
+                listModel.more = true
+                listModel.list = []
+                if index<4 {
+                    for (i,_) in titleNodeArr!.enumerated() {
+                        let videoModel = VideoModel.init()
+                        videoModel.name = titleNodeArr![i].content
+                        videoModel.detailUrl = urlStr+urlNodeArr![i].content!
+                        videoModel.picUrl = urlStr+imgNodeArr![i].content!
+                        videoModel.num = updateNodeArr![i].content
+                        videoModel.type = 3
+                        listModel.list?.append(videoModel)
+                    }
+                }
+                resultArr.append(listModel)
+            }
+            success(resultArr,1)
+        }else{
+            // 获取是视频列表
+            let listModel = ListModel.init()
+            let titleNodeArr = jiDoc?.xPath("/html/body/div[1]/ul/li/h2/a")
+            let urlNodeArr = jiDoc?.xPath("/html/body/div[1]/ul/li/p/a/@href")
+            let imgNodeArr = jiDoc?.xPath("/html/body/div[1]/ul/li/p/a/img/@data-original")
+            let updateNodeArr = jiDoc?.xPath("/html/body/div[1]/ul/li/p/a/span")
+            listModel.title = ""
+            listModel.more = false
+            listModel.list = []
+            for (i,_) in titleNodeArr!.enumerated() {
+                let videoModel = VideoModel.init()
+                videoModel.name = titleNodeArr![i].content
+                videoModel.detailUrl = "https://www.laikuaibo.com/"+urlNodeArr![i].content!
+                videoModel.picUrl = "https://www.laikuaibo.com/"+imgNodeArr![i].content!
+                videoModel.num = updateNodeArr![i].content
+                videoModel.type = 3
+                listModel.list?.append(videoModel)
+                //                print("封面是\(videoModel.picUrl),标提是\(videoModel.name) 更新信息是\(videoModel.num), 详情地址是\(videoModel.detailUrl)")
+            }
+            // 尾页
+            //FIXME:此处尾页获取有问题
+            let pageNodeArr = jiDoc?.xPath("//*[@id=\"long-page\"]/ul/li[last()]/a/@data")
+            var pageNumInt = 1
+            if pageNodeArr!.count>0 {
+                var pageNumStr = pageNodeArr?.first?.content
+                pageNumStr = pageNumStr?.replacingOccurrences(of: "p-", with: "")
+                //            print("尾页页码是\(pageNum)")
+                pageNumInt = Int(pageNumStr!)!
+            }
+            success([listModel],pageNumInt)
+        }
+    }
+    
+    // 获取来快播分类信息
+    func getLkbCategoryData(urlStr:String,success:@escaping(_ categoryData:[CategoryListModel])->()){
+        // 最后li需要去除第一行 最后ul只获取1，2，3
+        //        /html/body/div[2]/div/div[1]/div[2]/ul[1]/li/a
+        let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
+        // 获取标题
+        // 获取value
+        var listArr:[CategoryListModel]=[]
+        // 地区
+        let areaNodeArr = jiDoc?.xPath("/html/body/div[1]/dl/dd[2]/div/div/a")
+        let areaChooseNodeArr = jiDoc?.xPath("/html/body/div[1]/dl/dd[2]/div/div/a[@class='btn-success']")
+        let areaListModel = CategoryListModel.init()
+        areaListModel.name = "地区"
+        areaListModel.list = []
+        // 将具体的分类编入数组
+        for (index,_) in areaNodeArr!.enumerated() {
+            let categoryModel = CategoryModel.init()
+            let name = areaNodeArr![index].content
+            categoryModel.name = name
+            // 获取当前选中的分类
+            for chooseNode in areaChooseNodeArr! {
+                if name == chooseNode.content {
+                    categoryModel.ischoose = true
+                }
+            }
+            areaListModel.list?.append(categoryModel)
+        }
+        listArr.append(areaListModel)
+        // 排序
+        let orderNodeArr = jiDoc?.xPath("/html/body/div[1]/div[3]/div/a")
+        let orderChooseNodeArr = jiDoc?.xPath("/html/body/div[1]/div[3]/div/a[@class='btn-success']")
+        let orderListModel = CategoryListModel.init()
+        orderListModel.name = "排序"
+        orderListModel.list = []
+        // 将具体的分类编入数组
+        for (index,_) in orderNodeArr!.enumerated() {
+            let categoryModel = CategoryModel.init()
+            let name = orderNodeArr![index].content
+            categoryModel.name = name
+            // 获取当前选中的分类
+            for chooseNode in orderChooseNodeArr! {
+                if name == chooseNode.content {
+                    categoryModel.ischoose = true
+                }
+            }
+            orderListModel.list?.append(categoryModel)
+        }
+        listArr.append(orderListModel)
+        success(listArr)
+    }
+
+    // 获取视频详情
+    func getLkbVideoDetailData(urlStr:String,success:@escaping(_ videoModel:VideoModel,_ videoList:[VideoModel])->()){
+        let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
+        let videoModel = VideoModel.init()
+        var videoArr:[VideoModel] = []
+        // 获取视频详情
+        let playerUrlNodeArr = jiDoc?.xPath("//*[@id=\"cms_player\"]/script[1]")
+        if playerUrlNodeArr!.count>0 {
+            var playerUrl = playerUrlNodeArr![0].content
+            playerUrl = playerUrl?.replacingOccurrences(of: "var cms_player = ", with: "")
+            playerUrl = playerUrl?.replacingOccurrences(of: ";", with: "")
+            let dic = Dictionary<String, String>.init().stringValueDic(playerUrl!)
+            let urlStr:String = "https://www.bfq168.com/m3u8.php?url="+(dic!["url"] as! String)
+            videoModel.videoUrl = urlStr
+            // 获取推荐视频
+            let titleNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li[1]/h2/a")
+            let urlNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li[1]/p/a/@src/@href")
+            let imgNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li[1]/p/a/img/@data-original")
+            let updateNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li[1]/p/a/span")
+            for (i,_) in titleNodeArr!.enumerated() {
+                let videoModel = VideoModel.init()
+                videoModel.name = titleNodeArr![i].content
+                videoModel.detailUrl = "https://www.laikuaibo.com/"+urlNodeArr![i].content!
+                videoModel.picUrl = "https://www.laikuaibo.com/"+imgNodeArr![i].content!
+                videoModel.num = updateNodeArr![i].content
+                videoModel.type = 3
+                videoArr.append(videoModel)
+                //                print("封面是\(videoModel.picUrl),标提是\(videoModel.name) 更新信息是\(videoModel.num), 详情地址是\(videoModel.detailUrl)")
+            }
+        }
+        success(videoModel,videoArr)
+    }
 }
