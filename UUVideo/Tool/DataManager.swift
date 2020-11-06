@@ -372,8 +372,62 @@ class DataManager: NSObject {
         listArr.append(orderListModel)
         success(listArr)
     }
-
-    // 获取视频详情
+    
+    // 获取视频详情界面
+    func getLkbVideoInfoData(urlStr:String,success:@escaping(_ VideoModel:VideoModel)->()){
+        let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
+        let videoModel = VideoModel.init()
+        videoModel.videoArr = []
+        videoModel.tagArr = []
+        videoModel.serialArr = []
+//        视频封面
+        let videoImgNodeArr = jiDoc?.xPath("/html/body/div[1]/div[1]/div[1]/div/div[1]/a/img/@data-original")
+        videoModel.picUrl = "https://www.laikuaibo.com/"+videoImgNodeArr![0].content!
+//        视频标题
+        let videoTitleNodeArr = jiDoc?.xPath("/html/body/div[1]/div[1]/div[1]/div/div[2]/h4/a")
+        videoModel.name = videoTitleNodeArr![0].content
+        // 获取tag
+        let tagIndexArr = [1,2,4,6]
+        for item in tagIndexArr {
+            let tagNodeArr = jiDoc?.xPath("/html/body/div[1]/div[1]/div[1]/div/div[2]/dl/dd[\(item)]/a")
+            var tagArr:[String] = []
+            for tagNode in tagNodeArr! {
+                let tag = tagNode.content
+                tagArr.append(tag!)
+            }
+            videoModel.tagArr?.append(tagArr)
+        }
+//        剧集
+//        标题
+        let serialTitleNodeArr = jiDoc?.xPath("/html/body/div[1]/div[3]/ul/li/a")
+//        详情
+        let serialUrlNodeArr = jiDoc?.xPath("/html/body/div[1]/div[3]/ul/li/a/@href")
+        for (index,_) in serialTitleNodeArr!.enumerated() {
+            let serialModel = SerialModel.init()
+            serialModel.name = serialTitleNodeArr![index].content
+            serialModel.detailUrl = serialUrlNodeArr![index].content
+            videoModel.serialArr?.append(serialModel)
+        }
+        
+//        推荐视频
+        let recommendVideoTitleNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[2]/li/h2/a")
+        let recommendVideodetailNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[2]/li/h2/a/@href")
+        let recommendVideoImgNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[2]/li/p/a/img/@data-original")
+        let recommendVideoNumNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[2]/li/p/a/span")
+        for (i,_) in recommendVideoTitleNodeArr!.enumerated() {
+            let videoModel1 = VideoModel.init()
+            videoModel1.name = recommendVideoTitleNodeArr![i].content
+            videoModel1.detailUrl = "https://www.laikuaibo.com/"+recommendVideodetailNodeArr![i].content!
+            videoModel1.picUrl = "https://www.laikuaibo.com/"+recommendVideoImgNodeArr![i].content!
+            videoModel1.num = recommendVideoNumNodeArr![i].content
+            videoModel1.type = 3
+            videoModel.videoArr?.append(videoModel1)
+            //                print("封面是\(videoModel.picUrl),标提是\(videoModel.name) 更新信息是\(videoModel.num), 详情地址是\(videoModel.detailUrl)")
+        }
+        success(videoModel)
+    }
+    
+    // 获取视频播放界面
     func getLkbVideoDetailData(urlStr:String,success:@escaping(_ videoModel:VideoModel,_ videoList:[VideoModel])->()){
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         let videoModel = VideoModel.init()

@@ -4,7 +4,7 @@
 //
 //  Created by Galaxy on 2020/11/3.
 //  Copyright © 2020 qykj. All rights reserved.
-//
+//  视频详情界面
 
 import UIKit
 
@@ -21,11 +21,29 @@ class NetVideoDetailViewController: BaseViewController {
     
     // 获取详情数据
     func getLkbDetailData() {
-        DataManager.init().getLkbVideoDetailData(urlStr: (videoModel?.detailUrl)!) { (videoModel,videoArr) in
-            
+        DataManager.init().getLkbVideoInfoData(urlStr: (videoModel?.detailUrl)!) { (videoModel) in
+            self.mainCollect.model = videoModel
         }
     }
 
+    lazy var mainCollect: NetVideoDetailCollectionView = {
+        let layout = UICollectionViewFlowLayout.init()
+        let mainCollection = NetVideoDetailCollectionView.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: layout)
+        self.view.addSubview(mainCollection)
+        mainCollection.snp.makeConstraints { (make) in
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+        }
+        mainCollection.cellItemSelected = { indexPath in
+            if indexPath.section == 1{
+                // 剧集
+            }else{
+//                视频
+            }
+        }
+        return mainCollection
+    }()
+    
     /*
     // MARK: - Navigation
 

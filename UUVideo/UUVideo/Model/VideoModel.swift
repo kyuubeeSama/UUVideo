@@ -27,6 +27,12 @@ class VideoModel: NSObject {
     var detailUrl:String?
     //线上封面地址
     var picUrl:String?
-    // 最新一集
+    // 最新集或者评分等信息
     var num:String?
+    // 推荐视频
+    var videoArr:[VideoModel]?
+    // 剧集列表
+    var serialArr:[SerialModel]?
+    // 详情标签
+    var tagArr:[[String]]?
 }
