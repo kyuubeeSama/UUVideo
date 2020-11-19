@@ -16,7 +16,6 @@ class VideoInfoCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var label2: UILabel!
     @IBOutlet weak var label3: UILabel!
     @IBOutlet weak var label4: UILabel!
-    @IBOutlet weak var label5: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

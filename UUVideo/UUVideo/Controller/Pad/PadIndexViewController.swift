@@ -40,6 +40,7 @@ class PadIndexViewController: BaseViewController,UISearchBarDelegate {
             make.width.equalTo(200)
         }
         mainTable.cellItemDidSelect = { indexPath in
+            self.view.endEditing(true)
             self.tableIndex = indexPath.row
             let string = mainTable.listArr![indexPath.row]
             // 点击切换数据源
@@ -100,7 +101,7 @@ class PadIndexViewController: BaseViewController,UISearchBarDelegate {
         searchBar.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.centerX.equalToSuperview()
-            make.size.equalTo(CGSize(width: 200, height: 30))
+            make.size.equalTo(CGSize(width: 300, height: 30))
         }
         searchBar.delegate = self
         return searchView

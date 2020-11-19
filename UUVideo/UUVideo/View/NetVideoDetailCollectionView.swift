@@ -47,7 +47,13 @@ class NetVideoDetailCollectionView: UICollectionView,UICollectionViewDelegate,UI
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // 三种样式，一种是剧集介绍
         if indexPath.section == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "infoCell", for: indexPath)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "infoCell", for: indexPath) as! VideoInfoCollectionViewCell
+            cell.videoImg.kf.setImage(with: URL.init(string: (self.model?.picUrl)!))
+            cell.videoNameLab.text = self.model?.name
+            cell.label1.text = model?.getTag(tagArr: (model?.tagArr![0])!)
+            cell.label2.text = model?.getTag(tagArr: (model?.tagArr![1])!)
+            cell.label3.text = model?.getTag(tagArr: (model?.tagArr![2])!)
+            cell.label4.text = model?.getTag(tagArr: (model?.tagArr![3])!)
             return cell
         }else if indexPath.section == 1{
             //            剧集列表
@@ -68,6 +74,7 @@ class NetVideoDetailCollectionView: UICollectionView,UICollectionViewDelegate,UI
             let cell:VideoListCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "videoCell", for: indexPath) as! VideoListCollectionViewCell
             cell.titleLab.text = videoModel!.name
             cell.picImage.kf.setImage(with: URL.init(string: videoModel!.picUrl!))
+            cell.backgroundColor = .yellow
             return cell
         }
     }
@@ -89,11 +96,23 @@ class NetVideoDetailCollectionView: UICollectionView,UICollectionViewDelegate,UI
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if section == 1{
+        if section == 0{
             return CGSize(width: screenW, height: 0)
         }else {
             return CGSize(width: screenW, height: 60)
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

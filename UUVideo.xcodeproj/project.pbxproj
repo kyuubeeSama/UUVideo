@@ -54,6 +54,8 @@
 		A984955B25513FCE0007D0B8 /* NetVideoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A984955A25513FCE0007D0B8 /* NetVideoDetailViewController.swift */; };
 		A98794EC2553983B00DD62EE /* VideoInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98794EA2553983B00DD62EE /* VideoInfoCollectionViewCell.swift */; };
 		A98794ED2553983B00DD62EE /* VideoInfoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A98794EB2553983B00DD62EE /* VideoInfoCollectionViewCell.xib */; };
+		A9967C1D256265AA00752CB7 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9967C1C256265AA00752CB7 /* UserViewController.swift */; };
+		A997538125665ECF00179FCB /* EqualSpaceFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A997538025665ECF00179FCB /* EqualSpaceFlowLayout.swift */; };
 		A9B821F52550020400317702 /* LkbViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B821F42550020400317702 /* LkbViewController.swift */; };
 		A9B9CE1C24E9569700CFBE69 /* LocalVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CE1B24E9569700CFBE69 /* LocalVideoPlayerViewController.swift */; };
 		A9CBF74624EF6D38002BD074 /* PadNetVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBF74524EF6D38002BD074 /* PadNetVideoPlayerViewController.swift */; };
@@ -120,6 +122,8 @@
 		A984955A25513FCE0007D0B8 /* NetVideoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoDetailViewController.swift; sourceTree = "<group>"; };
 		A98794EA2553983B00DD62EE /* VideoInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		A98794EB2553983B00DD62EE /* VideoInfoCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoInfoCollectionViewCell.xib; sourceTree = "<group>"; };
+		A9967C1C256265AA00752CB7 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		A997538025665ECF00179FCB /* EqualSpaceFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualSpaceFlowLayout.swift; sourceTree = "<group>"; };
 		A9B821F42550020400317702 /* LkbViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LkbViewController.swift; sourceTree = "<group>"; };
 		A9B9CE1524E933E000CFBE69 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		A9B9CE1624E933E100CFBE69 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
@@ -279,6 +283,7 @@
 				A9F44FE0253D379700224DA5 /* HaliTVSearchResultViewController.swift */,
 				A97F52022537EC93008B872A /* CategoryChooseViewController.swift */,
 				A984955425512B530007D0B8 /* LkbVideoViewController.swift */,
+				A9967C1C256265AA00752CB7 /* UserViewController.swift */,
 				A950E2C624E674C2000CBB92 /* Phone */,
 				A950E2C724E674C7000CBB92 /* Pad */,
 			);
@@ -305,6 +310,7 @@
 				A92AC00B25529D28001EBD12 /* NetVideoDetailCollectionView.swift */,
 				A98794EA2553983B00DD62EE /* VideoInfoCollectionViewCell.swift */,
 				A98794EB2553983B00DD62EE /* VideoInfoCollectionViewCell.xib */,
+				A997538025665ECF00179FCB /* EqualSpaceFlowLayout.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -462,6 +468,7 @@
 				A984955525512B530007D0B8 /* LkbVideoViewController.swift in Sources */,
 				A950E2B824E6733F000CBB92 /* UIButton+extension.swift in Sources */,
 				A97FF1F0253161890097C0F7 /* CategoryModel.swift in Sources */,
+				A9967C1D256265AA00752CB7 /* UserViewController.swift in Sources */,
 				A964116A24ECCB9700D19D92 /* QYWebView.swift in Sources */,
 				A9B821F52550020400317702 /* LkbViewController.swift in Sources */,
 				A950E2B324E6733F000CBB92 /* NSObject+extension.swift in Sources */,
@@ -482,6 +489,7 @@
 				A90F7121252414740000D1CF /* ListModel.swift in Sources */,
 				A906DB1824EBCDDB00C070E4 /* WebVideoPlayerViewController.swift in Sources */,
 				A950E2B024E6733F000CBB92 /* Dictionary+extension.swift in Sources */,
+				A997538125665ECF00179FCB /* EqualSpaceFlowLayout.swift in Sources */,
 				A950E2B524E6733F000CBB92 /* String+extension.swift in Sources */,
 				A950E2C124E67356000CBB92 /* config.swift in Sources */,
 				A906DB0E24EA680B00C070E4 /* BangumiViewController.swift in Sources */,

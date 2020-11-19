@@ -1,14 +1,14 @@
 PODS:
-  - Alamofire (5.3.0)
+  - Alamofire (5.4.0)
   - EmptyDataSet-Swift (5.0.0)
   - ESPullToRefresh (2.9.3)
   - FluentDarkModeKit (1.0.1)
   - HandyJSON (5.0.2)
   - IQKeyboardManagerSwift (6.5.6)
   - Ji (5.0.0)
-  - Kingfisher (5.15.6):
-    - Kingfisher/Core (= 5.15.6)
-  - Kingfisher/Core (5.15.6)
+  - Kingfisher (5.15.7):
+    - Kingfisher/Core (= 5.15.7)
+  - Kingfisher/Core (5.15.7)
   - Masonry (1.1.0)
   - Reachability (3.2)
   - SideMenu (6.5.0)
@@ -117,14 +117,14 @@ SPEC REPOS:
     - YYModel
 
 SPEC CHECKSUMS:
-  Alamofire: 2c792affbdc2f18016e08fdbcacd60aebe1ba593
+  Alamofire: 3b6a534a3df22db367e4dedeeca73d1ddfcf0e2f
   EmptyDataSet-Swift: eb382c0c87a2d9c678077385a595cec52da38171
   ESPullToRefresh: 0d68daa602b343c81753a1b95e09fd0bfcddfd40
   FluentDarkModeKit: 0c5f31ca81eb058f3e8b6d79b3d08afbe7c40c42
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
   Ji: d795fed288fe78658b404c88946d753b17d8d7f4
-  Kingfisher: b3554e7bf6106115b44e8795300bad580ef2fdc7
+  Kingfisher: 6e1a13523fcb1c86924ce53affe4ac957e544d59
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2

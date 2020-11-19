@@ -35,4 +35,13 @@ class VideoModel: NSObject {
     var serialArr:[SerialModel]?
     // 详情标签
     var tagArr:[[String]]?
+    
+    // 获取单个tag字符串
+    func getTag(tagArr:[String]) -> String {
+        var string = ""
+        for tag in tagArr {
+            string = "\(string) \(tag)"
+        }
+        return string
+    }
 }
