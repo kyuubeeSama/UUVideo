@@ -37,8 +37,13 @@ class NetVideoDetailViewController: BaseViewController {
         mainCollection.cellItemSelected = { indexPath in
             if indexPath.section == 1{
                 // 剧集
+                let VC = NetVideoPlayerViewController.init()
+                VC.model = self.videoModel
+                self.navigationController?.pushViewController(VC, animated: true)
             }else{
 //                视频
+                let VC = NetVideoDetailViewController.init()
+                self.navigationController?.pushViewController(VC, animated: true)
             }
         }
         return mainCollection
