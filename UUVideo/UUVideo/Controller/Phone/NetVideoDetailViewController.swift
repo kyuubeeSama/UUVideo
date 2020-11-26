@@ -38,11 +38,14 @@ class NetVideoDetailViewController: BaseViewController {
             if indexPath.section == 1{
                 // 剧集
                 let VC = NetVideoPlayerViewController.init()
-                VC.model = self.videoModel
+                VC.model = mainCollection.model
+                VC.index = indexPath.row
                 self.navigationController?.pushViewController(VC, animated: true)
             }else{
 //                视频
+                let model = mainCollection.model!.videoArr![indexPath.row]
                 let VC = NetVideoDetailViewController.init()
+                VC.videoModel = model
                 self.navigationController?.pushViewController(VC, animated: true)
             }
         }

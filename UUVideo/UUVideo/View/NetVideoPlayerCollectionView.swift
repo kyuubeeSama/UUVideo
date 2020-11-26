@@ -7,8 +7,8 @@
 //
 
 import UIKit
-
-class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+import WebKit
+class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,WKUIDelegate,WKNavigationDelegate {
     // 头部播放player
     // 下面放标题
     // 下面放推荐视频
@@ -27,6 +27,7 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
         self.backgroundColor = UIColor.systemBackground
         self.register(UINib.init(nibName: "VideoListCollectionViewCell", bundle:Bundle.main), forCellWithReuseIdentifier: "videoCell")
         self.register(UINib.init(nibName: "VideoCategoryCollectionViewCell", bundle:Bundle.main), forCellWithReuseIdentifier: "serialCell")
+        self.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "playerCell")
         self.register(UINib.init(nibName: "HeaderTitleCollectionReusableView", bundle: Bundle.main), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
     }
     
@@ -48,8 +49,14 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
         // 三种样式，一种是剧集介绍
         if indexPath.section == 0 {
             // 播放界面
-            
-            
+            //TODO:播放界面为webview
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "playerCell", for: indexPath)
+            let webView = WKWebView.init()
+            webView.frame = CGRect(x: 0, y: 0, width: screenW, height: 300)
+            cell.contentView .addSubview(webView)
+            webView.backgroundColor = .black
+            webView.load(URLRequest.init(url: URL.init(string: (model?.videoUrl)!)!))
+            return cell
         }else if indexPath.section == 1{
             //            剧集列表
             let serialModel = self.model?.serialArr![indexPath.row]
@@ -69,15 +76,14 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
             let cell:VideoListCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "videoCell", for: indexPath) as! VideoListCollectionViewCell
             cell.titleLab.text = videoModel!.name
             cell.picImage.kf.setImage(with: URL.init(string: videoModel!.picUrl!))
-            cell.backgroundColor = .yellow
             return cell
         }
     }
-    
+                          
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.section == 0 {
             //            图片比例加上下空格
-            return CGSize(width: screenW, height: 90*379/270+20)
+            return CGSize(width: screenW, height: 300)
         }else if indexPath.section == 1{
             let serialModel = self.model?.serialArr![indexPath.row]
             // 根据字体大小计算

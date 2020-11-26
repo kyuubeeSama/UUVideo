@@ -427,11 +427,16 @@ class DataManager: NSObject {
         success(videoModel)
     }
     
-    // 获取视频播放界面
-    func getLkbVideoDetailData(urlStr:String,success:@escaping(_ videoModel:VideoModel,_ videoList:[VideoModel])->()){
+    /// 来快播视频播放接口
+    /// - Parameters:
+    ///   - urlStr: 视频详情地址
+    ///   - success: 成功返回
+    /// - Returns:
+    func getLkbVideoDetailData(urlStr:String,success:@escaping(_ videoModel:VideoModel)->()){
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         let videoModel = VideoModel.init()
-        var videoArr:[VideoModel] = []
+        videoModel.videoArr = []
+        videoModel.serialArr = []
         // 获取视频详情
         let playerUrlNodeArr = jiDoc?.xPath("//*[@id=\"cms_player\"]/script[1]")
         if playerUrlNodeArr!.count>0 {
@@ -442,21 +447,32 @@ class DataManager: NSObject {
             let urlStr:String = "https://www.bfq168.com/m3u8.php?url="+(dic!["url"] as! String)
             videoModel.videoUrl = urlStr
             // 获取推荐视频
-            let titleNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li[1]/h2/a")
-            let urlNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li[1]/p/a/@src/@href")
-            let imgNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li[1]/p/a/img/@data-original")
-            let updateNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li[1]/p/a/span")
+            let titleNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li/h2/a")
+            let urlNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li/p/a/@href")
+            let imgNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li/p/a/img/@data-original")
+            let updateNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li/p/a/span")
             for (i,_) in titleNodeArr!.enumerated() {
-                let videoModel = VideoModel.init()
-                videoModel.name = titleNodeArr![i].content
-                videoModel.detailUrl = "https://www.laikuaibo.com/"+urlNodeArr![i].content!
-                videoModel.picUrl = "https://www.laikuaibo.com/"+imgNodeArr![i].content!
-                videoModel.num = updateNodeArr![i].content
-                videoModel.type = 3
-                videoArr.append(videoModel)
+                let recomondVideoModel = VideoModel.init()
+                recomondVideoModel.name = titleNodeArr![i].content
+                recomondVideoModel.detailUrl = "https://www.laikuaibo.com/"+urlNodeArr![i].content!
+                recomondVideoModel.picUrl = "https://www.laikuaibo.com/"+imgNodeArr![i].content!
+                recomondVideoModel.num = updateNodeArr![i].content
+                recomondVideoModel.type = 3
+                videoModel.videoArr?.append(recomondVideoModel)
                 //                print("封面是\(videoModel.picUrl),标提是\(videoModel.name) 更新信息是\(videoModel.num), 详情地址是\(videoModel.detailUrl)")
             }
+            //TODO:获取剧集信息
+            //        标题
+            let serialTitleNodeArr = jiDoc?.xPath("/html/body/div[1]/div[6]/ul/li/a")
+            //        详情
+            let serialUrlNodeArr = jiDoc?.xPath("/html/body/div[1]/div[6]/ul/li/a/@href")
+            for (index,_) in serialTitleNodeArr!.enumerated() {
+                let serialModel = SerialModel.init()
+                serialModel.name = serialTitleNodeArr![index].content
+                serialModel.detailUrl = serialUrlNodeArr![index].content
+                videoModel.serialArr?.append(serialModel)
+            }
         }
-        success(videoModel,videoArr)
+        success(videoModel)
     }
 }

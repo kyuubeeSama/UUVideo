@@ -29,8 +29,10 @@ target 'UUVideo' do
   pod 'SideMenu'
   # 暗黑模式
   pod 'FluentDarkModeKit'
-  
+  # xpath工具
   pod "Ji"
+  # sqlite数据库
+  pod 'GRDB.swift'
   
 end
 

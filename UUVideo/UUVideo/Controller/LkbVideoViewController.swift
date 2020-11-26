@@ -62,7 +62,6 @@ class LkbVideoViewController: BaseViewController {
             present(menu, animated: true, completion: nil)
             VC.sureBtnReturn = { [self] resultDic in
                 print(resultDic)
-                
                 pageNum = 1
                 self.listArr = []
                 self.getListData()

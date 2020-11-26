@@ -74,7 +74,6 @@ class NetVideoDetailCollectionView: UICollectionView,UICollectionViewDelegate,UI
             let cell:VideoListCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "videoCell", for: indexPath) as! VideoListCollectionViewCell
             cell.titleLab.text = videoModel!.name
             cell.picImage.kf.setImage(with: URL.init(string: videoModel!.picUrl!))
-            cell.backgroundColor = .yellow
             return cell
         }
     }
