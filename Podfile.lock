@@ -9,9 +9,9 @@ PODS:
   - HandyJSON (5.0.2)
   - IQKeyboardManagerSwift (6.5.6)
   - Ji (5.0.0)
-  - Kingfisher (5.15.7):
-    - Kingfisher/Core (= 5.15.7)
-  - Kingfisher/Core (5.15.7)
+  - Kingfisher (5.15.8):
+    - Kingfisher/Core (= 5.15.8)
+  - Kingfisher/Core (5.15.8)
   - Masonry (1.1.0)
   - SideMenu (6.5.0)
   - SJBaseVideoPlayer (3.4.3):
@@ -124,7 +124,7 @@ SPEC CHECKSUMS:
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
   Ji: d795fed288fe78658b404c88946d753b17d8d7f4
-  Kingfisher: 6e1a13523fcb1c86924ce53affe4ac957e544d59
+  Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
   SJBaseVideoPlayer: 7af90105490cc751c2ddbfa615c943f88b256216

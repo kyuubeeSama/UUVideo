@@ -16,9 +16,42 @@ class UserViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        print("个人中心")
+        self.view.backgroundColor = UIColor.yellow
     }
     
-
+    //获取浏览记录和收藏
+    func getData() {
+        collectionView.reloadData()
+    }
+    
+    // collectionview 2个section，一个section显示浏览记录 一个section显示收藏列表
+    // 每个section最多不超过3行
+    // section上有查看更多按钮，进入查看更多列表
+    lazy var collectionView: VideoListCollectionView = {
+        let layout = UICollectionViewFlowLayout.init()
+        let collectionView = VideoListCollectionView.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0), collectionViewLayout:layout)
+        self.view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { (make) in
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+            make.left.equalTo(self.view.snp.left)
+            if(Tool.isPad()){
+                make.width.equalTo(375)
+            }else{
+                make.width.equalTo(self.view.frame.size.width)
+            }
+        }
+        // 点击具体的cell
+        collectionView.cellItemSelected = { indexPath in
+            
+        }
+        // 查看更多
+        collectionView.headerRightClicked = { indexPath in
+            
+        }
+        return collectionView
+    }()
     /*
     // MARK: - Navigation
 

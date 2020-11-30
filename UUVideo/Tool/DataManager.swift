@@ -43,44 +43,50 @@ class DataManager: NSObject {
                 model.type = 4
                 model.num = updateNode.content
                 listArr.append(model)
-                print("周\(j)")
-                print("更新信息是\(updateNode.content as Any)")
-                print("详情地址是\(urlNode.content as Any)")
-                print("图片地址是\(imgNode.content as Any)")
-                print("标题是\(titleNode.content as Any)")
             }
             array.append(listArr)
         }
         success(array)
     }
     
-    // 获取视频播放界面相关数据
-    func getVideoDetailData(urlStr:String,success:@escaping(_ dataDic:[String:Any])->(),failure:@escaping(_ error:Error)->()){
-        QYRequestData.shared.getHtmlContent(urlStr: urlStr, method: .get, params: nil) { (result) in
-            //            print(result)
-            //            "url":([\s\S]+?)",
-            //            获取请求值
-            var v:String = Tool.getRegularData(regularExpress: "\"url\":([\\s\\S]+?)\",", content: result)[0]
-            v = v.replacingOccurrences(of: "\"url\":", with: "")
-            v = v.replacingOccurrences(of: "\",", with: "")
-            v = v.replacingOccurrences(of: "\"", with: "")
-            //            "name":([\s\S]+?)",
-            //            获取那么属性
-            var name:String = Tool.getRegularData(regularExpress: "\"name\":([\\s\\S]+?)\",", content: result)[0]
-            name = name.replacingOccurrences(of: "\"name\":", with: "")
-            name = name.replacingOccurrences(of: "\",", with: "")
-            name = name.replacingOccurrences(of: "\"", with: "")
-            //            根据这两个参数，请求新页面
-            //                        let playerUrlStr = "https://www.halitv.com/api/haliapi.php?v="+v+"&name="+name
-            //                        QYRequestData.shared.getHtmlContent(urlStr: playerUrlStr, params: nil) { (playerResult) in
-            //                            print(playerResult)
-            //                        } failure: { (error) in
-            //                            failure(error)
-            //                        }
-        } failure: { (error) in
-            failure(error)
+    /// 获取视频播放界面相关数据
+    /// - Parameters:
+    ///   - urlStr: 视频地址
+    ///   - success: 成功返回
+    /// - Returns: listArr:[videoModel]
+    func getVideoDetailData(urlStr:String,success:@escaping(_ listArr:[VideoModel])->()){
+        let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
+        var array:[VideoModel] = []
+        // 标题
+        let titleXPath = "/html/body/div[2]/div[2]/div/div[6]/div[2]/ul/li/div/h5/a"
+        let titleNodeArr = jiDoc?.xPath(titleXPath)
+//        详情
+        let urlXPath = "/html/body/div[2]/div[2]/div/div[6]/div[2]/ul/li/div/h5/a/@href"
+        let urlNodeArr = jiDoc?.xPath(urlXPath)
+//        封面
+        let imgXPath = "/html/body/div[2]/div[2]/div/div[6]/div[2]/ul/li/a/img/@src"
+        let imgNodeArr = jiDoc?.xPath(imgXPath)
+//        更新信息
+        let updateInfoXPath = "/html/body/div[2]/div[2]/div/div[6]/div[2]/ul/li/a/span[3]"
+        let updateNodeArr = jiDoc?.xPath(updateInfoXPath)
+        if titleNodeArr!.count>0 {
+            for (index,titleNode) in titleNodeArr!.enumerated() {
+                let urlNode = urlNodeArr![index]
+                let imgNode = imgNodeArr![index]
+                let updateNode = updateNodeArr![index]
+                print("标提是\(titleNode.content) 图片是\(imgNode.content) 详情是\(urlNode.content) 更新信息是\(updateNode.content)")
+                let model = VideoModel.init()
+                model.name = titleNode.content
+                model.picUrl = imgNode.content
+                model.detailUrl = urlNode.content
+                model.num = updateNode.content
+                model.type = 3
+                array.append(model)
+            }
         }
+        success(array)
     }
+    
     // 获取哈哩tv数据
     // type 页面类型 1.首页  2.具体分类页面
     func getHaliTVData(urlStr:String,type:Int,success:@escaping(_ listData:[ListModel],_ page:Int)->()){

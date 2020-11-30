@@ -13,23 +13,25 @@ import ESPullToRefresh
 class PadNetVideoPlayerViewController: BaseViewController {
     var model:VideoModel?
     var dataArr:[[VideoModel]]?
+    var listArr:[ListModel]?
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.setNav()
         self.reloadWebView()
-//        webView.scrollView.es.addPullToRefresh{ [self] in
-//            webView.reload()
-//            webView.scrollView.es.stopPullToRefresh()
-//        }
+        self.getData()
     }
     
     func reloadWebView(){
+        webView.makeToastActivity(.center)
+        webView.load(URLRequest.init(url: URL.init(string: self.getUrl())!))
+    }
+    
+    func getUrl() -> String {
         var urlStr = model?.detailUrl?.replacingOccurrences(of: ".html", with: "-1-1.html")
         urlStr = urlStr?.replacingOccurrences(of: "detail", with: "play")
-        webView.makeToastActivity(.center)
-        webView.load(URLRequest.init(url: URL.init(string: "https://www.halitv.com/"+urlStr!)!))
+        return "https://www.halitv.com/"+urlStr!
     }
     
     func setNav(){
@@ -37,19 +39,32 @@ class PadNetVideoPlayerViewController: BaseViewController {
         self.navigationItem.rightBarButtonItem = baritem
     }
     
-    @objc func leftSideMenu(){
-        let VC = RightViewController.init()
-        VC.dataArr = self.dataArr
-        VC.cellIitemSelected = { indexPath in
-            let array:[VideoModel] = self.dataArr![indexPath.section]
-            let model = array[indexPath.row]
-            self.model = model
-            self.reloadWebView()
-            self.dismiss(animated: true, completion: nil)
+    // 获取推荐视频
+    func getData() {
+        DataManager.init().getVideoDetailData(urlStr: self.getUrl()) {(videoArr) in
+            let model = ListModel.init()
+            model.title = "猜你喜欢"
+            model.list = videoArr
+            self.listArr = [model]
         }
-        let menu = SideMenuNavigationController(rootViewController: VC)
-        menu.presentationStyle = .menuSlideIn
-        present(menu, animated: true, completion: nil)
+    }
+    
+    @objc func leftSideMenu(){
+        if self.listArr!.count>0 {
+            let VC = RightViewController.init()
+            VC.listArr = self.listArr
+            VC.cellItemSelected = { indexPath in
+                let listModel = self.listArr![0]
+                let model = listModel.list![indexPath.row]
+                self.model = model
+                self.reloadWebView()
+                self.dismiss(animated: true, completion: nil)
+            }
+            let menu = SideMenuNavigationController(rootViewController: VC)
+            menu.presentationStyle = .menuSlideIn
+            menu.menuWidth = 375
+            present(menu, animated: true, completion: nil)
+        }
     }
     
     lazy var webView: QYWebView = {

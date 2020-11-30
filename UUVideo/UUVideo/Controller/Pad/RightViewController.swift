@@ -9,42 +9,34 @@
 import UIKit
 
 class RightViewController: BaseViewController {
-    var dataArr:[[VideoModel]]?
-    var cellIitemSelected:((_ indexPath:IndexPath)->())?
+    var cellItemSelected:((_ indexPath:IndexPath)->())?
+    var listArr:[ListModel]?
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
-        let dayArr = ["周一","周二","周三","周四","周五","周六","周日"]
-        var collectionArr:[ListModel] = []
-        for (index,array) in self.dataArr!.enumerated() {
-            let listModel = ListModel.init()
-            listModel.title = dayArr[index]
-            listModel.list = array
-            listModel.more = false
-            collectionArr.append(listModel)
-        }
-        collectionView.listArr = collectionArr
+        collectionView.listArr = listArr
     }
-    
+        
+    // 使用tableview。列表展示推荐视频
     lazy var collectionView: VideoListCollectionView = {
         let layout = UICollectionViewFlowLayout.init()
-        let collection = VideoListCollectionView.init(frame: CGRect(x: 0, y: 0, width: 270, height: screenH), collectionViewLayout: layout)
-        self.view.addSubview(collection)
-        collection.snp.makeConstraints { (make) in
-            make.left.top.bottom.equalToSuperview()
-            make.width.equalTo(270)
+        let collectionView = VideoListCollectionView.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: layout)
+        self.view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { (make) in
+            make.left.equalToSuperview()
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+            make.width.equalTo(375)
         }
-        collection.cellItemSelected = { indexPath in
-            // 点击事件
-            if(self.cellIitemSelected != nil){
-                self.cellIitemSelected!(indexPath)
+        collectionView.cellItemSelected = { indexPath in
+            // cell点击，跳转到视频详情
+            if self.cellItemSelected != nil{
+                self.cellItemSelected!(indexPath)
             }
         }
-        return collection
+        return collectionView
     }()
     
-
     /*
     // MARK: - Navigation
 

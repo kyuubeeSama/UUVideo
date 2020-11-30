@@ -10,6 +10,6 @@ import UIKit
 
 class ListModel: NSObject {
     var title:String?
-    var more:Bool?
+    var more:Bool? = false
     var list:[VideoModel]?
 }

@@ -104,8 +104,8 @@ class LkbVideoViewController: BaseViewController {
         }
         mainCollection.cellItemSelected = { indexPath in
             let listModel = mainCollection.listArr![indexPath.section]
-            let VC = WebVideoPlayerViewController.init()
-            VC.model = listModel.list![indexPath.row]
+            let VC = NetVideoDetailViewController.init()
+            VC.videoModel = listModel.list![indexPath.row]
             self.navigationController?.pushViewController(VC, animated: true)
         }
         return mainCollection

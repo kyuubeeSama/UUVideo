@@ -52,7 +52,7 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
             //TODO:播放界面为webview
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "playerCell", for: indexPath)
             let webView = WKWebView.init()
-            webView.frame = CGRect(x: 0, y: 0, width: screenW, height: 300)
+            webView.frame = CGRect(x: 0, y: 0, width: screenW-20, height: 300)
             cell.contentView .addSubview(webView)
             webView.backgroundColor = .black
             webView.load(URLRequest.init(url: URL.init(string: (model?.videoUrl)!)!))

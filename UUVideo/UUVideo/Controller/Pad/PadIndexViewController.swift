@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import FluentDarkModeKit
+import SideMenu
 class PadIndexViewController: BaseViewController,UISearchBarDelegate {
     var allVideoArr:[[Any]] = [[],[],[]]
     var tableIndex:Int = 0
@@ -25,6 +26,19 @@ class PadIndexViewController: BaseViewController,UISearchBarDelegate {
         self.mainTable.listArr = ["本地视频","新番时间表","哈哩TV"]
         self.getVideo()
         NotificationCenter.default.addObserver(self, selector: #selector(didChangeRotate(notice:)), name: UIApplication.didChangeStatusBarFrameNotification, object: nil)
+        // 添加右侧图片
+        let item = UIBarButtonItem.init(image: UIImage.init(systemName: "person.circle"), style: .plain, target: self, action: #selector(showUser))
+        self.navigationItem.leftBarButtonItem = item
+    }
+    
+    @objc func showUser(){
+        print("显示个人中心")
+        let VC = UserViewController.init()
+        let menu = SideMenuNavigationController(rootViewController: VC)
+        menu.presentationStyle = .menuSlideIn
+        menu.menuWidth = 375
+        menu.leftSide = true
+        present(menu, animated: true, completion: nil)
     }
     
     @objc func didChangeRotate(notice:Notification){
