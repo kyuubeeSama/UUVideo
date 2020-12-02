@@ -3,9 +3,9 @@ PODS:
   - EmptyDataSet-Swift (5.0.0)
   - ESPullToRefresh (2.9.3)
   - FluentDarkModeKit (1.0.1)
-  - GRDB.swift (5.1.0):
-    - GRDB.swift/standard (= 5.1.0)
-  - GRDB.swift/standard (5.1.0)
+  - GRDB.swift (5.2.0):
+    - GRDB.swift/standard (= 5.2.0)
+  - GRDB.swift/standard (5.2.0)
   - HandyJSON (5.0.2)
   - IQKeyboardManagerSwift (6.5.6)
   - Ji (5.0.0)
@@ -120,7 +120,7 @@ SPEC CHECKSUMS:
   EmptyDataSet-Swift: eb382c0c87a2d9c678077385a595cec52da38171
   ESPullToRefresh: 0d68daa602b343c81753a1b95e09fd0bfcddfd40
   FluentDarkModeKit: 0c5f31ca81eb058f3e8b6d79b3d08afbe7c40c42
-  GRDB.swift: 9bc45e93b2aa2fa6d02bee883d803d1d187efb2f
+  GRDB.swift: f44f61fd032e176e3aadb1f70e15656dc50ca018
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
   Ji: d795fed288fe78658b404c88946d753b17d8d7f4

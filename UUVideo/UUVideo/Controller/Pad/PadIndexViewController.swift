@@ -123,8 +123,9 @@ class PadIndexViewController: BaseViewController,UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if searchBar.text!.count>0 {
-            let VC = HaliTVSearchResultViewController.init()
+            let VC = SearchResultViewController.init()
             VC.keyword = searchBar.text
+            VC.websiteValue = .haliTV
             self.navigationController?.pushViewController(VC, animated: true)
         }else{
             self.mainCollect.makeToast("请输入有效内容")

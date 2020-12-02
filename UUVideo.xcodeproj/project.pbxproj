@@ -63,7 +63,7 @@
 		A9CBF74624EF6D38002BD074 /* PadNetVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBF74524EF6D38002BD074 /* PadNetVideoPlayerViewController.swift */; };
 		A9CBF74824EF9976002BD074 /* RightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBF74724EF9976002BD074 /* RightViewController.swift */; };
 		A9F44FDE253D277700224DA5 /* CategoryBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F44FDD253D277700224DA5 /* CategoryBottomView.swift */; };
-		A9F44FE1253D379700224DA5 /* HaliTVSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F44FE0253D379700224DA5 /* HaliTVSearchResultViewController.swift */; };
+		A9F44FE1253D379700224DA5 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F44FE0253D379700224DA5 /* SearchResultViewController.swift */; };
 		A9FAD15025304066001A748C /* HaliTVVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FAD14F25304066001A748C /* HaliTVVideoViewController.swift */; };
 		A9FB284F24E67B6900F53E74 /* VideoListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FB284D24E67B6900F53E74 /* VideoListCollectionViewCell.swift */; };
 		A9FB285024E67B6900F53E74 /* VideoListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9FB284E24E67B6900F53E74 /* VideoListCollectionViewCell.xib */; };
@@ -135,7 +135,7 @@
 		A9CBF74524EF6D38002BD074 /* PadNetVideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadNetVideoPlayerViewController.swift; sourceTree = "<group>"; };
 		A9CBF74724EF9976002BD074 /* RightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightViewController.swift; sourceTree = "<group>"; };
 		A9F44FDD253D277700224DA5 /* CategoryBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBottomView.swift; sourceTree = "<group>"; };
-		A9F44FE0253D379700224DA5 /* HaliTVSearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaliTVSearchResultViewController.swift; sourceTree = "<group>"; };
+		A9F44FE0253D379700224DA5 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 		A9FAD14F25304066001A748C /* HaliTVVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaliTVVideoViewController.swift; sourceTree = "<group>"; };
 		A9FB284D24E67B6900F53E74 /* VideoListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListCollectionViewCell.swift; sourceTree = "<group>"; };
 		A9FB284E24E67B6900F53E74 /* VideoListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoListCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -285,7 +285,7 @@
 			isa = PBXGroup;
 			children = (
 				A9FAD14F25304066001A748C /* HaliTVVideoViewController.swift */,
-				A9F44FE0253D379700224DA5 /* HaliTVSearchResultViewController.swift */,
+				A9F44FE0253D379700224DA5 /* SearchResultViewController.swift */,
 				A97F52022537EC93008B872A /* CategoryChooseViewController.swift */,
 				A984955425512B530007D0B8 /* LkbVideoViewController.swift */,
 				A9967C1C256265AA00752CB7 /* UserViewController.swift */,
@@ -504,7 +504,7 @@
 				A906DB1524EBB08300C070E4 /* VideoTableCollectionViewCell.swift in Sources */,
 				A92AC00C25529D28001EBD12 /* NetVideoDetailCollectionView.swift in Sources */,
 				A950E2C024E67356000CBB92 /* FileTool.swift in Sources */,
-				A9F44FE1253D379700224DA5 /* HaliTVSearchResultViewController.swift in Sources */,
+				A9F44FE1253D379700224DA5 /* SearchResultViewController.swift in Sources */,
 				A950E2BF24E67356000CBB92 /* QYRequestData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

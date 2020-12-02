@@ -219,40 +219,53 @@ class DataManager: NSObject {
     }
     
     // 搜索数据
-    func getHaliTVSearchData(urlStr:String,keyword:String,success:@escaping(_ searchData:[ListModel])->()){
+    func getSearchData(urlStr:String,keyword:String,website:WebsiteName,success:@escaping(_ searchData:[ListModel])->()){
         let newUrlStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        
         let jiDoc = Ji(htmlURL: URL.init(string: newUrlStr)!)
-        // 获取当前选中的状态，如果是视频，继续判断，否则返回空
-//        /html/body/div[2]/div/div[1]/div/ul/li[2]/a/@class
-        let activeNodeArr = jiDoc?.xPath("/html/body/div[2]/div/div[1]/div/ul/li[2]/a/@class")
-//        /html/body/div[2]/div/div[1]/div/ul/li[3]/a/@class
-        if activeNodeArr![0].content == "active" {
-            //            标题
-            let titleNodeArr = jiDoc?.xPath("//*[@id=\"content\"]/div/div[1]/a/@title")
-            //            详情
-            let detailNodeArr = jiDoc?.xPath("//*[@id=\"content\"]/div/div[1]/a/@href")
-            //            状态
-            let updateNodeArr = jiDoc?.xPath("//*[@id=\"content\"]/div/div[2]/ul/li[3]/text()")
-            //            封面
-            let imgNodeArr = jiDoc?.xPath("//*[@id=\"content\"]/div/div[1]/a/@data-original")
-            let listModel = ListModel.init()
-            listModel.title = "搜索关键字:"+keyword
-            listModel.more = false
-            listModel.list = []
-            for (index,_) in titleNodeArr!.enumerated(){
-                let videoModel = VideoModel.init()
-                videoModel.name = titleNodeArr![index].content
-                videoModel.detailUrl = detailNodeArr![index].content
-                videoModel.num = updateNodeArr![index].content
-                videoModel.picUrl = imgNodeArr![index].content
-                videoModel.type = 3
-                listModel.list?.append(videoModel)
+        let listModel = ListModel.init()
+        listModel.title = "搜索关键字:"+keyword
+        listModel.more = false
+        listModel.list = []
+        var titleNodeArr:[JiNode] = []
+        var detailNodeArr:[JiNode] = []
+        var updateNodeArr:[JiNode] = []
+        var imgNodeArr:[JiNode] = []
+        
+        if website == .haliTV {
+            // 获取当前选中的状态，如果是视频，继续判断，否则返回空
+    //        /html/body/div[2]/div/div[1]/div/ul/li[2]/a/@class
+            let activeNodeArr = jiDoc?.xPath("/html/body/div[2]/div/div[1]/div/ul/li[2]/a/@class")
+    //        /html/body/div[2]/div/div[1]/div/ul/li[3]/a/@class
+            if activeNodeArr![0].content == "active" {
+                //            标题
+                titleNodeArr = (jiDoc?.xPath("//*[@id=\"content\"]/div/div[1]/a/@title"))!
+                //            详情
+                detailNodeArr = (jiDoc?.xPath("//*[@id=\"content\"]/div/div[1]/a/@href"))!
+                //            状态
+                updateNodeArr = (jiDoc?.xPath("//*[@id=\"content\"]/div/div[2]/ul/li[3]/text()"))!
+                //            封面
+                imgNodeArr = (jiDoc?.xPath("//*[@id=\"content\"]/div/div[1]/a/@data-original"))!
             }
-            success([listModel])
-        }else{
-            success([])
+        }else if website == .laiKuaiBo{
+            titleNodeArr = (jiDoc?.xPath("/html/body/div[1]/ul/li/h2/a"))!
+            detailNodeArr = (jiDoc?.xPath("/html/body/div[1]/ul/li/h2/a/@href"))!
+            updateNodeArr = (jiDoc?.xPath("/html/body/div[1]/ul/li/p/a/span"))!
+            imgNodeArr = (jiDoc?.xPath("/html/body/div[1]/ul/li/p/a/img/@data-original"))!
         }
+        for (index,_) in titleNodeArr.enumerated(){
+            let videoModel = VideoModel.init()
+            videoModel.name = titleNodeArr[index].content
+            videoModel.num = updateNodeArr[index].content
+            var baseUrl = ""
+            if website == .laiKuaiBo {
+                baseUrl = "https://www.laikuaibo.com/"
+            }
+            videoModel.detailUrl = baseUrl+detailNodeArr[index].content!
+            videoModel.picUrl = baseUrl+imgNodeArr[index].content!
+            videoModel.type = 3
+            listModel.list?.append(videoModel)
+        }
+        success([listModel])
     }
     
     //获取来快播

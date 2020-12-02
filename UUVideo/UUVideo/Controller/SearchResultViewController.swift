@@ -1,5 +1,5 @@
 //
-//  HaliTVSearchResultViewController.swift
+//  SearchResultViewController.swift
 //  UUVideo
 //
 //  Created by Galaxy on 2020/10/19.
@@ -8,10 +8,17 @@
 
 import UIKit
 import EmptyDataSet_Swift
-class HaliTVSearchResultViewController: BaseViewController {
+
+enum WebsiteName {
+    case haliTV
+    case laiKuaiBo
+}
+
+class SearchResultViewController: BaseViewController {
 
     var keyword:String?
     var pageNum:Int = 1
+    var websiteValue:WebsiteName?
     var listArr:[ListModel] = []
     
     override func viewDidLoad() {
@@ -24,9 +31,14 @@ class HaliTVSearchResultViewController: BaseViewController {
     
     //获取搜索数据
     func getResultList(){
-//        https://www.halitv.com/search/%E9%A3%9F%E6%88%9F%E4%B9%8B%E7%81%B5-1.html
-        let urlStr = "https://www.halitv.com/search/"+self.keyword!+"-\(self.pageNum).html"
-        DataManager.init().getHaliTVSearchData(urlStr: urlStr, keyword: self.keyword!) { (resultArr) in
+        var urlStr:String?
+        if self.websiteValue! == .haliTV {
+            urlStr = "https://www.halitv.com/search/"+keyword!+"-\(pageNum).html"
+        }else if websiteValue! == .laiKuaiBo{
+//            https://www.laikuaibo.com/vod-search-wd-%E5%A4%A9-p-2.html
+            urlStr = "https://www.laikuaibo.com/vod-search-wd-"+keyword!+"-p-\(pageNum).html"
+        }
+        DataManager.init().getSearchData(urlStr: urlStr!, keyword: self.keyword!, website: self.websiteValue!) { (resultArr) in
             if(resultArr.count>0){
                 self.pageNum += 1
                 self.mainCollect.es.stopLoadingMore()
@@ -55,9 +67,15 @@ class HaliTVSearchResultViewController: BaseViewController {
         }
         mainCollection.cellItemSelected = { indexPath in
             let listModel = mainCollection.listArr![indexPath.section]
-            let VC = WebVideoPlayerViewController.init()
-            VC.model = listModel.list![indexPath.row]
-            self.navigationController?.pushViewController(VC, animated: true)
+            if self.websiteValue! == .laiKuaiBo{
+                let VC = NetVideoDetailViewController.init()
+                VC.videoModel = listModel.list![indexPath.row]
+                self.navigationController?.pushViewController(VC, animated: true)
+            }else if self.websiteValue! == .haliTV{
+                let VC = WebVideoPlayerViewController.init()
+                VC.model = listModel.list![indexPath.row]
+                self.navigationController?.pushViewController(VC, animated: true)
+            }
         }
         mainCollection.emptyDataSetView { (view) in
             view.titleLabelString(NSAttributedString.init(string: "当前搜索无数据"))

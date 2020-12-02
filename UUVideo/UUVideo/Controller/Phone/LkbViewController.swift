@@ -44,8 +44,9 @@ class LkbViewController: BaseViewController,UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.view.endEditing(true)
         if searchBar.text!.count>0 {
-            let VC = HaliTVSearchResultViewController.init()
+            let VC = SearchResultViewController.init()
             VC.keyword = searchBar.text
+            VC.websiteValue = .laiKuaiBo
             self.navigationController?.pushViewController(VC, animated: true)
         }else{
             self.view.makeToast("请输入有效内容")
