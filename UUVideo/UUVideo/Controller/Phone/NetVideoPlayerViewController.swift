@@ -21,17 +21,23 @@ class NetVideoPlayerViewController: BaseViewController {
     // 获取数据
     func getData(){
         let model = self.model?.serialArr![index]
-        DataManager.init().getLkbVideoDetailData(urlStr:"https://www.laikuaibo.com"+(model?.detailUrl)!) { (resultModel) in
-            print(resultModel)
-//            保存数据库到历史记录表中
-            let databasePath = FileTool.init().getDocumentPath()+"/database.db"
-            let dbQueue = try? DatabaseQueue(path: databasePath)
-            try? dbQueue?.write { db in
-                try? db.execute(sql: """
-                                     INSERT INTO history ('name','url',add_time) VALUES(:name,:url,:add_time)
-                                     """,arguments: [resultModel.name,resultModel.detailUrl,Date.getCurrentTimeInterval()])
+        self.view.makeToastActivity(.center)
+        DispatchQueue.global().async {
+            DataManager.init().getLkbVideoDetailData(urlStr:"https://www.laikuaibo.com"+(model?.detailUrl)!) { (resultModel) in
+                self.view.hideToastActivity()
+                DispatchQueue.main.async {
+                    print(resultModel)
+        //            保存数据库到历史记录表中
+                    let databasePath = FileTool.init().getDocumentPath()+"/database.db"
+                    let dbQueue = try? DatabaseQueue(path: databasePath)
+                    try? dbQueue?.write { db in
+                        try? db.execute(sql: """
+                                             INSERT INTO history ('name','url',add_time) VALUES(:name,:url,:add_time)
+                                             """,arguments: [resultModel.name,resultModel.detailUrl,Date.getCurrentTimeInterval()])
+                    }
+                    self.mainCollect.model = resultModel
+                }
             }
-            self.mainCollect.model = resultModel
         }
     }
     // collectionview

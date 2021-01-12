@@ -23,8 +23,14 @@ class LkbViewController: BaseViewController,UISearchBarDelegate {
     }
     
     func getVideoData(){
-        DataManager.init().getLkbData(urlStr: "https://www.laikuaibo.com/", type: 1) { (resultArr, page) in
-            self.mainCollect.listArr = resultArr
+        self.view.makeToastActivity(.center)
+        DispatchQueue.global().async {
+            DataManager.init().getLkbData(urlStr: "https://www.laikuaibo.com/", type: 1) { (resultArr, page) in
+                DispatchQueue.main.async {
+                    self.view.hideToastActivity()
+                    self.mainCollect.listArr = resultArr
+                }
+            }
         }
     }
     

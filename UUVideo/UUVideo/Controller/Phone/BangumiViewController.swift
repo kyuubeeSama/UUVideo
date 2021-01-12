@@ -17,12 +17,16 @@ class BangumiViewController: BaseViewController {
         
         let dataManager = DataManager.init()
         self.view.makeToastActivity(.center)
-        dataManager.getBangumiData { [self] (dataArr) in
-            self.view.hideToastActivity()
-            listArr = dataArr
-            self.chooseView.index = 0
-        } failure: { (error) in
-            print(error)
+        DispatchQueue.global().async {
+            dataManager.getBangumiData { [self] (dataArr) in
+                DispatchQueue.main.async {
+                    self.view.hideToastActivity()
+                    listArr = dataArr
+                    self.chooseView.index = 0
+                }
+            } failure: { (error) in
+                print(error)
+            }
         }
     }
     

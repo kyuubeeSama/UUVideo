@@ -23,9 +23,15 @@ class HaliTVViewController: BaseViewController,UISearchBarDelegate {
     }
     
     func getVideoData(){
-        DataManager.init().getHaliTVData(urlStr: "https://www.halitv.com/",
-                                         type: 1) { (resultArr, page) in
-            self.mainCollect.listArr = resultArr
+        self.view.makeToastActivity(.center)
+        DispatchQueue.global().async {
+            DataManager.init().getHaliTVData(urlStr: "https://www.halitv.com/",
+                                             type: 1) { (resultArr, page) in
+                DispatchQueue.main.async {
+                    self.view.hideToastActivity()
+                    self.mainCollect.listArr = resultArr
+                }
+            }
         }
     }
     

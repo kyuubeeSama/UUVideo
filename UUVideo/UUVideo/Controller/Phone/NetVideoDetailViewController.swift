@@ -21,8 +21,14 @@ class NetVideoDetailViewController: BaseViewController {
     
     // 获取详情数据
     func getLkbDetailData() {
-        DataManager.init().getLkbVideoInfoData(urlStr: (videoModel?.detailUrl)!) { (videoModel) in
-            self.mainCollect.model = videoModel
+        self.view.makeToastActivity(.center)
+        DispatchQueue.global().async { [self] in
+            DataManager.init().getLkbVideoInfoData(urlStr: (videoModel?.detailUrl)!) { (videoModel) in
+                DispatchQueue.main.async {
+                    self.view.hideToastActivity()
+                    self.mainCollect.model = videoModel
+                }
+            }
         }
     }
 
