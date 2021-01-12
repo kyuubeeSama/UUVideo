@@ -5,9 +5,9 @@
 //  Created by Galaxy on 2020/11/19.
 //  Copyright © 2020 qykj. All rights reserved.
 //  视频播放界面
-
+// TODO:添加播放记录到数据库
 import UIKit
-
+import GRDB
 class NetVideoPlayerViewController: BaseViewController {
     
     var model:VideoModel?
@@ -23,6 +23,14 @@ class NetVideoPlayerViewController: BaseViewController {
         let model = self.model?.serialArr![index]
         DataManager.init().getLkbVideoDetailData(urlStr:"https://www.laikuaibo.com"+(model?.detailUrl)!) { (resultModel) in
             print(resultModel)
+//            保存数据库到历史记录表中
+            let databasePath = FileTool.init().getDocumentPath()+"/database.db"
+            let dbQueue = try? DatabaseQueue(path: databasePath)
+            try? dbQueue?.write { db in
+                try? db.execute(sql: """
+                                     INSERT INTO history ('name','url',add_time) VALUES(:name,:url,:add_time)
+                                     """,arguments: [resultModel.name,resultModel.detailUrl,Date.getCurrentTimeInterval()])
+            }
             self.mainCollect.model = resultModel
         }
     }

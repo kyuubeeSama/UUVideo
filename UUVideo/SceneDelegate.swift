@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GRDB
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -18,15 +19,44 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 //        guard let _ = (scene as? UIWindowScene) else { return }
-        
+        // 创建数据库文件。
+        let dataBasePath = FileTool.init().getDocumentPath() + "/database.db";
+        let result = FileTool.init().createFile(document: "/database.db", fileData: Data.init())
+        if result {
+            let dbQueue = try? DatabaseQueue(path: dataBasePath)
+            try? dbQueue?.write({ (db) in
+//                创建浏览历史表
+                try? db.execute(sql: """
+                                      CREATE TABLE IF NOT EXISTS history(
+                                      id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                      name TEXT NOT NULL,
+                                      url TEXT NOT NULL UNIQUE,
+                                      video_id INTEGER DEFAULT(0),
+                                      add_time INTEGER
+                                      )
+                                     """)
+//                创建收藏表
+                try? db.execute(sql: """
+                                     CREATE TABLE IF NOT EXISTS collect(
+                                     id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                     name TEXT NOT NULL,
+                                     url TEXT NOT NULL UNIQUE,
+                                     video_id INTEGER DEFAULT(0),
+                                     add_time INTEGER
+                                     )
+                                     """)
+            })
+        }
+
+        print(FileTool.init().getDocumentPath())
         let windowScene = scene as! UIWindowScene
         self.window = UIWindow.init(windowScene: windowScene)
         self.window?.backgroundColor = .systemBackground
         var index = BaseViewController.init()
         if Tool.isPad() {
             index = PadIndexViewController.init()
-        }else{
-           index = PhoneIndexViewController.init()
+        } else {
+            index = PhoneIndexViewController.init()
         }
         let nav = UINavigationController.init(rootViewController: index)
         self.window?.rootViewController = nav
@@ -60,6 +90,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
+
     // 文件转入提醒
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let url = URLContexts.first?.url else {
@@ -68,25 +99,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         print("音乐文件只是\(url.absoluteString)")
         let fileName = url.lastPathComponent
         var path = url.absoluteString
-        if path.contains("file://"){
+        if path.contains("file://") {
             print("\(path)")
             path = path.replacingOccurrences(of: "file:///private", with: "")
 //            path = path.replacingOccurrences(of: "%20", with: " ")
-            let localPath = FileTool.init().getDocumentPath()+"/video/"+fileName
+            let localPath = FileTool.init().getDocumentPath() + "/video/" + fileName
             print("目标保存位置是:\(localPath)")
-            let dic = ["fileName":fileName,"filePath":path]
+            let dic = ["fileName": fileName, "filePath": path]
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: localPath) {
                 // 文件不存在，重新拷贝
                 print("文件已存在")
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FileExistsNotification"), object: nil, userInfo: dic)
-            }else{
+            } else {
                 // 文件已存在
                 print("本地没有该文件，文件原始位置是\(path),目标位置是\(localPath)")
-                do{
+                do {
                     try fileManager.copyItem(atPath: path, toPath: localPath)
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FileSaveSuccessNotification"), object: nil, userInfo: dic)
-                }catch let error{
+                } catch let error {
                     print("外部文件本地保存失败，\(error)");
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FileSaveFieldFileNotification"), object: nil, userInfo: dic)
                 }

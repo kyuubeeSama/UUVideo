@@ -5,10 +5,12 @@
 //  Created by Galaxy on 2020/8/18.
 //  Copyright © 2020 qykj. All rights reserved.
 // 视频网页地址
+// TODO:添加播放记录到数据库
 
 import UIKit
 import WebKit
 import SnapKit
+import GRDB
 class WebVideoPlayerViewController: BaseViewController {
 
     var model:VideoModel?
@@ -16,14 +18,18 @@ class WebVideoPlayerViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+//            保存数据库到历史记录表中
+        let databasePath = FileTool.init().getDocumentPath()+"/database.db"
+        let dbQueue = try? DatabaseQueue(path: databasePath)
+        try? dbQueue?.write { db in
+            try? db.execute(sql: """
+                                 INSERT INTO history ('name','url',add_time) VALUES(:name,:url,:add_time)
+                                 """,arguments: [model?.name,model?.detailUrl,Date.getCurrentTimeInterval()])
+        }
         var urlStr = model?.detailUrl?.replacingOccurrences(of: ".html", with: "-1-1.html")
         urlStr = urlStr?.replacingOccurrences(of: "detail", with: "play")
         webView.makeToastActivity(.center)
         webView.load(URLRequest.init(url: URL.init(string: "https://m.halitv.com/"+urlStr!)!))
-//        webView.scrollView.es.addPullToRefresh { [self] in
-//            webView.reload()
-//            webView.scrollView.es.stopPullToRefresh()
-//        }
     }
     
     lazy var webView: QYWebView = {

@@ -49,7 +49,7 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
             // 番剧类似tableview的样式
             let cell:VideoTableCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "tableCell", for: indexPath) as! VideoTableCollectionViewCell
             cell.titleLab.text = model.name
-            //FIXME:文字定格显示
+            //FIXME:文字顶格显示
             cell.titleLab.sizeToFit()
             cell.leftImg.kf.setImage(with: URL.init(string: model.picUrl!))
             cell.numLab.text = model.num

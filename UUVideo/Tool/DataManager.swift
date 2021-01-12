@@ -74,7 +74,7 @@ class DataManager: NSObject {
                 let urlNode = urlNodeArr![index]
                 let imgNode = imgNodeArr![index]
                 let updateNode = updateNodeArr![index]
-                print("标提是\(titleNode.content) 图片是\(imgNode.content) 详情是\(urlNode.content) 更新信息是\(updateNode.content)")
+//                print("标提是\(titleNode.content) 图片是\(imgNode.content) 详情是\(urlNode.content) 更新信息是\(updateNode.content)")
                 let model = VideoModel.init()
                 model.name = titleNode.content
                 model.picUrl = imgNode.content

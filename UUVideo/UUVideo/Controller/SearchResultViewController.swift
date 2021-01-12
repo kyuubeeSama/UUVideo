@@ -20,6 +20,7 @@ class SearchResultViewController: BaseViewController {
     var pageNum:Int = 1
     var websiteValue:WebsiteName?
     var listArr:[ListModel] = []
+    var searchArr:[String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,14 +40,39 @@ class SearchResultViewController: BaseViewController {
             urlStr = "https://www.laikuaibo.com/vod-search-wd-"+keyword!+"-p-\(pageNum).html"
         }
         DataManager.init().getSearchData(urlStr: urlStr!, keyword: self.keyword!, website: self.websiteValue!) { (resultArr) in
-            if(resultArr.count>0){
+            if self.checkSearchResult(searchArr: resultArr) {
                 self.pageNum += 1
                 self.mainCollect.es.stopLoadingMore()
+                if self.listArr.count > 0{
+                    let model = self.listArr[0]
+                    let resultModel = resultArr[0]
+                    model.list! += resultModel.list!
+                }else{
+                    self.listArr.append(contentsOf: resultArr)
+                }
+                self.mainCollect.listArr = self.listArr
             }else{
                 self.mainCollect.es.noticeNoMoreData()
             }
-            self.listArr.append(contentsOf: resultArr)
-            self.mainCollect.listArr = self.listArr
+        }
+    }
+    
+    // 判断是否有重复的内容
+    func checkSearchResult(searchArr:[ListModel]) -> Bool {
+        if searchArr.count > 0 {
+            let resultModel = searchArr[0]
+            for videoModel in resultModel.list! {
+                if self.searchArr.contains(videoModel.detailUrl!) {
+                    // 已存在，说明已经到底了，结束循环
+                    // 因为每次出现重复，说明是整页的重复，表明整页都是无用数据
+                    return false
+                }else{
+                    self.searchArr.append(videoModel.detailUrl!)
+                }
+            }
+            return true
+        }else{
+            return false
         }
     }
     

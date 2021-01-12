@@ -49,15 +49,16 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
         // 三种样式，一种是剧集介绍
         if indexPath.section == 0 {
             // 播放界面
-            //TODO:播放界面为webview
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "playerCell", for: indexPath)
             let webView = WKWebView.init()
+            cell.contentView.addSubview(webView)
             webView.snp.makeConstraints { (make) in
                 make.left.right.top.equalToSuperview()
                 make.height.equalTo(300)
             }
-            cell.contentView .addSubview(webView)
             webView.backgroundColor = .black
+            webView.uiDelegate = self
+            webView.navigationDelegate = self
             webView.load(URLRequest.init(url: URL.init(string: (model?.videoUrl)!)!))
             return cell
         }else if indexPath.section == 1{
@@ -141,6 +142,14 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
         if self.cellItemSelected != nil {
             self.cellItemSelected!(indexPath)
         }
+    }
+    
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        webView.makeToastActivity(.center)
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        webView.hideToastActivity()
     }
     
     required init?(coder: NSCoder) {
