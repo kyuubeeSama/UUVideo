@@ -20,8 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 //        guard let _ = (scene as? UIWindowScene) else { return }
         // 创建数据库文件。
-        let dataBasePath = FileTool.init().getDocumentPath() + "/database.db";
-        let result = FileTool.init().createFile(document: "/database.db", fileData: Data.init())
+        let dataBasePath = FileTool.init().getDocumentPath() + "/.database.db";
+        let result = FileTool.init().createFile(document: "/.database.db", fileData: Data.init())
         if result {
             let dbQueue = try? DatabaseQueue(path: dataBasePath)
             try? dbQueue?.write({ (db) in

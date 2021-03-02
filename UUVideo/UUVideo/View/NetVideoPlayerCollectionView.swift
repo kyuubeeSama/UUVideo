@@ -32,13 +32,11 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        3
+        2
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0{
-            return 1
-        }else if section == 1{
             return (self.model?.serialArr!.count)!
         }else {
             return (self.model?.videoArr!.count)!
@@ -47,21 +45,7 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // 三种样式，一种是剧集介绍
-        if indexPath.section == 0 {
-            // 播放界面
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "playerCell", for: indexPath)
-            let webView = WKWebView.init()
-            cell.contentView.addSubview(webView)
-            webView.snp.makeConstraints { (make) in
-                make.left.right.top.equalToSuperview()
-                make.height.equalTo(300)
-            }
-            webView.backgroundColor = .black
-            webView.uiDelegate = self
-            webView.navigationDelegate = self
-            webView.load(URLRequest.init(url: URL.init(string: (model?.videoUrl)!)!))
-            return cell
-        }else if indexPath.section == 1{
+        if indexPath.section == 0{
             //            剧集列表
             let serialModel = self.model?.serialArr![indexPath.row]
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "serialCell", for: indexPath) as! VideoCategoryCollectionViewCell
@@ -85,10 +69,7 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
     }
                           
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if indexPath.section == 0 {
-            //            图片比例加上下空格
-            return CGSize(width: screenW, height: 300)
-        }else if indexPath.section == 1{
+        if indexPath.section == 0{
             let serialModel = self.model?.serialArr![indexPath.row]
             // 根据字体大小计算
             let size = serialModel!.name?.getStringSize(font: UIFont.systemFont(ofSize: 15), size: CGSize(width: Double(MAXFLOAT), height: 15.0))
@@ -101,19 +82,15 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if section == 0{
-            return CGSize(width: screenW, height: 0)
-        }else {
-            return CGSize(width: screenW, height: 60)
-        }
+        CGSize(width: screenW, height: 60)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        10
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        10
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -134,7 +111,7 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 1{
+        if indexPath.section == 0{
             // 剧集点击，修改为选中状态
             let model:SerialModel = (self.model?.serialArr![indexPath.row])!
             model.ischoose = !model.ischoose!

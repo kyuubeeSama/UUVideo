@@ -25,7 +25,7 @@ class PadNetVideoPlayerViewController: BaseViewController {
         // Do any additional setup after loading the view.
         self.setNav()
         self.reloadWebView()
-        let databasePath = FileTool.init().getDocumentPath() + "/database.db"
+        let databasePath = FileTool.init().getDocumentPath() + "/.database.db"
         let dbQueue = try? DatabaseQueue(path: databasePath)
         try? dbQueue?.write { db in
             try? db.execute(sql: """
@@ -49,7 +49,7 @@ class PadNetVideoPlayerViewController: BaseViewController {
 
     func setNav() {
         let baritem = UIBarButtonItem.init(image: UIImage.init(systemName: "slider.horizontal.3"), style: .done, target: self, action: #selector(leftSideMenu))
-        let databasePath = FileTool.init().getDocumentPath() + "/database.db"
+        let databasePath = FileTool.init().getDocumentPath() + "/.database.db"
         let dbQueue = try? DatabaseQueue(path: databasePath)
         // 从数据库查询当前视频是否收藏
         var imageName = "star"
@@ -77,7 +77,7 @@ class PadNetVideoPlayerViewController: BaseViewController {
 
     @objc func collect() {
         // 修改按钮图片
-        let databasePath = FileTool.init().getDocumentPath() + "/database.db"
+        let databasePath = FileTool.init().getDocumentPath() + "/.database.db"
         let dbQueue = try? DatabaseQueue(path: databasePath)
         if self.is_collect {
             // 取消收藏

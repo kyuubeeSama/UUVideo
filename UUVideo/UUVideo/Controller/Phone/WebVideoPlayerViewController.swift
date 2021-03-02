@@ -19,7 +19,7 @@ class WebVideoPlayerViewController: BaseViewController {
 
         // Do any additional setup after loading the view.
 //            保存数据库到历史记录表中
-        let databasePath = FileTool.init().getDocumentPath()+"/database.db"
+        let databasePath = FileTool.init().getDocumentPath()+"/.database.db"
         let dbQueue = try? DatabaseQueue(path: databasePath)
         try? dbQueue?.write { db in
             try? db.execute(sql: """
