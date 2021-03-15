@@ -49,9 +49,9 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
             // 番剧类似tableview的样式
             let cell:VideoTableCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "tableCell", for: indexPath) as! VideoTableCollectionViewCell
             cell.titleLab.text = model.name
+            cell.titleLab.alignTop()
             //FIXME:文字顶格显示
-            cell.titleLab.sizeToFit()
-            cell.leftImg.kf.setImage(with: URL.init(string: model.picUrl!))
+            cell.leftImg.kf.setImage(with: URL.init(string: model.picUrl), placeholder: UIImage.init(named: "placeholder.jpg"), options: nil, completionHandler: nil)
             cell.numLab.text = model.num
             return cell
         }else {
@@ -59,7 +59,8 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
             let cell:VideoListCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! VideoListCollectionViewCell
             cell.titleLab.text = model.name
             if model.type == 3 {
-                cell.picImage.kf.setImage(with: URL.init(string: model.picUrl!))
+                
+                cell.picImage.kf.setImage(with: URL.init(string: model.picUrl))
             }else{
                 cell.picImage.image = model.pic
             }

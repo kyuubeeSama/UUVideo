@@ -85,10 +85,13 @@ class LkbVideoViewController: BaseViewController {
     }
     //     获取分类信息
     func getCategoryData(){
-        DataManager.init().getLkbCategoryData(urlStr: urlStr+"list-select-id-\(videoType)-area-\(area)-order-\(order)-p-\(pageNum).html)") { (resutlArr) in
-            self.categoryListArr = resutlArr
+        DataManager.init().getWebsiteCategoryData(urlStr: urlStr+"list-select-id-\(videoType)-area-\(area)-order-\(order)-p-\(pageNum).html)", type: .laikuaibo) { (dataArr) in
+            self.categoryListArr = dataArr
+        } failure: { (error) in
+            print(error)
         }
     }
+
     func getMoreData(){
         self.mainCollect.es.addInfiniteScrolling {
             self.getListData()

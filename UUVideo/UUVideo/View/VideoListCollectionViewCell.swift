@@ -15,6 +15,7 @@ class VideoListCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        titleLab.textColor = UIColor.init(.dm, light: .black, dark: .white)
     }
 
 }

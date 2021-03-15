@@ -8,72 +8,57 @@
 
 import UIKit
 import SnapKit
-class BangumiViewController: BaseViewController {
-    var listArr:[[VideoModel]] = []
+import JXSegmentedView
+class BangumiViewController: BaseViewController,JXSegmentedViewDelegate, JXSegmentedListContainerViewDataSource {
+    
+    let segmentedDataSource = JXSegmentedTitleDataSource()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.makeUI()
+    }
+    
+    func makeUI(){
+        let segmentedView = JXSegmentedView.init()
+        segmentedView.delegate = self
+        view.addSubview(segmentedView)
+        segmentedView.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.height.equalTo(40)
+        }
         
-        let dataManager = DataManager.init()
-        self.view.makeToastActivity(.center)
-        DispatchQueue.global().async {
-            dataManager.getBangumiData { [self] (dataArr) in
-                DispatchQueue.main.async {
-                    self.view.hideToastActivity()
-                    listArr = dataArr
-                    self.chooseView.index = 0
-                }
-            } failure: { (error) in
-                print(error)
-            }
+        segmentedDataSource.titles = ["星期一", "星期二", "星期三","星期四","星期五","星期六","星期日"]
+        segmentedDataSource.isTitleColorGradientEnabled = true
+        segmentedDataSource.titleNormalColor = UIColor.init(.dm, light: .black, dark: .white)
+        segmentedView.dataSource = self.segmentedDataSource
+        
+        let indicator = JXSegmentedIndicatorLineView()
+        segmentedView.indicators = [indicator]
+        
+        let listContainerView = JXSegmentedListContainerView(dataSource: self)
+        view.addSubview(listContainerView)
+        //关联listContainer
+        segmentedView.listContainer = listContainerView
+        listContainerView.snp.makeConstraints { (make) in
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(segmentedView.snp.bottom)
         }
     }
     
-    // 头部时间，下面是tableview视频列表
-    lazy var chooseView: CategoryChooseView = {
-        let chooseView = CategoryChooseView.init()
-        self.view.addSubview(chooseView)
-        chooseView.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview()
-            make.height.equalTo(50)
-            make.top.equalToSuperview().offset(top_height);
-        }
-        chooseView.layoutIfNeeded()
-        let config = CategoryChooseConfig.init()
-        config.listArr = ["周一","周二","周三","周四","周五","周六","周日"]
-        config.backColor = UIColor.init(.dm, light: .white, dark: .black)
-        config.titleColor = UIColor.init(.dm, light: .black, dark: .white)
-        config.highLightColor = UIColor.init(.dm, light: .white, dark: .black)
-        chooseView.config = config
-        chooseView.chooseBlock = { index in
-            print(index)
-            let array = self.listArr[index]
-            let listModel = ListModel.init()
-            listModel.title = ""
-            listModel.list = array
-            listModel.more = false
-            self.mainCollection.listArr = [listModel]
-        }
-        return chooseView
-    }()
-    // 创建列表
-    lazy var mainCollection: VideoListCollectionView = {
-        let layout = UICollectionViewFlowLayout.init()
-        let collection = VideoListCollectionView.init(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH), collectionViewLayout: layout)
-        self.view.addSubview(collection)
-        collection.snp.makeConstraints { (make) in
-            make.left.right.bottom.equalToSuperview()
-            make.top.equalTo(self.chooseView.snp.bottom)
-        }
-        collection.cellItemSelected = { indexPath in
-            let listModel = collection.listArr![indexPath.section]
-            let VC = WebVideoPlayerViewController.init()
-            VC.model = listModel.list![indexPath.row]
-            self.navigationController?.pushViewController(VC, animated: true)
-        }
-        return collection
-    }()
+    //返回列表的数量
+    func numberOfLists(in listContainerView: JXSegmentedListContainerView) -> Int {
+        return segmentedDataSource.titles.count
+    }
+    //返回遵从`JXSegmentedListContainerViewListDelegate`协议的实例
+    func listContainerView(_ listContainerView: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
+        let VC = BangumiListViewController.init()
+        VC.index = index
+        return VC
+    }
+   
     /*
     // MARK: - Navigation
 

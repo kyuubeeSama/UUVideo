@@ -5,7 +5,7 @@
 //  Created by Galaxy on 2020/10/9.
 //  Copyright © 2020 qykj. All rights reserved.
 //  halitv 具体分类视频列表
-// 右上角类型筛选按钮,上拉加载,总页码显示，以及页码跳转
+// 右上角类型筛选按钮,上拉加载
 
 import UIKit
 import SideMenu
@@ -13,13 +13,16 @@ import SideMenu
 class HaliTVVideoViewController: BaseViewController {
 
     var pageNum:Int = 1
-    // 电影类型
-    var videoType:String = "_"
+    // 视频类型
+    var videoType:String = ""
     // 电影地区
-    var area:String = "__"
-    // 电影分类
-    var videoCategory:String = ""
-    var urlStr = "https://www.halitv.com/list/"
+    var area:String = "all"
+    // 剧情
+    var videoCategory:String = "0"
+    // 年份
+    var year:String = "0"
+    
+    var urlStr = "http://halihali2.com/"
     var listArr:[ListModel] = []
     var categoryListArr:[CategoryListModel] = []
     
@@ -27,22 +30,16 @@ class HaliTVVideoViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        // 类型+地区+页码
-//        https://www.halitv.com/list/tvban_129__riben____3.html
-        // 类型+页码
-//        https://www.halitv.com/list/tvban_129______3.html
-        // 页码
-//        https://www.halitv.com/list/tvban______3.html
         switch self.title {
-        case "tv动画":
-            videoCategory = "tvban"
-        case "剧场版":
-            videoCategory = "juchangban"
+        case "电视剧":
+            videoType = "tv"
+        case "动漫":
+            videoType = "acg"
         case "电影":
-            videoCategory = "dianying"
+            videoType = "mov"
         default:
-            //剧集
-            videoCategory = "dianshiju"
+            //综艺
+            videoType = "zongyi"
         }
         self.setNav()
         self.getListData()
@@ -65,37 +62,43 @@ class HaliTVVideoViewController: BaseViewController {
             menu.presentationStyle = .menuSlideIn
             menu.menuWidth = screenW*0.9
             present(menu, animated: true, completion: nil)
-            VC.sureBtnReturn = { [self] resultDic in
-                print(resultDic)
-                //            videoCategory videoType area
-                videoCategory = resultDic["videoCategory"]!
-                videoType = "_"+resultDic["videoType"]!
-                area = "__"+resultDic["area"]!
+            VC.sureBtnReturn = { [self] resultArr in
+                print(resultArr)
+                videoCategory = resultArr[0]
+                year = resultArr[1]
+                area = resultArr[2]
                 pageNum = 1
                 self.listArr = []
-                self.getListData()
                 self.getCategoryData()
+                self.getListData()
             }
+        }else{
+            self.view.makeToast("未获取到筛选数据")
         }
     }
 //    获取列表信息
     func getListData(){
-        DataManager.init().getHaliTVData(urlStr: urlStr+"\(videoCategory)\(videoType)\(area)____\(pageNum).html",
-                                         type: 2) { (resultArr, page) in
-            if(resultArr.count>0){
+        let detailUrlStr = "http://121.4.190.96:9991/getsortdata_all_z.php?action=\(videoType)&page=\(pageNum)&year=\(year)&area=\(area)&class=\(videoCategory)&dect=&id="
+        DataManager.init().getVideoListData(urlStr: detailUrlStr, type: .halihali) { (dataArr:[ListModel]) in
+            if(dataArr[0].list!.count>0){
                 self.pageNum += 1
                 self.mainCollect.es.stopLoadingMore()
             }else{
                 self.mainCollect.es.noticeNoMoreData()
             }
-            self.listArr.append(contentsOf: resultArr)
+            self.listArr.append(contentsOf: dataArr)
             self.mainCollect.listArr = self.listArr
+        } failure: { (error) in
+            print(error)
         }
     }
 //     获取分类信息
     func getCategoryData(){
-        DataManager.init().getHaliTVCategoryData(urlStr: urlStr+"\(videoCategory)\(videoType)\(area)____\(pageNum).html") { (resultArr) in
-            self.categoryListArr = resultArr
+//        http://halihali2.com/mov/0/0/all/1.html
+        DataManager.init().getWebsiteCategoryData(urlStr: urlStr+"\(videoType)/\(year)/\(videoCategory)/\(area)/\(pageNum).html", type: .halihali) { (dataArr) in
+            self.categoryListArr = dataArr
+        } failure: { (error) in
+            print(error)
         }
     }
     

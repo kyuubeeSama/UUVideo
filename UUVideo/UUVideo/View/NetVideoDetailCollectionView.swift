@@ -73,7 +73,7 @@ class NetVideoDetailCollectionView: UICollectionView,UICollectionViewDelegate,UI
             let videoModel = self.model?.videoArr![indexPath.row]
             let cell:VideoListCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "videoCell", for: indexPath) as! VideoListCollectionViewCell
             cell.titleLab.text = videoModel!.name
-            cell.picImage.kf.setImage(with: URL.init(string: videoModel!.picUrl!))
+            cell.picImage.kf.setImage(with: URL.init(string: videoModel!.picUrl))
             return cell
         }
     }

@@ -17,7 +17,7 @@ class HaliTVViewController: BaseViewController,UISearchBarDelegate {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        self.title = "哈哩TV"
+        self.title = "哈哩哈哩"
         // 获取哈哩tv数据
         self.getVideoData()
     }
@@ -25,12 +25,13 @@ class HaliTVViewController: BaseViewController,UISearchBarDelegate {
     func getVideoData(){
         self.view.makeToastActivity(.center)
         DispatchQueue.global().async {
-            DataManager.init().getHaliTVData(urlStr: "https://www.halitv.com/",
-                                             type: 1) { (resultArr, page) in
+            DataManager.init().getWebsiteIndexData(type: .halihali) { (dataArr) in
                 DispatchQueue.main.async {
                     self.view.hideToastActivity()
-                    self.mainCollect.listArr = resultArr
+                    self.mainCollect.listArr = dataArr
                 }
+            } failure: { (error) in
+                print(error)
             }
         }
     }

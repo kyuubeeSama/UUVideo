@@ -232,13 +232,17 @@ class PadIndexViewController: BaseViewController,UISearchBarDelegate {
         if array.count == 0 {
             mainCollect.makeToastActivity(.center)
             let dataManager = DataManager.init()
-            dataManager.getBangumiData { (dataArr) in
-                self.mainCollect.hideToastActivity()
-                self.allVideoArr[self.tableIndex] = dataArr
-                self.chooseView.index = 0
-            } failure: { (error) in
-                print(error)
-            }
+//            dataManager.getBangumiData { (dataArr) in
+//                self.mainCollect.hideToastActivity()
+//                self.allVideoArr[self.tableIndex] = dataArr
+//                self.chooseView.index = 0
+//            } failure: { (error) in
+//                DispatchQueue.main.async {
+//                    self.mainCollect.hideToastActivity()
+//                    self.mainCollect.makeToast("获取数据失败")
+//                }
+//                print(error)
+//            }
         }else{
             self.chooseView.index = 0
         }
@@ -258,12 +262,14 @@ class PadIndexViewController: BaseViewController,UISearchBarDelegate {
         mainCollect.reloadData()
         if array.count == 0 {
             mainCollect.makeToastActivity(.center)
+            /*
             DataManager.init().getHaliTVData(urlStr: "https://www.halitv.com/",
                                              type: 1) { (resultArr, page) in
                 self.mainCollect.hideToastActivity()
                 self.allVideoArr[self.tableIndex] = resultArr
                 self.mainCollect.listArr = resultArr
             }
+ */
         }else{
             mainCollect.listArr = array
         }

@@ -11,7 +11,7 @@ import UIKit
 class CategoryChooseViewController: BaseViewController {
 
     var listArr:[CategoryListModel]?
-    var sureBtnReturn:((_ resultDic:[String:String])->())?
+    var sureBtnReturn:((_ resultArr:[String])->())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,26 +43,17 @@ class CategoryChooseViewController: BaseViewController {
         }
         bottomView.sureBtnBlock = {
             // 将选中的界面添加保存在数组中，并返回上一页
-            var valueDic:[String:String] = ["videoCategory":"","videoType":"","area":""]
+            var valueArr:[String] = []
             for listModel in self.mainCollect.listArr! {
                 for categoryModel in listModel.list! {
                     if categoryModel.ischoose == true {
                         //            videoCategory videoType area
-                        if categoryModel.name != "全部" {
-                            if listModel.name == "按分类" {
-                                // 设置到分类
-                                valueDic["videoCategory"] = categoryModel.value?.lowercased()
-                            }else if listModel.name == "按类型"{
-                                valueDic["videoType"] = categoryModel.value
-                            }else{
-                                valueDic["area"] = categoryModel.value
-                            }
-                        }
+                        valueArr.append(categoryModel.value!)
                     }
                 }
             }
             if (self.sureBtnReturn != nil) {
-                self.sureBtnReturn!(valueDic)
+                self.sureBtnReturn!(valueArr)
             }
             self.dismiss(animated: true, completion: nil)
         }

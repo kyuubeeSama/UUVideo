@@ -18,6 +18,7 @@ class HeaderTitleCollectionReusableView: UICollectionReusableView {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
     }
     @IBAction func rightBtnClick(_ sender: UIButton) {
         if (rightBtnBlock != nil) {

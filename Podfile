@@ -33,6 +33,8 @@ target 'UUVideo' do
   pod "Ji"
   # sqlite数据库
   pod 'GRDB.swift'
+  # 导航栏
+  pod 'JXSegmentedView'
   
 end
 

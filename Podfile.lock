@@ -9,6 +9,7 @@ PODS:
   - HandyJSON (5.0.2)
   - IQKeyboardManagerSwift (6.5.6)
   - Ji (5.0.0)
+  - JXSegmentedView (1.2.7)
   - Kingfisher (6.1.1)
   - Masonry (1.1.0)
   - SideMenu (6.5.0)
@@ -85,6 +86,7 @@ DEPENDENCIES:
   - HandyJSON
   - IQKeyboardManagerSwift
   - Ji
+  - JXSegmentedView
   - Kingfisher
   - SideMenu
   - SJVideoPlayer
@@ -102,6 +104,7 @@ SPEC REPOS:
     - HandyJSON
     - IQKeyboardManagerSwift
     - Ji
+    - JXSegmentedView
     - Kingfisher
     - Masonry
     - SideMenu
@@ -122,6 +125,7 @@ SPEC CHECKSUMS:
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
   Ji: d795fed288fe78658b404c88946d753b17d8d7f4
+  JXSegmentedView: eb1cad21f57c2543c00c3e08b8fd3c7ca54f5acd
   Kingfisher: 676d63307fbef6ed5d5ed400bff36983480d7500
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
@@ -133,6 +137,6 @@ SPEC CHECKSUMS:
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 3c6c0eac0e19b3deb5c64cfc0a1aede11328ff47
+PODFILE CHECKSUM: c76c1f7f52303add33760e9ccd936e44d416104f
 
 COCOAPODS: 1.10.1
