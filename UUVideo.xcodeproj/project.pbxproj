@@ -16,7 +16,6 @@
 		A906DB1824EBCDDB00C070E4 /* WebVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB1724EBCDDB00C070E4 /* WebVideoPlayerViewController.swift */; };
 		A90F71192524100F0000D1CF /* HeaderTitleCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90F71172524100F0000D1CF /* HeaderTitleCollectionReusableView.swift */; };
 		A90F711A2524100F0000D1CF /* HeaderTitleCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A90F71182524100F0000D1CF /* HeaderTitleCollectionReusableView.xib */; };
-		A90F711D252411830000D1CF /* HaliTVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90F711C252411830000D1CF /* HaliTVViewController.swift */; };
 		A90F7121252414740000D1CF /* ListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90F7120252414740000D1CF /* ListModel.swift */; };
 		A923746B25FF017100CE21F4 /* BangumiListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923746A25FF017100CE21F4 /* BangumiListViewController.swift */; };
 		A923746F25FF091A00CE21F4 /* placeholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A923746E25FF091A00CE21F4 /* placeholder.jpg */; };
@@ -54,20 +53,20 @@
 		A97F520A2538495C008B872A /* VideoCategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97F52082538495C008B872A /* VideoCategoryCollectionViewCell.swift */; };
 		A97F520B2538495C008B872A /* VideoCategoryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A97F52092538495C008B872A /* VideoCategoryCollectionViewCell.xib */; };
 		A97FF1F0253161890097C0F7 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97FF1EF253161890097C0F7 /* CategoryModel.swift */; };
-		A984955525512B530007D0B8 /* LkbVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A984955425512B530007D0B8 /* LkbVideoViewController.swift */; };
 		A984955B25513FCE0007D0B8 /* NetVideoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A984955A25513FCE0007D0B8 /* NetVideoDetailViewController.swift */; };
 		A98794EC2553983B00DD62EE /* VideoInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98794EA2553983B00DD62EE /* VideoInfoCollectionViewCell.swift */; };
 		A98794ED2553983B00DD62EE /* VideoInfoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A98794EB2553983B00DD62EE /* VideoInfoCollectionViewCell.xib */; };
 		A9967C1D256265AA00752CB7 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9967C1C256265AA00752CB7 /* UserViewController.swift */; };
 		A997538125665ECF00179FCB /* EqualSpaceFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A997538025665ECF00179FCB /* EqualSpaceFlowLayout.swift */; };
 		A997538725666B9600179FCB /* NetVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A997538625666B9600179FCB /* NetVideoPlayerViewController.swift */; };
-		A9B821F52550020400317702 /* LkbViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B821F42550020400317702 /* LkbViewController.swift */; };
 		A9B9CE1C24E9569700CFBE69 /* LocalVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CE1B24E9569700CFBE69 /* LocalVideoPlayerViewController.swift */; };
 		A9CBF74624EF6D38002BD074 /* PadNetVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBF74524EF6D38002BD074 /* PadNetVideoPlayerViewController.swift */; };
 		A9CBF74824EF9976002BD074 /* RightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBF74724EF9976002BD074 /* RightViewController.swift */; };
+		A9F0302326003F100095EC83 /* UUWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F0302226003F100095EC83 /* UUWebView.swift */; };
+		A9F03026260097B60095EC83 /* NetVideoIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F03025260097B60095EC83 /* NetVideoIndexViewController.swift */; };
+		A9F03029260098280095EC83 /* NetVideoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F03028260098280095EC83 /* NetVideoListViewController.swift */; };
 		A9F44FDE253D277700224DA5 /* CategoryBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F44FDD253D277700224DA5 /* CategoryBottomView.swift */; };
 		A9F44FE1253D379700224DA5 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F44FE0253D379700224DA5 /* SearchResultViewController.swift */; };
-		A9FAD15025304066001A748C /* HaliTVVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FAD14F25304066001A748C /* HaliTVVideoViewController.swift */; };
 		A9FB284F24E67B6900F53E74 /* VideoListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FB284D24E67B6900F53E74 /* VideoListCollectionViewCell.swift */; };
 		A9FB285024E67B6900F53E74 /* VideoListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9FB284E24E67B6900F53E74 /* VideoListCollectionViewCell.xib */; };
 		A9FB285224E67E9400F53E74 /* PhoneVideoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */; };
@@ -86,7 +85,6 @@
 		A906DB1724EBCDDB00C070E4 /* WebVideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebVideoPlayerViewController.swift; sourceTree = "<group>"; };
 		A90F71172524100F0000D1CF /* HeaderTitleCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTitleCollectionReusableView.swift; sourceTree = "<group>"; };
 		A90F71182524100F0000D1CF /* HeaderTitleCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderTitleCollectionReusableView.xib; sourceTree = "<group>"; };
-		A90F711C252411830000D1CF /* HaliTVViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaliTVViewController.swift; sourceTree = "<group>"; };
 		A90F7120252414740000D1CF /* ListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListModel.swift; sourceTree = "<group>"; };
 		A923746A25FF017100CE21F4 /* BangumiListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BangumiListViewController.swift; sourceTree = "<group>"; };
 		A923746E25FF091A00CE21F4 /* placeholder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = placeholder.jpg; sourceTree = "<group>"; };
@@ -127,22 +125,22 @@
 		A97F52082538495C008B872A /* VideoCategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		A97F52092538495C008B872A /* VideoCategoryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoCategoryCollectionViewCell.xib; sourceTree = "<group>"; };
 		A97FF1EF253161890097C0F7 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
-		A984955425512B530007D0B8 /* LkbVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LkbVideoViewController.swift; sourceTree = "<group>"; };
 		A984955A25513FCE0007D0B8 /* NetVideoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoDetailViewController.swift; sourceTree = "<group>"; };
 		A98794EA2553983B00DD62EE /* VideoInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		A98794EB2553983B00DD62EE /* VideoInfoCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoInfoCollectionViewCell.xib; sourceTree = "<group>"; };
 		A9967C1C256265AA00752CB7 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		A997538025665ECF00179FCB /* EqualSpaceFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualSpaceFlowLayout.swift; sourceTree = "<group>"; };
 		A997538625666B9600179FCB /* NetVideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoPlayerViewController.swift; sourceTree = "<group>"; };
-		A9B821F42550020400317702 /* LkbViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LkbViewController.swift; sourceTree = "<group>"; };
 		A9B9CE1524E933E000CFBE69 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		A9B9CE1624E933E100CFBE69 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		A9B9CE1B24E9569700CFBE69 /* LocalVideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalVideoPlayerViewController.swift; sourceTree = "<group>"; };
 		A9CBF74524EF6D38002BD074 /* PadNetVideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadNetVideoPlayerViewController.swift; sourceTree = "<group>"; };
 		A9CBF74724EF9976002BD074 /* RightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightViewController.swift; sourceTree = "<group>"; };
+		A9F0302226003F100095EC83 /* UUWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUWebView.swift; sourceTree = "<group>"; };
+		A9F03025260097B60095EC83 /* NetVideoIndexViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoIndexViewController.swift; sourceTree = "<group>"; };
+		A9F03028260098280095EC83 /* NetVideoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoListViewController.swift; sourceTree = "<group>"; };
 		A9F44FDD253D277700224DA5 /* CategoryBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBottomView.swift; sourceTree = "<group>"; };
 		A9F44FE0253D379700224DA5 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
-		A9FAD14F25304066001A748C /* HaliTVVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaliTVVideoViewController.swift; sourceTree = "<group>"; };
 		A9FB284D24E67B6900F53E74 /* VideoListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListCollectionViewCell.swift; sourceTree = "<group>"; };
 		A9FB284E24E67B6900F53E74 /* VideoListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoListCollectionViewCell.xib; sourceTree = "<group>"; };
 		A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVideoListViewController.swift; sourceTree = "<group>"; };
@@ -274,16 +272,15 @@
 		A950E2C624E674C2000CBB92 /* Phone */ = {
 			isa = PBXGroup;
 			children = (
-				A906DB1724EBCDDB00C070E4 /* WebVideoPlayerViewController.swift */,
+				A923746A25FF017100CE21F4 /* BangumiListViewController.swift */,
+				A906DB0D24EA680B00C070E4 /* BangumiViewController.swift */,
+				A9B9CE1B24E9569700CFBE69 /* LocalVideoPlayerViewController.swift */,
+				A984955A25513FCE0007D0B8 /* NetVideoDetailViewController.swift */,
+				A9F03025260097B60095EC83 /* NetVideoIndexViewController.swift */,
+				A997538625666B9600179FCB /* NetVideoPlayerViewController.swift */,
 				A950E2C924E674E4000CBB92 /* PhoneIndexViewController.swift */,
 				A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */,
-				A906DB0D24EA680B00C070E4 /* BangumiViewController.swift */,
-				A90F711C252411830000D1CF /* HaliTVViewController.swift */,
-				A9B9CE1B24E9569700CFBE69 /* LocalVideoPlayerViewController.swift */,
-				A9B821F42550020400317702 /* LkbViewController.swift */,
-				A984955A25513FCE0007D0B8 /* NetVideoDetailViewController.swift */,
-				A997538625666B9600179FCB /* NetVideoPlayerViewController.swift */,
-				A923746A25FF017100CE21F4 /* BangumiListViewController.swift */,
+				A906DB1724EBCDDB00C070E4 /* WebVideoPlayerViewController.swift */,
 			);
 			path = Phone;
 			sourceTree = "<group>";
@@ -301,10 +298,9 @@
 		A950E2C824E674D0000CBB92 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				A9FAD14F25304066001A748C /* HaliTVVideoViewController.swift */,
+				A9F03028260098280095EC83 /* NetVideoListViewController.swift */,
 				A9F44FE0253D379700224DA5 /* SearchResultViewController.swift */,
 				A97F52022537EC93008B872A /* CategoryChooseViewController.swift */,
-				A984955425512B530007D0B8 /* LkbVideoViewController.swift */,
 				A9967C1C256265AA00752CB7 /* UserViewController.swift */,
 				A950E2C624E674C2000CBB92 /* Phone */,
 				A950E2C724E674C7000CBB92 /* Pad */,
@@ -334,6 +330,7 @@
 				A98794EB2553983B00DD62EE /* VideoInfoCollectionViewCell.xib */,
 				A997538025665ECF00179FCB /* EqualSpaceFlowLayout.swift */,
 				A928D21F2567917A003BF719 /* NetVideoPlayerCollectionView.swift */,
+				A9F0302226003F100095EC83 /* UUWebView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -479,7 +476,6 @@
 				A923747225FF0B4900CE21F4 /* UILabel+extension.swift in Sources */,
 				A950E2B624E6733F000CBB92 /* UIView+extension.swift in Sources */,
 				A984955B25513FCE0007D0B8 /* NetVideoDetailViewController.swift in Sources */,
-				A90F711D252411830000D1CF /* HaliTVViewController.swift in Sources */,
 				A9B9CE1C24E9569700CFBE69 /* LocalVideoPlayerViewController.swift in Sources */,
 				A950E29624E67157000CBB92 /* ViewController.swift in Sources */,
 				A98794EC2553983B00DD62EE /* VideoInfoCollectionViewCell.swift in Sources */,
@@ -491,15 +487,15 @@
 				A950E2B124E6733F000CBB92 /* Date+extension.swift in Sources */,
 				A928D2202567917A003BF719 /* NetVideoPlayerCollectionView.swift in Sources */,
 				A950E2B224E6733F000CBB92 /* UIImage+extension.swift in Sources */,
-				A984955525512B530007D0B8 /* LkbVideoViewController.swift in Sources */,
+				A9F0302326003F100095EC83 /* UUWebView.swift in Sources */,
 				A997538725666B9600179FCB /* NetVideoPlayerViewController.swift in Sources */,
 				A950E2B824E6733F000CBB92 /* UIButton+extension.swift in Sources */,
 				A97FF1F0253161890097C0F7 /* CategoryModel.swift in Sources */,
 				A9967C1D256265AA00752CB7 /* UserViewController.swift in Sources */,
 				A923746B25FF017100CE21F4 /* BangumiListViewController.swift in Sources */,
 				A964116A24ECCB9700D19D92 /* QYWebView.swift in Sources */,
-				A9B821F52550020400317702 /* LkbViewController.swift in Sources */,
 				A950E2B324E6733F000CBB92 /* NSObject+extension.swift in Sources */,
+				A9F03029260098280095EC83 /* NetVideoListViewController.swift in Sources */,
 				A90F71192524100F0000D1CF /* HeaderTitleCollectionReusableView.swift in Sources */,
 				A950E2C424E6736F000CBB92 /* BaseViewController.swift in Sources */,
 				A950E2BE24E67356000CBB92 /* Tool.swift in Sources */,
@@ -508,7 +504,7 @@
 				A950E2CF24E677D9000CBB92 /* VideoListCollectionView.swift in Sources */,
 				A950E2B424E6733F000CBB92 /* UITextField+extension.swift in Sources */,
 				A950E29424E67157000CBB92 /* SceneDelegate.swift in Sources */,
-				A9FAD15025304066001A748C /* HaliTVVideoViewController.swift in Sources */,
+				A9F03026260097B60095EC83 /* NetVideoIndexViewController.swift in Sources */,
 				A950E2CA24E674E4000CBB92 /* PhoneIndexViewController.swift in Sources */,
 				A9CBF74624EF6D38002BD074 /* PadNetVideoPlayerViewController.swift in Sources */,
 				A950E2B724E6733F000CBB92 /* UIColor+extension.swift in Sources */,

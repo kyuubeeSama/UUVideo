@@ -44,7 +44,7 @@ class Tool:NSObject {
         }
     }
     
-    // 谓词正则筛选
+//    弹窗
     static func showSystemAlert(viewController:UIViewController,title:String,message:String,sureBtnClick:@escaping(()->())) {
         let alert = UIAlertController.init(title: title, message: message, preferredStyle: .alert)
         let sureAction = UIAlertAction.init(title: "确定", style: .default) { (sureAction) in
@@ -57,7 +57,9 @@ class Tool:NSObject {
         alert.addAction(cancelAction)
         viewController.present(alert, animated: true, completion: nil)
     }
-    // TODO:正则表达式筛选
+    // 谓词正则筛选
+    
+    // 正则表达式筛选
     static func getRegularData(regularExpress:String,content:String)->[String]{
         var array:[String] = []
         do{
@@ -73,13 +75,23 @@ class Tool:NSObject {
         }
         return array;
     }
-    // TODO:是否是ipad
+    // 是否是ipad
     static func isPad()->Bool{
         if UIDevice.current.userInterfaceIdiom == .pad{
             return true
         }else{
             return false
         }
+    }
+    
+    // 从链接中提取参数的值
+    static func getKeyValueFromUrl(urlStr:String)->[String:String] {
+        var paramer:[String:String] = [:]
+        let urlComponents = NSURLComponents.init(string: urlStr)
+        for item in (urlComponents?.queryItems)! {
+            paramer[item.name] = item.value
+        }
+        return paramer
     }
     /*
     // Only override draw() if you perform custom drawing.

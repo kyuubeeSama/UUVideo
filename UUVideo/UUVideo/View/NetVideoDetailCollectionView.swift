@@ -50,10 +50,17 @@ class NetVideoDetailCollectionView: UICollectionView,UICollectionViewDelegate,UI
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "infoCell", for: indexPath) as! VideoInfoCollectionViewCell
             cell.videoImg.kf.setImage(with: URL.init(string: (self.model?.picUrl)!))
             cell.videoNameLab.text = self.model?.name
-            cell.label1.text = model?.getTag(tagArr: (model?.tagArr![0])!)
-            cell.label2.text = model?.getTag(tagArr: (model?.tagArr![1])!)
-            cell.label3.text = model?.getTag(tagArr: (model?.tagArr![2])!)
-            cell.label4.text = model?.getTag(tagArr: (model?.tagArr![3])!)
+            if (model?.tagArr!.count)! > 0 {
+                cell.label1.text = model?.getTag(tagArr: (model?.tagArr![0])!)
+                cell.label2.text = model?.getTag(tagArr: (model?.tagArr![1])!)
+                cell.label3.text = model?.getTag(tagArr: (model?.tagArr![2])!)
+                cell.label4.text = model?.getTag(tagArr: (model?.tagArr![3])!)
+            }else{
+                cell.label1.text = ""
+                cell.label2.text = ""
+                cell.label3.text = ""
+                cell.label4.text = ""
+            }
             return cell
         }else if indexPath.section == 1{
             //            剧集列表

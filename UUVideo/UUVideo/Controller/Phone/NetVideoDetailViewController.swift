@@ -11,6 +11,7 @@ import UIKit
 class NetVideoDetailViewController: BaseViewController {
 
     var videoModel:VideoModel?
+    var webType:websiteType = .halihali
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,11 +24,14 @@ class NetVideoDetailViewController: BaseViewController {
     func getLkbDetailData() {
         self.view.makeToastActivity(.center)
         DispatchQueue.global().async { [self] in
-            DataManager.init().getLkbVideoInfoData(urlStr: (videoModel?.detailUrl)!) { (videoModel) in
+            DataManager.init().getVideoDetailData(urlStr: (videoModel?.detailUrl)!, type: webType) { (videoModel) in
                 DispatchQueue.main.async {
                     self.view.hideToastActivity()
+                    videoModel.name = self.videoModel?.name
                     self.mainCollect.model = videoModel
                 }
+            } failure: { (error) in
+                print(error)
             }
         }
     }
@@ -46,8 +50,9 @@ class NetVideoDetailViewController: BaseViewController {
                 let VC = NetVideoPlayerViewController.init()
                 VC.model = mainCollection.model
                 VC.index = indexPath.row
+                VC.webType = self.webType
                 self.navigationController?.pushViewController(VC, animated: true)
-            }else{
+            }else if indexPath.section == 2{
 //                视频
                 let model = mainCollection.model!.videoArr![indexPath.row]
                 let VC = NetVideoDetailViewController.init()

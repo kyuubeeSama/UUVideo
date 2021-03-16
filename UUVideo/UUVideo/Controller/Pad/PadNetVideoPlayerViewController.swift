@@ -102,12 +102,12 @@ class PadNetVideoPlayerViewController: BaseViewController {
 
     // 获取推荐视频
     func getData() {
-        DataManager.init().getVideoDetailData(urlStr: self.getUrl()) { (videoArr) in
-            let model = ListModel.init()
-            model.title = "猜你喜欢"
-            model.list = videoArr
-            self.listArr = [model]
-        }
+//        DataManager.init().getVideoDetailData(urlStr: self.getUrl()) { (videoArr) in
+//            let model = ListModel.init()
+//            model.title = "猜你喜欢"
+//            model.list = videoArr
+//            self.listArr = [model]
+//        }
     }
 
     @objc func leftSideMenu() {

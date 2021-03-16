@@ -1,49 +1,73 @@
 //
-//  HaliTVVideoViewController.swift
+//  NetVideoListViewController.swift
 //  UUVideo
 //
-//  Created by Galaxy on 2020/10/9.
-//  Copyright © 2020 qykj. All rights reserved.
-//  halitv 具体分类视频列表
-// 右上角类型筛选按钮,上拉加载
+//  Created by Galaxy on 2021/3/16.
+//  Copyright © 2021 qykj. All rights reserved.
+//
 
 import UIKit
 import SideMenu
 
-class HaliTVVideoViewController: BaseViewController {
+class NetVideoListViewController: BaseViewController {
 
-    var pageNum:Int = 1
+    public var webType:websiteType = .halihali
+    private var pageNum:Int = 1
     // 视频类型
-    var videoType:String = ""
+    private var videoType:String = ""
     // 电影地区
-    var area:String = "all"
+    private var area:String = ""
     // 剧情
-    var videoCategory:String = "0"
+    private var videoCategory:String = ""
     // 年份
-    var year:String = "0"
-    
-    var urlStr = "http://halihali2.com/"
-    var listArr:[ListModel] = []
-    var categoryListArr:[CategoryListModel] = []
+    private var year:String = ""
+    // 排序
+        var order:String = ""
+    private var urlStr:String = ""
+    private var listArr:[ListModel] = []
+    private var categoryListArr:[CategoryListModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        switch self.title {
-        case "电视剧":
-            videoType = "tv"
-        case "动漫":
-            videoType = "acg"
-        case "电影":
-            videoType = "mov"
-        default:
-            //综艺
-            videoType = "zongyi"
+        urlStr = ["http://halihali2.com/","https://www.laikuaibo.com/"][self.webType.rawValue]
+        if self.webType == .halihali{
+            area = "all"
+            videoCategory = "0"
+            year = "0"
+            switch self.title {
+            case "电视剧":
+                videoType = "tv"
+            case "动漫":
+                videoType = "acg"
+            case "电影":
+                videoType = "mov"
+            default:
+                //综艺
+                videoType = "zongyi"
+            }
+        }else{
+            videoType = "1"
+            switch self.title {
+                    case "电影":
+                        videoType = "1"
+                    case "剧集":
+                        videoType = "2"
+                    case "综艺":
+                        videoType = "4"
+                    case "动漫":
+                        videoType = "3"
+                    default:
+                        //剧集
+                        videoType = "19"
+                    }
         }
-        self.setNav()
+        if webType == .halihali {
+            self.setNav()
+            self.getCategoryData()
+        }
         self.getListData()
-        self.getCategoryData()
         self.getMoreData()
     }
     
@@ -78,8 +102,13 @@ class HaliTVVideoViewController: BaseViewController {
     }
 //    获取列表信息
     func getListData(){
-        let detailUrlStr = "http://121.4.190.96:9991/getsortdata_all_z.php?action=\(videoType)&page=\(pageNum)&year=\(year)&area=\(area)&class=\(videoCategory)&dect=&id="
-        DataManager.init().getVideoListData(urlStr: detailUrlStr, type: .halihali) { (dataArr:[ListModel]) in
+        var detailUrlStr = ""
+        if webType == .halihali {
+        detailUrlStr = "http://121.4.190.96:9991/getsortdata_all_z.php?action=\(videoType)&page=\(pageNum)&year=\(year)&area=\(area)&class=\(videoCategory)&dect=&id="
+        }else{
+            detailUrlStr = urlStr+"list-select-id-\(videoType)-area-\(area)-order-\(order)-p-\(pageNum).html"
+        }
+        DataManager.init().getVideoListData(urlStr: detailUrlStr, type: self.webType) { (dataArr:[ListModel]) in
             if(dataArr[0].list!.count>0){
                 self.pageNum += 1
                 self.mainCollect.es.stopLoadingMore()
@@ -117,13 +146,13 @@ class HaliTVVideoViewController: BaseViewController {
         }
         mainCollection.cellItemSelected = { indexPath in
             let listModel = mainCollection.listArr![indexPath.section]
-            let VC = WebVideoPlayerViewController.init()
-            VC.model = listModel.list![indexPath.row]
+            let VC = NetVideoDetailViewController.init()
+            VC.videoModel = listModel.list![indexPath.row]
+            VC.webType = self.webType
             self.navigationController?.pushViewController(VC, animated: true)
         }
         return mainCollection
     }()
-    
 
     /*
     // MARK: - Navigation

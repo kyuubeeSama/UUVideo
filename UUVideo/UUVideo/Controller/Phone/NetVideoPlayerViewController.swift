@@ -9,10 +9,12 @@
 import UIKit
 import GRDB
 import SJVideoPlayer
+import WebKit
 class NetVideoPlayerViewController: BaseViewController {
     
     var model:VideoModel?
     var index:Int!
+    var webType:websiteType = .halihali
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -34,32 +36,43 @@ class NetVideoPlayerViewController: BaseViewController {
         
         // Do any additional setup after loading the view.
         self.getData()
+        self.mainCollect.model = model
     }
 
     // 获取数据
     func getData(){
         let model = self.model?.serialArr![index]
         self.view.makeToastActivity(.center)
-        DispatchQueue.global().async {
-            DataManager.init().getLkbVideoDetailData(urlStr:"https://www.laikuaibo.com"+(model?.detailUrl)!) { (resultModel) in
-                DispatchQueue.main.async {
-                    self.view.hideToastActivity()
-                    //            保存数据库到历史记录表中
-                    let databasePath = FileTool.init().getDocumentPath()+"/.database.db"
-                    do{
-                        let dbQueue = try DatabaseQueue(path: databasePath)
-                        try dbQueue.write { db in
-                            try db.execute(sql: """
-                                                 INSERT INTO history ('name','url',add_time) VALUES(:name,:url,:add_time)
-                                                 """,arguments: [model!.name,"https://www.laikuaibo.com"+(model?.detailUrl)!,Date.getCurrentTimeInterval()])
+        if self.webType == .halihali {
+            let config = WKWebViewConfiguration.init()
+            let webView = UUWebView.init(frame: CGRect(x: 0, y: 0, width: 1, height: 1), configuration: config)
+            self.view.addSubview(webView)
+            webView.load(URLRequest.init(url: URL.init(string: (model?.detailUrl)!)!))
+            webView.getVideoUrlComplete = { videoUrl in
+                self.view.hideToastActivity()
+                print("视频地址是\(videoUrl)")
+                self.player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(string: videoUrl)!)
+            }
+        }else{
+            DispatchQueue.global().async { [self] in
+                DataManager.init().getLkbVideoDetailData(urlStr:(model?.detailUrl)!) { (resultModel) in
+                    DispatchQueue.main.async {
+                        self.view.hideToastActivity()
+                        //            保存数据库到历史记录表中
+                        let databasePath = FileTool.init().getDocumentPath()+"/.database.db"
+                        do{
+                            let dbQueue = try DatabaseQueue(path: databasePath)
+                            try dbQueue.write { db in
+                                try db.execute(sql: """
+                                                         INSERT INTO history ('name','url',add_time) VALUES(:name,:url,:add_time)
+                                                         """,arguments: [model!.name,"https://www.laikuaibo.com"+(model?.detailUrl)!,Date.getCurrentTimeInterval()])
+                            }
+                        }catch{
+                            print(error.localizedDescription)
                         }
-                    }catch{
-                        print(error.localizedDescription)
+                        resultModel.videoUrl = resultModel.videoUrl?.replacingOccurrences(of: "https://www.bfq168.com/m3u8.php?url=", with: "")
+                        self.player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(string: resultModel.videoUrl!)!)
                     }
-                    resultModel.videoUrl = resultModel.videoUrl?.replacingOccurrences(of: "https://www.bfq168.com/m3u8.php?url=", with: "")
-                    self.player.defaultEdgeControlLayer.automaticallyShowsPictureInPictureItem = true
-                    self.player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(string: resultModel.videoUrl!)!)
-                    self.mainCollect.model = resultModel
                 }
             }
         }
@@ -72,6 +85,7 @@ class NetVideoPlayerViewController: BaseViewController {
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             make.height.equalTo(screenW*3/4)
         }
+        player.defaultEdgeControlLayer.automaticallyShowsPictureInPictureItem = true
         player.controlLayerNeedAppear()
         return player
     }()

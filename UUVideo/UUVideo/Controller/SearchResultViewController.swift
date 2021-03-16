@@ -9,16 +9,12 @@
 import UIKit
 import EmptyDataSet_Swift
 
-enum WebsiteName {
-    case haliTV
-    case laiKuaiBo
-}
 
 class SearchResultViewController: BaseViewController {
 
     var keyword:String?
     var pageNum:Int = 1
-    var websiteValue:WebsiteName?
+    var webType:websiteType?
     var listArr:[ListModel] = []
     var searchArr:[String] = []
     
@@ -33,13 +29,13 @@ class SearchResultViewController: BaseViewController {
     //获取搜索数据
     func getResultList(){
         var urlStr:String?
-        if self.websiteValue! == .haliTV {
+        if self.webType! == .halihali {
             urlStr = "https://www.halitv.com/search/"+keyword!+"-\(pageNum).html"
-        }else if websiteValue! == .laiKuaiBo{
+        }else if webType! == .laikuaibo{
 //            https://www.laikuaibo.com/vod-search-wd-%E5%A4%A9-p-2.html
             urlStr = "https://www.laikuaibo.com/vod-search-wd-"+keyword!+"-p-\(pageNum).html"
         }
-        DataManager.init().getSearchData(urlStr: urlStr!, keyword: self.keyword!, website: self.websiteValue!) { (resultArr) in
+        DataManager.init().getSearchData(urlStr: urlStr!, keyword: self.keyword!, website: self.webType!) { (resultArr) in
             if self.checkSearchResult(searchArr: resultArr) {
                 self.pageNum += 1
                 self.mainCollect.es.stopLoadingMore()
@@ -93,11 +89,11 @@ class SearchResultViewController: BaseViewController {
         }
         mainCollection.cellItemSelected = { indexPath in
             let listModel = mainCollection.listArr![indexPath.section]
-            if self.websiteValue! == .laiKuaiBo{
+            if self.webType! == .laikuaibo{
                 let VC = NetVideoDetailViewController.init()
                 VC.videoModel = listModel.list![indexPath.row]
                 self.navigationController?.pushViewController(VC, animated: true)
-            }else if self.websiteValue! == .haliTV{
+            }else if self.webType! == .halihali{
                 let VC = WebVideoPlayerViewController.init()
                 VC.model = listModel.list![indexPath.row]
                 self.navigationController?.pushViewController(VC, animated: true)

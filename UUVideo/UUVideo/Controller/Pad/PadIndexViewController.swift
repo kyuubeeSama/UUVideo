@@ -125,7 +125,7 @@ class PadIndexViewController: BaseViewController,UISearchBarDelegate {
         if searchBar.text!.count>0 {
             let VC = SearchResultViewController.init()
             VC.keyword = searchBar.text
-            VC.websiteValue = .haliTV
+            VC.webType = .halihali
             self.navigationController?.pushViewController(VC, animated: true)
         }else{
             self.mainCollect.makeToast("请输入有效内容")
@@ -167,8 +167,9 @@ class PadIndexViewController: BaseViewController,UISearchBarDelegate {
         }
         mainCollection.headerRightClicked = { indexPath in
             let model = mainCollection.listArr![indexPath.section]
-            let VC = HaliTVVideoViewController.init()
+            let VC = NetVideoListViewController.init()
             VC.title = model.title
+            VC.webType = .halihali
             self.navigationController?.pushViewController(VC, animated: true)
         }
         return mainCollection
@@ -262,14 +263,13 @@ class PadIndexViewController: BaseViewController,UISearchBarDelegate {
         mainCollect.reloadData()
         if array.count == 0 {
             mainCollect.makeToastActivity(.center)
-            /*
-            DataManager.init().getHaliTVData(urlStr: "https://www.halitv.com/",
-                                             type: 1) { (resultArr, page) in
+            DataManager.init().getWebsiteIndexData(type: .halihali) { (dataArr) in
                 self.mainCollect.hideToastActivity()
-                self.allVideoArr[self.tableIndex] = resultArr
-                self.mainCollect.listArr = resultArr
+                self.allVideoArr[self.tableIndex] = dataArr
+                self.mainCollect.listArr = dataArr
+            } failure: { (error) in
+                print(error)
             }
- */
         }else{
             mainCollect.listArr = array
         }

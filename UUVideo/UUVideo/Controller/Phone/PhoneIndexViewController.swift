@@ -39,11 +39,9 @@ class PhoneIndexViewController: BaseViewController {
             }else if(string == "本地视频"){
                 let VC = PhoneVideoListViewController.init()
                 self.navigationController?.pushViewController(VC, animated: true)
-            }else if(string == "哈哩TV"){
-                let VC = HaliTVViewController.init()
-                self.navigationController?.pushViewController(VC, animated: true)
-            }else if(string == "来快播"){
-                let VC = LkbViewController.init()
+            }else{
+                let VC = NetVideoIndexViewController.init()
+                VC.webType = websiteType(rawValue: indexPath.row-2)!
                 self.navigationController?.pushViewController(VC, animated: true)
             }
         }

@@ -1,31 +1,32 @@
 //
-//  HaliTVViewController.swift
+//  NetVideoIndexViewController.swift
 //  UUVideo
 //
-//  Created by Galaxy on 2020/9/30.
-//  Copyright © 2020 qykj. All rights reserved.
-//  halitv地址
+//  Created by Galaxy on 2021/3/16.
+//  Copyright © 2021 qykj. All rights reserved.
+//
 
 import UIKit
 
-class HaliTVViewController: BaseViewController,UISearchBarDelegate {
-    
+class NetVideoIndexViewController: BaseViewController,UISearchBarDelegate {
+
     var listArr:[ListModel]?
     var isSearch:Bool = false
+    var webType:websiteType = .halihali
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Do any additional setup after loading the view.
-        self.title = "哈哩哈哩"
+        self.title = ["哈哩哈哩","来快播"][webType.rawValue]
         // 获取哈哩tv数据
         self.getVideoData()
     }
     
     func getVideoData(){
         self.view.makeToastActivity(.center)
-        DispatchQueue.global().async {
-            DataManager.init().getWebsiteIndexData(type: .halihali) { (dataArr) in
+        DispatchQueue.global().async { [self] in
+            DataManager.init().getWebsiteIndexData(type: webType) { (dataArr) in
                 DispatchQueue.main.async {
                     self.view.hideToastActivity()
                     self.mainCollect.listArr = dataArr
@@ -54,7 +55,7 @@ class HaliTVViewController: BaseViewController,UISearchBarDelegate {
         if searchBar.text!.count>0 {
             let VC = SearchResultViewController.init()
             VC.keyword = searchBar.text
-            VC.websiteValue = .haliTV
+            VC.webType = self.webType
             self.navigationController?.pushViewController(VC, animated: true)
         }else{
             self.view.makeToast("请输入有效内容")
@@ -82,29 +83,31 @@ class HaliTVViewController: BaseViewController,UISearchBarDelegate {
         }
         mainCollection.cellItemSelected = { indexPath in
             let listModel = mainCollection.listArr![indexPath.section]
-            let VC = WebVideoPlayerViewController.init()
-            VC.model = listModel.list![indexPath.row]
+            let VC = NetVideoDetailViewController.init()
+            VC.videoModel = listModel.list![indexPath.row]
+            VC.webType = self.webType
             self.navigationController?.pushViewController(VC, animated: true)
         }
         mainCollection.headerRightClicked = { indexPath in
-            // 根据选中的行跳转对应页面
+            // 根据选中的行跳转对应的分类列表
             print(indexPath.section)
             let model = mainCollection.listArr![indexPath.section]
-            let VC = HaliTVVideoViewController.init()
+            let VC = NetVideoListViewController.init()
             VC.title = model.title
+            VC.webType = self.webType
             self.navigationController?.pushViewController(VC, animated: true)
         }
         return mainCollection
     }()
-    
+
     /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
 }
