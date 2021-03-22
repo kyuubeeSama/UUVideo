@@ -37,7 +37,8 @@ class NetVideoDetailViewController: BaseViewController {
     }
 
     lazy var mainCollect: NetVideoDetailCollectionView = {
-        let layout = EqualSpaceFlowLayout(AlignType.left,20.0)
+//        let layout = EqualSpaceFlowLayout(AlignType.left,20.0)
+        let layout = UICollectionViewLeftAlignedLayout.init()
         let mainCollection = NetVideoDetailCollectionView.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: layout)
         self.view.addSubview(mainCollection)
         mainCollection.snp.makeConstraints { (make) in

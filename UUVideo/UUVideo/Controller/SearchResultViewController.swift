@@ -23,32 +23,36 @@ class SearchResultViewController: BaseViewController {
 
         // Do any additional setup after loading the view.
         self.getResultList()
-        self.getMoreData()
     }
     
     //获取搜索数据
     func getResultList(){
         var urlStr:String?
         if self.webType! == .halihali {
-            urlStr = "https://www.halitv.com/search/"+keyword!+"-\(pageNum).html"
+            urlStr = "http://www.halihali2.com/search.php"
         }else if webType! == .laikuaibo{
-//            https://www.laikuaibo.com/vod-search-wd-%E5%A4%A9-p-2.html
             urlStr = "https://www.laikuaibo.com/vod-search-wd-"+keyword!+"-p-\(pageNum).html"
         }
-        DataManager.init().getSearchData(urlStr: urlStr!, keyword: self.keyword!, website: self.webType!) { (resultArr) in
-            if self.checkSearchResult(searchArr: resultArr) {
-                self.pageNum += 1
-                self.mainCollect.es.stopLoadingMore()
-                if self.listArr.count > 0{
-                    let model = self.listArr[0]
-                    let resultModel = resultArr[0]
-                    model.list! += resultModel.list!
-                }else{
-                    self.listArr.append(contentsOf: resultArr)
+        DispatchQueue.global().async {
+            DataManager.init().getSearchData(urlStr: urlStr!, keyword: self.keyword!, website: self.webType!) { (dataArr) in
+                DispatchQueue.main.async {
+                    if self.checkSearchResult(searchArr: dataArr) {
+                        self.pageNum += 1
+                        self.mainCollect.es.stopLoadingMore()
+                        if self.listArr.count > 0{
+                            let model = self.listArr[0]
+                            let resultModel = dataArr[0]
+                            model.list! += resultModel.list!
+                        }else{
+                            self.listArr.append(contentsOf: dataArr)
+                        }
+                        self.mainCollect.listArr = self.listArr
+                    }else{
+                        self.mainCollect.es.noticeNoMoreData()
+                    }
                 }
-                self.mainCollect.listArr = self.listArr
-            }else{
-                self.mainCollect.es.noticeNoMoreData()
+            } failure: { (error) in
+                print(error)
             }
         }
     }
@@ -71,38 +75,28 @@ class SearchResultViewController: BaseViewController {
             return false
         }
     }
-    
-    // 获取更多数据
-    func getMoreData(){
-        self.mainCollect.es.addInfiniteScrolling {
-            self.getResultList()
-        }
-    }
-    
+        
     // 搜索结果列表
     lazy var mainCollect: VideoListCollectionView = {
-        let layout = UICollectionViewFlowLayout.init()
+        let layout = UICollectionViewLeftAlignedLayout.init()
         let mainCollection = VideoListCollectionView.init(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH), collectionViewLayout: layout)
         self.view.addSubview(mainCollection)
         mainCollection.snp.makeConstraints { (make) in
             make.left.right.top.bottom.equalToSuperview()
         }
-        mainCollection.cellItemSelected = { indexPath in
+        mainCollection.cellItemSelected = { [self] indexPath in
             let listModel = mainCollection.listArr![indexPath.section]
-            if self.webType! == .laikuaibo{
-                let VC = NetVideoDetailViewController.init()
-                VC.videoModel = listModel.list![indexPath.row]
-                self.navigationController?.pushViewController(VC, animated: true)
-            }else if self.webType! == .halihali{
-                let VC = WebVideoPlayerViewController.init()
-                VC.model = listModel.list![indexPath.row]
-                self.navigationController?.pushViewController(VC, animated: true)
-            }
+            let VC = NetVideoDetailViewController.init()
+            VC.videoModel = listModel.list![indexPath.row]
+            VC.webType = self.webType!
+            self.navigationController?.pushViewController(VC, animated: true)
         }
         mainCollection.emptyDataSetView { (view) in
             view.titleLabelString(NSAttributedString.init(string: "当前搜索无数据"))
         }
-        
+        mainCollection.es.addInfiniteScrolling {
+            self.getResultList()
+        }
         return mainCollection
     }()
 

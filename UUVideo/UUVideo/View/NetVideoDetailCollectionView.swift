@@ -95,9 +95,15 @@ class NetVideoDetailCollectionView: UICollectionView,UICollectionViewDelegate,UI
             let size = serialModel!.name?.getStringSize(font: UIFont.systemFont(ofSize: 15), size: CGSize(width: Double(MAXFLOAT), height: 15.0))
             return CGSize(width: size!.width+20.0, height: 20.0)
         }else{
-            let width:CGFloat = screenW/2-15
-            let height = (width-20)*379/270+50
-            return CGSize(width: width, height: height)
+            if Tool.isPad() {
+                let width:CGFloat = 170
+                let height = (width-20)*379/270+50
+                return CGSize(width: width, height: height)
+            }else{
+                let width:CGFloat = screenW/2-15
+                let height = (width-20)*379/270+50
+                return CGSize(width: width, height: height)
+            }
         }
     }
     

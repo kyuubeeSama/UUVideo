@@ -8,6 +8,7 @@
 
 import UIKit
 import SideMenu
+import ESPullToRefresh
 
 class NetVideoListViewController: BaseViewController {
 
@@ -68,7 +69,6 @@ class NetVideoListViewController: BaseViewController {
             self.getCategoryData()
         }
         self.getListData()
-        self.getMoreData()
     }
     
     func setNav(){
@@ -108,17 +108,21 @@ class NetVideoListViewController: BaseViewController {
         }else{
             detailUrlStr = urlStr+"list-select-id-\(videoType)-area-\(area)-order-\(order)-p-\(pageNum).html"
         }
-        DataManager.init().getVideoListData(urlStr: detailUrlStr, type: self.webType) { (dataArr:[ListModel]) in
-            if(dataArr[0].list!.count>0){
-                self.pageNum += 1
-                self.mainCollect.es.stopLoadingMore()
-            }else{
-                self.mainCollect.es.noticeNoMoreData()
+        DispatchQueue.global().async {
+            DataManager.init().getVideoListData(urlStr: detailUrlStr, type: self.webType) { (dataArr:[ListModel]) in
+                DispatchQueue.main.async {
+                    if(dataArr[0].list!.count>0){
+                        self.pageNum += 1
+                        self.mainCollect.es.stopLoadingMore()
+                    }else{
+                        self.mainCollect.es.noticeNoMoreData()
+                    }
+                    self.listArr.append(contentsOf: dataArr)
+                    self.mainCollect.listArr = self.listArr
+                }
+            } failure: { (error) in
+                print(error)
             }
-            self.listArr.append(contentsOf: dataArr)
-            self.mainCollect.listArr = self.listArr
-        } failure: { (error) in
-            print(error)
         }
     }
 //     获取分类信息
@@ -128,12 +132,6 @@ class NetVideoListViewController: BaseViewController {
             self.categoryListArr = dataArr
         } failure: { (error) in
             print(error)
-        }
-    }
-    
-    func getMoreData(){
-        self.mainCollect.es.addInfiniteScrolling {
-            self.getListData()
         }
     }
     
@@ -150,6 +148,9 @@ class NetVideoListViewController: BaseViewController {
             VC.videoModel = listModel.list![indexPath.row]
             VC.webType = self.webType
             self.navigationController?.pushViewController(VC, animated: true)
+        }
+        mainCollection.es.addInfiniteScrolling {
+            self.getListData()
         }
         return mainCollection
     }()
