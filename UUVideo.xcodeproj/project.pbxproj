@@ -58,9 +58,11 @@
 		A9967C1D256265AA00752CB7 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9967C1C256265AA00752CB7 /* UserViewController.swift */; };
 		A997538125665ECF00179FCB /* EqualSpaceFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A997538025665ECF00179FCB /* EqualSpaceFlowLayout.swift */; };
 		A997538725666B9600179FCB /* NetVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A997538625666B9600179FCB /* NetVideoPlayerViewController.swift */; };
+		A9B378F9261089DD00EBC4EF /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B378F8261089DD00EBC4EF /* HistoryViewController.swift */; };
 		A9B9CE1C24E9569700CFBE69 /* LocalVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CE1B24E9569700CFBE69 /* LocalVideoPlayerViewController.swift */; };
 		A9CBF74824EF9976002BD074 /* RightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBF74724EF9976002BD074 /* RightViewController.swift */; };
 		A9CCBF332608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CCBF322608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift */; };
+		A9CCBF8C2608A16100427C47 /* SqlTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CCBF8B2608A16100427C47 /* SqlTool.swift */; };
 		A9F0302326003F100095EC83 /* UUWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F0302226003F100095EC83 /* UUWebView.swift */; };
 		A9F03026260097B60095EC83 /* NetVideoIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F03025260097B60095EC83 /* NetVideoIndexViewController.swift */; };
 		A9F03029260098280095EC83 /* NetVideoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F03028260098280095EC83 /* NetVideoListViewController.swift */; };
@@ -129,11 +131,13 @@
 		A9967C1C256265AA00752CB7 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		A997538025665ECF00179FCB /* EqualSpaceFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualSpaceFlowLayout.swift; sourceTree = "<group>"; };
 		A997538625666B9600179FCB /* NetVideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoPlayerViewController.swift; sourceTree = "<group>"; };
+		A9B378F8261089DD00EBC4EF /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		A9B9CE1524E933E000CFBE69 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		A9B9CE1624E933E100CFBE69 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		A9B9CE1B24E9569700CFBE69 /* LocalVideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalVideoPlayerViewController.swift; sourceTree = "<group>"; };
 		A9CBF74724EF9976002BD074 /* RightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightViewController.swift; sourceTree = "<group>"; };
 		A9CCBF322608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewLeftAlignedLayout.swift; sourceTree = "<group>"; };
+		A9CCBF8B2608A16100427C47 /* SqlTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqlTool.swift; sourceTree = "<group>"; };
 		A9F0302226003F100095EC83 /* UUWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUWebView.swift; sourceTree = "<group>"; };
 		A9F03025260097B60095EC83 /* NetVideoIndexViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoIndexViewController.swift; sourceTree = "<group>"; };
 		A9F03028260098280095EC83 /* NetVideoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoListViewController.swift; sourceTree = "<group>"; };
@@ -245,6 +249,7 @@
 				A950E2BB24E67356000CBB92 /* QYRequestData.swift */,
 				A950E2BA24E67356000CBB92 /* Tool.swift */,
 				A906DB1124EB7E5C00C070E4 /* DataManager.swift */,
+				A9CCBF8B2608A16100427C47 /* SqlTool.swift */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -278,6 +283,7 @@
 				A997538625666B9600179FCB /* NetVideoPlayerViewController.swift */,
 				A950E2C924E674E4000CBB92 /* PhoneIndexViewController.swift */,
 				A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */,
+				A9B378F8261089DD00EBC4EF /* HistoryViewController.swift */,
 			);
 			path = Phone;
 			sourceTree = "<group>";
@@ -479,6 +485,7 @@
 				A950E2CD24E67515000CBB92 /* WebsiteTableView.swift in Sources */,
 				A97F5206253848F1008B872A /* VideoCategoryCollectionView.swift in Sources */,
 				A950E29224E67157000CBB92 /* AppDelegate.swift in Sources */,
+				A9CCBF8C2608A16100427C47 /* SqlTool.swift in Sources */,
 				A92AC00F25529E9F001EBD12 /* SerialModel.swift in Sources */,
 				A9FB285224E67E9400F53E74 /* PhoneVideoListViewController.swift in Sources */,
 				A950E2B124E6733F000CBB92 /* Date+extension.swift in Sources */,
@@ -502,6 +509,7 @@
 				A950E2B424E6733F000CBB92 /* UITextField+extension.swift in Sources */,
 				A950E29424E67157000CBB92 /* SceneDelegate.swift in Sources */,
 				A9F03026260097B60095EC83 /* NetVideoIndexViewController.swift in Sources */,
+				A9B378F9261089DD00EBC4EF /* HistoryViewController.swift in Sources */,
 				A950E2CA24E674E4000CBB92 /* PhoneIndexViewController.swift in Sources */,
 				A950E2B724E6733F000CBB92 /* UIColor+extension.swift in Sources */,
 				A97F52032537EC93008B872A /* CategoryChooseViewController.swift in Sources */,

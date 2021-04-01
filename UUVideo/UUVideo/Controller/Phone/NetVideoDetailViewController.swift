@@ -37,7 +37,6 @@ class NetVideoDetailViewController: BaseViewController {
     }
 
     lazy var mainCollect: NetVideoDetailCollectionView = {
-//        let layout = EqualSpaceFlowLayout(AlignType.left,20.0)
         let layout = UICollectionViewLeftAlignedLayout.init()
         let mainCollection = NetVideoDetailCollectionView.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: layout)
         self.view.addSubview(mainCollection)
@@ -57,6 +56,7 @@ class NetVideoDetailViewController: BaseViewController {
 //                视频
                 let model = mainCollection.model!.videoArr![indexPath.row]
                 let VC = NetVideoDetailViewController.init()
+                VC.webType = self.webType
                 VC.videoModel = model
                 self.navigationController?.pushViewController(VC, animated: true)
             }

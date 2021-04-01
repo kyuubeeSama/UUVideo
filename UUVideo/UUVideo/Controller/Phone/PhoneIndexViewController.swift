@@ -22,7 +22,7 @@ class PhoneIndexViewController: BaseViewController {
             print(error)
         }
         print(FileTool.init().getDocumentPath())
-        self.mainTable.listArr = ["本地视频","新番时间表","哈哩TV","来快播"]
+        self.mainTable.listArr = ["本地视频","新番时间表","哈哩TV","来快播","历史记录","我的收藏"]
     }
     
     lazy var mainTable: WebsiteTableView = {
@@ -39,6 +39,11 @@ class PhoneIndexViewController: BaseViewController {
             }else if(string == "本地视频"){
                 let VC = PhoneVideoListViewController.init()
                 self.navigationController?.pushViewController(VC, animated: true)
+            }else if(string == "历史记录"){
+                let VC = HistoryViewController.init()
+                self.navigationController?.pushViewController(VC, animated: true)
+            }else if(string == "我的收藏"){
+                
             }else{
                 let VC = NetVideoIndexViewController.init()
                 VC.webType = websiteType(rawValue: indexPath.row-2)!

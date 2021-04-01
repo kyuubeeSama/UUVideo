@@ -3,9 +3,9 @@ PODS:
   - EmptyDataSet-Swift (5.0.0)
   - ESPullToRefresh (2.9.3)
   - FluentDarkModeKit (1.0.2)
-  - GRDB.swift (5.6.0):
-    - GRDB.swift/standard (= 5.6.0)
-  - GRDB.swift/standard (5.6.0)
+  - GRDB.swift (5.7.1):
+    - GRDB.swift/standard (= 5.7.1)
+  - GRDB.swift/standard (5.7.1)
   - HandyJSON (5.0.2)
   - IQKeyboardManagerSwift (6.5.6)
   - Ji (5.0.0)
@@ -57,23 +57,23 @@ PODS:
     - YYModel
   - SJUIKit/SQLite3/Protocol (0.0.0.52):
     - YYModel
-  - SJVideoPlayer (3.3.0):
+  - SJVideoPlayer (3.3.1):
     - SJBaseVideoPlayer (>= 3.5.0)
-    - SJVideoPlayer/Common (= 3.3.0)
-    - SJVideoPlayer/ControlLayers (= 3.3.0)
-    - SJVideoPlayer/ResourceLoader (= 3.3.0)
-  - SJVideoPlayer/Common (3.3.0):
+    - SJVideoPlayer/Common (= 3.3.1)
+    - SJVideoPlayer/ControlLayers (= 3.3.1)
+    - SJVideoPlayer/ResourceLoader (= 3.3.1)
+  - SJVideoPlayer/Common (3.3.1):
     - Masonry
     - SJBaseVideoPlayer (>= 3.5.0)
     - SJUIKit/AttributesFactory
     - SJVideoPlayer/ResourceLoader
-  - SJVideoPlayer/ControlLayers (3.3.0):
+  - SJVideoPlayer/ControlLayers (3.3.1):
     - SJBaseVideoPlayer (>= 3.5.0)
     - SJVideoPlayer/Common
-  - SJVideoPlayer/ResourceLoader (3.3.0):
+  - SJVideoPlayer/ResourceLoader (3.3.1):
     - SJBaseVideoPlayer (>= 3.5.0)
   - SnapKit (5.0.1)
-  - SwiftyJSON (5.0.0)
+  - SwiftyJSON (5.0.1)
   - Toast-Swift (5.0.1)
   - YYModel (1.0.4)
 
@@ -121,7 +121,7 @@ SPEC CHECKSUMS:
   EmptyDataSet-Swift: eb382c0c87a2d9c678077385a595cec52da38171
   ESPullToRefresh: 0d68daa602b343c81753a1b95e09fd0bfcddfd40
   FluentDarkModeKit: 636f1968d2109f064f0c210dcef3cc4f9f72d0ca
-  GRDB.swift: c91e3a2a59b5cdef17c2190015fd29ffee76922c
+  GRDB.swift: 5ec829be025b4c84a3fcaa0a4f112dda82787598
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
   Ji: d795fed288fe78658b404c88946d753b17d8d7f4
@@ -131,9 +131,9 @@ SPEC CHECKSUMS:
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
   SJBaseVideoPlayer: c8f2fdb374ec2c946c37b1f39eee24f0812a979b
   SJUIKit: 8246b1001e616b0dbd090309fd58cdd609ae3fd4
-  SJVideoPlayer: f819c5074aea5192fe624784f8a7e820e45b85cf
+  SJVideoPlayer: b5f8f852a892e4a8561e8ced3a6ecdf8ea91aa07
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
-  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
+  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 

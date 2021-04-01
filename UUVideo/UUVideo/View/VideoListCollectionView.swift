@@ -122,7 +122,7 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         let listModel = self.listArr![section]
-        if (String.myStringIsNULL(string: listModel.title!)){
+        if (String.myStringIsNULL(string: listModel.title)){
             return CGSize(width: screenW, height: 0)
         }else {
             return CGSize(width: screenW, height: 60)

@@ -120,7 +120,7 @@ class DataManager: NSObject {
                     }else{
                         videoModel.picUrl = urlArr[type.rawValue]+picUrl
                     }
-                    videoModel.num = updateNodeArr![i].content
+                    videoModel.num = updateNodeArr![i].content!
                     videoModel.type = 3
                     listModel.list?.append(videoModel)
                 }
@@ -163,7 +163,7 @@ class DataManager: NSObject {
             for (i,_) in titleNodeArr!.enumerated() {
                 let videoModel = VideoModel.init()
                 videoModel.name = titleNodeArr![i].content
-                videoModel.num = updateNodeArr![i].content
+                videoModel.num = updateNodeArr![i].content!
                 let detailUrl:String = urlNodeArr![i].content!
                 videoModel.detailUrl = checkUrl(urlStr: detailUrl, domainUrlStr: baseUrl)
                 let picUrl:String = imgNodeArr![i].content!
@@ -281,6 +281,7 @@ class DataManager: NSObject {
         }else{
             let baseUrl = Tool.getRegularData(regularExpress: "((http://)|(https://))[^\\.]*\\.(?<domain>[^/|?]*)", content: urlStr)[0]
             let videoModel = VideoModel.init()
+            videoModel.detailUrl = urlStr
             videoModel.videoArr = []
             videoModel.tagArr = []
             videoModel.serialArr = []
@@ -306,7 +307,7 @@ class DataManager: NSObject {
             }else{
                 //        视频封面
                 let videoImgNodeArr = jiDoc?.xPath("/html/body/div[1]/div[1]/div[1]/div/div[1]/a/img/@data-original")
-                videoModel.picUrl = "https://www.laikuaibo.com/"+videoImgNodeArr![0].content!
+                videoModel.picUrl = checkUrl(urlStr: videoImgNodeArr![0].content!, domainUrlStr: baseUrl)
                 //        视频标题
                 let videoTitleNodeArr = jiDoc?.xPath("/html/body/div[1]/div[1]/div[1]/div/div[2]/h4/a")
                 videoModel.name = videoTitleNodeArr![0].content
@@ -358,7 +359,7 @@ class DataManager: NSObject {
                     if type == .halihali{
                         model.num = ""
                     }else{
-                        model.num = updateNodeArr![index].content
+                        model.num = updateNodeArr![index].content!
 
                     }
                     model.type = 3
@@ -393,7 +394,7 @@ class DataManager: NSObject {
                     for item in json {
                         let videoModel = VideoModel.init()
                         videoModel.name = item.1["title"].string
-                        videoModel.num = item.1["lianzaijs"].string
+                        videoModel.num = item.1["lianzaijs"].string!
                         videoModel.detailUrl = checkUrl(urlStr: item.1["url"].string!, domainUrlStr: baseUrl)
                         videoModel.picUrl = item.1["thumb"].string!
                         videoModel.type = 3
@@ -418,7 +419,7 @@ class DataManager: NSObject {
                 for (index,_) in titleNodeArr.enumerated(){
                     let videoModel = VideoModel.init()
                     videoModel.name = titleNodeArr[index].content
-                    videoModel.num = updateNodeArr[index].content
+                    videoModel.num = updateNodeArr[index].content!
                     videoModel.detailUrl = checkUrl(urlStr: detailNodeArr[index].content!, domainUrlStr: baseUrl)
                     videoModel.picUrl = checkUrl(urlStr: imgNodeArr[index].content!, domainUrlStr: baseUrl)
                     videoModel.type = 3
@@ -456,9 +457,9 @@ class DataManager: NSObject {
             for (i,_) in titleNodeArr!.enumerated() {
                 let recomondVideoModel = VideoModel.init()
                 recomondVideoModel.name = titleNodeArr![i].content
-                recomondVideoModel.detailUrl = "https://www.laikuaibo.com/"+urlNodeArr![i].content!
-                recomondVideoModel.picUrl = "https://www.laikuaibo.com/"+imgNodeArr![i].content!
-                recomondVideoModel.num = updateNodeArr![i].content
+                recomondVideoModel.detailUrl = checkUrl(urlStr: urlNodeArr![i].content!, domainUrlStr: "https://www.laikuaibo.com/")
+                recomondVideoModel.picUrl = checkUrl(urlStr: imgNodeArr![i].content!, domainUrlStr: "https://www.laikuaibo.com/")
+                recomondVideoModel.num = updateNodeArr![i].content!
                 recomondVideoModel.type = 3
                 videoModel.videoArr?.append(recomondVideoModel)
                 //                print("封面是\(videoModel.picUrl),标提是\(videoModel.name) 更新信息是\(videoModel.num), 详情地址是\(videoModel.detailUrl)")
