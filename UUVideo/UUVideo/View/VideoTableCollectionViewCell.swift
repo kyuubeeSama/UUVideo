@@ -13,6 +13,7 @@ class VideoTableCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var leftImg: UIImageView!
     @IBOutlet weak var titleLab: UILabel!
     @IBOutlet weak var numLab: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

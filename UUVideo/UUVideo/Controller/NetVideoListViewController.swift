@@ -12,32 +12,32 @@ import ESPullToRefresh
 
 class NetVideoListViewController: BaseViewController {
 
-    public var webType:websiteType = .halihali
-    private var pageNum:Int = 1
+    public var webType: websiteType = .halihali
+    private var pageNum: Int = 1
     // 视频类型
-    private var videoType:String = ""
+    private var videoType: String = ""
     // 电影地区
-    private var area:String = ""
+    private var area: String = ""
     // 剧情
-    private var videoCategory:String = ""
+    private var videoCategory: String = ""
     // 年份
-    private var year:String = ""
+    private var year: String = ""
     // 排序
-        var order:String = ""
-    private var urlStr:String = ""
-    private var listArr:[ListModel] = []
-    private var categoryListArr:[CategoryListModel] = []
-    
+    var order: String = ""
+    private var urlStr: String = ""
+    private var listArr: [ListModel] = []
+    private var categoryListArr: [CategoryListModel] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        urlStr = ["http://halihali2.com/","https://www.laikuaibo.com/"][self.webType.rawValue]
-        if self.webType == .halihali{
+        urlStr = ["http://halihali2.com/", "https://www.laikuaibo.com/"][webType.rawValue]
+        if webType == .halihali {
             area = "all"
             videoCategory = "0"
             year = "0"
-            switch self.title {
+            switch title {
             case "电视剧":
                 videoType = "tv"
             case "动漫":
@@ -48,43 +48,44 @@ class NetVideoListViewController: BaseViewController {
                 //综艺
                 videoType = "zongyi"
             }
-        }else{
+        } else {
             videoType = "1"
-            switch self.title {
-                    case "电影":
-                        videoType = "1"
-                    case "剧集":
-                        videoType = "2"
-                    case "综艺":
-                        videoType = "4"
-                    case "动漫":
-                        videoType = "3"
-                    default:
-                        //剧集
-                        videoType = "19"
-                    }
+            switch title {
+            case "电影":
+                videoType = "1"
+            case "剧集":
+                videoType = "2"
+            case "综艺":
+                videoType = "4"
+            case "动漫":
+                videoType = "3"
+            default:
+                //剧集
+                videoType = "19"
+            }
         }
         if webType == .halihali {
-            self.setNav()
-            self.getCategoryData()
+            setNav()
+            getCategoryData()
         }
-        self.getListData()
+        getListData()
     }
-    
-    func setNav(){
+
+    func setNav() {
         let rightItem = UIBarButtonItem.init(title: "筛选", style: .plain, target: self, action: #selector(rightBtnClick))
-        self.navigationItem.rightBarButtonItem = rightItem
+        navigationItem.rightBarButtonItem = rightItem
     }
+
     // 右键筛选
-    @objc func rightBtnClick(){
+    @objc func rightBtnClick() {
 //        HaliTVCategoryView
-        if self.categoryListArr.count>0 {
+        if categoryListArr.count > 0 {
             // 滑出筛选界面
             let VC = CategoryChooseViewController.init()
-            VC.listArr = self.categoryListArr
+            VC.listArr = categoryListArr
             let menu = SideMenuNavigationController(rootViewController: VC)
             menu.presentationStyle = .menuSlideIn
-            menu.menuWidth = screenW*0.9
+            menu.menuWidth = screenW * 0.9
             present(menu, animated: true, completion: nil)
             VC.sureBtnReturn = { [self] resultArr in
                 print(resultArr)
@@ -92,29 +93,30 @@ class NetVideoListViewController: BaseViewController {
                 year = resultArr[1]
                 area = resultArr[2]
                 pageNum = 1
-                self.listArr = []
-                self.getCategoryData()
-                self.getListData()
+                listArr = []
+                getCategoryData()
+                getListData()
             }
-        }else{
-            self.view.makeToast("未获取到筛选数据")
+        } else {
+            view.makeToast("未获取到筛选数据")
         }
     }
+
 //    获取列表信息
-    func getListData(){
+    func getListData() {
         var detailUrlStr = ""
         if webType == .halihali {
-        detailUrlStr = "http://121.4.190.96:9991/getsortdata_all_z.php?action=\(videoType)&page=\(pageNum)&year=\(year)&area=\(area)&class=\(videoCategory)&dect=&id="
-        }else{
-            detailUrlStr = urlStr+"list-select-id-\(videoType)-area-\(area)-order-\(order)-p-\(pageNum).html"
+            detailUrlStr = "http://121.4.190.96:9991/getsortdata_all_z.php?action=\(videoType)&page=\(pageNum)&year=\(year)&area=\(area)&class=\(videoCategory)&dect=&id="
+        } else {
+            detailUrlStr = urlStr + "list-select-id-\(videoType)-area-\(area)-order-\(order)-p-\(pageNum).html"
         }
         DispatchQueue.global().async {
-            DataManager.init().getVideoListData(urlStr: detailUrlStr, type: self.webType) { (dataArr:[ListModel]) in
+            DataManager.init().getVideoListData(urlStr: detailUrlStr, type: self.webType) { (dataArr: [ListModel]) in
                 DispatchQueue.main.async {
-                    if(dataArr[0].list!.count>0){
+                    if (dataArr[0].list!.count > 0) {
                         self.pageNum += 1
                         self.mainCollect.es.stopLoadingMore()
-                    }else{
+                    } else {
                         self.mainCollect.es.noticeNoMoreData()
                     }
                     self.listArr.append(contentsOf: dataArr)
@@ -125,16 +127,17 @@ class NetVideoListViewController: BaseViewController {
             }
         }
     }
+
 //     获取分类信息
-    func getCategoryData(){
+    func getCategoryData() {
 //        http://halihali2.com/mov/0/0/all/1.html
-        DataManager.init().getWebsiteCategoryData(urlStr: urlStr+"\(videoType)/\(year)/\(videoCategory)/\(area)/\(pageNum).html", type: .halihali) { (dataArr) in
+        DataManager.init().getWebsiteCategoryData(urlStr: urlStr + "\(videoType)/\(year)/\(videoCategory)/\(area)/\(pageNum).html", type: .halihali) { (dataArr) in
             self.categoryListArr = dataArr
         } failure: { (error) in
             print(error)
         }
     }
-    
+
     lazy var mainCollect: VideoListCollectionView = {
         let layout = UICollectionViewFlowLayout.init()
         let mainCollection = VideoListCollectionView.init(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH), collectionViewLayout: layout)

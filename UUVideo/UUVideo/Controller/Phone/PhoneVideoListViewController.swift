@@ -13,20 +13,21 @@ class PhoneVideoListViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-            self.getVideo()
+        getVideo()
     }
+
     //获取所有的本地视频
-    func getVideo(){
+    func getVideo() {
         // 视频分为本地视频和相册视频
         // 本地视频
         let ftool = FileTool.init()
-        let localArr:[VideoModel] = ftool.getVideoFileList()
+        let localArr: [VideoModel] = ftool.getVideoFileList()
         let listModel1 = ListModel.init()
         listModel1.title = "本地视频"
         listModel1.more = false
         listModel1.list = localArr
-        var videoArr:[ListModel] = [listModel1]
-        self.mainCollect.listArr = videoArr
+        var videoArr: [ListModel] = [listModel1]
+        mainCollect.listArr = videoArr
 //        for item:VideoModel in localArr {
 //            print("视频名字是\(item.name),时长是\(item.time)")
 //        }
@@ -43,7 +44,7 @@ class PhoneVideoListViewController: BaseViewController {
             }
         }
     }
-    
+
     lazy var mainCollect: VideoListCollectionView = {
         let layout = UICollectionViewFlowLayout.init()
         let mainCollection = VideoListCollectionView.init(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH), collectionViewLayout: layout)
@@ -60,7 +61,7 @@ class PhoneVideoListViewController: BaseViewController {
         }
         return mainCollection
     }()
-    
+
     /*
     // MARK: - Navigation
 

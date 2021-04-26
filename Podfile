@@ -4,7 +4,9 @@ platform :ios,'13.0'
 target 'UUVideo' do
 
   pod 'SJVideoPlayer'
-  
+  # 投屏
+  pod 'MRDLNA'
+
   use_frameworks!
   #  网络请求
   pod 'Alamofire'

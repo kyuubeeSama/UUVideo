@@ -12,50 +12,19 @@ import GRDB
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 //        guard let _ = (scene as? UIWindowScene) else { return }
         // 创建数据库文件。
-        let dataBasePath = FileTool.init().getDocumentPath() + "/.database.db";
-        let result = FileTool.init().createFile(document: "/.database.db", fileData: Data.init())
-        if result {
-            let dbQueue = try? DatabaseQueue(path: dataBasePath)
-            try? dbQueue?.write({ (db) in
-//                创建浏览历史表
-                try? db.execute(sql: """
-                                      CREATE TABLE IF NOT EXISTS history(
-                                      id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                      name TEXT NOT NULL,
-                                      url TEXT NOT NULL UNIQUE,
-                                      updateinfo TEXT NOT NULL,
-                                      picurl TEXT NOT NULL,
-                                      add_time INTEGER,
-                                      webtype INTEGER NOT NULL
-                                      )
-                                     """)
-//                创建收藏表
-                try? db.execute(sql: """
-                                     CREATE TABLE IF NOT EXISTS collect(
-                                     id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                     name TEXT NOT NULL,
-                                     url TEXT NOT NULL UNIQUE,
-                                     video_id INTEGER DEFAULT(0),
-                                     updateinfo TEXT NOT NULL,
-                                     picurl TEXT NOT NULL,
-                                     add_time INTEGER,
-                                     webtype INTEGER NOT NULL
-                                     )
-                                     """)
-            })
-        }
+        SqlTool.init().createTable()
 
         print(FileTool.init().getDocumentPath())
         let windowScene = scene as! UIWindowScene
-        self.window = UIWindow.init(windowScene: windowScene)
-        self.window?.backgroundColor = .systemBackground
+        window = UIWindow.init(windowScene: windowScene)
+        window?.backgroundColor = .systemBackground
         var index = BaseViewController.init()
         if Tool.isPad() {
             index = PadIndexViewController.init()
@@ -63,8 +32,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             index = PhoneIndexViewController.init()
         }
         let nav = UINavigationController.init(rootViewController: index)
-        self.window?.rootViewController = nav
-        self.window?.makeKeyAndVisible()
+        window?.rootViewController = nav
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

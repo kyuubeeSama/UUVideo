@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		A906DB0C24EA575700C070E4 /* PadIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB0B24EA575700C070E4 /* PadIndexViewController.swift */; };
 		A906DB0E24EA680B00C070E4 /* BangumiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB0D24EA680B00C070E4 /* BangumiViewController.swift */; };
-		A906DB1024EA695900C070E4 /* CategoryChooseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB0F24EA695900C070E4 /* CategoryChooseView.swift */; };
 		A906DB1224EB7E5C00C070E4 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB1124EB7E5C00C070E4 /* DataManager.swift */; };
 		A906DB1524EBB08300C070E4 /* VideoTableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB1324EBB08300C070E4 /* VideoTableCollectionViewCell.swift */; };
 		A906DB1624EBB08300C070E4 /* VideoTableCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A906DB1424EBB08300C070E4 /* VideoTableCollectionViewCell.xib */; };
 		A90F71192524100F0000D1CF /* HeaderTitleCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90F71172524100F0000D1CF /* HeaderTitleCollectionReusableView.swift */; };
 		A90F711A2524100F0000D1CF /* HeaderTitleCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A90F71182524100F0000D1CF /* HeaderTitleCollectionReusableView.xib */; };
 		A90F7121252414740000D1CF /* ListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90F7120252414740000D1CF /* ListModel.swift */; };
+		A91F3CA6263504B1006E6DA6 /* CollectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91F3CA5263504B1006E6DA6 /* CollectViewController.swift */; };
 		A923746B25FF017100CE21F4 /* BangumiListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923746A25FF017100CE21F4 /* BangumiListViewController.swift */; };
 		A923746F25FF091A00CE21F4 /* placeholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A923746E25FF091A00CE21F4 /* placeholder.jpg */; };
 		A923747225FF0B4900CE21F4 /* UILabel+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923747125FF0B4900CE21F4 /* UILabel+extension.swift */; };
@@ -46,7 +46,6 @@
 		A950E2CD24E67515000CBB92 /* WebsiteTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2CC24E67515000CBB92 /* WebsiteTableView.swift */; };
 		A950E2CF24E677D9000CBB92 /* VideoListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2CE24E677D9000CBB92 /* VideoListCollectionView.swift */; };
 		A950E2D324E67871000CBB92 /* VideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2D224E67871000CBB92 /* VideoModel.swift */; };
-		A964116A24ECCB9700D19D92 /* QYWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A964116924ECCB9700D19D92 /* QYWebView.swift */; };
 		A97F52032537EC93008B872A /* CategoryChooseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97F52022537EC93008B872A /* CategoryChooseViewController.swift */; };
 		A97F5206253848F1008B872A /* VideoCategoryCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97F5205253848F1008B872A /* VideoCategoryCollectionView.swift */; };
 		A97F520A2538495C008B872A /* VideoCategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97F52082538495C008B872A /* VideoCategoryCollectionViewCell.swift */; };
@@ -56,7 +55,6 @@
 		A98794EC2553983B00DD62EE /* VideoInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98794EA2553983B00DD62EE /* VideoInfoCollectionViewCell.swift */; };
 		A98794ED2553983B00DD62EE /* VideoInfoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A98794EB2553983B00DD62EE /* VideoInfoCollectionViewCell.xib */; };
 		A9967C1D256265AA00752CB7 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9967C1C256265AA00752CB7 /* UserViewController.swift */; };
-		A997538125665ECF00179FCB /* EqualSpaceFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A997538025665ECF00179FCB /* EqualSpaceFlowLayout.swift */; };
 		A997538725666B9600179FCB /* NetVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A997538625666B9600179FCB /* NetVideoPlayerViewController.swift */; };
 		A9B378F9261089DD00EBC4EF /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B378F8261089DD00EBC4EF /* HistoryViewController.swift */; };
 		A9B9CE1C24E9569700CFBE69 /* LocalVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CE1B24E9569700CFBE69 /* LocalVideoPlayerViewController.swift */; };
@@ -79,13 +77,13 @@
 		A873C20C17BCF9F74FB8D914 /* Pods-UUVideo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UUVideo.release.xcconfig"; path = "Target Support Files/Pods-UUVideo/Pods-UUVideo.release.xcconfig"; sourceTree = "<group>"; };
 		A906DB0B24EA575700C070E4 /* PadIndexViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadIndexViewController.swift; sourceTree = "<group>"; };
 		A906DB0D24EA680B00C070E4 /* BangumiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BangumiViewController.swift; sourceTree = "<group>"; };
-		A906DB0F24EA695900C070E4 /* CategoryChooseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryChooseView.swift; sourceTree = "<group>"; };
 		A906DB1124EB7E5C00C070E4 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		A906DB1324EBB08300C070E4 /* VideoTableCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTableCollectionViewCell.swift; sourceTree = "<group>"; };
 		A906DB1424EBB08300C070E4 /* VideoTableCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoTableCollectionViewCell.xib; sourceTree = "<group>"; };
 		A90F71172524100F0000D1CF /* HeaderTitleCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTitleCollectionReusableView.swift; sourceTree = "<group>"; };
 		A90F71182524100F0000D1CF /* HeaderTitleCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderTitleCollectionReusableView.xib; sourceTree = "<group>"; };
 		A90F7120252414740000D1CF /* ListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListModel.swift; sourceTree = "<group>"; };
+		A91F3CA5263504B1006E6DA6 /* CollectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectViewController.swift; sourceTree = "<group>"; };
 		A923746A25FF017100CE21F4 /* BangumiListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BangumiListViewController.swift; sourceTree = "<group>"; };
 		A923746E25FF091A00CE21F4 /* placeholder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = placeholder.jpg; sourceTree = "<group>"; };
 		A923747125FF0B4900CE21F4 /* UILabel+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+extension.swift"; sourceTree = "<group>"; };
@@ -119,7 +117,6 @@
 		A950E2CC24E67515000CBB92 /* WebsiteTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteTableView.swift; sourceTree = "<group>"; };
 		A950E2CE24E677D9000CBB92 /* VideoListCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListCollectionView.swift; sourceTree = "<group>"; };
 		A950E2D224E67871000CBB92 /* VideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModel.swift; sourceTree = "<group>"; };
-		A964116924ECCB9700D19D92 /* QYWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QYWebView.swift; sourceTree = "<group>"; };
 		A97F52022537EC93008B872A /* CategoryChooseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryChooseViewController.swift; sourceTree = "<group>"; };
 		A97F5205253848F1008B872A /* VideoCategoryCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCategoryCollectionView.swift; sourceTree = "<group>"; };
 		A97F52082538495C008B872A /* VideoCategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCategoryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -129,7 +126,6 @@
 		A98794EA2553983B00DD62EE /* VideoInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		A98794EB2553983B00DD62EE /* VideoInfoCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoInfoCollectionViewCell.xib; sourceTree = "<group>"; };
 		A9967C1C256265AA00752CB7 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
-		A997538025665ECF00179FCB /* EqualSpaceFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualSpaceFlowLayout.swift; sourceTree = "<group>"; };
 		A997538625666B9600179FCB /* NetVideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoPlayerViewController.swift; sourceTree = "<group>"; };
 		A9B378F8261089DD00EBC4EF /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		A9B9CE1524E933E000CFBE69 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
@@ -284,6 +280,7 @@
 				A950E2C924E674E4000CBB92 /* PhoneIndexViewController.swift */,
 				A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */,
 				A9B378F8261089DD00EBC4EF /* HistoryViewController.swift */,
+				A91F3CA5263504B1006E6DA6 /* CollectViewController.swift */,
 			);
 			path = Phone;
 			sourceTree = "<group>";
@@ -317,10 +314,8 @@
 				A950E2CE24E677D9000CBB92 /* VideoListCollectionView.swift */,
 				A9FB284D24E67B6900F53E74 /* VideoListCollectionViewCell.swift */,
 				A9FB284E24E67B6900F53E74 /* VideoListCollectionViewCell.xib */,
-				A906DB0F24EA695900C070E4 /* CategoryChooseView.swift */,
 				A906DB1324EBB08300C070E4 /* VideoTableCollectionViewCell.swift */,
 				A906DB1424EBB08300C070E4 /* VideoTableCollectionViewCell.xib */,
-				A964116924ECCB9700D19D92 /* QYWebView.swift */,
 				A90F71172524100F0000D1CF /* HeaderTitleCollectionReusableView.swift */,
 				A90F71182524100F0000D1CF /* HeaderTitleCollectionReusableView.xib */,
 				A97F5205253848F1008B872A /* VideoCategoryCollectionView.swift */,
@@ -330,7 +325,6 @@
 				A92AC00B25529D28001EBD12 /* NetVideoDetailCollectionView.swift */,
 				A98794EA2553983B00DD62EE /* VideoInfoCollectionViewCell.swift */,
 				A98794EB2553983B00DD62EE /* VideoInfoCollectionViewCell.xib */,
-				A997538025665ECF00179FCB /* EqualSpaceFlowLayout.swift */,
 				A928D21F2567917A003BF719 /* NetVideoPlayerCollectionView.swift */,
 				A9F0302226003F100095EC83 /* UUWebView.swift */,
 				A9CCBF322608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift */,
@@ -497,7 +491,6 @@
 				A97FF1F0253161890097C0F7 /* CategoryModel.swift in Sources */,
 				A9967C1D256265AA00752CB7 /* UserViewController.swift in Sources */,
 				A923746B25FF017100CE21F4 /* BangumiListViewController.swift in Sources */,
-				A964116A24ECCB9700D19D92 /* QYWebView.swift in Sources */,
 				A950E2B324E6733F000CBB92 /* NSObject+extension.swift in Sources */,
 				A9F03029260098280095EC83 /* NetVideoListViewController.swift in Sources */,
 				A90F71192524100F0000D1CF /* HeaderTitleCollectionReusableView.swift in Sources */,
@@ -513,10 +506,9 @@
 				A950E2CA24E674E4000CBB92 /* PhoneIndexViewController.swift in Sources */,
 				A950E2B724E6733F000CBB92 /* UIColor+extension.swift in Sources */,
 				A97F52032537EC93008B872A /* CategoryChooseViewController.swift in Sources */,
-				A906DB1024EA695900C070E4 /* CategoryChooseView.swift in Sources */,
+				A91F3CA6263504B1006E6DA6 /* CollectViewController.swift in Sources */,
 				A90F7121252414740000D1CF /* ListModel.swift in Sources */,
 				A950E2B024E6733F000CBB92 /* Dictionary+extension.swift in Sources */,
-				A997538125665ECF00179FCB /* EqualSpaceFlowLayout.swift in Sources */,
 				A950E2B524E6733F000CBB92 /* String+extension.swift in Sources */,
 				A950E2C124E67356000CBB92 /* config.swift in Sources */,
 				A906DB0E24EA680B00C070E4 /* BangumiViewController.swift in Sources */,

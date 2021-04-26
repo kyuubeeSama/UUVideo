@@ -11,11 +11,11 @@ import Ji
 import Alamofire
 import SwiftyJSON
 
-enum XPathError:Error {
+enum XPathError: Error {
     case getContentFail
 }
 
-enum websiteType:Int {
+enum websiteType: Int {
     case halihali = 0
     case laikuaibo = 1
 }
@@ -27,37 +27,37 @@ class DataManager: NSObject {
     ///   - success: 返回视频列表
     ///   - failure: 返回错误
     /// - Returns: 空
-    func getBangumiData(dayIndex:Int,success:@escaping(_ listArr:[VideoModel])->(),failure:@escaping(_ error:Error)->()) {
+    func getBangumiData(dayIndex: Int, success: @escaping (_ listArr: [VideoModel]) -> (), failure: @escaping (_ error: Error) -> ()) {
         let jiDoc = Ji(htmlURL: URL.init(string: "http://halihali2.com/zhougen/")!)
         if (jiDoc == nil) {
             failure(XPathError.getContentFail)
-        }else{
+        } else {
             //*[@id="con_dm_1"]/span[2]/a  获取标题
             //*[@id="con_dm_2"]/span[2]/a/@href 详情地址
-            var listArr:[VideoModel] = []
+            var listArr: [VideoModel] = []
             // 获取标题
-            let titlePath = "//*[@id=\"con_dm_\(dayIndex+1)\"]/span/a"
+            let titlePath = "//*[@id=\"con_dm_\(dayIndex + 1)\"]/span/a"
             let titleNodeArr = jiDoc?.xPath(titlePath)
             // 获取详情地址
-            let urlPath = "//*[@id=\"con_dm_\(dayIndex+1)\"]/span/a/@href"
+            let urlPath = "//*[@id=\"con_dm_\(dayIndex + 1)\"]/span/a/@href"
             let urlNodeArr = jiDoc?.xPath(urlPath)
-            for (index,_) in titleNodeArr!.enumerated() {
-                if (index>0){
+            for (index, _) in titleNodeArr!.enumerated() {
+                if (index > 0) {
                     let titleNode = titleNodeArr![index]
-                    let titleStr:NSString = titleNode.content! as NSString
+                    let titleStr: NSString = titleNode.content! as NSString
                     // 从标题中提取出标题和更新信息
                     let beginRange = titleStr.range(of: "(")
                     let endRange = titleStr.range(of: ")")
-                    let string = titleStr.substring(with: NSRange.init(location: beginRange.location+1, length: endRange.location-beginRange.location-1))
+                    let string = titleStr.substring(with: NSRange.init(location: beginRange.location + 1, length: endRange.location - beginRange.location - 1))
                     // 标题
                     let title = titleStr.substring(to: beginRange.location)
                     // 更新记录
                     let update = string.replacingOccurrences(of: "最新:", with: "")
-                    let urlNode = urlNodeArr![index-1]
+                    let urlNode = urlNodeArr![index - 1]
                     let model = VideoModel.init()
                     model.name = title
-                    let detailUrl:String = urlNode.content!
-                   model.detailUrl = checkUrl(urlStr: detailUrl, domainUrlStr: "http://halihali2.com")
+                    let detailUrl: String = urlNode.content!
+                    model.detailUrl = checkUrl(urlStr: detailUrl, domainUrlStr: "http://halihali2.com")
                     model.num = update
                     model.type = 4
                     model.picUrl = ""
@@ -67,18 +67,18 @@ class DataManager: NSObject {
             success(listArr)
         }
     }
-    
+
     // 获取站点首页数据
-    func getWebsiteIndexData(type:websiteType,success:@escaping(_ listData:[ListModel])->(),failure:@escaping(_ error:Error)->()){
-        let urlArr = ["http://halihali2.com/","https://www.laikuaibo.com/"]
+    func getWebsiteIndexData(type: websiteType, success: @escaping (_ listData: [ListModel]) -> (), failure: @escaping (_ error: Error) -> ()) {
+        let urlArr = ["http://halihali2.com/", "https://www.laikuaibo.com/"]
         let jiDoc = Ji(htmlURL: URL.init(string: urlArr[type.rawValue])!)
         if jiDoc == nil {
             failure(XPathError.getContentFail)
-        }else{
-            let divArr = [[5,6,7,8],[3,5,7,9,0]]
-            let titleArr = [["动漫","电视剧","电影","综艺"],["电影","剧集","综艺","动漫","伦理"]]
-            var resultArr:[ListModel] = []
-            for (index,value) in divArr[type.rawValue].enumerated() {
+        } else {
+            let divArr = [[5, 6, 7, 8], [3, 5, 7, 9, 0]]
+            let titleArr = [["动漫", "电视剧", "电影", "综艺"], ["电影", "剧集", "综艺", "动漫", "伦理"]]
+            var resultArr: [ListModel] = []
+            for (index, value) in divArr[type.rawValue].enumerated() {
                 let listModel = ListModel.init()
                 var titleXpath = ""
                 var urlXpath = ""
@@ -89,8 +89,8 @@ class DataManager: NSObject {
                     urlXpath = "/html/body/div[2]/div[\(value)]/div[1]/ul/li/a/@href"
                     imgXpath = "/html/body/div[2]/div[\(value)]/div[1]/ul/li/a/div[1]/img/@data-original"
                     updateXpath = "/html/body/div[2]/div[\(value)]/div[1]/ul/li/a/div[1]/p"
-                    
-                }else{
+
+                } else {
                     titleXpath = "/html/body/div[\(value)]/div[2]/div[1]/ul/li/h2/a"
                     urlXpath = "/html/body/div[\(value)]/div[2]/div[1]/ul/li/p/a/@href"
                     imgXpath = "/html/body/div[\(value)]/div[2]/div[1]/ul/li/p/a/img/@data-original"
@@ -103,22 +103,22 @@ class DataManager: NSObject {
                 listModel.title = titleArr[type.rawValue][index]
                 listModel.more = true
                 listModel.list = []
-                for (i,_) in titleNodeArr!.enumerated() {
+                for (i, _) in titleNodeArr!.enumerated() {
                     let videoModel = VideoModel.init()
                     videoModel.name = titleNodeArr![i].content
-                    
-                    let detailUrl:String = urlNodeArr![i].content!
+
+                    let detailUrl: String = urlNodeArr![i].content!
                     if detailUrl.contains("http") {
                         videoModel.detailUrl = detailUrl
-                    }else{
-                        videoModel.detailUrl = urlArr[type.rawValue]+detailUrl
+                    } else {
+                        videoModel.detailUrl = urlArr[type.rawValue] + detailUrl
                     }
-                    
-                    let picUrl:String = imgNodeArr![i].content!
+
+                    let picUrl: String = imgNodeArr![i].content!
                     if picUrl.contains("http") {
                         videoModel.picUrl = picUrl
-                    }else{
-                        videoModel.picUrl = urlArr[type.rawValue]+picUrl
+                    } else {
+                        videoModel.picUrl = urlArr[type.rawValue] + picUrl
                     }
                     videoModel.num = updateNodeArr![i].content!
                     videoModel.type = 3
@@ -129,13 +129,13 @@ class DataManager: NSObject {
             success(resultArr)
         }
     }
-    
+
     // 获取视频列表
-    func getVideoListData(urlStr:String,type:websiteType,success:@escaping(_ listData:[ListModel])->(),failure:@escaping(_ error:Error)->()){
+    func getVideoListData(urlStr: String, type: websiteType, success: @escaping (_ listData: [ListModel]) -> (), failure: @escaping (_ error: Error) -> ()) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             failure(XPathError.getContentFail)
-        }else{
+        } else {
             let baseUrl = Tool.getRegularData(regularExpress: "((http://)|(https://))[^\\.]*\\.(?<domain>[^/|?]*)", content: urlStr)[0]
             let listModel = ListModel.init()
             listModel.title = ""
@@ -150,7 +150,7 @@ class DataManager: NSObject {
                 urlXpath = "/html/body/li/a/@href"
                 imgXpath = "/html/body/li/a/div[1]/img/@data-original"
                 updateXpath = "/html/body/li/a/div[1]"
-            }else{
+            } else {
                 titleXpath = "/html/body/div[1]/ul/li/h2/a"
                 urlXpath = "/html/body/div[1]/ul/li/p/a/@href"
                 imgXpath = "/html/body/div[1]/ul/li/p/a/img/@data-original"
@@ -160,13 +160,13 @@ class DataManager: NSObject {
             let urlNodeArr = jiDoc?.xPath(urlXpath)
             let imgNodeArr = jiDoc?.xPath(imgXpath)
             let updateNodeArr = jiDoc?.xPath(updateXpath)
-            for (i,_) in titleNodeArr!.enumerated() {
+            for (i, _) in titleNodeArr!.enumerated() {
                 let videoModel = VideoModel.init()
                 videoModel.name = titleNodeArr![i].content
                 videoModel.num = updateNodeArr![i].content!
-                let detailUrl:String = urlNodeArr![i].content!
+                let detailUrl: String = urlNodeArr![i].content!
                 videoModel.detailUrl = checkUrl(urlStr: detailUrl, domainUrlStr: baseUrl)
-                let picUrl:String = imgNodeArr![i].content!
+                let picUrl: String = imgNodeArr![i].content!
                 videoModel.picUrl = checkUrl(urlStr: picUrl, domainUrlStr: baseUrl)
                 videoModel.type = 3
                 listModel.list?.append(videoModel)
@@ -174,7 +174,7 @@ class DataManager: NSObject {
             success([listModel])
         }
     }
-    
+
     /// 获取分类数据
     /// - Parameters:
     ///   - urlStr: 请求地址
@@ -182,39 +182,39 @@ class DataManager: NSObject {
     ///   - success: 成功返回
     ///   - failure: 失败返回
     /// - Returns: 空
-    func getWebsiteCategoryData(urlStr:String,type:websiteType,success:@escaping(_ listData:[CategoryListModel])->(),failure:@escaping(_ error:Error)->()){
+    func getWebsiteCategoryData(urlStr: String, type: websiteType, success: @escaping (_ listData: [CategoryListModel]) -> (), failure: @escaping (_ error: Error) -> ()) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             failure(XPathError.getContentFail)
-        }else{
-            var listArr:[CategoryListModel]=[]
-            let titleArr = [["按剧情","按年代","按地区"]]
+        } else {
+            var listArr: [CategoryListModel] = []
+            let titleArr = [["按剧情", "按年代", "按地区"]]
             if type == .halihali {
                 for item in 1...3 {
-                    let chooseArr = ["","","js-tongjip "]
+                    let chooseArr = ["", "", "js-tongjip "]
                     let titleXpath = "/html/body/div[2]/div[1]/div[2]/dl[\(item)]/dd/a"
                     let urlXpath = "/html/body/div[2]/div[1]/div[2]/dl[\(item)]/dd/a/@href"
-                    let chooseXpath = "/html/body/div[2]/div[1]/div[2]/dl[\(item)]/dd/a[@class='\(chooseArr[item-1])on']"
+                    let chooseXpath = "/html/body/div[2]/div[1]/div[2]/dl[\(item)]/dd/a[@class='\(chooseArr[item - 1])on']"
                     let titleNodeArr = jiDoc?.xPath(titleXpath)
                     let urlNodeArr = jiDoc?.xPath(urlXpath)
                     let chooseNodeArr = jiDoc?.xPath(chooseXpath)
                     let listModel = CategoryListModel.init()
-                    listModel.name = titleArr[type.rawValue][item-1]
+                    listModel.name = titleArr[type.rawValue][item - 1]
                     listModel.list = []
-                    for (index,_) in titleNodeArr!.enumerated() {
+                    for (index, _) in titleNodeArr!.enumerated() {
                         let categoryModel = CategoryModel.init()
                         let name = titleNodeArr![index].content
                         categoryModel.name = name
                         let detailUrl = urlNodeArr![index].content
                         let detailUrlArr = detailUrl?.components(separatedBy: "/")
-                        if chooseNodeArr!.count>0 && name == chooseNodeArr![0].content {
+                        if chooseNodeArr!.count > 0 && name == chooseNodeArr![0].content {
                             categoryModel.ischoose = true
                         }
                         if item == 1 {
                             categoryModel.value = detailUrlArr![5]
-                        }else if item == 2{
+                        } else if item == 2 {
                             categoryModel.value = detailUrlArr![4]
-                        }else {
+                        } else {
                             categoryModel.value = detailUrlArr![6]
                         }
                         listModel.list?.append(categoryModel)
@@ -222,7 +222,7 @@ class DataManager: NSObject {
                     listArr.append(listModel)
                 }
                 success(listArr)
-            }else{
+            } else {
                 // TODO:待完善
                 // 地区
                 let areaNodeArr = jiDoc?.xPath("/html/body/div[1]/dl/dd[2]/div/div/a")
@@ -231,7 +231,7 @@ class DataManager: NSObject {
                 areaListModel.name = "地区"
                 areaListModel.list = []
                 // 将具体的分类编入数组
-                for (index,_) in areaNodeArr!.enumerated() {
+                for (index, _) in areaNodeArr!.enumerated() {
                     let categoryModel = CategoryModel.init()
                     let name = areaNodeArr![index].content
                     categoryModel.name = name
@@ -251,7 +251,7 @@ class DataManager: NSObject {
                 orderListModel.name = "排序"
                 orderListModel.list = []
                 // 将具体的分类编入数组
-                for (index,_) in orderNodeArr!.enumerated() {
+                for (index, _) in orderNodeArr!.enumerated() {
                     let categoryModel = CategoryModel.init()
                     let name = orderNodeArr![index].content
                     categoryModel.name = name
@@ -268,17 +268,17 @@ class DataManager: NSObject {
             }
         }
     }
-    
+
     /// 获取视频详情界面相关数据
     /// - Parameters:
     ///   - urlStr: 视频地址
     ///   - success: 成功返回
     /// - Returns: listArr:[videoModel]
-    func getVideoDetailData(urlStr:String,type:websiteType,success:@escaping(_ VideoModel:VideoModel)->(),failure:@escaping(_ error:Error)->()){
+    func getVideoDetailData(urlStr: String, type: websiteType, success: @escaping (_ VideoModel: VideoModel) -> (), failure: @escaping (_ error: Error) -> ()) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             failure(XPathError.getContentFail)
-        }else{
+        } else {
             let baseUrl = Tool.getRegularData(regularExpress: "((http://)|(https://))[^\\.]*\\.(?<domain>[^/|?]*)", content: urlStr)[0]
             let videoModel = VideoModel.init()
             videoModel.detailUrl = urlStr
@@ -295,7 +295,7 @@ class DataManager: NSObject {
                 // 获取视频封面
                 let videoPicXpath = "/html/body/div[2]/div[2]/div[1]/img/@data-original"
                 let videoPicNodeArr = jiDoc?.xPath(videoPicXpath)
-                let picurl:String = videoPicNodeArr![0].content!
+                let picurl: String = videoPicNodeArr![0].content!
                 videoModel.picUrl = checkUrl(urlStr: picurl, domainUrlStr: baseUrl)
                 // 剧集信息
                 serialPathXpath = "//*[@id=\"stab_1_71\"]/ul/li/a/@href"
@@ -304,7 +304,7 @@ class DataManager: NSObject {
                 titleXPath = "/html/body/div[2]/div[4]/div[8]/ul/li/a/@title"
                 urlXPath = "/html/body/div[2]/div[4]/div[8]/ul/li/a/@href"
                 imgXPath = "/html/body/div[2]/div[4]/div[8]/ul/li/a/div[1]/img/@data-original"
-            }else{
+            } else {
                 //        视频封面
                 let videoImgNodeArr = jiDoc?.xPath("/html/body/div[1]/div[1]/div[1]/div/div[1]/a/img/@data-original")
                 videoModel.picUrl = checkUrl(urlStr: videoImgNodeArr![0].content!, domainUrlStr: baseUrl)
@@ -312,10 +312,10 @@ class DataManager: NSObject {
                 let videoTitleNodeArr = jiDoc?.xPath("/html/body/div[1]/div[1]/div[1]/div/div[2]/h4/a")
                 videoModel.name = videoTitleNodeArr![0].content
                 // 获取tag
-                let tagIndexArr = [1,2,4,6]
+                let tagIndexArr = [1, 2, 4, 6]
                 for item in tagIndexArr {
                     let tagNodeArr = jiDoc?.xPath("/html/body/div[1]/div[1]/div[1]/div/div[2]/dl/dd[\(item)]/a")
-                    var tagArr:[String] = []
+                    var tagArr: [String] = []
                     for tagNode in tagNodeArr! {
                         let tag = tagNode.content
                         tagArr.append(tag!)
@@ -334,11 +334,11 @@ class DataManager: NSObject {
             //        剧集
             let serialTitleNodeArr = jiDoc?.xPath(serialNameXpath)
             let serialUrlNodeArr = jiDoc?.xPath(serialPathXpath)
-            if serialUrlNodeArr!.count>0 {
-                for (index,item) in serialUrlNodeArr!.enumerated() {
+            if serialUrlNodeArr!.count > 0 {
+                for (index, item) in serialUrlNodeArr!.enumerated() {
                     let serial = SerialModel.init()
                     serial.name = serialTitleNodeArr![index].content
-                    let serialDetailUrl:String = item.content!
+                    let serialDetailUrl: String = item.content!
                     serial.detailUrl = checkUrl(urlStr: serialDetailUrl, domainUrlStr: baseUrl)
                     videoModel.serialArr?.append(serial)
                 }
@@ -348,17 +348,17 @@ class DataManager: NSObject {
             let urlNodeArr = jiDoc?.xPath(urlXPath)
             let imgNodeArr = jiDoc?.xPath(imgXPath)
             let updateNodeArr = jiDoc?.xPath(updateXpath)
-            if titleNodeArr!.count > 0{
-                for (index,titleNode) in titleNodeArr!.enumerated() {
-                    let recommandUrlStr:String = urlNodeArr![index].content!
-                    let imgPic:String = imgNodeArr![index].content!
+            if titleNodeArr!.count > 0 {
+                for (index, titleNode) in titleNodeArr!.enumerated() {
                     let model = VideoModel.init()
                     model.name = titleNode.content
+                    let imgPic: String = imgNodeArr![index].content!
                     model.picUrl = checkUrl(urlStr: imgPic, domainUrlStr: baseUrl)
+                    let recommandUrlStr: String = urlNodeArr![index].content!
                     model.detailUrl = checkUrl(urlStr: recommandUrlStr, domainUrlStr: baseUrl)
-                    if type == .halihali{
+                    if type == .halihali {
                         model.num = ""
-                    }else{
+                    } else {
                         model.num = updateNodeArr![index].content!
 
                     }
@@ -369,26 +369,26 @@ class DataManager: NSObject {
             success(videoModel)
         }
     }
-        
+
     // 判断是否有http，并拼接地址
-    func checkUrl(urlStr:String,domainUrlStr:String) -> String {
+    func checkUrl(urlStr: String, domainUrlStr: String) -> String {
         if urlStr.contains("http") {
             return urlStr
-        }else{
-            return domainUrlStr+urlStr
+        } else {
+            return domainUrlStr + urlStr
         }
     }
-    
+
     // 搜索数据
-    func getSearchData(urlStr:String,keyword:String,website:websiteType,success:@escaping(_ searchData:[ListModel])->(),failure:@escaping(_ error:Error)->()){
+    func getSearchData(urlStr: String, keyword: String, website: websiteType, success: @escaping (_ searchData: [ListModel]) -> (), failure: @escaping (_ error: Error) -> ()) {
         let listModel = ListModel.init()
-        listModel.title = "搜索关键字:"+keyword
+        listModel.title = "搜索关键字:" + keyword
         listModel.more = false
         listModel.list = []
         let baseUrl = Tool.getRegularData(regularExpress: "((http://)|(https://))[^\\.]*\\.(?<domain>[^/|?]*)", content: urlStr)[0]
         if website == .halihali {
-            AF.request("http://119.29.158.173:9988/ssszz.php", method: .get, parameters: ["q":keyword]).responseJSON{ [self](response) in
-                switch response.result{
+            AF.request("http://119.29.158.173:9988/ssszz.php", method: .get, parameters: ["q": keyword]).responseJSON { [self](response) in
+                switch response.result {
                 case .success(let value):
                     let json = JSON(value)
                     for item in json {
@@ -406,17 +406,17 @@ class DataManager: NSObject {
                     failure(error)
                 }
             }
-        }else{
+        } else {
             let newUrlStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
             let jiDoc = Ji(htmlURL: URL.init(string: newUrlStr)!)
             if jiDoc == nil {
                 failure(XPathError.getContentFail)
-            }else{
+            } else {
                 let titleNodeArr = (jiDoc?.xPath("/html/body/div[1]/ul/li/h2/a"))!
                 let detailNodeArr = (jiDoc?.xPath("/html/body/div[1]/ul/li/h2/a/@href"))!
                 let updateNodeArr = (jiDoc?.xPath("/html/body/div[1]/ul/li/p/a/span"))!
                 let imgNodeArr = (jiDoc?.xPath("/html/body/div[1]/ul/li/p/a/img/@data-original"))!
-                for (index,_) in titleNodeArr.enumerated(){
+                for (index, _) in titleNodeArr.enumerated() {
                     let videoModel = VideoModel.init()
                     videoModel.name = titleNodeArr[index].content
                     videoModel.num = updateNodeArr[index].content!
@@ -429,32 +429,145 @@ class DataManager: NSObject {
             }
         }
     }
-            
+
+    //获取播放界面
+    func getVideoPlayerData(urlStr: String, website: websiteType, success: @escaping (_ videoModel: VideoModel) -> (), failure: @escaping (_ error: Error) -> ()) {
+        let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
+        if jiDoc == nil {
+            failure(XPathError.getContentFail)
+        } else {
+            let baseUrl = Tool.getRegularData(regularExpress: "((http://)|(https://))[^\\.]*\\.(?<domain>[^/|?]*)", content: urlStr)[0]
+            let videoModel = VideoModel.init()
+            videoModel.videoArr = []
+            videoModel.serialArr = []
+            if website == .halihali {
+//                TODO:获取剧集
+//                                http://t.mtyee.com/ne2/s51696.js?1619401415
+                                // 从js中获取视频信息，组装剧集model
+                let jsXPath = "/html/script/@src"
+                let jsNodeArr = jiDoc?.xPath(jsXPath)
+                if jsNodeArr!.count>0 {
+                    // 获取播放地址等内容
+//                    获取js内容
+                    var jsContent = ""
+                    do {
+                        let data = try Data.init(contentsOf: URL.init(string: jsNodeArr![0].content!)!, options:[])
+                        jsContent = String.init(data: data, encoding: .utf8)!
+                        var array = jsContent.split(separator: ";")
+                        let titleItem = array[0]
+                        // 起始位置是空格，结束位置是=号
+                        var title:String = String(titleItem[..<titleItem.firstIndex(of: "=")!])
+                        title = title.replacingOccurrences(of: "var ", with: "")
+                        array.removeFirst(4)
+                        let index = array.firstIndex(of: "\(title)_ed=1")
+                        array.removeFirst(index!+5)
+                        array.removeLast()
+                        for item in array{
+                            // 从数组中提取出数据
+                            var itemStr:String = String(item) as String
+                            itemStr = itemStr.replacingOccurrences(of: "\"", with: "")
+                            itemStr = String(itemStr[itemStr.firstIndex(of: "=")!...])
+                            itemStr.removeFirst()
+                            let valueArr = itemStr.split(separator: ",")
+                            let serial = SerialModel.init()
+                            //FIXME:编码错误
+                            serial.name = String(valueArr[2].replacingOccurrences(of: "%", with: "\\"))
+                            serial.name = serial.name?.unicodeToUtf8()
+                            serial.detailUrl = checkUrl(urlStr: String(valueArr[0]), domainUrlStr: baseUrl)
+                            videoModel.serialArr?.append(serial)
+                        }
+                    } catch {
+                       print("获取js内容失败")
+                    }
+                }
+//                TODO:获取推荐视频
+                let videoImgXPath = "/html/body/div[3]/div[6]/div/ul/li/a/div[1]/img/@data-original"
+                let videoTitleXPath = "/html/body/div[3]/div[6]/div/ul/li/a/@title"
+                let videoUrlXPath = "/html/body/div[3]/div[6]/div/ul/li/a/@href"
+
+                let titleNodeArr = jiDoc?.xPath(videoTitleXPath)
+                let urlNodeArr = jiDoc?.xPath(videoUrlXPath)
+                let imgNodeArr = jiDoc?.xPath(videoImgXPath)
+                if titleNodeArr!.count>0 {
+                    for (index,item) in titleNodeArr!.enumerated() {
+                        let model = VideoModel.init()
+                        model.name = item.content
+                        let imgPic: String = imgNodeArr![index].content!
+                        model.picUrl = checkUrl(urlStr: imgPic, domainUrlStr: baseUrl)
+                        let recommandUrlStr: String = urlNodeArr![index].content!
+                        model.detailUrl = checkUrl(urlStr: recommandUrlStr, domainUrlStr: baseUrl)
+                        model.num = ""
+                        model.type = 3
+                        videoModel.videoArr!.append(model)
+                    }
+                }
+            } else if website == .laikuaibo {
+                // 获取视频详情
+                let playerUrlNodeArr = jiDoc?.xPath("//*[@id=\"cms_player\"]/script[1]")
+                if playerUrlNodeArr!.count > 0 {
+                    var playerUrl = playerUrlNodeArr![0].content
+                    playerUrl = playerUrl?.replacingOccurrences(of: "var cms_player = ", with: "")
+                    playerUrl = playerUrl?.replacingOccurrences(of: ";", with: "")
+                    let dic = Dictionary<String, String>.init().stringValueDic(playerUrl!)
+                    let urlStr: String = "https://www.bfq168.com/m3u8.php?url=" + (dic!["url"] as! String)
+                    videoModel.videoUrl = urlStr
+                    // 获取推荐视频
+                    let titleNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li/h2/a")
+                    let urlNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li/p/a/@href")
+                    let imgNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li/p/a/img/@data-original")
+                    let updateNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li/p/a/span")
+                    for (i, _) in titleNodeArr!.enumerated() {
+                        let recomondVideoModel = VideoModel.init()
+                        recomondVideoModel.name = titleNodeArr![i].content
+                        recomondVideoModel.detailUrl = checkUrl(urlStr: urlNodeArr![i].content!, domainUrlStr: "https://www.laikuaibo.com/")
+                        recomondVideoModel.picUrl = checkUrl(urlStr: imgNodeArr![i].content!, domainUrlStr: "https://www.laikuaibo.com/")
+                        recomondVideoModel.num = updateNodeArr![i].content!
+                        recomondVideoModel.type = 3
+                        videoModel.videoArr?.append(recomondVideoModel)
+                        //                print("封面是\(videoModel.picUrl),标提是\(videoModel.name) 更新信息是\(videoModel.num), 详情地址是\(videoModel.detailUrl)")
+                    }
+                    //TODO:获取剧集信息
+                    //        标题
+                    let serialTitleNodeArr = jiDoc?.xPath("/html/body/div[1]/div[6]/ul/li/a")
+                    //        详情
+                    let serialUrlNodeArr = jiDoc?.xPath("/html/body/div[1]/div[6]/ul/li/a/@href")
+                    for (index, _) in serialTitleNodeArr!.enumerated() {
+                        let serialModel = SerialModel.init()
+                        serialModel.name = serialTitleNodeArr![index].content
+                        serialModel.detailUrl = serialUrlNodeArr![index].content
+                        videoModel.serialArr?.append(serialModel)
+                    }
+                }
+            }
+            success(videoModel)
+        }
+    }
+
     /// 来快播视频播放界面
     /// - Parameters:
     ///   - urlStr: 视频详情地址
     ///   - success: 成功返回
     /// - Returns:
-    func getLkbVideoDetailData(urlStr:String,success:@escaping(_ videoModel:VideoModel)->()){
+    func getLkbVideoDetailData(urlStr: String, success: @escaping (_ videoModel: VideoModel) -> ()) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         let videoModel = VideoModel.init()
         videoModel.videoArr = []
         videoModel.serialArr = []
         // 获取视频详情
         let playerUrlNodeArr = jiDoc?.xPath("//*[@id=\"cms_player\"]/script[1]")
-        if playerUrlNodeArr!.count>0 {
+        if playerUrlNodeArr!.count > 0 {
             var playerUrl = playerUrlNodeArr![0].content
             playerUrl = playerUrl?.replacingOccurrences(of: "var cms_player = ", with: "")
             playerUrl = playerUrl?.replacingOccurrences(of: ";", with: "")
             let dic = Dictionary<String, String>.init().stringValueDic(playerUrl!)
-            let urlStr:String = "https://www.bfq168.com/m3u8.php?url="+(dic!["url"] as! String)
+            let urlStr: String = "https://www.bfq168.com/m3u8.php?url=" + (dic!["url"] as! String)
             videoModel.videoUrl = urlStr
             // 获取推荐视频
             let titleNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li/h2/a")
             let urlNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li/p/a/@href")
             let imgNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li/p/a/img/@data-original")
             let updateNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li/p/a/span")
-            for (i,_) in titleNodeArr!.enumerated() {
+            for (i, _) in titleNodeArr!.enumerated() {
                 let recomondVideoModel = VideoModel.init()
                 recomondVideoModel.name = titleNodeArr![i].content
                 recomondVideoModel.detailUrl = checkUrl(urlStr: urlNodeArr![i].content!, domainUrlStr: "https://www.laikuaibo.com/")
@@ -469,7 +582,7 @@ class DataManager: NSObject {
             let serialTitleNodeArr = jiDoc?.xPath("/html/body/div[1]/div[6]/ul/li/a")
             //        详情
             let serialUrlNodeArr = jiDoc?.xPath("/html/body/div[1]/div[6]/ul/li/a/@href")
-            for (index,_) in serialTitleNodeArr!.enumerated() {
+            for (index, _) in serialTitleNodeArr!.enumerated() {
                 let serialModel = SerialModel.init()
                 serialModel.name = serialTitleNodeArr![index].content
                 serialModel.detailUrl = serialUrlNodeArr![index].content

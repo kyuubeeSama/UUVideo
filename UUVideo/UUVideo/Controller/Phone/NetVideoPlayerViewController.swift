@@ -6,84 +6,97 @@
 //  Copyright © 2020 qykj. All rights reserved.
 //  视频播放界面
 // TODO:添加播放记录到数据库
+
 import UIKit
 import GRDB
 import SJVideoPlayer
 import WebKit
+
 class NetVideoPlayerViewController: BaseViewController {
-    
-    var model:VideoModel?
-    var index:Int!
-    var webType:websiteType = .halihali
-    
+
+    var model: VideoModel?
+    var webType: websiteType = .halihali
+    private var playerUrl = ""
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.player.vc_viewDidAppear()
+        player.vc_viewDidAppear()
+        // 重新进入页面，判断是否需要重新播放
+        if !playerUrl.isEmpty {
+            player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(string: playerUrl)!)
+        }
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.player.vc_viewWillDisappear()
+        player.vc_viewWillDisappear()
+        // TODO:当视频要退出时，保存视频记录，视频进度
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.player.stop()
-        self.player.vc_viewDidDisappear()
+        //FIXME:退出界面时停止播放，进入页面时需要重新播放
+        player.stop()
+        player.vc_viewDidDisappear()
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Do any additional setup after loading the view.
-        self.getData()
-        self.mainCollect.model = model
+        getData()
     }
 
     // 获取数据
-    func getData(){
-        let model = self.model?.serialArr![index]
-        self.view.makeToastActivity(.center)
-        if self.webType == .halihali {
-            let config = WKWebViewConfiguration.init()
-            let webView = UUWebView.init(frame: CGRect(x: 0, y: 0, width: 1, height: 1), configuration: config)
-            self.view.addSubview(webView)
-            webView.load(URLRequest.init(url: URL.init(string: (model?.detailUrl)!)!))
-            webView.getVideoUrlComplete = { videoUrl in
-                self.view.hideToastActivity()
-                print("视频地址是\(videoUrl)")
-                self.model?.webType = self.webType.rawValue
-                SqlTool.init().saveHistory(model: self.model!)
-                self.player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(string: videoUrl)!)
-            }
-        }else{
-            DispatchQueue.global().async { [self] in
-                DataManager.init().getLkbVideoDetailData(urlStr:(model?.detailUrl)!) { (resultModel) in
-                    DispatchQueue.main.async {
-                        self.view.hideToastActivity()
-                        //            保存数据库到历史记录表中
-                        self.model?.webType = self.webType.rawValue
-                        SqlTool.init().saveHistory(model: self.model!)
-                        resultModel.videoUrl = resultModel.videoUrl?.replacingOccurrences(of: "https://www.bfq168.com/m3u8.php?url=", with: "")
-                        self.player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(string: resultModel.videoUrl!)!)
+    func getData() {
+        let model = self.model?.serialArr![(self.model?.serialIndex)!]
+        view.makeToastActivity(.center)
+        DispatchQueue.global().async {
+            DataManager.init().getVideoPlayerData(urlStr: (model?.detailUrl)!, website: self.webType) { (resultModel) in
+                DispatchQueue.main.async {
+                    self.view.hideToastActivity()
+                    self.model?.webType = self.webType.rawValue
+                    self.model?.videoArr = resultModel.videoArr
+                    self.model?.serialArr = resultModel.serialArr
+                    if (self.webType == .laikuaibo){
+                        self.playerUrl = (resultModel.videoUrl?.replacingOccurrences(of: "https://www.bfq168.com/m3u8.php?url=", with: ""))!
+                        self.model?.videoUrl = self.playerUrl
+                        print("视频播放地址是\(self.playerUrl)")
+                    }else if(self.webType == .halihali){
+                        let config = WKWebViewConfiguration.init()
+                        let webView = UUWebView.init(frame: CGRect(x: 0, y: 0, width: 1, height: 1), configuration: config)
+                        self.view.addSubview(webView)
+                        webView.load(URLRequest.init(url: URL.init(string: (model?.detailUrl)!)!))
+                        webView.getVideoUrlComplete = { videoUrl in
+                            self.view.hideToastActivity()
+                            print("视频播放地址是\(videoUrl)")
+                            self.playerUrl = videoUrl
+                            self.player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(string: self.playerUrl)!)
+                            webView.removeFromSuperview()
+                        }
                     }
+                    self.mainCollect.model = self.model
                 }
+            } failure: { (error) in
+                print(error.localizedDescription)
             }
         }
     }
+
     lazy var player: SJVideoPlayer = {
+        //FIXME:在ipad情况下，调整播放器大小
         let player = SJVideoPlayer.init()
         self.view.addSubview(player.view)
         player.view.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            make.height.equalTo(screenW*3/4)
+            make.height.equalTo(screenW * 3 / 4)
         }
         player.defaultEdgeControlLayer.automaticallyShowsPictureInPictureItem = true
         player.controlLayerNeedAppear()
         return player
     }()
-    
+
     // collectionview
     lazy var mainCollect: NetVideoPlayerCollectionView = {
         let layout = UICollectionViewLeftAlignedLayout.init()
@@ -93,15 +106,20 @@ class NetVideoPlayerViewController: BaseViewController {
             make.left.right.bottom.equalToSuperview()
             make.top.equalTo(self.player.view.snp.bottom);
         }
-        mainCollection.cellItemSelected = { indexPath in
-            if indexPath.section == 0{
+        mainCollection.cellItemSelected = { [self] indexPath in
+            if indexPath.section == 0 {
                 // 剧集
-                let VC = NetVideoPlayerViewController.init()
-                VC.model = mainCollection.model
-                VC.index = indexPath.row
-                self.navigationController?.pushViewController(VC, animated: true)
-            }else{
-                //                视频
+                self.model?.serialIndex = indexPath.row
+                // 在当前页面获取数据并刷新
+                if self.webType == .halihali {
+                    let model = self.model?.serialArr![indexPath.row]
+                    self.playerUrl = (model?.detailUrl)!
+                    self.player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(string: self.playerUrl)!)
+                }else{
+                    self.getData()
+                }
+            } else {
+                // 视频
                 let model = mainCollection.model!.videoArr![indexPath.row]
                 let VC = NetVideoDetailViewController.init()
                 VC.videoModel = model
@@ -111,7 +129,7 @@ class NetVideoPlayerViewController: BaseViewController {
         }
         return mainCollection
     }()
-    
+
     /*
      // MARK: - Navigation
      
@@ -121,5 +139,5 @@ class NetVideoPlayerViewController: BaseViewController {
      // Pass the selected object to the new view controller.
      }
      */
-    
+
 }

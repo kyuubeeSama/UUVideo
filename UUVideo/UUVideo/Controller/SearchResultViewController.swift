@@ -9,29 +9,28 @@
 import UIKit
 import EmptyDataSet_Swift
 
-
 class SearchResultViewController: BaseViewController {
 
-    var keyword:String?
-    var pageNum:Int = 1
-    var webType:websiteType?
-    var listArr:[ListModel] = []
-    var searchArr:[String] = []
-    
+    var keyword: String?
+    var pageNum: Int = 1
+    var webType: websiteType?
+    var listArr: [ListModel] = []
+    var searchArr: [String] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.getResultList()
+        getResultList()
     }
-    
+
     //获取搜索数据
-    func getResultList(){
-        var urlStr:String?
-        if self.webType! == .halihali {
+    func getResultList() {
+        var urlStr: String?
+        if webType! == .halihali {
             urlStr = "http://www.halihali2.com/search.php"
-        }else if webType! == .laikuaibo{
-            urlStr = "https://www.laikuaibo.com/vod-search-wd-"+keyword!+"-p-\(pageNum).html"
+        } else if webType! == .laikuaibo {
+            urlStr = "https://www.laikuaibo.com/vod-search-wd-" + keyword! + "-p-\(pageNum).html"
         }
         DispatchQueue.global().async {
             DataManager.init().getSearchData(urlStr: urlStr!, keyword: self.keyword!, website: self.webType!) { (dataArr) in
@@ -39,15 +38,15 @@ class SearchResultViewController: BaseViewController {
                     if self.checkSearchResult(searchArr: dataArr) {
                         self.pageNum += 1
                         self.mainCollect.es.stopLoadingMore()
-                        if self.listArr.count > 0{
+                        if self.listArr.count > 0 {
                             let model = self.listArr[0]
                             let resultModel = dataArr[0]
                             model.list! += resultModel.list!
-                        }else{
+                        } else {
                             self.listArr.append(contentsOf: dataArr)
                         }
                         self.mainCollect.listArr = self.listArr
-                    }else{
+                    } else {
                         self.mainCollect.es.noticeNoMoreData()
                     }
                 }
@@ -56,9 +55,9 @@ class SearchResultViewController: BaseViewController {
             }
         }
     }
-    
+
     // 判断是否有重复的内容
-    func checkSearchResult(searchArr:[ListModel]) -> Bool {
+    func checkSearchResult(searchArr: [ListModel]) -> Bool {
         if searchArr.count > 0 {
             let resultModel = searchArr[0]
             for videoModel in resultModel.list! {
@@ -66,16 +65,16 @@ class SearchResultViewController: BaseViewController {
                     // 已存在，说明已经到底了，结束循环
                     // 因为每次出现重复，说明是整页的重复，表明整页都是无用数据
                     return false
-                }else{
+                } else {
                     self.searchArr.append(videoModel.detailUrl!)
                 }
             }
             return true
-        }else{
+        } else {
             return false
         }
     }
-        
+
     // 搜索结果列表
     lazy var mainCollect: VideoListCollectionView = {
         let layout = UICollectionViewLeftAlignedLayout.init()

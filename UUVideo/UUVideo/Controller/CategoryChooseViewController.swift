@@ -10,16 +10,16 @@ import UIKit
 
 class CategoryChooseViewController: BaseViewController {
 
-    var listArr:[CategoryListModel]?
-    var sureBtnReturn:((_ resultArr:[String])->())?
-    
+    var listArr: [CategoryListModel]?
+    var sureBtnReturn: ((_ resultArr: [String]) -> ())?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.mainCollect.listArr = listArr
+        mainCollect.listArr = listArr
     }
-    
+
     lazy var mainCollect: VideoCategoryCollectionView = {
         let layout = UICollectionViewFlowLayout.init()
         layout.minimumLineSpacing = 20
@@ -43,7 +43,7 @@ class CategoryChooseViewController: BaseViewController {
         }
         bottomView.sureBtnBlock = {
             // 将选中的界面添加保存在数组中，并返回上一页
-            var valueArr:[String] = []
+            var valueArr: [String] = []
             for listModel in self.mainCollect.listArr! {
                 for categoryModel in listModel.list! {
                     if categoryModel.ischoose == true {
@@ -57,12 +57,12 @@ class CategoryChooseViewController: BaseViewController {
             }
             self.dismiss(animated: true, completion: nil)
         }
-        
+
         bottomView.cancelBtnBlock = {
             // 重置选项为初始选项，返回上一页
             self.dismiss(animated: true, completion: nil)
         }
-        
+
         return bottomView
     }()
     /*

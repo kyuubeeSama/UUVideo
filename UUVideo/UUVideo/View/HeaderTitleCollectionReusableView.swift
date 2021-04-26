@@ -12,17 +12,18 @@ class HeaderTitleCollectionReusableView: UICollectionReusableView {
 
     @IBOutlet weak var titleLab: UILabel!
     @IBOutlet weak var rightBtn: UIButton!
-    
-    var rightBtnBlock:(()->())?
-    
+
+    var rightBtnBlock: (() -> ())?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
+
     }
+
     @IBAction func rightBtnClick(_ sender: UIButton) {
         if (rightBtnBlock != nil) {
-            self.rightBtnBlock!()
+            rightBtnBlock!()
         }
-    }    
+    }
 }

@@ -4,7 +4,7 @@
 //
 //  Created by Galaxy on 2020/8/21.
 //  Copyright © 2020 qykj. All rights reserved.
-//
+//  单独的推荐视频界面，暂时无用
 
 import UIKit
 

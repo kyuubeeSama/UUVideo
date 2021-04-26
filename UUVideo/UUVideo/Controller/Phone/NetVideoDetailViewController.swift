@@ -10,25 +10,62 @@ import UIKit
 
 class NetVideoDetailViewController: BaseViewController {
 
-    var videoModel:VideoModel?
-    var webType:websiteType = .halihali
-    
+    var videoModel: VideoModel?
+    var webType: websiteType = .halihali
+    let collectBtn = UIButton.init(type: .custom)
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.getLkbDetailData()
+        getLkbDetailData()
     }
-    
+
+    //TODO:nav上添加收藏按钮
+    func addCollectItem(videoModel: VideoModel) {
+        // 判断用户是否收藏该视频
+        var imageName = "heart"
+        if SqlTool.init().isCollect(model: videoModel) {
+            imageName = "heart.fill"
+        }
+        collectBtn.tag = 500
+        collectBtn.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        collectBtn.setImage(UIImage.init(systemName: imageName), for: .normal)
+        collectBtn.addTarget(self, action: #selector(collectClick), for: .touchUpInside)
+        let rightBtnItem = UIBarButtonItem.init(customView: collectBtn)
+        navigationItem.rightBarButtonItem = rightBtnItem
+    }
+
+    @objc func collectClick() {
+        if SqlTool.init().isCollect(model: videoModel!) {
+            // 删除收藏
+            if SqlTool.init().deleteCollect(model: videoModel!) {
+                collectBtn.setImage(UIImage.init(systemName: "heart"), for: .normal)
+            } else {
+                view.makeToast("操作失败")
+            }
+        } else {
+            // 添加收藏
+            if SqlTool.init().saveCollect(model: videoModel!) {
+                // 修改bar按钮
+                collectBtn.setImage(UIImage.init(systemName: "heart.fill"), for: .normal)
+            } else {
+                view.makeToast("操作成功")
+            }
+        }
+    }
+
     // 获取详情数据
     func getLkbDetailData() {
-        self.view.makeToastActivity(.center)
+        view.makeToastActivity(.center)
         DispatchQueue.global().async { [self] in
             DataManager.init().getVideoDetailData(urlStr: (videoModel?.detailUrl)!, type: webType) { (videoModel) in
                 DispatchQueue.main.async {
-                    self.view.hideToastActivity()
+                    view.hideToastActivity()
                     videoModel.name = self.videoModel?.name
-                    self.mainCollect.model = videoModel
+                    self.videoModel?.webType = webType.rawValue
+                    mainCollect.model = videoModel
+                    addCollectItem(videoModel: videoModel)
                 }
             } failure: { (error) in
                 print(error)
@@ -45,14 +82,14 @@ class NetVideoDetailViewController: BaseViewController {
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
         }
         mainCollection.cellItemSelected = { indexPath in
-            if indexPath.section == 1{
+            if indexPath.section == 1 {
                 // 剧集
                 let VC = NetVideoPlayerViewController.init()
                 VC.model = mainCollection.model
-                VC.index = indexPath.row
+                VC.model?.serialIndex = indexPath.row
                 VC.webType = self.webType
                 self.navigationController?.pushViewController(VC, animated: true)
-            }else if indexPath.section == 2{
+            } else if indexPath.section == 2 {
 //                视频
                 let model = mainCollection.model!.videoArr![indexPath.row]
                 let VC = NetVideoDetailViewController.init()
@@ -63,7 +100,7 @@ class NetVideoDetailViewController: BaseViewController {
         }
         return mainCollection
     }()
-    
+
     /*
     // MARK: - Navigation
 

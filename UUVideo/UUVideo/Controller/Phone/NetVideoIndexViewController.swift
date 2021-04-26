@@ -8,37 +8,37 @@
 
 import UIKit
 
-class NetVideoIndexViewController: BaseViewController,UISearchBarDelegate {
+class NetVideoIndexViewController: BaseViewController, UISearchBarDelegate {
 
-    var listArr:[ListModel]?
-    var isSearch:Bool = false
-    var webType:websiteType = .halihali
-    
+    var listArr: [ListModel]?
+    var isSearch: Bool = false
+    var webType: websiteType = .halihali
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.title = ["哈哩哈哩","来快播"][webType.rawValue]
+        title = ["哈哩哈哩", "来快播"][webType.rawValue]
         // 获取哈哩tv数据
-        self.getVideoData()
+        getVideoData()
     }
-    
-    func getVideoData(){
-        self.view.makeToastActivity(.center)
+
+    func getVideoData() {
+        view.makeToastActivity(.center)
         DispatchQueue.global().async { [self] in
             DataManager.init().getWebsiteIndexData(type: webType) { (dataArr) in
                 DispatchQueue.main.async {
-                    self.view.hideToastActivity()
-                    self.mainCollect.listArr = dataArr
+                    view.hideToastActivity()
+                    mainCollect.listArr = dataArr
                 }
             } failure: { (error) in
                 print(error)
             }
         }
     }
-    
+
     // 添加搜索
-    lazy var searchBar:UISearchBar = {
+    lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar.init()
         self.view.addSubview(searchBar)
         searchBar.delegate = self
@@ -49,34 +49,34 @@ class NetVideoIndexViewController: BaseViewController,UISearchBarDelegate {
         }
         return searchBar
     }()
-    
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.view.endEditing(true)
-        if searchBar.text!.count>0 {
+        view.endEditing(true)
+        if searchBar.text!.count > 0 {
             let VC = SearchResultViewController.init()
             VC.keyword = searchBar.text
-            VC.webType = self.webType
-            self.navigationController?.pushViewController(VC, animated: true)
-        }else{
-            self.view.makeToast("请输入有效内容")
+            VC.webType = webType
+            navigationController?.pushViewController(VC, animated: true)
+        } else {
+            view.makeToast("请输入有效内容")
         }
     }
-    
+
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.showsCancelButton = false
         searchBar.endEditing(true)
     }
-    
+
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = true
     }
-        
+
     lazy var mainCollect: VideoListCollectionView = {
         let layout = UICollectionViewFlowLayout.init()
         let mainCollection = VideoListCollectionView.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: layout)
         self.view.addSubview(mainCollection)
-        
+
         mainCollection.snp.makeConstraints { (make) in
             make.left.right.bottom.equalToSuperview()
             make.top.equalTo(self.searchBar.snp.bottom)

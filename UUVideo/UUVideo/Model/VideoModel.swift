@@ -35,10 +35,12 @@ class VideoModel: NSObject {
     var serialArr:[SerialModel]?
     // 详情标签
     var tagArr:[[String]]?
-    
+    // 数据库中存储的id
     var video_id:Int?
     // 站点
     var webType:Int?
+    //当前播放的剧集
+    var serialIndex:Int?
     
     // 获取单个tag字符串
     func getTag(tagArr:[String]) -> String {

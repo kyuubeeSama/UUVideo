@@ -10,15 +10,15 @@ import UIKit
 
 class CategoryBottomView: UIView {
 
-    var sureBtnBlock:(()->())?
-    var cancelBtnBlock:(()->())?
-    
+    var sureBtnBlock: (() -> ())?
+    var cancelBtnBlock: (() -> ())?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.systemBackground
+        backgroundColor = UIColor.systemBackground
         // 取消按钮
         let cancelBtn = UIButton.init(type: .custom)
-        self.addSubview(cancelBtn)
+        addSubview(cancelBtn)
         cancelBtn.setTitle("取消", for: .normal)
         cancelBtn.setTitleColor(UIColor.init(.dm, light: .black, dark: .white), for: .normal)
         cancelBtn.addTarget(self, action: #selector(cancelBtnClick), for: .touchUpInside)
@@ -31,10 +31,10 @@ class CategoryBottomView: UIView {
         cancelBtn.layer.borderColor = UIColor.init(.dm, light: .black, dark: .white).cgColor
         cancelBtn.layer.masksToBounds = true
         cancelBtn.layer.cornerRadius = 17.5
-        
+
         // 确认按钮
         let sureBtn = UIButton.init(type: .custom)
-        self.addSubview(sureBtn)
+        addSubview(sureBtn)
         sureBtn.setTitle("确定", for: .normal)
         sureBtn.setTitleColor(UIColor.red, for: .normal)
         sureBtn.addTarget(self, action: #selector(sureBtnClick), for: .touchUpInside)
@@ -48,22 +48,23 @@ class CategoryBottomView: UIView {
         sureBtn.layer.masksToBounds = true
         sureBtn.layer.cornerRadius = 17.5
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    @objc func sureBtnClick(){
-        if self.sureBtnBlock != nil {
-            self.sureBtnBlock!()
+
+    @objc func sureBtnClick() {
+        if sureBtnBlock != nil {
+            sureBtnBlock!()
         }
     }
-    
-    @objc func cancelBtnClick(){
-        if self.cancelBtnBlock != nil {
-            self.cancelBtnBlock!()
+
+    @objc func cancelBtnClick() {
+        if cancelBtnBlock != nil {
+            cancelBtnBlock!()
         }
     }
+
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

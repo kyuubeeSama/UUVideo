@@ -12,7 +12,7 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
     
     var listArr:[ListModel]?{
         didSet{
-            self.reloadData()
+            reloadData()
         }
     }
     
@@ -21,9 +21,9 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
-        self.delegate = self
-        self.dataSource = self
-        self.backgroundColor = .systemBackground
+        delegate = self
+        dataSource = self
+        backgroundColor = .systemBackground
         self.register(UINib.init(nibName: "VideoListCollectionViewCell", bundle:Bundle.main), forCellWithReuseIdentifier: "cell")
         self.register(UINib.init(nibName: "VideoTableCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "tableCell")
         self.register(UINib.init(nibName: "HeaderTitleCollectionReusableView", bundle: Bundle.main), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
@@ -34,23 +34,22 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        self.listArr!.count
+        listArr!.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let listModel = self.listArr![section]
+        let listModel = listArr![section]
         return listModel.list!.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let listModel = self.listArr![indexPath.section]
+        let listModel = listArr![indexPath.section]
         let model = listModel.list![indexPath.row]
         if model.type == 4{
             // 番剧类似tableview的样式
             let cell:VideoTableCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "tableCell", for: indexPath) as! VideoTableCollectionViewCell
             cell.titleLab.text = model.name
             cell.titleLab.alignTop()
-            //FIXME:文字顶格显示
             cell.leftImg.kf.setImage(with: URL.init(string: model.picUrl), placeholder: UIImage.init(named: "placeholder.jpg"), options: nil, completionHandler: nil)
             cell.numLab.text = model.num
             return cell
@@ -69,7 +68,7 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let listModel = self.listArr![indexPath.section]
+        let listModel = listArr![indexPath.section]
         let model = listModel.list![indexPath.row]
         if Tool.isPad() {
 //            340,230
@@ -102,7 +101,7 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
         let header:HeaderTitleCollectionReusableView
         if kind == UICollectionView.elementKindSectionHeader {
             header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header", for: indexPath) as! HeaderTitleCollectionReusableView
-            let listModel = self.listArr![indexPath.section]
+            let listModel = listArr![indexPath.section]
             header.titleLab.text = listModel.title
             if listModel.more! {
                 header.rightBtn.isHidden = false
@@ -121,7 +120,7 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let listModel = self.listArr![section]
+        let listModel = listArr![section]
         if (String.myStringIsNULL(string: listModel.title)){
             return CGSize(width: screenW, height: 0)
         }else {
@@ -138,16 +137,16 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        10
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        10
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if self.cellItemSelected != nil {
-            self.cellItemSelected!(indexPath)
+        if cellItemSelected != nil {
+            cellItemSelected!(indexPath)
         }
     }
     

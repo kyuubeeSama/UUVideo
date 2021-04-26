@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+
 class PhoneIndexViewController: BaseViewController {
 
     override func viewDidLoad() {
@@ -15,16 +16,16 @@ class PhoneIndexViewController: BaseViewController {
 
         // Do any additional setup after loading the view.
         // 创建video文件夹
-        do{
+        do {
             let path = FileTool.init().getDocumentPath().appending("/video")
             _ = try FileTool.init().createDirectory(path: path)
-        }catch (let error){
+        } catch (let error) {
             print(error)
         }
         print(FileTool.init().getDocumentPath())
-        self.mainTable.listArr = ["本地视频","新番时间表","哈哩TV","来快播","历史记录","我的收藏"]
+        mainTable.listArr = ["本地视频", "新番时间表", "哈哩TV", "来快播", "历史记录", "我的收藏"]
     }
-    
+
     lazy var mainTable: WebsiteTableView = {
         let table = WebsiteTableView.init(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH), style: .plain)
         self.view.addSubview(table)
@@ -33,20 +34,21 @@ class PhoneIndexViewController: BaseViewController {
         }
         table.cellItemDidSelect = { indexPath in
             let string = table.listArr![indexPath.row]
-            if(string == "新番时间表"){
+            if (string == "新番时间表") {
                 let VC = BangumiViewController.init()
                 self.navigationController?.pushViewController(VC, animated: true)
-            }else if(string == "本地视频"){
+            } else if (string == "本地视频") {
                 let VC = PhoneVideoListViewController.init()
                 self.navigationController?.pushViewController(VC, animated: true)
-            }else if(string == "历史记录"){
+            } else if (string == "历史记录") {
                 let VC = HistoryViewController.init()
                 self.navigationController?.pushViewController(VC, animated: true)
-            }else if(string == "我的收藏"){
-                
-            }else{
+            } else if (string == "我的收藏") {
+                let VC = CollectViewController.init()
+                self.navigationController?.pushViewController(VC, animated: true)
+            } else {
                 let VC = NetVideoIndexViewController.init()
-                VC.webType = websiteType(rawValue: indexPath.row-2)!
+                VC.webType = websiteType(rawValue: indexPath.row - 2)!
                 self.navigationController?.pushViewController(VC, animated: true)
             }
         }

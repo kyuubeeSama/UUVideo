@@ -10,9 +10,9 @@ import UIKit
 import JXSegmentedView
 
 class BangumiListViewController: BaseViewController,JXSegmentedListContainerViewListDelegate {
-    
+    // JXSegmentedListContainerViewListDelegate用到
     func listView() -> UIView {
-        return view
+        view
     }
     
     var index:Int?
@@ -22,17 +22,17 @@ class BangumiListViewController: BaseViewController,JXSegmentedListContainerView
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.getData()
+        getData()
     }
-    
+
     // 获取数据
     func getData() {
         let dataManager = DataManager.init()
-        self.view.makeToastActivity(.center)
+        view.makeToastActivity(.center)
         DispatchQueue.global().async { [self] in
             dataManager.getBangumiData(dayIndex: index!) { (dataArr) in
                 DispatchQueue.main.async {
-                    self.view.hideToastActivity()
+                    view.hideToastActivity()
                     let model = ListModel.init()
                     model.title = ""
                     model.list = dataArr
@@ -40,14 +40,14 @@ class BangumiListViewController: BaseViewController,JXSegmentedListContainerView
                 }
             } failure: { (error) in
                 DispatchQueue.main.async {
-                    self.view.hideToastActivity()
-                    self.view.makeToast("获取内容失败")
+                    view.hideToastActivity()
+                    view.makeToast("获取内容失败")
                 }
                 print(error)
             }
         }
     }
-    
+
     // 创建列表
     lazy var mainCollection: VideoListCollectionView = {
         let layout = UICollectionViewFlowLayout.init()
@@ -56,7 +56,7 @@ class BangumiListViewController: BaseViewController,JXSegmentedListContainerView
         collection.snp.makeConstraints { (make) in
             make.left.right.bottom.top.equalToSuperview()
         }
-        
+
         collection.cellItemSelected = { indexPath in
             let listModel = collection.listArr![indexPath.section]
             let VC = NetVideoDetailViewController.init()

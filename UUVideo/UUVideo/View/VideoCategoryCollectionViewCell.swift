@@ -15,8 +15,5 @@ class VideoCategoryCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        self.layer.masksToBounds = true
-        self.layer.cornerRadius = 10
-        self.layer.borderWidth = 1
     }
 }

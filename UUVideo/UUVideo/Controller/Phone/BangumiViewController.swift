@@ -9,18 +9,19 @@
 import UIKit
 import SnapKit
 import JXSegmentedView
-class BangumiViewController: BaseViewController,JXSegmentedViewDelegate, JXSegmentedListContainerViewDataSource {
-    
+
+class BangumiViewController: BaseViewController, JXSegmentedViewDelegate, JXSegmentedListContainerViewDataSource {
+
     let segmentedDataSource = JXSegmentedTitleDataSource()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.makeUI()
+        makeUI()
     }
-    
-    func makeUI(){
+
+    func makeUI() {
         let segmentedView = JXSegmentedView.init()
         segmentedView.delegate = self
         view.addSubview(segmentedView)
@@ -29,15 +30,15 @@ class BangumiViewController: BaseViewController,JXSegmentedViewDelegate, JXSegme
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.height.equalTo(40)
         }
-        
-        segmentedDataSource.titles = ["星期一", "星期二", "星期三","星期四","星期五","星期六","星期日"]
+
+        segmentedDataSource.titles = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"]
         segmentedDataSource.isTitleColorGradientEnabled = true
         segmentedDataSource.titleNormalColor = UIColor.init(.dm, light: .black, dark: .white)
-        segmentedView.dataSource = self.segmentedDataSource
-        
+        segmentedView.dataSource = segmentedDataSource
+
         let indicator = JXSegmentedIndicatorLineView()
         segmentedView.indicators = [indicator]
-        
+
         let listContainerView = JXSegmentedListContainerView(dataSource: self)
         view.addSubview(listContainerView)
         //关联listContainer
@@ -47,18 +48,19 @@ class BangumiViewController: BaseViewController,JXSegmentedViewDelegate, JXSegme
             make.top.equalTo(segmentedView.snp.bottom)
         }
     }
-    
+
     //返回列表的数量
     func numberOfLists(in listContainerView: JXSegmentedListContainerView) -> Int {
-        return segmentedDataSource.titles.count
+        segmentedDataSource.titles.count
     }
+
     //返回遵从`JXSegmentedListContainerViewListDelegate`协议的实例
     func listContainerView(_ listContainerView: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
         let VC = BangumiListViewController.init()
         VC.index = index
         return VC
     }
-   
+
     /*
     // MARK: - Navigation
 
