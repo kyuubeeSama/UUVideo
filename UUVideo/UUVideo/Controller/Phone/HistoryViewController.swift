@@ -10,11 +10,20 @@ import UIKit
 
 class HistoryViewController: BaseViewController {
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if Tool.isPad() {
+            getHistoryData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        getHistoryData()
+        if !Tool.isPad() {
+            getHistoryData()
+        }
     }
     
     func getHistoryData(){
@@ -31,11 +40,11 @@ class HistoryViewController: BaseViewController {
             make.left.right.top.bottom.equalToSuperview()
         }
         mainCollection.cellItemSelected = { indexPath in
+            //            进入剧集界面
             let listModel = mainCollection.listArr![indexPath.section]
-            let VC = NetVideoDetailViewController.init()
+            let VC = NetVideoPlayerViewController.init()
             let videoModel = listModel.list![indexPath.row]
-            VC.videoModel = videoModel
-            VC.webType = websiteType(rawValue: videoModel.webType!)!
+            VC.model = videoModel
             self.navigationController?.pushViewController(VC, animated: true)
         }
         return mainCollection

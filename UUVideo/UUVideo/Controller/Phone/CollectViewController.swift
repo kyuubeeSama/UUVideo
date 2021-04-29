@@ -10,11 +10,20 @@ import UIKit
 
 class CollectViewController: BaseViewController {
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if Tool.isPad() {
+            getCollectData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        getCollectData()
+        if !Tool.isPad() {
+            getCollectData()
+        }
     }
     
     func getCollectData(){
@@ -36,7 +45,6 @@ class CollectViewController: BaseViewController {
                 let VC = NetVideoDetailViewController.init()
                 let videoModel = listModel.list![indexPath.row]
                 VC.videoModel = videoModel
-                VC.webType = websiteType(rawValue: videoModel.webType!)!
                 self.navigationController?.pushViewController(VC, animated: true)
             }
             return mainCollection

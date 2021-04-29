@@ -11,7 +11,6 @@ import UIKit
 class NetVideoDetailViewController: BaseViewController {
 
     var videoModel: VideoModel?
-    var webType: websiteType = .halihali
     let collectBtn = UIButton.init(type: .custom)
 
     override func viewDidLoad() {
@@ -59,13 +58,14 @@ class NetVideoDetailViewController: BaseViewController {
     func getLkbDetailData() {
         view.makeToastActivity(.center)
         DispatchQueue.global().async { [self] in
-            DataManager.init().getVideoDetailData(urlStr: (videoModel?.detailUrl)!, type: webType) { (videoModel) in
+            DataManager.init().getVideoDetailData(urlStr: (videoModel?.detailUrl)!, type: websiteType(rawValue: (self.videoModel?.webType)!)!) { (resultModel) in
                 DispatchQueue.main.async {
                     view.hideToastActivity()
-                    videoModel.name = self.videoModel?.name
-                    self.videoModel?.webType = webType.rawValue
-                    mainCollect.model = videoModel
-                    addCollectItem(videoModel: videoModel)
+                    self.videoModel?.picUrl = resultModel.picUrl
+                    self.videoModel?.videoArr = resultModel.videoArr
+                    self.videoModel?.serialArr = resultModel.serialArr
+                    mainCollect.model = self.videoModel
+                    addCollectItem(videoModel: self.videoModel!)
                 }
             } failure: { (error) in
                 print(error)
@@ -86,14 +86,16 @@ class NetVideoDetailViewController: BaseViewController {
                 // 剧集
                 let VC = NetVideoPlayerViewController.init()
                 VC.model = mainCollection.model
+                let serialModel = mainCollection.model?.serialArr![indexPath.row]
+                VC.model!.serialDetailUrl = serialModel?.detailUrl
                 VC.model?.serialIndex = indexPath.row
-                VC.webType = self.webType
+//                VC.webType = self.webType
                 self.navigationController?.pushViewController(VC, animated: true)
             } else if indexPath.section == 2 {
 //                视频
                 let model = mainCollection.model!.videoArr![indexPath.row]
                 let VC = NetVideoDetailViewController.init()
-                VC.webType = self.webType
+//                VC.webType = self.webType
                 VC.videoModel = model
                 self.navigationController?.pushViewController(VC, animated: true)
             }

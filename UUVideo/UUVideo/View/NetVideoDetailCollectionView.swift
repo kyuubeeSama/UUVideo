@@ -50,11 +50,11 @@ class NetVideoDetailCollectionView: UICollectionView, UICollectionViewDelegate, 
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "infoCell", for: indexPath) as! VideoInfoCollectionViewCell
             cell.videoImg.kf.setImage(with: URL.init(string: (model?.picUrl)!))
             cell.videoNameLab.text = model?.name
-            if (model?.tagArr!.count)! > 0 {
-                cell.label1.text = model?.getTag(tagArr: (model?.tagArr![0])!)
-                cell.label2.text = model?.getTag(tagArr: (model?.tagArr![1])!)
-                cell.label3.text = model?.getTag(tagArr: (model?.tagArr![2])!)
-                cell.label4.text = model?.getTag(tagArr: (model?.tagArr![3])!)
+            if (model?.tagArr.count)! > 0 {
+                cell.label1.text = model?.getTag(tagArr: (model?.tagArr[0])!)
+                cell.label2.text = model?.getTag(tagArr: (model?.tagArr[1])!)
+                cell.label3.text = model?.getTag(tagArr: (model?.tagArr[2])!)
+                cell.label4.text = model?.getTag(tagArr: (model?.tagArr[3])!)
             } else {
                 cell.label1.text = ""
                 cell.label2.text = ""
@@ -92,8 +92,8 @@ class NetVideoDetailCollectionView: UICollectionView, UICollectionViewDelegate, 
         } else if indexPath.section == 1 {
             let serialModel = model?.serialArr![indexPath.row]
             // 根据字体大小计算
-            let size = serialModel!.name?.getStringSize(font: UIFont.systemFont(ofSize: 15), size: CGSize(width: Double(MAXFLOAT), height: 15.0))
-            return CGSize(width: size!.width + 20.0, height: 20.0)
+            let size = serialModel!.name.getStringSize(font: UIFont.systemFont(ofSize: 15), size: CGSize(width: Double(MAXFLOAT), height: 15.0))
+            return CGSize(width: size.width + 20.0, height: 20.0)
         } else {
             if Tool.isPad() {
                 let width: CGFloat = 170

@@ -79,7 +79,7 @@ class FileTool: NSObject {
                     print(fileType)
                     let typeArr:[String] = ["MP4","mp4","AVI","avi"]
                     if typeArr.contains(String(fileType)){
-                        let model:VideoModel = VideoModel.init()
+                        var model:VideoModel = VideoModel.init()
                         let filePath = path+"/"+fileName
                         model.type = 1
                         model.name = fileName
@@ -138,7 +138,7 @@ class FileTool: NSObject {
                         let fileType:String = String(fileName.split(separator: ".")[1])
                         let typeArr:[String] = ["MP4","mp4","AVI","avi"]
                         if typeArr.contains(fileType) {
-                            let model = VideoModel.init()
+                            var model = VideoModel.init()
                             model.type = 2
                             model.name = fileName
                             model.asset = item

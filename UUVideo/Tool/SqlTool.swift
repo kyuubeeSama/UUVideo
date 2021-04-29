@@ -24,11 +24,11 @@ class SqlTool: NSObject {
                                      id INTEGER PRIMARY KEY AUTOINCREMENT,
                                      name TEXT NOT NULL,
                                      url TEXT NOT NULL UNIQUE,
-                                     updateinfo TEXT NOT NULL,
+                                     serialName TEXT NOT NULL,
                                      picurl TEXT NOT NULL,
                                      add_time INTEGER,
                                      webtype INTEGER NOT NULL,
-                                     seriaIndex INTEGER NOT NULL,
+                                     serialIndex INTEGER NOT NULL,
                                      progress FLOAT NOT NULL
                                       )
                                      """)
@@ -56,8 +56,8 @@ class SqlTool: NSObject {
             let dbQueue = try DatabaseQueue(path: databasePath)
             try dbQueue.write { db in
                 try db.execute(sql: """
-                                        REPLACE INTO history ('name','url','updateinfo','picurl',add_time,webtype) VALUES(:name,:url,:update,:picurl,:add_time,:webtype)
-                                    """, arguments: [model.name, model.detailUrl, model.num, model.picUrl, Date.getCurrentTimeInterval(), model.webType])
+                                        REPLACE INTO history ('name','url','serialName','picurl',add_time,webtype,serialIndex,progress) VALUES(:name,:url,:serialName,:picurl,:add_time,:webtype,:serialIndex,:progress)
+                                    """, arguments: [model.name, model.serialDetailUrl, model.serialName, model.picUrl, Date.getCurrentTimeInterval(), model.webType, model.serialIndex, model.progress])
             }
         } catch {
             print(error.localizedDescription)
@@ -76,13 +76,15 @@ class SqlTool: NSObject {
                 try Row.fetchAll(db, sql: "select * from history where 1=1 order by add_time desc")
             })
             for items in rows {
-                let videoModel = VideoModel.init()
-                videoModel.type = 3
+                var videoModel = VideoModel.init()
+                videoModel.type = 5
                 videoModel.name = items[Column("name")]
-                videoModel.detailUrl = items[Column("url")]
-                videoModel.num = items[Column("updateinfo")]
+                videoModel.serialDetailUrl = items[Column("url")]
+//                videoModel.num = items[Column("updateinfo")]
+                videoModel.serialName = items[Column("serialName")]
                 videoModel.picUrl = items[Column("picurl")]
                 videoModel.webType = items[Column("webtype")]
+                videoModel.progress = items[Column("progress")]
                 model.list?.append(videoModel)
             }
         } catch {
@@ -164,8 +166,8 @@ class SqlTool: NSObject {
                 try Row.fetchAll(db, sql: "select * from collect where 1=1 order by add_time desc")
             })
             for item in rows {
-                let videoModel = VideoModel.init()
-                videoModel.type = 3
+                var videoModel = VideoModel.init()
+                videoModel.type = 4
                 videoModel.name = item[Column("name")]
                 videoModel.detailUrl = item[Column("url")]
                 videoModel.num = item[Column("updateinfo")]

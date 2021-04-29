@@ -85,7 +85,6 @@ class NetVideoIndexViewController: BaseViewController, UISearchBarDelegate {
             let listModel = mainCollection.listArr![indexPath.section]
             let VC = NetVideoDetailViewController.init()
             VC.videoModel = listModel.list![indexPath.row]
-            VC.webType = self.webType
             self.navigationController?.pushViewController(VC, animated: true)
         }
         mainCollection.headerRightClicked = { indexPath in

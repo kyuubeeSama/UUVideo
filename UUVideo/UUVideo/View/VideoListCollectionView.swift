@@ -45,13 +45,18 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let listModel = listArr![indexPath.section]
         let model = listModel.list![indexPath.row]
-        if model.type == 4{
+        // 5的类型为
+        if model.type == 4 || model.type == 5{
             // 番剧类似tableview的样式
             let cell:VideoTableCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "tableCell", for: indexPath) as! VideoTableCollectionViewCell
             cell.titleLab.text = model.name
             cell.titleLab.alignTop()
             cell.leftImg.kf.setImage(with: URL.init(string: model.picUrl), placeholder: UIImage.init(named: "placeholder.jpg"), options: nil, completionHandler: nil)
-            cell.numLab.text = model.num
+            if model.type == 5 {
+                cell.numLab.text = "播放到：\(model.serialName! as String)"
+            }else{
+                cell.numLab.text = model.num
+            }
             return cell
         }else {
             // 本地和相册,线上模式
@@ -72,7 +77,7 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
         let model = listModel.list![indexPath.row]
         if Tool.isPad() {
 //            340,230
-            if model.type == 4 {
+            if model.type == 4 || model.type == 5{
                 return CGSize(width: 250, height: 100)
             }else if model.type == 3{
                 let width:CGFloat = 170
@@ -82,7 +87,7 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
                 return CGSize(width: 170, height: 115)
             }
         }else{
-            if model.type == 4 {
+            if model.type == 4 || model.type == 5{
                 return CGSize(width: screenW, height: 100)
             }else if model.type == 3{
                 let width:CGFloat = screenW/2-15

@@ -149,7 +149,6 @@ class NetVideoListViewController: BaseViewController {
             let listModel = mainCollection.listArr![indexPath.section]
             let VC = NetVideoDetailViewController.init()
             VC.videoModel = listModel.list![indexPath.row]
-            VC.webType = self.webType
             self.navigationController?.pushViewController(VC, animated: true)
         }
         mainCollection.es.addInfiniteScrolling {

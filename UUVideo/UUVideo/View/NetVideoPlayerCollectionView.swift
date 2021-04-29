@@ -51,6 +51,11 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
             let serialModel = model?.serialArr![indexPath.row]
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "serialCell", for: indexPath) as! VideoCategoryCollectionViewCell
             cell.titleLab.text = serialModel!.name
+            if self.model?.serialIndex == indexPath.row {
+                serialModel?.ischoose = true
+            }else{
+                serialModel?.ischoose = false
+            }
             if serialModel!.ischoose == true {
                 cell.layer.borderColor = UIColor.red.cgColor
                 cell.titleLab.textColor = UIColor.red
@@ -73,8 +78,8 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
         if indexPath.section == 0 {
             let serialModel = model?.serialArr![indexPath.row]
             // 根据字体大小计算
-            let size = serialModel!.name?.getStringSize(font: UIFont.systemFont(ofSize: 15), size: CGSize(width: Double(MAXFLOAT), height: 15.0))
-            return CGSize(width: size!.width + 20.0, height: 20.0)
+            let size = serialModel!.name.getStringSize(font: UIFont.systemFont(ofSize: 15), size: CGSize(width: Double(MAXFLOAT), height: 15.0))
+            return CGSize(width: size.width + 20.0, height: 20.0)
         } else {
             let width: CGFloat = screenW / 2 - 15
             let height = (width - 20) * 379 / 270 + 50
@@ -102,7 +107,7 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
         let header: HeaderTitleCollectionReusableView
         if kind == UICollectionView.elementKindSectionHeader {
             header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header", for: indexPath) as! HeaderTitleCollectionReusableView
-            let titleArr = ["", "播放线路", "猜你喜欢"]
+            let titleArr = [ "播放线路", "猜你喜欢"]
             header.titleLab.text = titleArr[indexPath.section]
             header.rightBtn.isHidden = true
         } else {
@@ -112,11 +117,6 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
-            // 剧集点击，修改为选中状态
-            let model: SerialModel = (self.model?.serialArr![indexPath.row])!
-            model.ischoose = !model.ischoose!
-        }
         if cellItemSelected != nil {
             cellItemSelected!(indexPath)
         }
