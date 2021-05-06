@@ -10,7 +10,11 @@ import UIKit
 import SnapKit
 
 class PhoneIndexViewController: BaseViewController {
-
+    
+    @objc func injected(){
+        viewDidLoad()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

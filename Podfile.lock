@@ -19,29 +19,29 @@ PODS:
   - MRDLNA/MRC (0.1.1):
     - CocoaAsyncSocket
   - SideMenu (6.5.0)
-  - SJBaseVideoPlayer (3.6.0):
+  - SJBaseVideoPlayer (3.6.3):
     - Masonry
-    - SJBaseVideoPlayer/AVPlayer (= 3.6.0)
-    - SJBaseVideoPlayer/Common (= 3.6.0)
+    - SJBaseVideoPlayer/AVPlayer (= 3.6.3)
+    - SJBaseVideoPlayer/Common (= 3.6.3)
     - SJUIKit/AttributesFactory (>= 0.0.0.38)
     - SJUIKit/ObserverHelper
     - SJUIKit/Queues
     - SJUIKit/SQLite3
-  - SJBaseVideoPlayer/AVPlayer (3.6.0):
+  - SJBaseVideoPlayer/AVPlayer (3.6.3):
     - Masonry
     - SJBaseVideoPlayer/Common
     - SJUIKit/AttributesFactory (>= 0.0.0.38)
     - SJUIKit/ObserverHelper
     - SJUIKit/Queues
     - SJUIKit/SQLite3
-  - SJBaseVideoPlayer/Common (3.6.0):
+  - SJBaseVideoPlayer/Common (3.6.3):
     - Masonry
     - SJBaseVideoPlayer/ResourceLoader
     - SJUIKit/AttributesFactory (>= 0.0.0.38)
     - SJUIKit/ObserverHelper
     - SJUIKit/Queues
     - SJUIKit/SQLite3
-  - SJBaseVideoPlayer/ResourceLoader (3.6.0):
+  - SJBaseVideoPlayer/ResourceLoader (3.6.3):
     - Masonry
     - SJUIKit/AttributesFactory (>= 0.0.0.38)
     - SJUIKit/ObserverHelper
@@ -140,7 +140,7 @@ SPEC CHECKSUMS:
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MRDLNA: 3fe35c6ac57c946413d07896faeb9101c4d8853d
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
-  SJBaseVideoPlayer: cce3df2362ab1dee82a663394c0af1b9109cb4ac
+  SJBaseVideoPlayer: 99957bb0d0fe1ccb8d6710bd9db9f52640c56a32
   SJUIKit: 8246b1001e616b0dbd090309fd58cdd609ae3fd4
   SJVideoPlayer: 3a271ff92c7b9d611c537655fd1edcbae18b8587
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb

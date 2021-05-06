@@ -85,8 +85,8 @@ class NetVideoDetailViewController: BaseViewController {
             if indexPath.section == 1 {
                 // 剧集
                 let VC = NetVideoPlayerViewController.init()
-                VC.model = mainCollection.model
-                let serialModel = mainCollection.model?.serialArr![indexPath.row]
+                VC.model = self.videoModel
+                let serialModel = self.videoModel?.serialArr![indexPath.row]
                 VC.model!.serialDetailUrl = serialModel?.detailUrl
                 VC.model?.serialIndex = indexPath.row
 //                VC.webType = self.webType

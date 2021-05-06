@@ -11,11 +11,19 @@ import UIKit
 import GRDB
 import SJVideoPlayer
 import WebKit
+import MRDLNA
 
-class NetVideoPlayerViewController: BaseViewController {
+class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
 
     var model: VideoModel?
+    // TODO:创建右侧投屏按钮。如果获取到了播放地址，显示投屏按钮，店家弹出选择按钮。
+    private let toupingBtn = UIButton.init(type: .custom)
+    
 
+    @objc func injected(){
+        viewDidLoad()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         player.vc_viewDidAppear()
@@ -46,9 +54,50 @@ class NetVideoPlayerViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        setNav()
         getData()
     }
-
+    
+    lazy var dlnaManager: MRDLNA = {
+        let dlnaManager = MRDLNA.sharedMRDLNAManager()
+        dlnaManager?.delegate = self
+        return dlnaManager!
+    }()
+    
+    func setNav(){
+        // 添加右上角投屏按钮
+        toupingBtn.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        toupingBtn.setImage(UIImage.init(systemName: "tv"), for: .normal)
+        toupingBtn.addTarget(self, action: #selector(touping), for: .touchUpInside)
+        let rightBtnItem = UIBarButtonItem.init(customView: toupingBtn)
+        navigationItem.rightBarButtonItem = rightBtnItem
+    }
+    
+    @objc func touping(){
+        // 投屏
+        dlnaManager.startSearch()
+    }
+    
+    func searchDLNAResult(_ devicesArray: [Any]!) {
+        if devicesArray.isEmpty {
+            self.view.makeToast("当前未发现可投屏设备")
+        }else{
+            let alert = UIAlertController.init(title: "", message: "请选择设备", preferredStyle: .actionSheet)
+            for item in devicesArray {
+                let device:CLUPnPDevice = item as! CLUPnPDevice
+                let deviceAction = UIAlertAction.init(title: device.friendlyName, style: .default) { [self] action in
+                    self.dlnaManager.device = device
+                    self.dlnaManager.playUrl = self.model?.videoUrl
+                    self.dlnaManager.dlnaPlay()
+                }
+                alert.addAction(deviceAction)
+            }
+            let cancelAction = UIAlertAction.init(title: "取消", style: .cancel, handler: nil)
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
     // 获取数据
     func getData() {
         // 正常流程下，需要先获取当前剧集的详情地址，然后再操作播放
@@ -78,6 +127,7 @@ class NetVideoPlayerViewController: BaseViewController {
                     }
                     self.player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(string: (self.model?.videoUrl)!)!, startPosition: TimeInterval(self.model!.progress))
                     self.mainCollect.model = self.model
+                    print(self.model?.videoUrl)
                 }
             } failure: { (error) in
                 print(error.localizedDescription)

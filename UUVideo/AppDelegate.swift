@@ -12,6 +12,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+//        #if DEBUG
+//        var injectionBundlePath = "/Applications/InjectionIII.app/Contents/Resources"
+//        #if targetEnvironment(macCatalyst)
+//        injectionBundlePath = "\(injectionBundlePath)/macOSInjection.bundle"
+//        #elseif os(iOS)
+//        injectionBundlePath = "\(injectionBundlePath)/iOSInjection.bundle"
+//        #endif
+//        Bundle(path: injectionBundlePath)?.load()
+//        #endif
+        
+        #if DEBUG
+            Bundle.init(path: "/Applications/InjectionIII.app/Contents/Resources/iOSInjection.bundle")?.load()
+            #endif
         return true
     }
 
