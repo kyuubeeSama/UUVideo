@@ -35,10 +35,10 @@ class UserViewController: BaseViewController {
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
             make.left.equalTo(self.view.snp.left)
-            if (Tool.isPad()) {
-                make.width.equalTo(375)
-            } else {
+            if Tool.isPhone() {
                 make.width.equalTo(self.view.frame.size.width)
+            }else{
+                make.width.equalTo(375)
             }
         }
         // 点击具体的cell

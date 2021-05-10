@@ -12,7 +12,7 @@ class HistoryViewController: BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if Tool.isPad() {
+        if !Tool.isPhone() {
             getHistoryData()
         }
     }
@@ -21,7 +21,7 @@ class HistoryViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        if !Tool.isPad() {
+        if Tool.isPhone() {
             getHistoryData()
         }
     }

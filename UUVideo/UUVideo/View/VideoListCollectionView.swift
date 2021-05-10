@@ -75,18 +75,7 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let listModel = listArr![indexPath.section]
         let model = listModel.list![indexPath.row]
-        if Tool.isPad() {
-//            340,230
-            if model.type == 4 || model.type == 5{
-                return CGSize(width: 250, height: 100)
-            }else if model.type == 3{
-                let width:CGFloat = 170
-                let height = (width-20)*379/270+50
-                return CGSize(width: width, height: height)
-            }else{
-                return CGSize(width: 170, height: 115)
-            }
-        }else{
+        if Tool.isPhone() {
             if model.type == 4 || model.type == 5{
                 return CGSize(width: screenW, height: 100)
             }else if model.type == 3{
@@ -99,6 +88,18 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
                 let height = (width-20)*9/16+50
                 return CGSize(width: width, height: height)
             }
+        }else{
+            //            340,230
+            if model.type == 4 || model.type == 5{
+                return CGSize(width: 250, height: 100)
+            }else if model.type == 3{
+                let width:CGFloat = 170
+                let height = (width-20)*379/270+50
+                return CGSize(width: width, height: height)
+            }else{
+                return CGSize(width: 170, height: 115)
+            }
+            
         }
     }
     
@@ -156,11 +157,11 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
     }
     
     /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-
+     // Only override draw() if you perform custom drawing.
+     // An empty implementation adversely affects performance during animation.
+     override func draw(_ rect: CGRect) {
+     // Drawing code
+     }
+     */
+    
 }

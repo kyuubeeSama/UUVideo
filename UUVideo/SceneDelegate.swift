@@ -26,10 +26,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow.init(windowScene: windowScene)
         window?.backgroundColor = .systemBackground
         var index = BaseViewController.init()
-        if Tool.isPad() {
-            index = PadIndexViewController.init()
-        } else {
+        if Tool.isPhone() {
             index = PhoneIndexViewController.init()
+        }else{
+            index = PadIndexViewController.init()
         }
         let nav = UINavigationController.init(rootViewController: index)
         window?.rootViewController = nav

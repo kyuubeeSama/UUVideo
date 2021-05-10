@@ -84,6 +84,24 @@ class Tool:NSObject {
         }
     }
     
+    // 是否是mac
+    static func isMac()->Bool{
+        if UIDevice.current.userInterfaceIdiom == .mac {
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    // 是否是手机
+    static func isPhone()->Bool{
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return true
+        }else{
+            return false
+        }
+    }
+    
     // 从链接中提取参数的值
     static func getKeyValueFromUrl(urlStr:String)->[String:String] {
         var paramer:[String:String] = [:]
