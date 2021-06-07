@@ -88,6 +88,7 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
                 let deviceAction = UIAlertAction.init(title: device.friendlyName, style: .default) { [self] action in
                     self.dlnaManager.device = device
                     self.dlnaManager.playUrl = self.model?.videoUrl
+                    self.dlnaManager.start()
                     self.dlnaManager.dlnaPlay()
                 }
                 alert.addAction(deviceAction)
@@ -96,6 +97,10 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
             alert.addAction(cancelAction)
             self.present(alert, animated: true, completion: nil)
         }
+    }
+    
+    func dlnaStartPlay() {
+        self.view.makeToast("投屏成功，开始播放")
     }
     
     // 获取数据
@@ -130,7 +135,10 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
                     print(self.model?.videoUrl)
                 }
             } failure: { (error) in
-                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    self.view.hideToastActivity()
+                    self.view.makeToast("内容获取失败")
+                }
             }
         }
     }
@@ -174,6 +182,7 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
                     }else{
                         self.model?.videoUrl = (serialModel?.playerUrl)!
                         self.player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(string: (self.model?.videoUrl)!)!)
+                        mainCollection.model = self.model
                     }
                 } else {
                     let serialModel = self.model?.serialArr![indexPath.row]

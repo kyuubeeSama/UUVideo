@@ -137,7 +137,10 @@ class DataManager: NSObject {
         if jiDoc == nil {
             failure(XPathError.getContentFail)
         } else {
-            let baseUrl = Tool.getRegularData(regularExpress: "((http://)|(https://))[^\\.]*\\.(?<domain>[^/|?]*)", content: urlStr)[0]
+            var baseUrl = Tool.getRegularData(regularExpress: "((http://)|(https://))[^\\.]*\\.(?<domain>[^/|?]*)", content: urlStr)[0]
+            if type == .halihali {
+                baseUrl = "http://halihali2.com/"
+            }
             let listModel = ListModel.init()
             listModel.title = ""
             listModel.more = false
@@ -170,6 +173,7 @@ class DataManager: NSObject {
                 let picUrl: String = imgNodeArr![i].content!
                 videoModel.picUrl = checkUrl(urlStr: picUrl, domainUrlStr: baseUrl)
                 videoModel.type = 3
+                videoModel.webType = type.rawValue
                 listModel.list?.append(videoModel)
             }
             success([listModel])
@@ -374,7 +378,7 @@ class DataManager: NSObject {
 
     // 判断是否有http，并拼接地址
     func checkUrl(urlStr: String, domainUrlStr: String) -> String {
-        if urlStr.contains("http") {
+        if urlStr.contains("http") || urlStr.contains("https") {
             return urlStr
         } else {
             return domainUrlStr + urlStr
@@ -559,7 +563,7 @@ class DataManager: NSObject {
                     for (index, _) in serialTitleNodeArr!.enumerated() {
                         let serialModel = SerialModel.init()
                         serialModel.name = serialTitleNodeArr![index].content!
-                        serialModel.detailUrl = serialUrlNodeArr![index].content!
+                        serialModel.detailUrl = checkUrl(urlStr: serialUrlNodeArr![index].content!, domainUrlStr: baseUrl)
                         videoModel.serialArr?.append(serialModel)
                     }
                 }

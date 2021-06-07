@@ -68,6 +68,10 @@ class NetVideoDetailViewController: BaseViewController {
                     addCollectItem(videoModel: self.videoModel!)
                 }
             } failure: { (error) in
+                DispatchQueue.main.async {
+                    view.hideToastActivity()
+                    view.makeToast("加载失败")
+                }
                 print(error)
             }
         }
