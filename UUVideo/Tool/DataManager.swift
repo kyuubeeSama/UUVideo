@@ -487,7 +487,7 @@ class DataManager: NSObject {
     }
 
     //获取播放界面
-    func getVideoPlayerData(urlStr: String, website: websiteType, success: @escaping (_ videoModel: VideoModel) -> (), failure: @escaping (_ error: Error) -> ()) {
+    func getVideoPlayerData(urlStr: String, website: websiteType, videoNum:Int, success: @escaping (_ videoModel: VideoModel) -> (), failure: @escaping (_ error: Error) -> ()) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             failure(XPathError.getContentFail)
@@ -517,7 +517,7 @@ class DataManager: NSObject {
                         var array = jsContent.split(separator: ";")
                         var firstIndex = 0
                         for (index,item) in array.enumerated() {
-                            if item.contains("lianzaijs=") {
+                            if item.contains("=\(videoNum)") {
                                 // 获取到正确的第一个位置
                                 firstIndex = index
                             }

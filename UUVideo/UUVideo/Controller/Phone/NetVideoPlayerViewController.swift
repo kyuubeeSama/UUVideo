@@ -115,7 +115,7 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
         // 正常流程下，需要先获取当前剧集的详情地址，然后再操作播放
         view.makeToastActivity(.center)
         DispatchQueue.global().async {
-            DataManager.init().getVideoPlayerData(urlStr: (self.model?.serialDetailUrl)!, website:websiteType(rawValue: (self.model?.webType)!)!) { (resultModel) in
+            DataManager.init().getVideoPlayerData(urlStr: (self.model?.serialDetailUrl)!, website:websiteType(rawValue: (self.model?.webType)!)!, videoNum: (self.model?.serialArr!.count)!) { (resultModel) in
                 DispatchQueue.main.async {
                     self.view.hideToastActivity()
                     self.model?.videoArr = resultModel.videoArr

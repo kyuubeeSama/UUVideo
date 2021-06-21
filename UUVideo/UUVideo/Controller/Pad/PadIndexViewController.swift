@@ -25,7 +25,7 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
         } catch (let error) {
             print(error)
         }
-        mainTable.listArr = ["本地视频", "新番时间表", "哈哩哈哩","历史记录","收藏"]
+        mainTable.listArr = ["本地视频", "新番时间表", "哈哩哈哩","樱花动漫","历史记录","收藏"]
         view.bringSubviewToFront(localView)
         NotificationCenter.default.addObserver(self, selector: #selector(didChangeRotate(notice:)), name: UIApplication.didChangeStatusBarFrameNotification, object: nil)
     }
@@ -63,6 +63,8 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
                 self.view.bringSubviewToFront(self.bangumiView)
             } else if (string == "哈哩哈哩") {
                 self.view.bringSubviewToFront(self.haliView)
+            }else if (string == "樱花动漫") {
+                self.view.bringSubviewToFront(self.sakuraView)
             }else if (string == "历史记录"){
                 self.view.bringSubviewToFront(self.historyView)
             }else if(string == "收藏"){
@@ -90,9 +92,17 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
     }()
     
     lazy var haliView: UIView = {
-        getView(controller: NetVideoIndexViewController.init())
+        let VC = NetVideoIndexViewController.init()
+        VC.webType = .halihali
+        return getView(controller:VC)
     }()
 
+    lazy var sakuraView: UIView = {
+        let VC = NetVideoIndexViewController.init()
+        VC.webType = .sakura
+        return getView(controller:VC)
+    }()
+    
     func getView(controller: UIViewController) -> UIView {
         addChild(controller)
         view.addSubview(controller.view)
