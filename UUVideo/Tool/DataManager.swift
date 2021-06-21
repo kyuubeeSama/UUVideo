@@ -18,6 +18,7 @@ enum XPathError: Error {
 enum websiteType: Int {
     case halihali = 0
     case laikuaibo = 1
+    case sakura = 2
 }
 
 class DataManager: NSObject {
@@ -69,15 +70,20 @@ class DataManager: NSObject {
         }
     }
 
-    // 获取站点首页数据
+    /// 获取站点首页数据
+    /// - Parameters:
+    ///   - type: 站点
+    ///   - success: 成功
+    ///   - failure: 失败
+    /// - Returns: nil
     func getWebsiteIndexData(type: websiteType, success: @escaping (_ listData: [ListModel]) -> (), failure: @escaping (_ error: Error) -> ()) {
-        let urlArr = ["http://halihali2.com/", "https://www.laikuaibo.com/"]
+        let urlArr = ["http://halihali2.com/", "https://www.laikuaibo.com/","http://www.yhdm.so/"]
         let jiDoc = Ji(htmlURL: URL.init(string: urlArr[type.rawValue])!)
         if jiDoc == nil {
             failure(XPathError.getContentFail)
         } else {
-            let divArr = [[5, 6, 7, 8], [3, 5, 7, 9, 0]]
-            let titleArr = [["动漫", "电视剧", "电影", "综艺"], ["电影", "剧集", "综艺", "动漫", "伦理"]]
+            let divArr = [[5, 6, 7, 8], [3, 5, 7, 9, 0],[4,6,8,10]]
+            let titleArr = [["动漫", "电视剧", "电影", "综艺"], ["电影", "剧集", "综艺", "动漫", "伦理"],["日本动漫","国产动漫","欧美动漫","动漫电影"]]
             var resultArr: [ListModel] = []
             for (index, value) in divArr[type.rawValue].enumerated() {
                 let listModel = ListModel.init()
@@ -90,12 +96,16 @@ class DataManager: NSObject {
                     urlXpath = "/html/body/div[2]/div[\(value)]/div[1]/ul/li/a/@href"
                     imgXpath = "/html/body/div[2]/div[\(value)]/div[1]/ul/li/a/div[1]/img/@data-original"
                     updateXpath = "/html/body/div[2]/div[\(value)]/div[1]/ul/li/a/div[1]/p"
-
-                } else {
+                } else if type == .laikuaibo{
                     titleXpath = "/html/body/div[\(value)]/div[2]/div[1]/ul/li/h2/a"
                     urlXpath = "/html/body/div[\(value)]/div[2]/div[1]/ul/li/p/a/@href"
                     imgXpath = "/html/body/div[\(value)]/div[2]/div[1]/ul/li/p/a/img/@data-original"
                     updateXpath = "/html/body/div[\(value)]/div[2]/div[1]/ul/li/p/a/span"
+                }else{
+                    titleXpath = "/html/body/div[8]/div[1]/div[\(value)]/ul[1]/li/p[1]/a"
+                    urlXpath = "/html/body/div[8]/div[1]/div[\(value)]/ul[1]/li/p/a/@href"
+                    imgXpath = "/html/body/div[8]/div[1]/div[\(value)]/ul[1]/li/a/img/@src"
+                    updateXpath = "/html/body/div[8]/div[1]/div[\(value)]/ul[1]/li/p[2]/a"
                 }
                 let titleNodeArr = jiDoc?.xPath(titleXpath)
                 let urlNodeArr = jiDoc?.xPath(urlXpath)
@@ -121,7 +131,9 @@ class DataManager: NSObject {
                     } else {
                         videoModel.picUrl = urlArr[type.rawValue] + picUrl
                     }
-                    videoModel.num = updateNodeArr![i].content!
+                    if type != .sakura {
+                        videoModel.num = updateNodeArr![i].content!
+                    }
                     videoModel.type = 3
                     listModel.list?.append(videoModel)
                 }
@@ -131,7 +143,13 @@ class DataManager: NSObject {
         }
     }
 
-    // 获取视频列表
+    /// 获取视频列表
+    /// - Parameters:
+    ///   - urlStr: 站点地址
+    ///   - type: 站点
+    ///   - success: 成功
+    ///   - failure: 失败
+    /// - Returns: nil
     func getVideoListData(urlStr: String, type: websiteType, success: @escaping (_ listData: [ListModel]) -> (), failure: @escaping (_ error: Error) -> ()) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
@@ -154,11 +172,15 @@ class DataManager: NSObject {
                 urlXpath = "/html/body/li/a/@href"
                 imgXpath = "/html/body/li/a/div[1]/img/@data-original"
                 updateXpath = "/html/body/li/a/div[1]"
-            } else {
+            } else if type == .laikuaibo{
                 titleXpath = "/html/body/div[1]/ul/li/h2/a"
                 urlXpath = "/html/body/div[1]/ul/li/p/a/@href"
                 imgXpath = "/html/body/div[1]/ul/li/p/a/img/@data-original"
                 updateXpath = "/html/body/div[1]/ul/li/p/a/span"
+            }else {
+                titleXpath = "/html/body/div[4]/div[3]/div[1]/ul/li/h2/a/@title"
+                urlXpath = "/html/body/div[4]/div[3]/div[1]/ul/li/h2/a/@href"
+                imgXpath = "/html/body/div[4]/div[3]/div[1]/ul/li/a/img/@src"
             }
             let titleNodeArr = jiDoc?.xPath(titleXpath)
             let urlNodeArr = jiDoc?.xPath(urlXpath)
@@ -167,7 +189,9 @@ class DataManager: NSObject {
             for (i, _) in titleNodeArr!.enumerated() {
                 var videoModel = VideoModel.init()
                 videoModel.name = titleNodeArr![i].content
-                videoModel.num = updateNodeArr![i].content!
+                if type != .sakura {
+                    videoModel.num = updateNodeArr![i].content!
+                }
                 let detailUrl: String = urlNodeArr![i].content!
                 videoModel.detailUrl = checkUrl(urlStr: detailUrl, domainUrlStr: baseUrl)
                 let picUrl: String = imgNodeArr![i].content!
@@ -222,7 +246,7 @@ class DataManager: NSObject {
                         } else {
                             categoryModel.value = detailUrlArr![6]
                         }
-                        listModel.list?.append(categoryModel)
+                        listModel.list.append(categoryModel)
                     }
                     listArr.append(listModel)
                 }
@@ -246,7 +270,7 @@ class DataManager: NSObject {
                             categoryModel.ischoose = true
                         }
                     }
-                    areaListModel.list?.append(categoryModel)
+                    areaListModel.list.append(categoryModel)
                 }
                 listArr.append(areaListModel)
                 // 排序
@@ -266,7 +290,7 @@ class DataManager: NSObject {
                             categoryModel.ischoose = true
                         }
                     }
-                    orderListModel.list?.append(categoryModel)
+                    orderListModel.list.append(categoryModel)
                 }
                 listArr.append(orderListModel)
                 success(listArr)
@@ -289,7 +313,8 @@ class DataManager: NSObject {
             videoModel.detailUrl = urlStr
             videoModel.videoArr = []
             videoModel.tagArr = []
-            videoModel.serialArr = [] 
+            videoModel.serialArr = []
+            var videoPicXpath = ""
             var serialPathXpath = ""
             var serialNameXpath = ""
             var titleXPath = ""
@@ -298,10 +323,7 @@ class DataManager: NSObject {
             var updateXpath = ""
             if type == .halihali {
                 // 获取视频封面
-                let videoPicXpath = "/html/body/div[2]/div[2]/div[1]/img/@data-original"
-                let videoPicNodeArr = jiDoc?.xPath(videoPicXpath)
-                let picurl: String = videoPicNodeArr![0].content!
-                videoModel.picUrl = checkUrl(urlStr: picurl, domainUrlStr: baseUrl)
+                videoPicXpath = "/html/body/div[2]/div[2]/div[1]/img/@data-original"
                 // 剧集信息
                 serialPathXpath = "//*[@id=\"stab_1_71\"]/ul/li/a/@href"
                 serialNameXpath = "//*[@id=\"stab_1_71\"]/ul/li/a"
@@ -309,10 +331,9 @@ class DataManager: NSObject {
                 titleXPath = "/html/body/div[2]/div[4]/div[8]/ul/li/a/@title"
                 urlXPath = "/html/body/div[2]/div[4]/div[8]/ul/li/a/@href"
                 imgXPath = "/html/body/div[2]/div[4]/div[8]/ul/li/a/div[1]/img/@data-original"
-            } else {
+            } else if type == .laikuaibo{
                 //        视频封面
-                let videoImgNodeArr = jiDoc?.xPath("/html/body/div[1]/div[1]/div[1]/div/div[1]/a/img/@data-original")
-                videoModel.picUrl = checkUrl(urlStr: videoImgNodeArr![0].content!, domainUrlStr: baseUrl)
+                videoPicXpath = "/html/body/div[1]/div[1]/div[1]/div/div[1]/a/img/@data-original"
                 //        视频标题
                 let videoTitleNodeArr = jiDoc?.xPath("/html/body/div[1]/div[1]/div[1]/div/div[2]/h4/a")
                 videoModel.name = videoTitleNodeArr![0].content
@@ -335,7 +356,18 @@ class DataManager: NSObject {
                 urlXPath = "/html/body/div[1]/ul[2]/li/h2/a/@href"
                 imgXPath = "/html/body/div[1]/ul[2]/li/p/a/img/@data-original"
                 updateXpath = "/html/body/div[1]/ul[2]/li/p/a/span"
+            }else{
+                videoPicXpath = "/html/body/div[2]/div[2]/div[1]/img/@src"
+                serialPathXpath = "//*[@id=\"main0\"]/div/ul/li/a/@href"
+                serialNameXpath = "//*[@id=\"main0\"]/div/ul/li/a"
+                titleXPath = "/html/body/div[2]/div[3]/div[2]/ul/li/a/img/@alt"
+                urlXPath = "/html/body/div[2]/div[3]/div[2]/ul/li/h2/a/@href"
+                imgXPath = "/html/body/div[2]/div[3]/div[2]/ul/li/a/img/@src"
+                
             }
+            let videoPicNodeArr = jiDoc?.xPath(videoPicXpath)
+            let picurl: String = videoPicNodeArr![0].content!
+            videoModel.picUrl = checkUrl(urlStr: picurl, domainUrlStr: baseUrl)
             //        剧集
             let serialTitleNodeArr = jiDoc?.xPath(serialNameXpath)
             let serialUrlNodeArr = jiDoc?.xPath(serialPathXpath)
@@ -362,11 +394,10 @@ class DataManager: NSObject {
                     let recommandUrlStr: String = urlNodeArr![index].content!
                     model.detailUrl = checkUrl(urlStr: recommandUrlStr, domainUrlStr: baseUrl)
                     model.webType = type.rawValue
-                    if type == .halihali {
+                    if type == .halihali || type == .sakura {
                         model.num = ""
                     } else {
                         model.num = updateNodeArr![index].content!
-
                     }
                     model.type = 3
                     videoModel.videoArr!.append(model)
@@ -419,18 +450,35 @@ class DataManager: NSObject {
             if jiDoc == nil {
                 failure(XPathError.getContentFail)
             } else {
-                let titleNodeArr = (jiDoc?.xPath("/html/body/div[1]/ul/li/h2/a"))!
-                let detailNodeArr = (jiDoc?.xPath("/html/body/div[1]/ul/li/h2/a/@href"))!
-                let updateNodeArr = (jiDoc?.xPath("/html/body/div[1]/ul/li/p/a/span"))!
-                let imgNodeArr = (jiDoc?.xPath("/html/body/div[1]/ul/li/p/a/img/@data-original"))!
-                for (index, _) in titleNodeArr.enumerated() {
+                var titleXpath = ""
+                var detailXpath = ""
+                var imgXpath = ""
+                var updateXpath = ""
+                if website == .laikuaibo {
+                    titleXpath = "/html/body/div[1]/ul/li/h2/a"
+                    detailXpath = "/html/body/div[1]/ul/li/h2/a/@href"
+                    imgXpath = "/html/body/div[1]/ul/li/p/a/img/@data-original"
+                    updateXpath = "/html/body/div[1]/ul/li/p/a/span"
+                }else{
+                    titleXpath = "/html/body/div[4]/div[2]/div/ul/li/h2/a/@title"
+                    detailXpath = "/html/body/div[4]/div[2]/div/ul/li/h2/a/@href"
+                    imgXpath = "/html/body/div[4]/div[2]/div/ul/li/a/img/@src"
+                    updateXpath = ""
+                }
+                let titleNodeArr = jiDoc?.xPath(titleXpath)
+                let detailNodeArr = jiDoc?.xPath(detailXpath)
+                let updateNodeArr = jiDoc?.xPath(updateXpath)
+                let imgNodeArr = jiDoc?.xPath(imgXpath)
+                for (index, _) in titleNodeArr!.enumerated() {
                     var videoModel = VideoModel.init()
-                    videoModel.name = titleNodeArr[index].content
-                    videoModel.num = updateNodeArr[index].content!
-                    videoModel.detailUrl = checkUrl(urlStr: detailNodeArr[index].content!, domainUrlStr: baseUrl)
-                    videoModel.picUrl = checkUrl(urlStr: imgNodeArr[index].content!, domainUrlStr: baseUrl)
+                    videoModel.name = titleNodeArr![index].content
+                    if website != .sakura {
+                        videoModel.num = updateNodeArr![index].content!
+                    }
+                    videoModel.detailUrl = checkUrl(urlStr: detailNodeArr![index].content!, domainUrlStr: baseUrl)
+                    videoModel.picUrl = checkUrl(urlStr: imgNodeArr![index].content!, domainUrlStr: baseUrl)
                     videoModel.type = 3
-                    videoModel.webType = 1
+                    videoModel.webType = website.rawValue
                     listModel.list?.append(videoModel)
                 }
                 success([listModel])
@@ -448,6 +496,10 @@ class DataManager: NSObject {
             var videoModel = VideoModel.init()
             videoModel.videoArr = []
             videoModel.serialArr = []
+            var recommendTitleXpath = ""
+            var recommendUrlXpath = ""
+            var recommendImgXpath = ""
+            var recommendUpdateXpath = ""
             if website == .halihali {
 //                TODO:获取剧集
 //                                http://t.mtyee.com/ne2/s51696.js?1619401415
@@ -506,28 +558,9 @@ class DataManager: NSObject {
                     } catch {
                        print("获取js内容失败")
                     }
-                }
-//                TODO:获取推荐视频
-                let videoImgXPath = "/html/body/div[3]/div[6]/div/ul/li/a/div[1]/img/@data-original"
-                let videoTitleXPath = "/html/body/div[3]/div[6]/div/ul/li/a/@title"
-                let videoUrlXPath = "/html/body/div[3]/div[6]/div/ul/li/a/@href"
-
-                let titleNodeArr = jiDoc?.xPath(videoTitleXPath)
-                let urlNodeArr = jiDoc?.xPath(videoUrlXPath)
-                let imgNodeArr = jiDoc?.xPath(videoImgXPath)
-                if titleNodeArr!.count>0 {
-                    for (index,item) in titleNodeArr!.enumerated() {
-                        var model = VideoModel.init()
-                        model.name = item.content
-                        let imgPic: String = imgNodeArr![index].content!
-                        model.picUrl = checkUrl(urlStr: imgPic, domainUrlStr: baseUrl)
-                        let recommandUrlStr: String = urlNodeArr![index].content!
-                        model.detailUrl = checkUrl(urlStr: recommandUrlStr, domainUrlStr: baseUrl)
-                        model.num = ""
-                        model.type = 3
-                        model.webType = 0
-                        videoModel.videoArr!.append(model)
-                    }
+                    recommendTitleXpath = "/html/body/div[3]/div[6]/div/ul/li/a/@title"
+                    recommendImgXpath = "/html/body/div[3]/div[6]/div/ul/li/a/div[1]/img/@data-original"
+                    recommendUrlXpath = "/html/body/div[3]/div[6]/div/ul/li/a/@href"
                 }
             } else if website == .laikuaibo {
                 // 获取视频详情
@@ -539,22 +572,7 @@ class DataManager: NSObject {
                     let dic = Dictionary<String, String>.init().stringValueDic(playerUrl!)
                     let urlStr: String = "https://www.bfq168.com/m3u8.php?url=" + (dic!["url"] as! String)
                     videoModel.videoUrl = urlStr
-                    // 获取推荐视频
-                    let titleNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li/h2/a")
-                    let urlNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li/p/a/@href")
-                    let imgNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li/p/a/img/@data-original")
-                    let updateNodeArr = jiDoc?.xPath("/html/body/div[1]/ul[1]/li/p/a/span")
-                    for (i, _) in titleNodeArr!.enumerated() {
-                        var recomondVideoModel = VideoModel.init()
-                        recomondVideoModel.name = titleNodeArr![i].content
-                        recomondVideoModel.detailUrl = checkUrl(urlStr: urlNodeArr![i].content!, domainUrlStr: "https://www.laikuaibo.com/")
-                        recomondVideoModel.picUrl = checkUrl(urlStr: imgNodeArr![i].content!, domainUrlStr: "https://www.laikuaibo.com/")
-                        recomondVideoModel.num = updateNodeArr![i].content!
-                        recomondVideoModel.type = 3
-                        recomondVideoModel.webType = 1
-                        videoModel.videoArr?.append(recomondVideoModel)
-                        //                print("封面是\(videoModel.picUrl),标提是\(videoModel.name) 更新信息是\(videoModel.num), 详情地址是\(videoModel.detailUrl)")
-                    }
+                    
                     //TODO:获取剧集信息
                     //        标题
                     let serialTitleNodeArr = jiDoc?.xPath("/html/body/div[1]/div[6]/ul/li/a")
@@ -566,6 +584,74 @@ class DataManager: NSObject {
                         serialModel.detailUrl = checkUrl(urlStr: serialUrlNodeArr![index].content!, domainUrlStr: baseUrl)
                         videoModel.serialArr?.append(serialModel)
                     }
+                    
+                    recommendTitleXpath = "/html/body/div[1]/ul[1]/li/h2/a"
+                    recommendUrlXpath = "/html/body/div[1]/ul[1]/li/p/a/@href"
+                    recommendImgXpath = "/html/body/div[1]/ul[1]/li/p/a/img/@data-original"
+                    recommendUpdateXpath = "/html/body/div[1]/ul[1]/li/p/a/span"
+                }
+            }else {
+//                备注，视频获取地址的js逻辑
+                /*
+                if ($('#playbox').length>0){
+                        var vid = $('#playbox').attr('data-vid');
+                        var gf = $('#playbox').attr('data-gf');
+                        if (gf=='1'){
+                            $.post('http://tup.yhdm.so/playgf.php',{vid:vid},function(data){
+                                $('#playbox').html(data);
+                            });
+                        }else
+                            playit(vid);
+                    }
+ */
+                let vidXpath = "//*[@id=\"playbox\"]/@data-vid"
+                let gfXpath = "//*[@id=\"playbox\"]/@data-gf"
+                let vidNodeArr = jiDoc?.xPath(vidXpath)
+                let gfNodeArr = jiDoc?.xPath(gfXpath)
+                var vid = vidNodeArr![0].content
+                let gf = gfNodeArr![0].content
+                if gf == "1" {
+                }else{
+                    vid = vid?.replacingOccurrences(of: "$mp4", with: "")
+                    print("播放地址是：\(vid)")
+                    videoModel.videoUrl = vid!
+                }
+                // 获取剧集信息
+                //        标题
+                let serialTitleNodeArr = jiDoc?.xPath("/html/body/div[7]/div[2]/ul/li/a")
+                //        详情
+                let serialUrlNodeArr = jiDoc?.xPath("/html/body/div[7]/div[2]/ul/li/a/@href")
+                for (index, _) in serialTitleNodeArr!.enumerated() {
+                    let serialModel = SerialModel.init()
+                    serialModel.name = serialTitleNodeArr![index].content!
+                    serialModel.detailUrl = checkUrl(urlStr: serialUrlNodeArr![index].content!, domainUrlStr: baseUrl)
+                    videoModel.serialArr?.append(serialModel)
+                }
+                
+                recommendTitleXpath = "/html/body/div[9]/div[2]/ul/li/a/img/@alt"
+                recommendUrlXpath = "/html/body/div[9]/div[2]/ul/li/p[1]/a/@href"
+                recommendImgXpath = "/html/body/div[9]/div[2]/ul/li/a/img/@src"
+            }
+            // 获取推荐视频
+            let recommendTitleNodeArr = jiDoc?.xPath(recommendTitleXpath)
+            let recommendUrlNodeArr = jiDoc?.xPath(recommendUrlXpath)
+            let recommendImgNodeArr = jiDoc?.xPath(recommendImgXpath)
+            let recommendUPdateNodeArr = jiDoc?.xPath(recommendUpdateXpath)
+            if recommendTitleNodeArr!.count>0 {
+                for (index,item) in recommendTitleNodeArr!.enumerated() {
+                    var model = VideoModel.init()
+                    model.name = item.content
+                    let imgPic: String = recommendImgNodeArr![index].content!
+                    model.picUrl = checkUrl(urlStr: imgPic, domainUrlStr: baseUrl)
+                    let recommandUrlStr: String = recommendUrlNodeArr![index].content!
+                    model.detailUrl = checkUrl(urlStr: recommandUrlStr, domainUrlStr: baseUrl)
+                    if website == .laikuaibo {
+                        model.num = recommendUPdateNodeArr![index].content!
+                    }
+                    model.num = ""
+                    model.type = 3
+                    model.webType = website.rawValue
+                    videoModel.videoArr!.append(model)
                 }
             }
             success(videoModel)

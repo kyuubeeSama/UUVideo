@@ -61,6 +61,7 @@
 		A9CBF74824EF9976002BD074 /* RightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBF74724EF9976002BD074 /* RightViewController.swift */; };
 		A9CCBF332608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CCBF322608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift */; };
 		A9CCBF8C2608A16100427C47 /* SqlTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CCBF8B2608A16100427C47 /* SqlTool.swift */; };
+		A9DFBD9A2680297000BBA638 /* Array+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DFBD992680296F00BBA638 /* Array+extension.swift */; };
 		A9F0302326003F100095EC83 /* UUWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F0302226003F100095EC83 /* UUWebView.swift */; };
 		A9F03026260097B60095EC83 /* NetVideoIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F03025260097B60095EC83 /* NetVideoIndexViewController.swift */; };
 		A9F03029260098280095EC83 /* NetVideoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F03028260098280095EC83 /* NetVideoListViewController.swift */; };
@@ -134,6 +135,7 @@
 		A9CBF74724EF9976002BD074 /* RightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightViewController.swift; sourceTree = "<group>"; };
 		A9CCBF322608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewLeftAlignedLayout.swift; sourceTree = "<group>"; };
 		A9CCBF8B2608A16100427C47 /* SqlTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqlTool.swift; sourceTree = "<group>"; };
+		A9DFBD992680296F00BBA638 /* Array+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+extension.swift"; sourceTree = "<group>"; };
 		A9F0302226003F100095EC83 /* UUWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUWebView.swift; sourceTree = "<group>"; };
 		A9F03025260097B60095EC83 /* NetVideoIndexViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoIndexViewController.swift; sourceTree = "<group>"; };
 		A9F03028260098280095EC83 /* NetVideoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoListViewController.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 		A950E2A624E67318000CBB92 /* extension */ = {
 			isa = PBXGroup;
 			children = (
+				A9DFBD992680296F00BBA638 /* Array+extension.swift */,
 				A950E2A824E6733F000CBB92 /* Date+extension.swift */,
 				A950E2A724E6733E000CBB92 /* Dictionary+extension.swift */,
 				A950E2AA24E6733F000CBB92 /* NSObject+extension.swift */,
@@ -486,6 +489,7 @@
 				A928D2202567917A003BF719 /* NetVideoPlayerCollectionView.swift in Sources */,
 				A950E2B224E6733F000CBB92 /* UIImage+extension.swift in Sources */,
 				A9F0302326003F100095EC83 /* UUWebView.swift in Sources */,
+				A9DFBD9A2680297000BBA638 /* Array+extension.swift in Sources */,
 				A997538725666B9600179FCB /* NetVideoPlayerViewController.swift in Sources */,
 				A950E2B824E6733F000CBB92 /* UIButton+extension.swift in Sources */,
 				A97FF1F0253161890097C0F7 /* CategoryModel.swift in Sources */,

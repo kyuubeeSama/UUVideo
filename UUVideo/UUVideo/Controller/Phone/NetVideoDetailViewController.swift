@@ -17,7 +17,7 @@ class NetVideoDetailViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        getLkbDetailData()
+        getDetailData()
     }
 
     //TODO:nav上添加收藏按钮
@@ -55,7 +55,7 @@ class NetVideoDetailViewController: BaseViewController {
     }
 
     // 获取详情数据
-    func getLkbDetailData() {
+    func getDetailData() {
         view.makeToastActivity(.center)
         DispatchQueue.global().async { [self] in
             DataManager.init().getVideoDetailData(urlStr: (videoModel?.detailUrl)!, type: websiteType(rawValue: (self.videoModel?.webType)!)!) { (resultModel) in

@@ -10,6 +10,8 @@ import UIKit
 
 class VideoCategoryCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
+    var cellItemClick:((_ indexPath:IndexPath)->())?
+    
     var listArr: [CategoryListModel]? {
         didSet {
             reloadData()
@@ -35,12 +37,12 @@ class VideoCategoryCollectionView: UICollectionView, UICollectionViewDelegate, U
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let listModel = listArr![section]
-        return listModel.list!.count
+        return listModel.list.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let listModel = listArr![indexPath.section]
-        let model = listModel.list![indexPath.row]
+        let model = listModel.list[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! VideoCategoryCollectionViewCell
         cell.titleLab.text = model.name
         if model.ischoose == true {
@@ -55,7 +57,7 @@ class VideoCategoryCollectionView: UICollectionView, UICollectionViewDelegate, U
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let listModel = listArr![indexPath.section]
-        let model = listModel.list![indexPath.row]
+        let model = listModel.list[indexPath.row]
         // 根据字体大小计算
         let size = model.name?.getStringSize(font: UIFont.systemFont(ofSize: 15), size: CGSize(width: Double(MAXFLOAT), height: 15.0))
         return CGSize(width: size!.width + 20.0, height: 20.0)
@@ -89,12 +91,15 @@ class VideoCategoryCollectionView: UICollectionView, UICollectionViewDelegate, U
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // 此处为单选
         let listModel = listArr![indexPath.section]
-        for model in listModel.list! {
+        for model in listModel.list {
             model.ischoose = false
         }
-        let model = listModel.list![indexPath.row]
+        let model = listModel.list[indexPath.row]
         model.ischoose = !model.ischoose!
         reloadData()
+        if self.cellItemClick != nil {
+            self.cellItemClick!(indexPath)
+        }
     }
 
     /*

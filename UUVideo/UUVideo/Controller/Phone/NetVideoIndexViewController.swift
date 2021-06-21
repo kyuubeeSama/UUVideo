@@ -18,7 +18,7 @@ class NetVideoIndexViewController: BaseViewController, UISearchBarDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        title = ["哈哩哈哩", "来快播"][webType.rawValue]
+        title = ["哈哩哈哩", "来快播","樱花动漫"][webType.rawValue]
         // 获取哈哩tv数据
         getVideoData()
     }
@@ -54,7 +54,7 @@ class NetVideoIndexViewController: BaseViewController, UISearchBarDelegate {
         view.endEditing(true)
         if searchBar.text!.count > 0 {
             let VC = SearchResultViewController.init()
-            VC.keyword = searchBar.text
+            VC.keyword = searchBar.text!
             VC.webType = webType
             navigationController?.pushViewController(VC, animated: true)
         } else {

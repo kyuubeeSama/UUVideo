@@ -32,41 +32,29 @@ class NetVideoListViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        urlStr = ["http://halihali2.com/", "https://www.laikuaibo.com/"][webType.rawValue]
+        urlStr = ["http://halihali2.com/", "https://www.laikuaibo.com/", "http://www.yhdm.so/"][webType.rawValue]
+        let videoTypeData = [["电视剧":"tv","动漫":"acg","电影":"mov","综艺":"zongyi"],["电影":"1","剧集":"2","综艺":"4","动漫":"3","伦理":"19"],["日本动漫":"japan","国产动漫":"china","美国动漫":"american","动漫电影":"movie"]]
         if webType == .halihali {
             area = "all"
             videoCategory = "0"
             year = "0"
-            switch title {
-            case "电视剧":
-                videoType = "tv"
-            case "动漫":
-                videoType = "acg"
-            case "电影":
-                videoType = "mov"
-            default:
-                //综艺
-                videoType = "zongyi"
-            }
         } else {
             videoType = "1"
-            switch title {
-            case "电影":
-                videoType = "1"
-            case "剧集":
-                videoType = "2"
-            case "综艺":
-                videoType = "4"
-            case "动漫":
-                videoType = "3"
-            default:
-                //剧集
-                videoType = "19"
-            }
         }
+        videoType = videoTypeData[webType.rawValue][title!]!
         if webType == .halihali {
             setNav()
             getCategoryData()
+        }else if webType == .sakura {
+            setNav()
+            self.categoryListArr = CategoryModel.getSakuraCategoryData()
+            for listModel in self.categoryListArr {
+                for model in listModel.list {
+                    if model.value == videoType {
+                        model.ischoose = true
+                    }
+                }
+            }
         }
         getListData()
     }
@@ -82,6 +70,7 @@ class NetVideoListViewController: BaseViewController {
         if categoryListArr.count > 0 {
             // 滑出筛选界面
             let VC = CategoryChooseViewController.init()
+            VC.type = self.webType
             VC.listArr = categoryListArr
             let menu = SideMenuNavigationController(rootViewController: VC)
             menu.presentationStyle = .menuSlideIn
@@ -89,9 +78,13 @@ class NetVideoListViewController: BaseViewController {
             present(menu, animated: true, completion: nil)
             VC.sureBtnReturn = { [self] resultArr in
                 print(resultArr)
-                videoCategory = resultArr[0]
-                year = resultArr[1]
-                area = resultArr[2]
+                if self.webType == .sakura {
+                    videoType = resultArr[0]
+                }else{
+                    videoCategory = resultArr[0]
+                    year = resultArr[1]
+                    area = resultArr[2]
+                }
                 pageNum = 1
                 listArr = []
                 getCategoryData()
@@ -107,8 +100,14 @@ class NetVideoListViewController: BaseViewController {
         var detailUrlStr = ""
         if webType == .halihali {
             detailUrlStr = "http://121.4.190.96:9991/getsortdata_all_z.php?action=\(videoType)&page=\(pageNum)&year=\(year)&area=\(area)&class=\(videoCategory)&dect=&id="
-        } else {
+        } else if webType == .laikuaibo {
             detailUrlStr = urlStr + "list-select-id-\(videoType)-area-\(area)-order-\(order)-p-\(pageNum).html"
+        }else{
+            var pageInfo = ""
+            if pageNum>1 {
+                pageInfo = "\(pageNum).html"
+            }
+            detailUrlStr = urlStr + "\(videoType)/"+pageInfo
         }
         DispatchQueue.global().async {
             DataManager.init().getVideoListData(urlStr: detailUrlStr, type: self.webType) { (dataArr: [ListModel]) in
@@ -119,7 +118,11 @@ class NetVideoListViewController: BaseViewController {
                     } else {
                         self.mainCollect.es.noticeNoMoreData()
                     }
-                    self.listArr.append(contentsOf: dataArr)
+                    if self.listArr.count > 0{
+                        self.listArr[0].list?.append(array: dataArr[0].list!)
+                    }else{
+                        self.listArr.append(contentsOf: dataArr)
+                    }
                     self.mainCollect.listArr = self.listArr
                 }
             } failure: { (error) in

@@ -11,7 +11,7 @@ import EmptyDataSet_Swift
 
 class SearchResultViewController: BaseViewController {
 
-    var keyword: String?
+    var keyword: String = ""
     var pageNum: Int = 1
     var webType: websiteType?
     var listArr: [ListModel] = []
@@ -30,10 +30,12 @@ class SearchResultViewController: BaseViewController {
         if webType! == .halihali {
             urlStr = "http://www.halihali2.com/search.php"
         } else if webType! == .laikuaibo {
-            urlStr = "https://www.laikuaibo.com/vod-search-wd-" + keyword! + "-p-\(pageNum).html"
+            urlStr = "https://www.laikuaibo.com/vod-search-wd-" + keyword + "-p-\(pageNum).html"
+        }else{
+            urlStr = "http://www.yhdm.so/search/\(keyword)/?page=\(pageNum)"
         }
         DispatchQueue.global().async {
-            DataManager.init().getSearchData(urlStr: urlStr!, keyword: self.keyword!, website: self.webType!) { (dataArr) in
+            DataManager.init().getSearchData(urlStr: urlStr!, keyword: self.keyword, website: self.webType!) { (dataArr) in
                 DispatchQueue.main.async {
                     if self.checkSearchResult(searchArr: dataArr) {
                         self.pageNum += 1
@@ -52,6 +54,9 @@ class SearchResultViewController: BaseViewController {
                 }
             } failure: { (error) in
                 print(error)
+                DispatchQueue.main.async {
+                    self.mainCollect.es.noticeNoMoreData()
+                }
             }
         }
     }

@@ -79,28 +79,35 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
     }
     
     func searchDLNAResult(_ devicesArray: [Any]!) {
-        if devicesArray.isEmpty {
-            self.view.makeToast("当前未发现可投屏设备")
-        }else{
-            let alert = UIAlertController.init(title: "", message: "请选择设备", preferredStyle: .actionSheet)
-            for item in devicesArray {
-                let device:CLUPnPDevice = item as! CLUPnPDevice
-                let deviceAction = UIAlertAction.init(title: device.friendlyName, style: .default) { [self] action in
-                    self.dlnaManager.device = device
-                    self.dlnaManager.playUrl = self.model?.videoUrl
-                    self.dlnaManager.start()
-                    self.dlnaManager.dlnaPlay()
+        view.makeToastActivity(.center)
+        DispatchQueue.main.asyncAfter(deadline: .now()+3) {
+            self.view.hideToastActivity()
+            if devicesArray.isEmpty {
+                self.view.makeToast("当前未发现可投屏设备")
+            }else{
+                let alert = UIAlertController.init(title: "", message: "请选择设备", preferredStyle: .actionSheet)
+                for item in devicesArray {
+                    let device:CLUPnPDevice = item as! CLUPnPDevice
+                    let deviceAction = UIAlertAction.init(title: device.friendlyName, style: .default) { [self] action in
+                        self.dlnaManager.device = device
+                        self.dlnaManager.playUrl = self.model?.videoUrl
+                        self.dlnaManager.start()
+                        self.dlnaManager.dlnaPlay()
+                        self.player.pause()
+                    }
+                    alert.addAction(deviceAction)
                 }
-                alert.addAction(deviceAction)
+                let cancelAction = UIAlertAction.init(title: "取消", style: .cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.present(alert, animated: true, completion: nil)
             }
-            let cancelAction = UIAlertAction.init(title: "取消", style: .cancel, handler: nil)
-            alert.addAction(cancelAction)
-            self.present(alert, animated: true, completion: nil)
         }
     }
     
     func dlnaStartPlay() {
-        self.view.makeToast("投屏成功，开始播放")
+        DispatchQueue.main.async {
+            self.view.makeToast("投屏成功，开始播放")
+        }
     }
     
     // 获取数据
@@ -115,6 +122,8 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
                     self.model?.serialArr = resultModel.serialArr
                     if (self.model?.webType == 1) {
                         self.model?.videoUrl = (resultModel.videoUrl.replacingOccurrences(of: "https://www.bfq168.com/m3u8.php?url=", with: ""))
+                    }else if(self.model?.webType == 2){
+                        self.model?.videoUrl = resultModel.videoUrl
                     }
                     // 此处已获取到所有剧集播放地址，根据选中的剧集，获取到播放地址。
                     if self.model?.type == 5 {

@@ -12,6 +12,7 @@ class CategoryChooseViewController: BaseViewController {
 
     var listArr: [CategoryListModel]?
     var sureBtnReturn: ((_ resultArr: [String]) -> ())?
+    var type:websiteType?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +22,7 @@ class CategoryChooseViewController: BaseViewController {
     }
 
     lazy var mainCollect: VideoCategoryCollectionView = {
-        let layout = UICollectionViewFlowLayout.init()
+        let layout = UICollectionViewLeftAlignedLayout.init()
         layout.minimumLineSpacing = 20
         layout.minimumInteritemSpacing = 20
         let mainCollection = VideoCategoryCollectionView.init(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH), collectionViewLayout: layout)
@@ -29,6 +30,18 @@ class CategoryChooseViewController: BaseViewController {
         mainCollection.snp.makeConstraints { (make) in
             make.left.right.top.equalToSuperview()
             make.bottom.equalTo(self.bottomView.snp.top)
+        }
+        mainCollection.cellItemClick = { indexPath in
+            if self.type == .sakura{
+                for listModel in self.listArr! {
+                    for model in listModel.list {
+                        model.ischoose = false
+                    }
+                }
+                let model = self.listArr![indexPath.section].list[indexPath.row]
+                model.ischoose = true
+                mainCollection.reloadData()
+            }
         }
         return mainCollection
     }()
@@ -45,7 +58,7 @@ class CategoryChooseViewController: BaseViewController {
             // 将选中的界面添加保存在数组中，并返回上一页
             var valueArr: [String] = []
             for listModel in self.mainCollect.listArr! {
-                for categoryModel in listModel.list! {
+                for categoryModel in listModel.list {
                     if categoryModel.ischoose == true {
                         //            videoCategory videoType area
                         valueArr.append(categoryModel.value!)
