@@ -38,9 +38,9 @@ class NetVideoDetailCollectionView: UICollectionView, UICollectionViewDelegate, 
         if section == 0 {
             return 1
         } else if section == 1 {
-            return (model?.serialArr!.count)!
+            return (model?.serialArr.count)!
         } else {
-            return (model?.videoArr!.count)!
+            return (model?.videoArr.count)!
         }
     }
 
@@ -64,7 +64,7 @@ class NetVideoDetailCollectionView: UICollectionView, UICollectionViewDelegate, 
             return cell
         } else if indexPath.section == 1 {
             //            剧集列表
-            let serialModel = model?.serialArr![indexPath.row]
+            let serialModel = model?.serialArr[indexPath.row]
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "serialCell", for: indexPath) as! VideoCategoryCollectionViewCell
             cell.titleLab.text = serialModel!.name
             if serialModel!.ischoose == true {
@@ -77,7 +77,7 @@ class NetVideoDetailCollectionView: UICollectionView, UICollectionViewDelegate, 
             return cell
         } else {
             //            推荐列表
-            let videoModel = model?.videoArr![indexPath.row]
+            let videoModel = model?.videoArr[indexPath.row]
             let cell: VideoListCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "videoCell", for: indexPath) as! VideoListCollectionViewCell
             cell.titleLab.text = videoModel!.name
             cell.picImage.kf.setImage(with: URL.init(string: videoModel!.picUrl))
@@ -90,7 +90,7 @@ class NetVideoDetailCollectionView: UICollectionView, UICollectionViewDelegate, 
             //            图片比例加上下空格
             return CGSize(width: screenW, height: 90 * 379 / 270 + 20)
         } else if indexPath.section == 1 {
-            let serialModel = model?.serialArr![indexPath.row]
+            let serialModel = model?.serialArr[indexPath.row]
             // 根据字体大小计算
             let size = serialModel!.name.getStringSize(font: UIFont.systemFont(ofSize: 15), size: CGSize(width: Double(MAXFLOAT), height: 15.0))
             return CGSize(width: size.width + 20.0, height: 20.0)
@@ -143,7 +143,7 @@ class NetVideoDetailCollectionView: UICollectionView, UICollectionViewDelegate, 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             // 剧集点击，修改为选中状态
-            let model: SerialModel = (self.model?.serialArr![indexPath.row])!
+            let model: SerialModel = (self.model?.serialArr[indexPath.row])!
             model.ischoose = !model.ischoose!
         }
         if cellItemSelected != nil {

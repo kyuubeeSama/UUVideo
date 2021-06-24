@@ -60,7 +60,7 @@ class BangumiListViewController: BaseViewController,JXSegmentedListContainerView
         collection.cellItemSelected = { indexPath in
             let listModel = collection.listArr![indexPath.section]
             let VC = NetVideoDetailViewController.init()
-            VC.videoModel = listModel.list![indexPath.row]
+            VC.videoModel = listModel.list[indexPath.row]
             VC.videoModel?.webType = 0
             self.navigationController?.pushViewController(VC, animated: true)
         }

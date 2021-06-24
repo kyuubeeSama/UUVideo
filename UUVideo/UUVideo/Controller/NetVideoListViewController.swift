@@ -112,14 +112,14 @@ class NetVideoListViewController: BaseViewController {
         DispatchQueue.global().async {
             DataManager.init().getVideoListData(urlStr: detailUrlStr, type: self.webType) { (dataArr: [ListModel]) in
                 DispatchQueue.main.async {
-                    if (dataArr[0].list!.count > 0) {
+                    if (dataArr[0].list.count > 0) {
                         self.pageNum += 1
                         self.mainCollect.es.stopLoadingMore()
                     } else {
                         self.mainCollect.es.noticeNoMoreData()
                     }
                     if self.listArr.count > 0{
-                        self.listArr[0].list?.append(array: dataArr[0].list!)
+                        self.listArr[0].list.append(array: dataArr[0].list)
                     }else{
                         self.listArr.append(contentsOf: dataArr)
                     }
@@ -151,7 +151,7 @@ class NetVideoListViewController: BaseViewController {
         mainCollection.cellItemSelected = { indexPath in
             let listModel = mainCollection.listArr![indexPath.section]
             let VC = NetVideoDetailViewController.init()
-            VC.videoModel = listModel.list![indexPath.row]
+            VC.videoModel = listModel.list[indexPath.row]
             self.navigationController?.pushViewController(VC, animated: true)
         }
         mainCollection.es.addInfiniteScrolling {

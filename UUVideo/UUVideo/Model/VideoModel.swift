@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 struct VideoModel {
-    //1.本地视频 2.相册视频 3.在线视频 4.番剧
+    //1.本地视频 2.相册视频 3.在线视频 4.番剧 5.哈哩哈哩视频
     var type:Int?
 //    视频名
     var name:String?
@@ -30,22 +30,24 @@ struct VideoModel {
     // 最新集或者评分等信息
     var num:String = ""
     // 推荐视频
-    var videoArr:[VideoModel]?
+    var videoArr:[VideoModel] = []
     // 剧集列表
-    var serialArr:[SerialModel]?
+    var serialArr:[SerialModel] = []
+    // 剧集总个数
+    var serialNum:Int = 0
     // 详情地址
     // MARK:哈哩哈哩时，此处地址只是保存一下详情地址，具体播放地址会根据serialindex重新定位。来快播时，保存当前剧集地址
-    var serialDetailUrl:String?
+    var serialDetailUrl:String = ""
     // 记录当前播放的视频的名字，在播放历史时，需要根据名字做对比
-    var serialName:String?
+    var serialName:String = ""
     // 详情标签
-    var tagArr:[[String]]=[]
+    var tagArr:[[String]] = []
     // 数据库中存储的id
     var video_id:Int?
     // 站点
     var webType:Int?
     //当前播放的剧集
-    var serialIndex:Int?
+    var serialIndex:Int = 0
     // 当前剧集播放的进度,与播放的剧集搭配使用
     var progress:Int = 0
     

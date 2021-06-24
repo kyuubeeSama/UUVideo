@@ -31,8 +31,50 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
         if !model!.videoUrl.isEmpty {
             self.player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(string: (self.model?.videoUrl)!)!, startPosition: TimeInterval(self.model!.progress))
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinish), name: NSNotification.Name.SJMediaPlayerPlaybackDidFinish, object: nil)
     }
-
+    
+    @objc func playerDidFinish(){
+        if self.model!.serialIndex < (self.model?.serialArr.count)!-1 {
+            /*
+            // 添加下一集按钮
+            let nextItemTag = SJEdgeControlButtonItemTag.init(10)
+//            TODO:使用view，添加一个重播按钮，一个下一集按钮
+//            let nextItem = SJEdgeControlButtonItem.init(customView: <#T##UIView?#>, tag: <#T##SJEdgeControlButtonItemTag#>)
+            let nextItem = SJEdgeControlButtonItem.init(image: UIImage.init(named:"forward"), target: self, action: #selector(playNextVideo), tag: nextItemTag)
+            nextItem.size = 40
+            nextItem.insets = SJEdgeInsets.init(front: 30, rear: 30)
+            self.player.defaultEdgeControlLayer.centerAdapter.add(nextItem)
+            self.player.defaultEdgeControlLayer.centerAdapter.reload()
+ */
+        }
+    }
+    
+    @objc func playNextVideo(){
+        print("播放下一集")
+        if self.model?.webType == 0 {
+            // 查看剧集是否有播放地址，如果没有就提示无法播放
+            let serialModel = self.model?.serialArr[self.model!.serialIndex+1]
+            if serialModel!.playerUrl.isEmpty {
+                let alert = UIAlertController.init(title: "提醒", message: "该集无法播放", preferredStyle: .alert)
+                let sureAction = UIAlertAction.init(title: "确定", style: .cancel, handler: nil)
+                alert.addAction(sureAction)
+                self.present(alert, animated: true, completion: nil)
+            }else{
+                self.model?.videoUrl = (serialModel?.playerUrl)!
+                self.player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(string: (self.model?.videoUrl)!)!)
+                self.model?.serialIndex = self.model!.serialIndex+1
+                self.model?.serialName = serialModel!.name
+                self.mainCollect.model = self.model
+            }
+        } else {
+            let serialModel = self.model?.serialArr[self.model!.serialIndex+1]
+            self.model?.serialDetailUrl = serialModel!.detailUrl
+            self.model?.serialIndex = self.model!.serialIndex+1
+            self.getData()
+        }
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         player.vc_viewWillDisappear()
@@ -115,7 +157,7 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
         // 正常流程下，需要先获取当前剧集的详情地址，然后再操作播放
         view.makeToastActivity(.center)
         DispatchQueue.global().async {
-            DataManager.init().getVideoPlayerData(urlStr: (self.model?.serialDetailUrl)!, website:websiteType(rawValue: (self.model?.webType)!)!, videoNum: (self.model?.serialArr!.count)!) { (resultModel) in
+            DataManager.init().getVideoPlayerData(urlStr: (self.model?.serialDetailUrl)!, website:websiteType(rawValue: (self.model?.webType)!)!, videoNum: self.model!.serialNum) { (resultModel) in
                 DispatchQueue.main.async {
                     self.view.hideToastActivity()
                     self.model?.videoArr = resultModel.videoArr
@@ -128,20 +170,20 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
                     // 此处已获取到所有剧集播放地址，根据选中的剧集，获取到播放地址。
                     if self.model?.type == 5 {
                         // 当是从历史记录进入时，播放的是第几集，根据名字匹配是第几集
-                        for (index,serialModel) in resultModel.serialArr!.enumerated() {
+                        for (index,serialModel) in resultModel.serialArr.enumerated() {
                             if serialModel.name == self.model?.serialName {
                                 self.model?.serialIndex = index
                             }
                         }
                     }
-                    let currentSerialModel:SerialModel = resultModel.serialArr![(self.model?.serialIndex)!]
+                    let currentSerialModel:SerialModel = resultModel.serialArr[(self.model?.serialIndex)!]
                     self.model?.serialName = currentSerialModel.name
                     if(self.model?.webType == 0){
                         self.model?.videoUrl = currentSerialModel.playerUrl
                     }
                     self.player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(string: (self.model?.videoUrl)!)!, startPosition: TimeInterval(self.model!.progress))
                     self.mainCollect.model = self.model
-                    print(self.model?.videoUrl)
+                    print("播放地址是\(self.model?.videoUrl)")
                 }
             } failure: { (error) in
                 DispatchQueue.main.async {
@@ -161,6 +203,8 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             make.height.equalTo(screenW * 3 / 4)
         }
+        player.defaultEdgeControlLayer.topAdapter.removeItem(forTag: SJEdgeControlLayerTopItem_Back)
+        player.defaultEdgeControlLayer.topAdapter.reload()
         player.defaultEdgeControlLayer.automaticallyShowsPictureInPictureItem = true
         player.controlLayerNeedAppear()
         return player
@@ -182,7 +226,7 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
                 // 在当前页面获取数据并刷新
                 if self.model?.webType == 0 {
                     // 查看剧集是否有播放地址，如果没有就提示无法播放
-                    let serialModel = self.model?.serialArr![indexPath.row]
+                    let serialModel = self.model?.serialArr[indexPath.row]
                     if serialModel!.playerUrl.isEmpty {
                         let alert = UIAlertController.init(title: "提醒", message: "该集无法播放", preferredStyle: .alert)
                         let sureAction = UIAlertAction.init(title: "确定", style: .cancel, handler: nil)
@@ -191,16 +235,19 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
                     }else{
                         self.model?.videoUrl = (serialModel?.playerUrl)!
                         self.player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(string: (self.model?.videoUrl)!)!)
+                        self.model?.serialIndex = indexPath.row
+                        self.model?.serialName = serialModel!.name
                         mainCollection.model = self.model
                     }
                 } else {
-                    let serialModel = self.model?.serialArr![indexPath.row]
-                    self.model?.serialDetailUrl = serialModel?.detailUrl
+                    let serialModel = self.model?.serialArr[indexPath.row]
+                    self.model?.serialDetailUrl = serialModel!.detailUrl
+                    self.model?.serialIndex = indexPath.row
                     self.getData()
                 }
             } else {
                 // 视频
-                let model = mainCollection.model!.videoArr![indexPath.row]
+                let model = mainCollection.model!.videoArr[indexPath.row]
                 let VC = NetVideoDetailViewController.init()
                 VC.videoModel = model
                 self.navigationController?.pushViewController(VC, animated: true)

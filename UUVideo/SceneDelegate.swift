@@ -20,7 +20,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        guard let _ = (scene as? UIWindowScene) else { return }
         // 创建数据库文件。
         SqlTool.init().createTable()
-
+        if !(SqlTool.init().findCoumExist(table: "history", column: "serialNum")) {
+            SqlTool.init().addColum(table: "history", column: "serialNum", type: .integer, defalut: "1")
+        }
         print(FileTool.init().getDocumentPath())
         let windowScene = scene as! UIWindowScene
         window = UIWindow.init(windowScene: windowScene)

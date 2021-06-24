@@ -64,6 +64,7 @@ class NetVideoDetailViewController: BaseViewController {
                     self.videoModel?.picUrl = resultModel.picUrl
                     self.videoModel?.videoArr = resultModel.videoArr
                     self.videoModel?.serialArr = resultModel.serialArr
+                    self.videoModel?.serialNum = resultModel.serialNum
                     mainCollect.model = self.videoModel
                     addCollectItem(videoModel: self.videoModel!)
                 }
@@ -90,14 +91,13 @@ class NetVideoDetailViewController: BaseViewController {
                 // 剧集
                 let VC = NetVideoPlayerViewController.init()
                 VC.model = self.videoModel
-                let serialModel = self.videoModel?.serialArr![indexPath.row]
-                VC.model!.serialDetailUrl = serialModel?.detailUrl
+                let serialModel = self.videoModel?.serialArr[indexPath.row]
+                VC.model!.serialDetailUrl = serialModel!.detailUrl
                 VC.model?.serialIndex = indexPath.row
-//                VC.webType = self.webType
                 self.navigationController?.pushViewController(VC, animated: true)
             } else if indexPath.section == 2 {
 //                视频
-                let model = mainCollection.model!.videoArr![indexPath.row]
+                let model = mainCollection.model!.videoArr[indexPath.row]
                 let VC = NetVideoDetailViewController.init()
 //                VC.webType = self.webType
                 VC.videoModel = model

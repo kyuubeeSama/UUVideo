@@ -39,12 +39,12 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let listModel = listArr![section]
-        return listModel.list!.count
+        return listModel.list.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let listModel = listArr![indexPath.section]
-        let model = listModel.list![indexPath.row]
+        let model = listModel.list[indexPath.row]
         // 5的类型为
         if model.type == 4 || model.type == 5{
             // 番剧类似tableview的样式
@@ -53,7 +53,7 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
             cell.titleLab.alignTop()
             cell.leftImg.kf.setImage(with: URL.init(string: model.picUrl), placeholder: UIImage.init(named: "placeholder.jpg"), options: nil, completionHandler: nil)
             if model.type == 5 {
-                cell.numLab.text = "播放到：\(model.serialName! as String)"
+                cell.numLab.text = "播放到：\(model.serialName as String)"
             }else{
                 cell.numLab.text = model.num
             }
@@ -74,7 +74,7 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let listModel = listArr![indexPath.section]
-        let model = listModel.list![indexPath.row]
+        let model = listModel.list[indexPath.row]
         if Tool.isPhone() {
             if model.type == 4 || model.type == 5{
                 return CGSize(width: screenW, height: 100)

@@ -11,5 +11,5 @@ import UIKit
 class ListModel: NSObject {
     var title:String = ""
     var more:Bool? = false
-    var list:[VideoModel]?
+    var list:[VideoModel] = []
 }

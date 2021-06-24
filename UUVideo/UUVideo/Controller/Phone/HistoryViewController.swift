@@ -24,6 +24,20 @@ class HistoryViewController: BaseViewController {
         if Tool.isPhone() {
             getHistoryData()
         }
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "清空", style: .plain, target: self, action: #selector(cleanHistory))
+    }
+    
+    @objc func cleanHistory(){
+        let alert = UIAlertController.init(title: "警告", message: "是否删除所有历史记录", preferredStyle: .alert)
+        let sureAction = UIAlertAction.init(title: "删除", style: .default) { action in
+            if SqlTool.init().cleanHistory() {
+                self.mainCollect.listArr = []
+            }
+        }
+        alert.addAction(sureAction)
+        let cancelAction = UIAlertAction.init(title: "取消", style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
     }
     
     func getHistoryData(){
@@ -43,7 +57,7 @@ class HistoryViewController: BaseViewController {
             //            进入剧集界面
             let listModel = mainCollection.listArr![indexPath.section]
             let VC = NetVideoPlayerViewController.init()
-            let videoModel = listModel.list![indexPath.row]
+            let videoModel = listModel.list[indexPath.row]
             VC.model = videoModel
             self.navigationController?.pushViewController(VC, animated: true)
         }

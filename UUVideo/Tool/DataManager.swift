@@ -135,7 +135,7 @@ class DataManager: NSObject {
                         videoModel.num = updateNodeArr![i].content!
                     }
                     videoModel.type = 3
-                    listModel.list?.append(videoModel)
+                    listModel.list.append(videoModel)
                 }
                 resultArr.append(listModel)
             }
@@ -198,7 +198,7 @@ class DataManager: NSObject {
                 videoModel.picUrl = checkUrl(urlStr: picUrl, domainUrlStr: baseUrl)
                 videoModel.type = 3
                 videoModel.webType = type.rawValue
-                listModel.list?.append(videoModel)
+                listModel.list.append(videoModel)
             }
             success([listModel])
         }
@@ -377,9 +377,10 @@ class DataManager: NSObject {
                     serial.name = serialTitleNodeArr![index].content!
                     let serialDetailUrl: String = item.content!
                     serial.detailUrl = checkUrl(urlStr: serialDetailUrl, domainUrlStr: baseUrl)
-                    videoModel.serialArr?.append(serial)
+                    videoModel.serialArr.append(serial)
                 }
             }
+            videoModel.serialNum = videoModel.serialArr.count
             //        推荐视频
             let titleNodeArr = jiDoc?.xPath(titleXPath)
             let urlNodeArr = jiDoc?.xPath(urlXPath)
@@ -400,7 +401,7 @@ class DataManager: NSObject {
                         model.num = updateNodeArr![index].content!
                     }
                     model.type = 3
-                    videoModel.videoArr!.append(model)
+                    videoModel.videoArr.append(model)
                 }
             }
             success(videoModel)
@@ -436,7 +437,7 @@ class DataManager: NSObject {
                         videoModel.picUrl = item.1["thumb"].string!
                         videoModel.type = 3
                         videoModel.webType = 0
-                        listModel.list?.append(videoModel)
+                        listModel.list.append(videoModel)
                     }
                     success([listModel])
                 case .failure(let error):
@@ -479,7 +480,7 @@ class DataManager: NSObject {
                     videoModel.picUrl = checkUrl(urlStr: imgNodeArr![index].content!, domainUrlStr: baseUrl)
                     videoModel.type = 3
                     videoModel.webType = website.rawValue
-                    listModel.list?.append(videoModel)
+                    listModel.list.append(videoModel)
                 }
                 success([listModel])
             }
@@ -553,7 +554,7 @@ class DataManager: NSObject {
                                 serial.name = serial.name.unicodeToUtf8()
                                 serial.playerUrl = checkUrl(urlStr: String(valueArr[0]), domainUrlStr: baseUrl)
                             }
-                           videoModel.serialArr?.append(serial)
+                            videoModel.serialArr.append(serial)
                         }
                     } catch {
                        print("获取js内容失败")
@@ -582,7 +583,7 @@ class DataManager: NSObject {
                         let serialModel = SerialModel.init()
                         serialModel.name = serialTitleNodeArr![index].content!
                         serialModel.detailUrl = checkUrl(urlStr: serialUrlNodeArr![index].content!, domainUrlStr: baseUrl)
-                        videoModel.serialArr?.append(serialModel)
+                        videoModel.serialArr.append(serialModel)
                     }
                     
                     recommendTitleXpath = "/html/body/div[1]/ul[1]/li/h2/a"
@@ -613,7 +614,6 @@ class DataManager: NSObject {
                 if gf == "1" {
                 }else{
                     vid = vid?.replacingOccurrences(of: "$mp4", with: "")
-                    print("播放地址是：\(vid)")
                     videoModel.videoUrl = vid!
                 }
                 // 获取剧集信息
@@ -625,7 +625,7 @@ class DataManager: NSObject {
                     let serialModel = SerialModel.init()
                     serialModel.name = serialTitleNodeArr![index].content!
                     serialModel.detailUrl = checkUrl(urlStr: serialUrlNodeArr![index].content!, domainUrlStr: baseUrl)
-                    videoModel.serialArr?.append(serialModel)
+                    videoModel.serialArr.append(serialModel)
                 }
                 
                 recommendTitleXpath = "/html/body/div[9]/div[2]/ul/li/a/img/@alt"
@@ -651,7 +651,7 @@ class DataManager: NSObject {
                     model.num = ""
                     model.type = 3
                     model.webType = website.rawValue
-                    videoModel.videoArr!.append(model)
+                    videoModel.videoArr.append(model)
                 }
             }
             success(videoModel)

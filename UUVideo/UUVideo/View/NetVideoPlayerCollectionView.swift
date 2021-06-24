@@ -38,9 +38,9 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
-            return (model?.serialArr!.count)!
+            return (model?.serialArr.count)!
         } else {
-            return (model?.videoArr!.count)!
+            return (model?.videoArr.count)!
         }
     }
 
@@ -48,7 +48,7 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
         // 三种样式，一种是剧集介绍
         if indexPath.section == 0 {
             //            剧集列表
-            let serialModel = model?.serialArr![indexPath.row]
+            let serialModel = model?.serialArr[indexPath.row]
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "serialCell", for: indexPath) as! VideoCategoryCollectionViewCell
             cell.titleLab.text = serialModel!.name
             if self.model?.serialIndex == indexPath.row {
@@ -66,7 +66,7 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
             return cell
         } else {
             //            推荐列表
-            let videoModel = model?.videoArr![indexPath.row]
+            let videoModel = model?.videoArr[indexPath.row]
             let cell: VideoListCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "videoCell", for: indexPath) as! VideoListCollectionViewCell
             cell.titleLab.text = videoModel!.name
             cell.picImage.kf.setImage(with: URL.init(string: videoModel!.picUrl))
@@ -76,7 +76,7 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.section == 0 {
-            let serialModel = model?.serialArr![indexPath.row]
+            let serialModel = model?.serialArr[indexPath.row]
             // 根据字体大小计算
             let size = serialModel!.name.getStringSize(font: UIFont.systemFont(ofSize: 15), size: CGSize(width: Double(MAXFLOAT), height: 15.0))
             return CGSize(width: size.width + 20.0, height: 20.0)

@@ -29,7 +29,8 @@ class SqlTool: NSObject {
                                      add_time INTEGER,
                                      webtype INTEGER NOT NULL,
                                      serialIndex INTEGER NOT NULL,
-                                     progress FLOAT NOT NULL
+                                     progress FLOAT NOT NULL,
+                                     serialNum INTEGER DEFAULT (1)
                                       )
                                      """)
 //                创建收藏表
@@ -47,17 +48,48 @@ class SqlTool: NSObject {
                                      """)
                 //TODO:创建追番表，保存追番的视频
             })
+            
         }
     }
 
+    // 判断某个字段是否存在
+    func findCoumExist(table:String,column:String) -> Bool{
+        do {
+            let dbQueue = try DatabaseQueue(path: databasePath)
+            let row = try dbQueue.read({ db in
+                try Row.fetchOne(db, sql: "select * from sqlite_master where name = '\(table)' and sql like '%\(column)%'")
+            })
+            if row != nil {
+                return true
+            }
+        }catch {
+            print(error.localizedDescription)
+        }
+        return false
+    }
+    
+    // 在表中添加某字段
+    func addColum(table:String,column:String,type:Database.ColumnType,defalut:DatabaseValueConvertible){
+        do{
+            let dbQueue = try DatabaseQueue(path: databasePath)
+            try dbQueue.write({ db in
+                try db.alter(table: table, body: { t in
+                    t.add(column: column, type).defaults(to: defalut)
+                })
+            })
+        }catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     // 保存历史浏览记录
     func saveHistory(model: VideoModel) {
         do {
             let dbQueue = try DatabaseQueue(path: databasePath)
             try dbQueue.write { db in
                 try db.execute(sql: """
-                                        REPLACE INTO history ('name','url','serialName','picurl',add_time,webtype,serialIndex,progress) VALUES(:name,:url,:serialName,:picurl,:add_time,:webtype,:serialIndex,:progress)
-                                    """, arguments: [model.name, model.serialDetailUrl, model.serialName, model.picUrl, Date.getCurrentTimeInterval(), model.webType, model.serialIndex, model.progress])
+                                        REPLACE INTO history ('name','url','serialName','picurl',add_time,webtype,serialIndex,progress,serialNum) VALUES(:name,:url,:serialName,:picurl,:add_time,:webtype,:serialIndex,:progress,:serialNum)
+                                    """, arguments: [model.name, model.serialDetailUrl, model.serialName, model.picUrl, Date.getCurrentTimeInterval(), model.webType, model.serialIndex, model.progress,model.serialNum])
             }
         } catch {
             print(error.localizedDescription)
@@ -85,14 +117,14 @@ class SqlTool: NSObject {
                 videoModel.picUrl = items[Column("picurl")]
                 videoModel.webType = items[Column("webtype")]
                 videoModel.progress = items[Column("progress")]
-                model.list?.append(videoModel)
+                videoModel.serialNum = items[Column("serialNum")]
+                model.list.append(videoModel)
             }
         } catch {
             print(error.localizedDescription)
         }
         return model
     }
-
     // 清空浏览记录
     func cleanHistory() -> Bool {
         do {
@@ -173,7 +205,7 @@ class SqlTool: NSObject {
                 videoModel.num = item[Column("updateinfo")]
                 videoModel.picUrl = item[Column("picurl")]
                 videoModel.webType = item[Column("webtype")]
-                model.list?.append(videoModel)
+                model.list.append(videoModel)
             }
         } catch {
             print(error.localizedDescription)

@@ -43,7 +43,7 @@ class CollectViewController: BaseViewController {
                 let listModel = mainCollection.listArr![indexPath.section]
                 //TODO:收藏的话，进入视频详情界面
                 let VC = NetVideoDetailViewController.init()
-                let videoModel = listModel.list![indexPath.row]
+                let videoModel = listModel.list[indexPath.row]
                 VC.videoModel = videoModel
                 self.navigationController?.pushViewController(VC, animated: true)
             }

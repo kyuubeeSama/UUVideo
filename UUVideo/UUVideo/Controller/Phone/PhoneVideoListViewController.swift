@@ -55,7 +55,7 @@ class PhoneVideoListViewController: BaseViewController {
         mainCollection.cellItemSelected = { indexPath in
             let listModel = mainCollection.listArr![indexPath.section]
             let VC = LocalVideoPlayerViewController.init()
-            VC.model = listModel.list![indexPath.row]
+            VC.model = listModel.list[indexPath.row]
             VC.modalPresentationStyle = .fullScreen
             self.present(VC, animated: true, completion: nil)
         }
