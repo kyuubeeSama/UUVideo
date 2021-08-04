@@ -29,7 +29,7 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
         player.vc_viewDidAppear()
         // 重新进入页面，判断是否需要重新播放
         if !model!.videoUrl.isEmpty {
-            self.player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(string: (self.model?.videoUrl)!)!, startPosition: TimeInterval(self.model!.progress))
+            self.playerVideo()
         }
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinish), name: NSNotification.Name.SJMediaPlayerPlaybackDidFinish, object: nil)
     }
@@ -62,7 +62,7 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
                 self.present(alert, animated: true, completion: nil)
             }else{
                 self.model?.videoUrl = (serialModel?.playerUrl)!
-                self.player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(string: (self.model?.videoUrl)!)!)
+                self.playerVideo()
                 self.model?.serialIndex = self.model!.serialIndex+1
                 self.model?.serialName = serialModel!.name
                 self.mainCollect.model = self.model
@@ -152,6 +152,13 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
         }
     }
     
+    func playerVideo(){
+        let headers = ["User-Agent":"Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/92.0.4515.107"];
+        let asset = AVURLAsset.init(url: URL.init(string: (self.model?.videoUrl)!)!, options: ["AVURLAssetHTTPHeaderFieldsKey":headers])
+        self.player.urlAsset = SJVideoPlayerURLAsset.init(avAsset: asset, startPosition: TimeInterval(self.model!.progress), playModel: SJPlayModel.init())
+        print("播放地址是"+self.model!.videoUrl)
+    }
+    
     // 获取数据
     func getData() {
         // 正常流程下，需要先获取当前剧集的详情地址，然后再操作播放
@@ -181,9 +188,8 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
                     if(self.model?.webType == 0){
                         self.model?.videoUrl = currentSerialModel.playerUrl
                     }
-                    self.player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(string: (self.model?.videoUrl)!)!, startPosition: TimeInterval(self.model!.progress))
+                    self.playerVideo()
                     self.mainCollect.model = self.model
-                    print("播放地址是\(self.model?.videoUrl)")
                 }
             } failure: { (error) in
                 DispatchQueue.main.async {
@@ -234,7 +240,7 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
                         self.present(alert, animated: true, completion: nil)
                     }else{
                         self.model?.videoUrl = (serialModel?.playerUrl)!
-                        self.player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(string: (self.model?.videoUrl)!)!)
+                        self.playerVideo()
                         self.model?.serialIndex = indexPath.row
                         self.model?.serialName = serialModel!.name
                         mainCollection.model = self.model

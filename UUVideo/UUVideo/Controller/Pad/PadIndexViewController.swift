@@ -25,7 +25,7 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
         } catch (let error) {
             print(error)
         }
-        mainTable.listArr = ["本地视频", "新番时间表", "哈哩哈哩","樱花动漫","历史记录","收藏"]
+        mainTable.listArr = ["本地视频", "新番时间表", "哈哩哈哩","来快播","樱花动漫","历史记录","收藏"]
         view.bringSubviewToFront(localView)
         NotificationCenter.default.addObserver(self, selector: #selector(didChangeRotate(notice:)), name: UIApplication.didChangeStatusBarFrameNotification, object: nil)
     }
@@ -69,6 +69,8 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
                 self.view.bringSubviewToFront(self.historyView)
             }else if(string == "收藏"){
                 self.view.bringSubviewToFront(self.collectView)
+            }else if (string == "来快播") {
+                self.view.bringSubviewToFront(self.laikuaiboView)
             }
         }
         return mainTable
@@ -100,6 +102,12 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
     lazy var sakuraView: UIView = {
         let VC = NetVideoIndexViewController.init()
         VC.webType = .sakura
+        return getView(controller:VC)
+    }()
+    
+    lazy var laikuaiboView: UIView = {
+        let VC = NetVideoIndexViewController.init()
+        VC.webType = .laikuaibo
         return getView(controller:VC)
     }()
     
