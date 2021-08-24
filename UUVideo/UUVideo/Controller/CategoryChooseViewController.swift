@@ -68,12 +68,6 @@ class CategoryChooseViewController: BaseViewController {
             if (self.sureBtnReturn != nil) {
                 self.sureBtnReturn!(valueArr)
             }
-            self.dismiss(animated: true, completion: nil)
-        }
-
-        bottomView.cancelBtnBlock = {
-            // 重置选项为初始选项，返回上一页
-            self.dismiss(animated: true, completion: nil)
         }
 
         return bottomView

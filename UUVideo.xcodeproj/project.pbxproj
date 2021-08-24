@@ -61,6 +61,7 @@
 		A9CBF74824EF9976002BD074 /* RightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBF74724EF9976002BD074 /* RightViewController.swift */; };
 		A9CCBF332608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CCBF322608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift */; };
 		A9CCBF8C2608A16100427C47 /* SqlTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CCBF8B2608A16100427C47 /* SqlTool.swift */; };
+		A9D49EA726D530B6003BEDC2 /* UIWindow+WBPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D49EA626D530B6003BEDC2 /* UIWindow+WBPopView.swift */; };
 		A9DFBD9A2680297000BBA638 /* Array+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DFBD992680296F00BBA638 /* Array+extension.swift */; };
 		A9F0302326003F100095EC83 /* UUWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F0302226003F100095EC83 /* UUWebView.swift */; };
 		A9F03026260097B60095EC83 /* NetVideoIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F03025260097B60095EC83 /* NetVideoIndexViewController.swift */; };
@@ -135,6 +136,7 @@
 		A9CBF74724EF9976002BD074 /* RightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightViewController.swift; sourceTree = "<group>"; };
 		A9CCBF322608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewLeftAlignedLayout.swift; sourceTree = "<group>"; };
 		A9CCBF8B2608A16100427C47 /* SqlTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqlTool.swift; sourceTree = "<group>"; };
+		A9D49EA626D530B6003BEDC2 /* UIWindow+WBPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+WBPopView.swift"; sourceTree = "<group>"; };
 		A9DFBD992680296F00BBA638 /* Array+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+extension.swift"; sourceTree = "<group>"; };
 		A9F0302226003F100095EC83 /* UUWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUWebView.swift; sourceTree = "<group>"; };
 		A9F03025260097B60095EC83 /* NetVideoIndexViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoIndexViewController.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				A950E2AB24E6733F000CBB92 /* UITextField+extension.swift */,
 				A950E2AD24E6733F000CBB92 /* UIView+extension.swift */,
 				A923747125FF0B4900CE21F4 /* UILabel+extension.swift */,
+				A9D49EA626D530B6003BEDC2 /* UIWindow+WBPopView.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -498,6 +501,7 @@
 				A950E2B324E6733F000CBB92 /* NSObject+extension.swift in Sources */,
 				A9F03029260098280095EC83 /* NetVideoListViewController.swift in Sources */,
 				A90F71192524100F0000D1CF /* HeaderTitleCollectionReusableView.swift in Sources */,
+				A9D49EA726D530B6003BEDC2 /* UIWindow+WBPopView.swift in Sources */,
 				A950E2C424E6736F000CBB92 /* BaseViewController.swift in Sources */,
 				A950E2BE24E67356000CBB92 /* Tool.swift in Sources */,
 				A9CBF74824EF9976002BD074 /* RightViewController.swift in Sources */,

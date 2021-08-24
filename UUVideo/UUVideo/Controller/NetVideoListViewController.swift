@@ -9,6 +9,7 @@
 import UIKit
 import SideMenu
 import ESPullToRefresh
+import Toast_Swift
 
 class NetVideoListViewController: BaseViewController {
 
@@ -33,7 +34,7 @@ class NetVideoListViewController: BaseViewController {
 
         // Do any additional setup after loading the view.
         urlStr = ["http://halihali2.com/", "https://www.laikuaibo.com/", "http://www.yhdm.so/"][webType.rawValue]
-        let videoTypeData = [["电视剧":"tv","动漫":"acg","电影":"mov","综艺":"zongyi"],["电影":"1","剧集":"2","综艺":"4","动漫":"3","伦理":"19"],["日本动漫":"japan","国产动漫":"china","美国动漫":"american","动漫电影":"movie"]]
+        let videoTypeData = [["电视剧": "tv", "动漫": "acg", "电影": "mov", "综艺": "zongyi"], ["电影": "1", "剧集": "2", "综艺": "4", "动漫": "3", "伦理": "19"], ["日本动漫": "japan", "国产动漫": "china", "美国动漫": "american", "动漫电影": "movie"]]
         if webType == .halihali {
             area = "all"
             videoCategory = "0"
@@ -45,10 +46,10 @@ class NetVideoListViewController: BaseViewController {
         if webType == .halihali {
             setNav()
             getCategoryData()
-        }else if webType == .sakura {
+        } else if webType == .sakura {
             setNav()
-            self.categoryListArr = CategoryModel.getSakuraCategoryData()
-            for listModel in self.categoryListArr {
+            categoryListArr = CategoryModel.getSakuraCategoryData()
+            for listModel in categoryListArr {
                 for model in listModel.list {
                     if model.value == videoType {
                         model.ischoose = true
@@ -70,17 +71,27 @@ class NetVideoListViewController: BaseViewController {
         if categoryListArr.count > 0 {
             // 滑出筛选界面
             let VC = CategoryChooseViewController.init()
-            VC.type = self.webType
+            VC.type = webType
             VC.listArr = categoryListArr
-            let menu = SideMenuNavigationController(rootViewController: VC)
-            menu.presentationStyle = .menuSlideIn
-            menu.menuWidth = screenW * 0.9
-            present(menu, animated: true, completion: nil)
+            if Tool.isPhone() {
+                let menu = SideMenuNavigationController(rootViewController: VC)
+                menu.presentationStyle = .menuSlideIn
+                menu.menuWidth = screenW * 0.9
+                present(menu, animated: true, completion: nil)
+            } else {
+                VC.view.bounds = CGRect(x: 0, y: 0, width: screenW-80, height: 500);
+                view.showToast(VC.view)
+            }
             VC.sureBtnReturn = { [self] resultArr in
+                if Tool.isPhone() {
+                    VC.dismiss(animated: true)
+                } else {
+                    view.hideToast()
+                }
                 print(resultArr)
-                if self.webType == .sakura {
+                if webType == .sakura {
                     videoType = resultArr[0]
-                }else{
+                } else {
                     videoCategory = resultArr[0]
                     year = resultArr[1]
                     area = resultArr[2]
@@ -89,6 +100,13 @@ class NetVideoListViewController: BaseViewController {
                 listArr = []
                 getCategoryData()
                 getListData()
+            }
+            VC.bottomView.cancelBtnBlock = {
+                if Tool.isPhone() {
+                    VC.dismiss(animated: true)
+                } else {
+                    self.view.hideAllToasts()
+                }
             }
         } else {
             view.makeToast("未获取到筛选数据")
@@ -102,12 +120,12 @@ class NetVideoListViewController: BaseViewController {
             detailUrlStr = "http://121.4.190.96:9991/getsortdata_all_z.php?action=\(videoType)&page=\(pageNum)&year=\(year)&area=\(area)&class=\(videoCategory)&dect=&id="
         } else if webType == .laikuaibo {
             detailUrlStr = urlStr + "list-select-id-\(videoType)-area-\(area)-order-\(order)-p-\(pageNum).html"
-        }else{
+        } else {
             var pageInfo = ""
-            if pageNum>1 {
+            if pageNum > 1 {
                 pageInfo = "\(pageNum).html"
             }
-            detailUrlStr = urlStr + "\(videoType)/"+pageInfo
+            detailUrlStr = urlStr + "\(videoType)/" + pageInfo
         }
         DispatchQueue.global().async {
             DataManager.init().getVideoListData(urlStr: detailUrlStr, type: self.webType) { (dataArr: [ListModel]) in
@@ -118,9 +136,9 @@ class NetVideoListViewController: BaseViewController {
                     } else {
                         self.mainCollect.es.noticeNoMoreData()
                     }
-                    if self.listArr.count > 0{
+                    if self.listArr.count > 0 {
                         self.listArr[0].list.append(array: dataArr[0].list)
-                    }else{
+                    } else {
                         self.listArr.append(contentsOf: dataArr)
                     }
                     self.mainCollect.listArr = self.listArr
