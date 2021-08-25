@@ -46,6 +46,7 @@
 		A950E2CD24E67515000CBB92 /* WebsiteTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2CC24E67515000CBB92 /* WebsiteTableView.swift */; };
 		A950E2CF24E677D9000CBB92 /* VideoListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2CE24E677D9000CBB92 /* VideoListCollectionView.swift */; };
 		A950E2D324E67871000CBB92 /* VideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2D224E67871000CBB92 /* VideoModel.swift */; };
+		A97CFDA426D5E65700CC72B4 /* WBPopCoverBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97CFDA326D5E65700CC72B4 /* WBPopCoverBackgroundView.swift */; };
 		A97F52032537EC93008B872A /* CategoryChooseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97F52022537EC93008B872A /* CategoryChooseViewController.swift */; };
 		A97F5206253848F1008B872A /* VideoCategoryCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97F5205253848F1008B872A /* VideoCategoryCollectionView.swift */; };
 		A97F520A2538495C008B872A /* VideoCategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97F52082538495C008B872A /* VideoCategoryCollectionViewCell.swift */; };
@@ -119,6 +120,7 @@
 		A950E2CC24E67515000CBB92 /* WebsiteTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteTableView.swift; sourceTree = "<group>"; };
 		A950E2CE24E677D9000CBB92 /* VideoListCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListCollectionView.swift; sourceTree = "<group>"; };
 		A950E2D224E67871000CBB92 /* VideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModel.swift; sourceTree = "<group>"; };
+		A97CFDA326D5E65700CC72B4 /* WBPopCoverBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBPopCoverBackgroundView.swift; sourceTree = "<group>"; };
 		A97F52022537EC93008B872A /* CategoryChooseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryChooseViewController.swift; sourceTree = "<group>"; };
 		A97F5205253848F1008B872A /* VideoCategoryCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCategoryCollectionView.swift; sourceTree = "<group>"; };
 		A97F52082538495C008B872A /* VideoCategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCategoryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				A950E2AD24E6733F000CBB92 /* UIView+extension.swift */,
 				A923747125FF0B4900CE21F4 /* UILabel+extension.swift */,
 				A9D49EA626D530B6003BEDC2 /* UIWindow+WBPopView.swift */,
+				A97CFDA326D5E65700CC72B4 /* WBPopCoverBackgroundView.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -506,6 +509,7 @@
 				A950E2BE24E67356000CBB92 /* Tool.swift in Sources */,
 				A9CBF74824EF9976002BD074 /* RightViewController.swift in Sources */,
 				A950E2D324E67871000CBB92 /* VideoModel.swift in Sources */,
+				A97CFDA426D5E65700CC72B4 /* WBPopCoverBackgroundView.swift in Sources */,
 				A950E2CF24E677D9000CBB92 /* VideoListCollectionView.swift in Sources */,
 				A950E2B424E6733F000CBB92 /* UITextField+extension.swift in Sources */,
 				A950E29424E67157000CBB92 /* SceneDelegate.swift in Sources */,

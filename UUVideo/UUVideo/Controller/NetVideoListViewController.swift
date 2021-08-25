@@ -79,14 +79,14 @@ class NetVideoListViewController: BaseViewController {
                 menu.menuWidth = screenW * 0.9
                 present(menu, animated: true, completion: nil)
             } else {
-                VC.view.bounds = CGRect(x: 0, y: 0, width: screenW-80, height: 500);
-                view.showToast(VC.view)
+                VC.view.bounds = CGRect(x: 0, y: 0, width: Tool.isPad() ? screenW-80 : 500, height: 500);
+                self.view.window?.QY_ShowPopView(popStyle: .center, popView: VC.view, offset: CGPoint(x: 0, y: 0), dismissWhenClickCoverView: true, isBlur: false, alpha: 0.3)
             }
             VC.sureBtnReturn = { [self] resultArr in
                 if Tool.isPhone() {
                     VC.dismiss(animated: true)
                 } else {
-                    view.hideToast()
+                    self.view.window?.wb_dismissPopView(popStyle: .center, completion: {})
                 }
                 print(resultArr)
                 if webType == .sakura {
@@ -105,7 +105,7 @@ class NetVideoListViewController: BaseViewController {
                 if Tool.isPhone() {
                     VC.dismiss(animated: true)
                 } else {
-                    self.view.hideAllToasts()
+                    self.view.window?.wb_dismissPopView(popStyle: .center, completion: {})
                 }
             }
         } else {
