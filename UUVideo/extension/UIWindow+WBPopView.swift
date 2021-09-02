@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 enum WBPopStyle {
     case top
@@ -57,6 +58,10 @@ extension UIWindow {
             }
             break
         case .center:
+            popView.snp.makeConstraints { make in
+                make.centerX.centerY.equalTo(self)
+                make.size.equalTo(CGSize(width: width, height: height))
+            }
             popView.center = CGPoint(x: screenW/2-offset.x, y: screenH/2-offset.y)
             popView.transform = CGAffineTransform.identity.scaledBy(x: CGFloat.leastNormalMagnitude,y: CGFloat.leastNormalMagnitude)
             UIView.animate(withDuration: UIWindow.popview_animationTime) {

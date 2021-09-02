@@ -33,6 +33,9 @@ class NetVideoIndexViewController: BaseViewController, UISearchBarDelegate {
                 }
             } failure: { (error) in
                 print(error)
+                DispatchQueue.main.async {
+                    view.hideToastActivity()
+                }
             }
         }
     }

@@ -47,21 +47,21 @@ PODS:
     - SJUIKit/ObserverHelper
     - SJUIKit/Queues
     - SJUIKit/SQLite3
-  - SJUIKit/AttributesFactory (0.0.0.55):
-    - SJUIKit/AttributesFactory/Deprecated (= 0.0.0.55)
-    - SJUIKit/AttributesFactory/UIKitText (= 0.0.0.55)
-  - SJUIKit/AttributesFactory/Deprecated (0.0.0.55)
-  - SJUIKit/AttributesFactory/UIKitText (0.0.0.55)
-  - SJUIKit/ObserverHelper (0.0.0.55)
-  - SJUIKit/Queues (0.0.0.55)
-  - SJUIKit/SQLite3 (0.0.0.55):
-    - SJUIKit/SQLite3/Core (= 0.0.0.55)
-    - SJUIKit/SQLite3/Protocol (= 0.0.0.55)
+  - SJUIKit/AttributesFactory (0.0.0.57):
+    - SJUIKit/AttributesFactory/Deprecated (= 0.0.0.57)
+    - SJUIKit/AttributesFactory/UIKitText (= 0.0.0.57)
+  - SJUIKit/AttributesFactory/Deprecated (0.0.0.57)
+  - SJUIKit/AttributesFactory/UIKitText (0.0.0.57)
+  - SJUIKit/ObserverHelper (0.0.0.57)
+  - SJUIKit/Queues (0.0.0.57)
+  - SJUIKit/SQLite3 (0.0.0.57):
+    - SJUIKit/SQLite3/Core (= 0.0.0.57)
+    - SJUIKit/SQLite3/Protocol (= 0.0.0.57)
     - YYModel
-  - SJUIKit/SQLite3/Core (0.0.0.55):
+  - SJUIKit/SQLite3/Core (0.0.0.57):
     - SJUIKit/SQLite3/Protocol
     - YYModel
-  - SJUIKit/SQLite3/Protocol (0.0.0.55):
+  - SJUIKit/SQLite3/Protocol (0.0.0.57):
     - YYModel
   - SJVideoPlayer (3.3.2):
     - SJBaseVideoPlayer (>= 3.6.0)
@@ -141,7 +141,7 @@ SPEC CHECKSUMS:
   MRDLNA: 3fe35c6ac57c946413d07896faeb9101c4d8853d
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
   SJBaseVideoPlayer: 99957bb0d0fe1ccb8d6710bd9db9f52640c56a32
-  SJUIKit: 0d7f9b7027126ded2cb783c06befb58e6ace8650
+  SJUIKit: 55e5ae2beee094abab143f45addc23690883040b
   SJVideoPlayer: 3a271ff92c7b9d611c537655fd1edcbae18b8587
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
