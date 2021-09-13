@@ -34,7 +34,7 @@ class NetVideoListViewController: BaseViewController {
 
         // Do any additional setup after loading the view.
         urlStr = ["http://halihali2.com/", "https://www.laikuaibo.com/", "http://www.yhdm.so/"][webType.rawValue]
-        let videoTypeData = [["电视剧": "tv", "动漫": "acg", "电影": "mov", "综艺": "zongyi"], ["电影": "1", "剧集": "2", "综艺": "4", "动漫": "3", "伦理": "19"], ["日本动漫": "japan", "国产动漫": "china", "美国动漫": "american", "动漫电影": "movie"]]
+        let videoTypeData = [["电视剧": "tv", "动漫": "acg", "电影": "mov", "综艺": "zongyi"], ["电影": "1", "剧集": "2", "综艺": "4", "动漫": "3", "伦理": "19"], ["日本动漫": "japan", "国产动漫": "china", "欧美动漫": "american", "动漫电影": "movie"]]
         if webType == .halihali {
             area = "all"
             videoCategory = "0"

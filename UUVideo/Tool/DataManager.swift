@@ -521,6 +521,7 @@ class DataManager: NSObject {
                             if item.contains("=\(videoNum)") {
                                 // 获取到正确的第一个位置
                                 firstIndex = index
+                                break
                             }
                         }
                         array.removeFirst(firstIndex)
@@ -585,7 +586,6 @@ class DataManager: NSObject {
                         serialModel.detailUrl = checkUrl(urlStr: serialUrlNodeArr![index].content!, domainUrlStr: baseUrl)
                         videoModel.serialArr.append(serialModel)
                     }
-                    
                     recommendTitleXpath = "/html/body/div[1]/ul[1]/li/h2/a"
                     recommendUrlXpath = "/html/body/div[1]/ul[1]/li/p/a/@href"
                     recommendImgXpath = "/html/body/div[1]/ul[1]/li/p/a/img/@data-original"
