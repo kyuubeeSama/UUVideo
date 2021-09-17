@@ -67,6 +67,14 @@ class NetVideoDetailViewController: BaseViewController {
                     self.videoModel?.serialNum = resultModel.serialNum
                     mainCollect.model = self.videoModel
                     addCollectItem(videoModel: self.videoModel!)
+                    if resultModel.serialArr.isEmpty {
+                        let alert = UIAlertController.init(title: "提示", message: "当前视频没有剧集", preferredStyle: .alert)
+                        let alertAction = UIAlertAction.init(title: "返回上一页", style: .default) { action in
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                        alert.addAction(alertAction)
+                        self.present(alert, animated: true, completion: nil)
+                    }
                 }
             } failure: { (error) in
                 DispatchQueue.main.async {
@@ -90,10 +98,10 @@ class NetVideoDetailViewController: BaseViewController {
             if indexPath.section == 1 {
                 // 剧集
                 let VC = NetVideoPlayerViewController.init()
-                VC.model = self.videoModel
+                VC.model = self.videoModel!
                 let serialModel = self.videoModel?.serialArr[indexPath.row]
-                VC.model!.serialDetailUrl = serialModel!.detailUrl
-                VC.model?.serialIndex = indexPath.row
+                VC.model.serialDetailUrl = serialModel!.detailUrl
+                VC.model.serialIndex = indexPath.row
                 self.navigationController?.pushViewController(VC, animated: true)
             } else if indexPath.section == 2 {
 //                视频

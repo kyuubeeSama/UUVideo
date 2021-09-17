@@ -103,7 +103,7 @@ class DataManager: NSObject {
                     updateXpath = "/html/body/div[\(value)]/div[2]/div[1]/ul/li/p/a/span"
                 }else{
                     titleXpath = "/html/body/div[8]/div[1]/div[\(value)]/ul[1]/li/p[1]/a"
-                    urlXpath = "/html/body/div[8]/div[1]/div[\(value)]/ul[1]/li/p/a/@href"
+                    urlXpath = "/html/body/div[8]/div[1]/div[\(value)]/ul[1]/li/a/@href"
                     imgXpath = "/html/body/div[8]/div[1]/div[\(value)]/ul[1]/li/a/img/@src"
                     updateXpath = "/html/body/div[8]/div[1]/div[\(value)]/ul[1]/li/p[2]/a"
                 }

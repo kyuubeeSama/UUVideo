@@ -7,13 +7,19 @@
 //
 
 import UIKit
+import Kingfisher
 
 class NetVideoIndexViewController: BaseViewController, UISearchBarDelegate {
 
     var listArr: [ListModel]?
     var isSearch: Bool = false
     var webType: websiteType = .halihali
-
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        ImageCache.default.clearMemoryCache()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
