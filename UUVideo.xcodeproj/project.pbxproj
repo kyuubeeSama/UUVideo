@@ -63,6 +63,7 @@
 		A9CCBF332608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CCBF322608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift */; };
 		A9CCBF8C2608A16100427C47 /* SqlTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CCBF8B2608A16100427C47 /* SqlTool.swift */; };
 		A9D49EA726D530B6003BEDC2 /* UIWindow+WBPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D49EA626D530B6003BEDC2 /* UIWindow+WBPopView.swift */; };
+		A9DF207027118E91004C1263 /* PadVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DF206F27118E90004C1263 /* PadVideoPlayerViewController.swift */; };
 		A9DFBD9A2680297000BBA638 /* Array+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DFBD992680296F00BBA638 /* Array+extension.swift */; };
 		A9F0302326003F100095EC83 /* UUWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F0302226003F100095EC83 /* UUWebView.swift */; };
 		A9F03026260097B60095EC83 /* NetVideoIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F03025260097B60095EC83 /* NetVideoIndexViewController.swift */; };
@@ -139,6 +140,7 @@
 		A9CCBF322608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewLeftAlignedLayout.swift; sourceTree = "<group>"; };
 		A9CCBF8B2608A16100427C47 /* SqlTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqlTool.swift; sourceTree = "<group>"; };
 		A9D49EA626D530B6003BEDC2 /* UIWindow+WBPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+WBPopView.swift"; sourceTree = "<group>"; };
+		A9DF206F27118E90004C1263 /* PadVideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadVideoPlayerViewController.swift; sourceTree = "<group>"; };
 		A9DFBD992680296F00BBA638 /* Array+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+extension.swift"; sourceTree = "<group>"; };
 		A9F0302226003F100095EC83 /* UUWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUWebView.swift; sourceTree = "<group>"; };
 		A9F03025260097B60095EC83 /* NetVideoIndexViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoIndexViewController.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 			children = (
 				A906DB0B24EA575700C070E4 /* PadIndexViewController.swift */,
 				A9CBF74724EF9976002BD074 /* RightViewController.swift */,
+				A9DF206F27118E90004C1263 /* PadVideoPlayerViewController.swift */,
 			);
 			path = Pad;
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 				A90F7121252414740000D1CF /* ListModel.swift in Sources */,
 				A950E2B024E6733F000CBB92 /* Dictionary+extension.swift in Sources */,
 				A950E2B524E6733F000CBB92 /* String+extension.swift in Sources */,
+				A9DF207027118E91004C1263 /* PadVideoPlayerViewController.swift in Sources */,
 				A950E2C124E67356000CBB92 /* config.swift in Sources */,
 				A906DB0E24EA680B00C070E4 /* BangumiViewController.swift in Sources */,
 				A906DB1524EBB08300C070E4 /* VideoTableCollectionViewCell.swift in Sources */,
@@ -685,14 +689,14 @@
 				CODE_SIGN_ENTITLEMENTS = UUVideo/UUVideo.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3KW2TU676U;
+				DEVELOPMENT_TEAM = WVJ3T6UNZ3;
 				INFOPLIST_FILE = UUVideo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.qystudio.UUVideo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.quanyihulian.UUVideo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
@@ -708,14 +712,14 @@
 				CODE_SIGN_ENTITLEMENTS = UUVideo/UUVideo.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3KW2TU676U;
+				DEVELOPMENT_TEAM = WVJ3T6UNZ3;
 				INFOPLIST_FILE = UUVideo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.qystudio.UUVideo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.quanyihulian.UUVideo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
