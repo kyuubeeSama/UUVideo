@@ -56,10 +56,17 @@ class HistoryViewController: BaseViewController {
         mainCollection.cellItemSelected = { indexPath in
             //            进入剧集界面
             let listModel = mainCollection.listArr![indexPath.section]
-            let VC = NetVideoPlayerViewController.init()
-            let videoModel = listModel.list[indexPath.row]
-            VC.model = videoModel
-            self.navigationController?.pushViewController(VC, animated: true)
+            if Tool.isPhone() {
+                let VC = NetVideoPlayerViewController.init()
+                let videoModel = listModel.list[indexPath.row]
+                VC.model = videoModel
+                self.navigationController?.pushViewController(VC, animated: true)
+            }else{
+                let VC = PadVideoPlayerViewController.init()
+                let videoModel = listModel.list[indexPath.row]
+                VC.model = videoModel
+                self.navigationController?.pushViewController(VC, animated: true)
+            }
         }
         return mainCollection
     }()

@@ -96,6 +96,7 @@ class NetVideoListViewController: BaseViewController {
                     year = resultArr[1]
                     area = resultArr[2]
                 }
+                self.mainCollect.es.resetNoMoreData()
                 pageNum = 1
                 listArr = []
                 getCategoryData()
@@ -172,7 +173,7 @@ class NetVideoListViewController: BaseViewController {
             VC.videoModel = listModel.list[indexPath.row]
             self.navigationController?.pushViewController(VC, animated: true)
         }
-        mainCollection.es.addInfiniteScrolling {
+                mainCollection.es.addInfiniteScrolling(animator: headerAnimator) {
             self.getListData()
         }
         return mainCollection

@@ -24,11 +24,7 @@ class WBPopCoverBackgroundView: UIView {
     }
     public var coverAlpha:Float = 1{
         didSet{
-            if isBlur {
-                self.backgroundColor = UIColor.init(white: 0, alpha: CGFloat(coverAlpha))
-            }else{
-                self.backgroundColor = .clear
-            }
+            self.backgroundColor = UIColor.init(white: 0, alpha: CGFloat(coverAlpha))
         }
     }
     public var blurCloverView:UIView?

@@ -96,13 +96,21 @@ class NetVideoDetailViewController: BaseViewController {
         }
         mainCollection.cellItemSelected = { indexPath in
             if indexPath.section == 1 {
-                // 剧集
-                let VC = NetVideoPlayerViewController.init()
-                VC.model = self.videoModel!
-                let serialModel = self.videoModel?.serialArr[indexPath.row]
-                VC.model.serialDetailUrl = serialModel!.detailUrl
-                VC.model.serialIndex = indexPath.row
-                self.navigationController?.pushViewController(VC, animated: true)
+                if Tool.isPhone() {
+                    let VC = NetVideoPlayerViewController.init()
+                    VC.model = self.videoModel!
+                    let serialModel = self.videoModel?.serialArr[indexPath.row]
+                    VC.model.serialDetailUrl = serialModel!.detailUrl
+                    VC.model.serialIndex = indexPath.row
+                    self.navigationController?.pushViewController(VC, animated: true)
+                }else{
+                    let VC = PadVideoPlayerViewController.init()
+                    VC.model = self.videoModel!
+                    let serialModel = self.videoModel?.serialArr[indexPath.row]
+                    VC.model.serialDetailUrl = serialModel!.detailUrl
+                    VC.model.serialIndex = indexPath.row
+                    self.navigationController?.pushViewController(VC, animated: true)
+                }
             } else if indexPath.section == 2 {
 //                视频
                 let model = mainCollection.model!.videoArr[indexPath.row]

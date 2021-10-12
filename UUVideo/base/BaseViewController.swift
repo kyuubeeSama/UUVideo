@@ -8,6 +8,7 @@
 
 import UIKit
 import Toast_Swift
+import ESPullToRefresh
 
 class BaseViewController: UIViewController {
     
@@ -67,6 +68,14 @@ class BaseViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+    
+    lazy var headerAnimator: ESRefreshFooterAnimator = {
+        let animator =  ESRefreshFooterAnimator.init()
+        animator.loadingDescription = "上拉加载更多"
+        animator.loadingMoreDescription = "加载中……"
+        animator.noMoreDataDescription = "已经加载完毕"
+        return animator
+    }()
     /*
      // MARK: - Navigation
      

@@ -16,14 +16,9 @@ import MRDLNA
 class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
 
     public var model: VideoModel = VideoModel.init()
-    // TODO:创建右侧投屏按钮。如果获取到了播放地址，显示投屏按钮，店家弹出选择按钮。
+    // 创建右侧投屏按钮。如果获取到了播放地址，显示投屏按钮，点击弹出选择按钮。
     private let toupingBtn = UIButton.init(type: .custom)
-    
 
-    @objc func injected(){
-        viewDidLoad()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         player.vc_viewDidAppear()
