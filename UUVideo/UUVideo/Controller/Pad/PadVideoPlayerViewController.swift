@@ -197,9 +197,9 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
         player.defaultEdgeControlLayer.automaticallyShowsPictureInPictureItem = true
         player.controlLayerNeedAppear()
         // 截获全屏点击事件，改为自定义
-        let fullItem = player.defaultEdgeControlLayer.bottomAdapter.item(forTag: SJEdgeControlLayerBottomItem_Full)
-        let action = SJEdgeControlButtonItemAction.init(target: self, action: #selector(fullPlayer))
-        fullItem?.addAction(action)
+//        let fullItem = player.defaultEdgeControlLayer.bottomAdapter.item(forTag: SJEdgeControlLayerBottomItem_Full)
+//        let action = SJEdgeControlButtonItemAction.init(target: self, action: #selector(fullPlayer))
+//        fullItem?.addAction(action)
         return player
     }()
     

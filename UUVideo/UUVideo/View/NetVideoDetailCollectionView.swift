@@ -80,6 +80,8 @@ class NetVideoDetailCollectionView: UICollectionView, UICollectionViewDelegate, 
             let videoModel = model?.videoArr[indexPath.row]
             let cell: VideoListCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "videoCell", for: indexPath) as! VideoListCollectionViewCell
             cell.titleLab.text = videoModel!.name
+            cell.titleLab.alignTop()
+            cell.titleLab.lineBreakMode = .byClipping
             cell.picImage.kf.setImage(with: URL.init(string: videoModel!.picUrl))
             return cell
         }
@@ -93,15 +95,19 @@ class NetVideoDetailCollectionView: UICollectionView, UICollectionViewDelegate, 
             let serialModel = model?.serialArr[indexPath.row]
             // 根据字体大小计算
             let size = serialModel!.name.getStringSize(font: UIFont.systemFont(ofSize: 15), size: CGSize(width: Double(MAXFLOAT), height: 15.0))
-            return CGSize(width: size.width + 20.0, height: 20.0)
+            var width = size.width+30
+            if width < 50 {
+                width = 50
+            }
+            return CGSize(width: 50, height: 30.0)
         } else {
             if Tool.isPhone() {
                 let width: CGFloat = screenW / 2 - 15
-                let height = (width - 20) * 379 / 270 + 50
+                let height = (width - 20) * 379 / 270 + 70
                 return CGSize(width: width, height: height)
             }else{
                 let width: CGFloat = 170
-                let height = (width - 20) * 379 / 270 + 50
+                let height = (width - 20) * 379 / 270 + 70
                 return CGSize(width: width, height: height)
             }
         }

@@ -63,7 +63,6 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
             let cell:VideoListCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! VideoListCollectionViewCell
             cell.titleLab.text = model.name
             if model.type == 3 {
-                
                 cell.picImage.kf.setImage(with: URL.init(string: model.picUrl))
             }else{
                 cell.picImage.image = model.pic
@@ -94,10 +93,10 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
                 return CGSize(width: 250, height: 100)
             }else if model.type == 3{
                 let width:CGFloat = 170
-                let height = (width-20)*379/270+50
+                let height = (width-20)*379/270+70
                 return CGSize(width: width, height: height)
             }else{
-                return CGSize(width: 170, height: 115)
+                return CGSize(width: 170, height: 135)
             }
             
         }
