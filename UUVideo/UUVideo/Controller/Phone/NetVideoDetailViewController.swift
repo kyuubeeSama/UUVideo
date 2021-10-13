@@ -58,22 +58,22 @@ class NetVideoDetailViewController: BaseViewController {
     func getDetailData() {
         view.makeToastActivity(.center)
         DispatchQueue.global().async { [self] in
-            DataManager.init().getVideoDetailData(urlStr: (videoModel?.detailUrl)!, type: websiteType(rawValue: (self.videoModel?.webType)!)!) { (resultModel) in
+            DataManager.init().getVideoDetailData(urlStr: (videoModel?.detailUrl)!, type: websiteType(rawValue: (videoModel?.webType)!)!) { (resultModel) in
                 DispatchQueue.main.async {
                     view.hideToastActivity()
-                    self.videoModel?.picUrl = resultModel.picUrl
-                    self.videoModel?.videoArr = resultModel.videoArr
-                    self.videoModel?.serialArr = resultModel.serialArr
-                    self.videoModel?.serialNum = resultModel.serialNum
-                    mainCollect.model = self.videoModel
-                    addCollectItem(videoModel: self.videoModel!)
+                    videoModel?.picUrl = resultModel.picUrl
+                    videoModel?.videoArr = resultModel.videoArr
+                    videoModel?.serialArr = resultModel.serialArr
+                    videoModel?.serialNum = resultModel.serialNum
+                    mainCollect.model = videoModel
+                    addCollectItem(videoModel: videoModel!)
                     if resultModel.serialArr.isEmpty {
                         let alert = UIAlertController.init(title: "提示", message: "当前视频没有剧集", preferredStyle: .alert)
                         let alertAction = UIAlertAction.init(title: "返回上一页", style: .default) { action in
-                            self.navigationController?.popViewController(animated: true)
+                            navigationController?.popViewController(animated: true)
                         }
                         alert.addAction(alertAction)
-                        self.present(alert, animated: true, completion: nil)
+                        present(alert, animated: true, completion: nil)
                     }
                 }
             } failure: { (error) in

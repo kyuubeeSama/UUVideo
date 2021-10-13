@@ -25,7 +25,7 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
         player.vc_viewDidAppear()
         // 重新进入页面，判断是否需要重新播放
         if !model.videoUrl.isEmpty {
-            self.playerVideo()
+            playerVideo()
         }
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinish), name: NSNotification.Name.SJMediaPlayerPlaybackDidFinish, object: nil)
     }
@@ -144,6 +144,7 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
                     listModel.title = "推荐视频"
                     listModel.list = self.model.videoArr
                     self.recommendVideoList.listArr = [listModel]
+                    self.mainCollection.model = self.model
                 }
             } failure: { (error) in
                 DispatchQueue.main.async {
@@ -156,15 +157,15 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
     
     func playerVideo(){
         let headers = ["User-Agent":"Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/92.0.4515.107"];
-        if self.model.videoUrl.isEmpty {
+        if model.videoUrl.isEmpty {
             let alert = UIAlertController.init(title: "提示", message: "当前视频没有播放地址", preferredStyle: .alert)
             let alertAction = UIAlertAction.init(title: "返回上一页", style: .default) { action in
                 self.navigationController?.popViewController(animated: true)
             }
             alert.addAction(alertAction)
-            self.present(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)
         }else{
-            let asset = AVURLAsset.init(url: URL.init(string: self.model.videoUrl)!, options: ["AVURLAssetHTTPHeaderFieldsKey":headers])
+            let asset = AVURLAsset.init(url: URL.init(string: model.videoUrl)!, options: ["AVURLAssetHTTPHeaderFieldsKey":headers])
             // 获取视频分辨率
             //            let tracksArr = asset.tracks(withMediaType: AVMediaType.video)
             //            if !tracksArr.isEmpty {
@@ -172,57 +173,74 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
             //                let t = videoTrack.preferredTransform
             //                print("视频大小是 width : \(videoTrack.naturalSize.width) height: \(videoTrack.naturalSize.height)")
             //            }
-            self.player.urlAsset = SJVideoPlayerURLAsset.init(avAsset: asset, startPosition: TimeInterval(self.model.progress), playModel: SJPlayModel.init())
+            player.urlAsset = SJVideoPlayerURLAsset.init(avAsset: asset, startPosition: TimeInterval(model.progress), playModel: SJPlayModel.init())
         }
-        print("播放地址是"+self.model.videoUrl)
+        print("播放地址是"+model.videoUrl)
     }
+    
+    lazy var playerContainerView: UIView = {
+        let playerView = UIView.init()
+        view.addSubview(playerView)
+        playerView.snp.makeConstraints { (make) in
+            make.left.equalToSuperview()
+            make.right.equalToSuperview().offset(-375)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            make.height.equalTo(450)
+        }
+        return playerView
+    }()
     
     // MARK:视频播放器
     lazy var player: SJVideoPlayer = {
         let player = SJVideoPlayer.init()
-        self.view.addSubview(player.view)
+        playerContainerView.addSubview(player.view)
         player.view.snp.makeConstraints { (make) in
-            if Tool.isPhone() {
-                make.left.right.equalToSuperview()
-                make.height.equalTo(screenW * 3 / 4)
-            }else{
-                make.left.equalToSuperview()
-                make.size.equalTo(CGSize(width: screenW-375, height: (screenW-375) * 3 / 4))
-            }
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            make.edges.equalToSuperview()
         }
+        player.onlyUsedFitOnScreen = true
         player.rotationManager.isDisabledAutorotation = true
         player.defaultEdgeControlLayer.topAdapter.removeItem(forTag: SJEdgeControlLayerTopItem_Back)
         player.defaultEdgeControlLayer.topAdapter.reload()
         player.defaultEdgeControlLayer.automaticallyShowsPictureInPictureItem = true
         player.controlLayerNeedAppear()
-        // 截获全屏点击事件，改为自定义
-//        let fullItem = player.defaultEdgeControlLayer.bottomAdapter.item(forTag: SJEdgeControlLayerBottomItem_Full)
-//        let action = SJEdgeControlButtonItemAction.init(target: self, action: #selector(fullPlayer))
-//        fullItem?.addAction(action)
         return player
     }()
-    
-    @objc func fullPlayer(){
-        print("全屏")
-        let VC = PadFullPlayerViewController.init()
-        VC.view.isHidden = true
-        self.view.addSubview(VC.view)
-        let orientation = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation
-        var videoOrientation:SJOrientation = .landscapeRight
-        if orientation == .landscapeRight{
-            videoOrientation = .landscapeLeft
+        
+    // MARK:底部内容
+    lazy var mainCollection: padVideoDetailCollectionView = {
+        let layout = UICollectionViewLeftAlignedLayout.init()
+        let mainCollection = padVideoDetailCollectionView.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: layout)
+        self.view.addSubview(mainCollection)
+        mainCollection.snp.makeConstraints { (make) in
+            make.left.bottom.equalToSuperview()
+            make.top.equalTo(self.playerContainerView.snp.bottom)
+            make.right.equalToSuperview().offset(-375)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
-            VC.player.rotate(videoOrientation, animated: true){ player in
-                VC.view.isHidden = false
-                self.navigationController?.pushViewController(VC, animated: false)
+        mainCollection.cellItemSelected = { [self] indexPath in
+            if indexPath.section == 1 {
+                // 剧集
+                self.model.serialIndex = indexPath.row
+                // 在当前页面获取数据并刷新
+                if self.model.webType == 0 {
+                    // 查看剧集是否有播放地址，如果没有就提示无法播放
+                    let serialModel = self.model.serialArr[indexPath.row]
+                    if serialModel.playerUrl.isEmpty {
+                        let alert = UIAlertController.init(title: "提醒", message: "该集无法播放", preferredStyle: .alert)
+                        let sureAction = UIAlertAction.init(title: "确定", style: .cancel, handler: nil)
+                        alert.addAction(sureAction)
+                        self.present(alert, animated: true, completion: nil)
+                    }else{
+                        self.model.videoUrl = (serialModel.playerUrl)
+                        self.playerVideo()
+                        self.model.serialIndex = indexPath.row
+                        self.model.serialName = serialModel.name
+                        mainCollection.model = self.model
+                    }
+                }
             }
         }
-    }
-    
-    // MARK:底部内容
-    
+        return mainCollection
+    }()
     
     //MARK:右侧推荐视频
     lazy var recommendVideoList: VideoListCollectionView = {
@@ -241,6 +259,18 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
         }
         return collectionView
     }()
+    
+    func prefersStatusBarHidden()->Bool{
+        player.vc_prefersStatusBarHidden()
+    }
+    
+    func preferredStatusBarStyle()->UIStatusBarStyle{
+        player.vc_preferredStatusBarStyle()
+    }
+    
+    func prefersHomeIndicatorAutoHidden()->Bool{
+        true
+    }
     
     /*
      // MARK: - Navigation

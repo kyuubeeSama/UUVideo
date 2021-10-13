@@ -24,7 +24,7 @@ class HistoryViewController: BaseViewController {
         if Tool.isPhone() {
             getHistoryData()
         }
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "清空", style: .plain, target: self, action: #selector(cleanHistory))
+        navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "清空", style: .plain, target: self, action: #selector(cleanHistory))
     }
     
     @objc func cleanHistory(){

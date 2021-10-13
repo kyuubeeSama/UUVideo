@@ -82,9 +82,6 @@ PODS:
   - SwiftyJSON (5.0.1)
   - Toast-Swift (5.0.1)
   - YYModel (1.0.4)
-  - ZFPlayer (4.0.1):
-    - ZFPlayer/Core (= 4.0.1)
-  - ZFPlayer/Core (4.0.1)
 
 DEPENDENCIES:
   - Alamofire
@@ -103,7 +100,6 @@ DEPENDENCIES:
   - SnapKit
   - SwiftyJSON
   - Toast-Swift
-  - ZFPlayer
 
 SPEC REPOS:
   https://gitee.com/mirrors/CocoaPods-Specs.git:
@@ -128,7 +124,6 @@ SPEC REPOS:
     - SwiftyJSON
     - Toast-Swift
     - YYModel
-    - ZFPlayer
 
 SPEC CHECKSUMS:
   Alamofire: f3b09a368f1582ab751b3fff5460276e0d2cf5c9
@@ -152,8 +147,7 @@ SPEC CHECKSUMS:
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
-  ZFPlayer: f88787c815f7b0801279c42f131a89e2823e669e
 
-PODFILE CHECKSUM: 87cc8f62d624f53dde7c2d8440daf19a38eb6ffb
+PODFILE CHECKSUM: 932ad2bf0af256b3bfdf1ed40ec335af7bca0faf
 
 COCOAPODS: 1.11.2

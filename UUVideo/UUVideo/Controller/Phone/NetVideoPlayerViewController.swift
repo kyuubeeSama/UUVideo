@@ -24,13 +24,13 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
         player.vc_viewDidAppear()
         // 重新进入页面，判断是否需要重新播放
         if !model.videoUrl.isEmpty {
-            self.playerVideo()
+            playerVideo()
         }
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinish), name: NSNotification.Name.SJMediaPlayerPlaybackDidFinish, object: nil)
     }
     
     @objc func playerDidFinish(){
-        if self.model.serialIndex < self.model.serialArr.count-1 {
+        if model.serialIndex < model.serialArr.count-1 {
             /*
             // 添加下一集按钮
             let nextItemTag = SJEdgeControlButtonItemTag.init(10)
@@ -47,26 +47,26 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
     
     @objc func playNextVideo(){
         print("播放下一集")
-        if self.model.webType == 0 {
+        if model.webType == 0 {
             // 查看剧集是否有播放地址，如果没有就提示无法播放
-            let serialModel = self.model.serialArr[self.model.serialIndex+1]
+            let serialModel = model.serialArr[model.serialIndex+1]
             if serialModel.playerUrl.isEmpty {
                 let alert = UIAlertController.init(title: "提醒", message: "该集无法播放", preferredStyle: .alert)
                 let sureAction = UIAlertAction.init(title: "确定", style: .cancel, handler: nil)
                 alert.addAction(sureAction)
-                self.present(alert, animated: true, completion: nil)
+                present(alert, animated: true, completion: nil)
             }else{
-                self.model.videoUrl = (serialModel.playerUrl)
-                self.playerVideo()
-                self.model.serialIndex = self.model.serialIndex+1
-                self.model.serialName = serialModel.name
-                self.mainCollect.model = self.model
+                model.videoUrl = (serialModel.playerUrl)
+                playerVideo()
+                model.serialIndex = model.serialIndex+1
+                model.serialName = serialModel.name
+                mainCollect.model = model
             }
         } else {
-            let serialModel = self.model.serialArr[self.model.serialIndex+1]
-            self.model.serialDetailUrl = serialModel.detailUrl
-            self.model.serialIndex = self.model.serialIndex+1
-            self.getData()
+            let serialModel = model.serialArr[model.serialIndex+1]
+            model.serialDetailUrl = serialModel.detailUrl
+            model.serialIndex = model.serialIndex+1
+            getData()
         }
     }
     
@@ -149,18 +149,18 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
     
     func playerVideo(){
         let headers = ["User-Agent":"Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/92.0.4515.107"];
-        if self.model.videoUrl.isEmpty {
+        if model.videoUrl.isEmpty {
             let alert = UIAlertController.init(title: "提示", message: "当前视频没有播放地址", preferredStyle: .alert)
             let alertAction = UIAlertAction.init(title: "返回上一页", style: .default) { action in
                 self.navigationController?.popViewController(animated: true)
             }
             alert.addAction(alertAction)
-            self.present(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)
         }else{
-            let asset = AVURLAsset.init(url: URL.init(string: self.model.videoUrl)!, options: ["AVURLAssetHTTPHeaderFieldsKey":headers])
-            self.player.urlAsset = SJVideoPlayerURLAsset.init(avAsset: asset, startPosition: TimeInterval(self.model.progress), playModel: SJPlayModel.init())
+            let asset = AVURLAsset.init(url: URL.init(string: model.videoUrl)!, options: ["AVURLAssetHTTPHeaderFieldsKey":headers])
+            player.urlAsset = SJVideoPlayerURLAsset.init(avAsset: asset, startPosition: TimeInterval(model.progress), playModel: SJPlayModel.init())
         }
-        print("播放地址是"+self.model.videoUrl)
+        print("播放地址是"+model.videoUrl)
     }
     
     // 获取数据

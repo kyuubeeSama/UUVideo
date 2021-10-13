@@ -99,7 +99,7 @@ class NetVideoDetailCollectionView: UICollectionView, UICollectionViewDelegate, 
             if width < 50 {
                 width = 50
             }
-            return CGSize(width: 50, height: 30.0)
+            return CGSize(width: width, height: 30.0)
         } else {
             if Tool.isPhone() {
                 let width: CGFloat = screenW / 2 - 15

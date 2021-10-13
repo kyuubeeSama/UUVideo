@@ -80,13 +80,13 @@ class NetVideoListViewController: BaseViewController {
                 present(menu, animated: true, completion: nil)
             } else {
                 VC.view.bounds = CGRect(x: 0, y: 0, width: Tool.isPad() ? screenW-80 : 500, height: 500);
-                self.view.window?.QY_ShowPopView(popStyle: .center, popView: VC.view, offset: CGPoint(x: 0, y: 0), dismissWhenClickCoverView: true, isBlur: false, alpha: 0.3)
+                view.window?.QY_ShowPopView(popStyle: .center, popView: VC.view, offset: CGPoint(x: 0, y: 0), dismissWhenClickCoverView: true, isBlur: false, alpha: 0.3)
             }
             VC.sureBtnReturn = { [self] resultArr in
                 if Tool.isPhone() {
                     VC.dismiss(animated: true)
                 } else {
-                    self.view.window?.wb_dismissPopView(popStyle: .center, completion: {})
+                    view.window?.wb_dismissPopView(popStyle: .center, completion: {})
                 }
                 print(resultArr)
                 if webType == .sakura {
@@ -96,7 +96,7 @@ class NetVideoListViewController: BaseViewController {
                     year = resultArr[1]
                     area = resultArr[2]
                 }
-                self.mainCollect.es.resetNoMoreData()
+                mainCollect.es.resetNoMoreData()
                 pageNum = 1
                 listArr = []
                 getCategoryData()

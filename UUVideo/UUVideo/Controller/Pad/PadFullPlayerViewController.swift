@@ -41,6 +41,7 @@ class PadFullPlayerViewController: BaseViewController {
             make.center.equalToSuperview()
             make.height.equalTo(self.player.view.snp.width).multipliedBy(9/16)
         }
+        player.defaultEdgeControlLayer.topAdapter.add(SJEdgeControlButtonItem.init(tag: SJEdgeControlLayerTopItem_Back))
         return player
     }()
     
