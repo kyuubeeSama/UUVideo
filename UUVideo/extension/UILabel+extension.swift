@@ -23,6 +23,7 @@ extension UILabel{
         for _ in 0...Int(newLineToPad) {
             self.text! += "\n "
         }
+        self.lineBreakMode = .byClipping
     }
     
     func alignBottom() {

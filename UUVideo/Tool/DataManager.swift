@@ -518,7 +518,7 @@ class DataManager: NSObject {
                         var array = jsContent.split(separator: ";")
                         var firstIndex = 0
                         for (index,item) in array.enumerated() {
-                            if item.contains("=\(videoNum)") {
+                            if item.contains("=\(videoNum)") && item.contains("lianzaijs") {
                                 // 获取到正确的第一个位置
                                 firstIndex = index
                                 break

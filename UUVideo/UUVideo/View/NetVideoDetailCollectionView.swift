@@ -81,7 +81,6 @@ class NetVideoDetailCollectionView: UICollectionView, UICollectionViewDelegate, 
             let cell: VideoListCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "videoCell", for: indexPath) as! VideoListCollectionViewCell
             cell.titleLab.text = videoModel!.name
             cell.titleLab.alignTop()
-            cell.titleLab.lineBreakMode = .byClipping
             cell.picImage.kf.setImage(with: URL.init(string: videoModel!.picUrl))
             return cell
         }
