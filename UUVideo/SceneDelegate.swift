@@ -36,31 +36,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UNUserNotificationCente
         let nav = UINavigationController.init(rootViewController: index)
         window?.rootViewController = nav
         window?.makeKeyAndVisible()
-        self .registerAPN()
     }
 
-    func registerAPN(){
-        let center = UNUserNotificationCenter.current()
-        center.delegate = self
-        center.getNotificationSettings { setting in
-            if setting.authorizationStatus == .notDetermined {
-                center.requestAuthorization(options: [.badge,.sound,.alert]) { result, error in
-                    if result {
-                        if error != nil {
-                            UIApplication.shared.registerForRemoteNotifications()
-                        }
-                    }
-                }
-            }else if (setting.authorizationStatus == .denied){
-                
-            } else if(setting.authorizationStatus == .authorized){
-                DispatchQueue.main.async {
-                    UIApplication.shared.registerForRemoteNotifications()
-                }
-            }
-        }
-    }
-    
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.

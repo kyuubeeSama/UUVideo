@@ -416,6 +416,8 @@
 				"zh-Hans",
 			);
 			mainGroup = A950E28524E67157000CBB92;
+			packageReferences = (
+			);
 			productRefGroup = A950E28F24E67157000CBB92 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

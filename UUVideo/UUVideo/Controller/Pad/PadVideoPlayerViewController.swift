@@ -219,11 +219,11 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
         mainCollection.cellItemSelected = { [self] indexPath in
             if indexPath.section == 1 {
                 // 剧集
-                self.model.serialIndex = indexPath.row
+                self.player.stop()
+                let serialModel = self.model.serialArr[indexPath.row]
                 // 在当前页面获取数据并刷新
                 if self.model.webType == 0 {
                     // 查看剧集是否有播放地址，如果没有就提示无法播放
-                    let serialModel = self.model.serialArr[indexPath.row]
                     if serialModel.playerUrl.isEmpty {
                         let alert = UIAlertController.init(title: "提醒", message: "该集无法播放", preferredStyle: .alert)
                         let sureAction = UIAlertAction.init(title: "确定", style: .cancel, handler: nil)
@@ -236,6 +236,12 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
                         self.model.serialName = serialModel.name
                         mainCollection.model = self.model
                     }
+                }else{
+                    // 重新获取数据，并刷新页面
+                    self.model.serialDetailUrl = serialModel.detailUrl
+                    self.model.serialIndex = indexPath.row
+                    self.model.serialName = serialModel.name
+                    self.getData()
                 }
             }
         }

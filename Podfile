@@ -38,5 +38,7 @@ target 'UUVideo' do
   # 导航栏
   pod 'JXSegmentedView'
   
+  pod 'ReactiveCocoa'
+  
 end
 

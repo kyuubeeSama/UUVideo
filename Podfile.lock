@@ -18,6 +18,9 @@ PODS:
     - MRDLNA/MRC (= 0.1.1)
   - MRDLNA/MRC (0.1.1):
     - CocoaAsyncSocket
+  - ReactiveCocoa (11.2.2):
+    - ReactiveSwift (~> 6.6)
+  - ReactiveSwift (6.7.0)
   - SideMenu (6.5.0)
   - SJBaseVideoPlayer (3.6.5):
     - Masonry
@@ -95,6 +98,7 @@ DEPENDENCIES:
   - JXSegmentedView
   - Kingfisher
   - MRDLNA
+  - ReactiveCocoa
   - SideMenu
   - SJVideoPlayer
   - SnapKit
@@ -116,6 +120,8 @@ SPEC REPOS:
     - Kingfisher
     - Masonry
     - MRDLNA
+    - ReactiveCocoa
+    - ReactiveSwift
     - SideMenu
     - SJBaseVideoPlayer
     - SJUIKit
@@ -139,6 +145,8 @@ SPEC CHECKSUMS:
   Kingfisher: 5efc54fec3980f92354898532e562cc17f31efb4
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MRDLNA: 3fe35c6ac57c946413d07896faeb9101c4d8853d
+  ReactiveCocoa: e539cd41c523c8c80851b88e9723235c933b024b
+  ReactiveSwift: 208201d6ecc9734196d147aa76bc1f24b1b821fe
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
   SJBaseVideoPlayer: 23762dd5433a6f37d6214ae8a9ba267ebee69577
   SJUIKit: 86d5b16f8b8b17274ef8805acf965e4014629e15
@@ -148,6 +156,6 @@ SPEC CHECKSUMS:
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 932ad2bf0af256b3bfdf1ed40ec335af7bca0faf
+PODFILE CHECKSUM: d42ba66af5e19d174630eaca2da7a3d3a48f4a45
 
 COCOAPODS: 1.11.2

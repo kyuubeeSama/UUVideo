@@ -12,12 +12,14 @@ import GRDB
 import SJVideoPlayer
 import WebKit
 import MRDLNA
+import ReactiveCocoa
 
 class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
 
     public var model: VideoModel = VideoModel.init()
     // 创建右侧投屏按钮。如果获取到了播放地址，显示投屏按钮，点击弹出选择按钮。
     private let toupingBtn = UIButton.init(type: .custom)
+    private let downloadBtn = UIButton.init(type: .custom)
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -102,11 +104,22 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
     }()
     
     func setNav(){
+        let rightBtnView = UIView.init()
+        rightBtnView.frame = CGRect(x: 0, y: 0, width: 80, height: 40)
         // 添加右上角投屏按钮
-        toupingBtn.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        toupingBtn.frame = CGRect(x: 40, y: 0, width: 40, height: 40)
         toupingBtn.setImage(UIImage.init(systemName: "tv"), for: .normal)
         toupingBtn.addTarget(self, action: #selector(touping), for: .touchUpInside)
-        let rightBtnItem = UIBarButtonItem.init(customView: toupingBtn)
+        rightBtnView.addSubview(toupingBtn)
+        // TODO:添加下载按钮
+        downloadBtn.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        rightBtnView.addSubview(downloadBtn)
+        downloadBtn.setImage(UIImage.init(systemName: "arrow.down.square"), for: .normal)
+        downloadBtn.reactive.controlEvents(.touchUpInside).observeValues { button in
+            // 下载操作
+        }
+        downloadBtn.isHidden = true
+        let rightBtnItem = UIBarButtonItem.init(customView: rightBtnView)
         navigationItem.rightBarButtonItem = rightBtnItem
     }
     
@@ -159,6 +172,11 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
         }else{
             let asset = AVURLAsset.init(url: URL.init(string: model.videoUrl)!, options: ["AVURLAssetHTTPHeaderFieldsKey":headers])
             player.urlAsset = SJVideoPlayerURLAsset.init(avAsset: asset, startPosition: TimeInterval(model.progress), playModel: SJPlayModel.init())
+        }
+        // 判断视频是否可以播放
+        if !model.videoUrl.contains("m3u8") || !model.videoUrl.contains("html"){
+//            暂时不支持m3u8下载
+            self.downloadBtn.isHidden = false
         }
         print("播放地址是"+model.videoUrl)
     }
