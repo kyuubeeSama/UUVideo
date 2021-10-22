@@ -28,48 +28,6 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
         if !model.videoUrl.isEmpty {
             playerVideo()
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinish), name: NSNotification.Name.SJMediaPlayerPlaybackDidFinish, object: nil)
-    }
-    
-    @objc func playerDidFinish(){
-        if model.serialIndex < model.serialArr.count-1 {
-            /*
-            // 添加下一集按钮
-            let nextItemTag = SJEdgeControlButtonItemTag.init(10)
-//            TODO:使用view，添加一个重播按钮，一个下一集按钮
-//            let nextItem = SJEdgeControlButtonItem.init(customView: <#T##UIView?#>, tag: <#T##SJEdgeControlButtonItemTag#>)
-            let nextItem = SJEdgeControlButtonItem.init(image: UIImage.init(named:"forward"), target: self, action: #selector(playNextVideo), tag: nextItemTag)
-            nextItem.size = 40
-            nextItem.insets = SJEdgeInsets.init(front: 30, rear: 30)
-            self.player.defaultEdgeControlLayer.centerAdapter.add(nextItem)
-            self.player.defaultEdgeControlLayer.centerAdapter.reload()
- */
-        }
-    }
-    
-    @objc func playNextVideo(){
-        print("播放下一集")
-        if model.webType == 0 {
-            // 查看剧集是否有播放地址，如果没有就提示无法播放
-            let serialModel = model.serialArr[model.serialIndex+1]
-            if serialModel.playerUrl.isEmpty {
-                let alert = UIAlertController.init(title: "提醒", message: "该集无法播放", preferredStyle: .alert)
-                let sureAction = UIAlertAction.init(title: "确定", style: .cancel, handler: nil)
-                alert.addAction(sureAction)
-                present(alert, animated: true, completion: nil)
-            }else{
-                model.videoUrl = (serialModel.playerUrl)
-                playerVideo()
-                model.serialIndex = model.serialIndex+1
-                model.serialName = serialModel.name
-                mainCollect.model = model
-            }
-        } else {
-            let serialModel = model.serialArr[model.serialIndex+1]
-            model.serialDetailUrl = serialModel.detailUrl
-            model.serialIndex = model.serialIndex+1
-            getData()
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -95,6 +53,43 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
         // Do any additional setup after loading the view.
         setNav()
         getData()
+        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinish), name: NSNotification.Name.SJMediaPlayerPlaybackDidFinish, object: nil)
+    }
+    
+    @objc func playerDidFinish(){
+        self.player.defaultEdgeControlLayer.centerContainerView.isHidden = false
+    }
+
+    @objc func replayPlayer(){
+        self.player.defaultEdgeControlLayer.centerContainerView.isHidden = true
+        self.player.replay()
+    }
+    
+    @objc func playNextVideo(){
+        self.player.defaultEdgeControlLayer.centerAdapter.removeItem(forTag: 10)
+        if model.webType == 0 {
+            // 查看剧集是否有播放地址，如果没有就提示无法播放
+            let serialModel = model.serialArr[model.serialIndex+1]
+            if serialModel.playerUrl.isEmpty {
+                let alert = UIAlertController.init(title: "提醒", message: "该集无法播放", preferredStyle: .alert)
+                let sureAction = UIAlertAction.init(title: "确定", style: .cancel, handler: nil)
+                alert.addAction(sureAction)
+                present(alert, animated: true, completion: nil)
+            }else{
+                self.player.defaultEdgeControlLayer.centerContainerView.isHidden = true
+                model.videoUrl = (serialModel.playerUrl)
+                playerVideo()
+                model.serialIndex = model.serialIndex+1
+                model.serialName = serialModel.name
+                mainCollect.model = model
+            }
+        } else {
+            self.player.defaultEdgeControlLayer.centerContainerView.isHidden = true
+            let serialModel = model.serialArr[model.serialIndex+1]
+            model.serialDetailUrl = serialModel.detailUrl
+            model.serialIndex = model.serialIndex+1
+            getData()
+        }
     }
     
     lazy var dlnaManager: MRDLNA = {
@@ -223,18 +218,40 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
     }
 
     lazy var player: SJVideoPlayer = {
-        //FIXME:在ipad情况下，调整播放器大小
-        let player = SJVideoPlayer.init()
-        self.view.addSubview(player.view)
-        player.view.snp.makeConstraints { (make) in
+        let playerView = UIView.init()
+        self.view.addSubview(playerView)
+        playerView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             make.height.equalTo(screenW * 3 / 4)
         }
+        let player = SJVideoPlayer.init()
+        playerView.addSubview(player.view)
+        player.view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         player.defaultEdgeControlLayer.topAdapter.removeItem(forTag: SJEdgeControlLayerTopItem_Back)
         player.defaultEdgeControlLayer.topAdapter.reload()
-        player.defaultEdgeControlLayer.automaticallyShowsPictureInPictureItem = true
-        player.controlLayerNeedAppear()
+        player.defaultEdgeControlLayer.automaticallyShowsPictureInPictureItem = false
+        player.defaultEdgeControlLayer.centerAdapter.removeItem(forTag: SJEdgeControlLayerCenterItem_Replay)
+        let buttonView = UIView.init(frame: CGRect(x: 0, y: 0, width: 100, height: 60))
+        // 重播按钮
+        let replayBtn = UIButton.init(type: .custom)
+        replayBtn.addTarget(self, action: #selector(replayPlayer), for: .touchUpInside)
+        replayBtn.setImage(UIImage.init(named: "sj_video_player_replay"), for: .normal)
+        replayBtn.frame = CGRect(x: 0, y: 0, width: 50, height: 60)
+        buttonView.addSubview(replayBtn)
+        // 下一集按钮
+        let nextBtn = UIButton.init(type: .custom)
+        nextBtn.addTarget(self, action: #selector(playNextVideo), for: .touchUpInside)
+        nextBtn.setImage(UIImage.init(named: "sj_video_player_fast"), for: .normal)
+        nextBtn.frame = CGRect(x: 50, y: 0, width: 50, height: 60)
+        buttonView.addSubview(nextBtn)
+        
+        let item = SJEdgeControlButtonItem.frameLayout(withCustomView: buttonView, tag: 10)
+        player.defaultEdgeControlLayer.centerAdapter.add(item)
+        player.defaultEdgeControlLayer.centerAdapter.reload()
+        player.defaultEdgeControlLayer.centerContainerView.isHidden = true
         return player
     }()
 

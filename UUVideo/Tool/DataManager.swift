@@ -150,7 +150,7 @@ class DataManager: NSObject {
     ///   - success: 成功
     ///   - failure: 失败
     /// - Returns: nil
-    func getVideoListData(urlStr: String, type: websiteType, success: @escaping (_ listData: [ListModel]) -> (), failure: @escaping (_ error: Error) -> ()) {
+    func getVideoListData(urlStr: String, type: websiteType, success: @escaping (_ listData: [ListModel],_ allPageNum:NSInteger) -> (), failure: @escaping (_ error: Error) -> ()) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             failure(XPathError.getContentFail)
@@ -159,6 +159,7 @@ class DataManager: NSObject {
             if type == .halihali {
                 baseUrl = "http://halihali2.com/"
             }
+            var allPageNum = 0
             let listModel = ListModel.init()
             listModel.title = ""
             listModel.more = false
@@ -167,6 +168,7 @@ class DataManager: NSObject {
             var urlXpath = ""
             var imgXpath = ""
             var updateXpath = ""
+            var pageNumXpath = ""
             if type == .halihali {
                 titleXpath = "/html/body/li/a/@title"
                 urlXpath = "/html/body/li/a/@href"
@@ -177,15 +179,18 @@ class DataManager: NSObject {
                 urlXpath = "/html/body/div[1]/ul/li/p/a/@href"
                 imgXpath = "/html/body/div[1]/ul/li/p/a/img/@data-original"
                 updateXpath = "/html/body/div[1]/ul/li/p/a/span"
+                pageNumXpath = ""
             }else {
                 titleXpath = "/html/body/div[4]/div[3]/div[1]/ul/li/h2/a/@title"
                 urlXpath = "/html/body/div[4]/div[3]/div[1]/ul/li/h2/a/@href"
                 imgXpath = "/html/body/div[4]/div[3]/div[1]/ul/li/a/img/@src"
+                pageNumXpath = "//*[@id=\"lastn\"]"
             }
             let titleNodeArr = jiDoc?.xPath(titleXpath)
             let urlNodeArr = jiDoc?.xPath(urlXpath)
             let imgNodeArr = jiDoc?.xPath(imgXpath)
             let updateNodeArr = jiDoc?.xPath(updateXpath)
+            let pageNodeArr = jiDoc?.xPath(pageNumXpath)
             for (i, _) in titleNodeArr!.enumerated() {
                 var videoModel = VideoModel.init()
                 videoModel.name = titleNodeArr![i].content
@@ -200,7 +205,11 @@ class DataManager: NSObject {
                 videoModel.webType = type.rawValue
                 listModel.list.append(videoModel)
             }
-            success([listModel])
+            if type == .sakura{
+                let allPageNumStr:String = pageNodeArr![0].content!
+                allPageNum = Int(allPageNumStr)!
+            }
+            success([listModel],allPageNum)
         }
     }
 

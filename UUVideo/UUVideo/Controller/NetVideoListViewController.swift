@@ -64,7 +64,23 @@ class NetVideoListViewController: BaseViewController {
         let rightItem = UIBarButtonItem.init(title: "筛选", style: .plain, target: self, action: #selector(rightBtnClick))
         navigationItem.rightBarButtonItem = rightItem
     }
-
+    
+    // 如果是macos，底部添加bottomview
+    lazy var pageView: PageView = {
+        let pageView = PageView.init()
+        view.addSubview(pageView)
+        pageView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(60)
+        }
+        pageView.pageBtnClickBlock = { nextPageNum in
+            self.pageNum = nextPageNum
+            self.listArr = []
+            self.getListData()
+        }
+        return pageView
+    }()
+        
     // 右键筛选
     @objc func rightBtnClick() {
 //        HaliTVCategoryView
@@ -120,7 +136,8 @@ class NetVideoListViewController: BaseViewController {
         if webType == .halihali {
             detailUrlStr = "http://121.4.190.96:9991/getsortdata_all_z.php?action=\(videoType)&page=\(pageNum)&year=\(year)&area=\(area)&class=\(videoCategory)&dect=&id="
         } else if webType == .laikuaibo {
-            detailUrlStr = urlStr + "list-select-id-\(videoType)-area-\(area)-order-\(order)-p-\(pageNum).html"
+//            detailUrlStr = urlStr + "list-select-id-\(videoType)-area-\(area)-order-\(order)-addtime-p-\(pageNum).html"
+            detailUrlStr = urlStr + "list-select-id-\(videoType)-area--order-addtime-p-\(pageNum).html"
         } else {
             var pageInfo = ""
             if pageNum > 1 {
@@ -129,23 +146,30 @@ class NetVideoListViewController: BaseViewController {
             detailUrlStr = urlStr + "\(videoType)/" + pageInfo
         }
         DispatchQueue.global().async {
-            DataManager.init().getVideoListData(urlStr: detailUrlStr, type: self.webType) { (dataArr: [ListModel]) in
+            DataManager.init().getVideoListData(urlStr: detailUrlStr, type: self.webType) { listData, allPageNum in
                 DispatchQueue.main.async {
-                    if (dataArr[0].list.count > 0) {
+                    if (listData[0].list.count > 0) {
                         self.pageNum += 1
                         self.mainCollect.es.stopLoadingMore()
                     } else {
                         self.mainCollect.es.noticeNoMoreData()
                     }
                     if self.listArr.count > 0 {
-                        self.listArr[0].list.append(array: dataArr[0].list)
+                        self.listArr[0].list.append(array: listData[0].list)
                     } else {
-                        self.listArr.append(contentsOf: dataArr)
+                        self.listArr.append(contentsOf: listData)
                     }
                     self.mainCollect.listArr = self.listArr
+                    if Tool.isMac(){
+                        self.mainCollect.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+                        self.pageView.allPageNum = allPageNum
+                    }
                 }
-            } failure: { (error) in
+            } failure: { error in
                 print(error)
+                DispatchQueue.main.async {
+                    self.view.makeToast("获取视频列表失败")
+                }
             }
         }
     }
@@ -165,7 +189,12 @@ class NetVideoListViewController: BaseViewController {
         let mainCollection = VideoListCollectionView.init(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH), collectionViewLayout: layout)
         self.view.addSubview(mainCollection)
         mainCollection.snp.makeConstraints { (make) in
-            make.left.right.top.bottom.equalToSuperview()
+            make.left.right.top.equalToSuperview()
+            if Tool.isMac(){
+                make.bottom.equalToSuperview().offset(-60)
+            }else{
+                make.bottom.equalToSuperview()
+            }
         }
         mainCollection.cellItemSelected = { indexPath in
             let listModel = mainCollection.listArr![indexPath.section]
@@ -173,8 +202,10 @@ class NetVideoListViewController: BaseViewController {
             VC.videoModel = listModel.list[indexPath.row]
             self.navigationController?.pushViewController(VC, animated: true)
         }
-                mainCollection.es.addInfiniteScrolling(animator: headerAnimator) {
-            self.getListData()
+        if !Tool.isMac(){
+            mainCollection.es.addInfiniteScrolling(animator: headerAnimator) {
+                self.getListData()
+            }
         }
         return mainCollection
     }()
