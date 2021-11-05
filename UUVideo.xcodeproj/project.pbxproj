@@ -46,6 +46,10 @@
 		A950E2CD24E67515000CBB92 /* WebsiteTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2CC24E67515000CBB92 /* WebsiteTableView.swift */; };
 		A950E2CF24E677D9000CBB92 /* VideoListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2CE24E677D9000CBB92 /* VideoListCollectionView.swift */; };
 		A950E2D324E67871000CBB92 /* VideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2D224E67871000CBB92 /* VideoModel.swift */; };
+		A960D894272FBC0800B7C0BC /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A960D893272FBC0800B7C0BC /* DownloadViewController.swift */; };
+		A960D896272FBC1D00B7C0BC /* DownloadTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A960D895272FBC1D00B7C0BC /* DownloadTableView.swift */; };
+		A960D899272FBCD500B7C0BC /* DownloadTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A960D897272FBCD500B7C0BC /* DownloadTableViewCell.swift */; };
+		A960D89A272FBCD500B7C0BC /* DownloadTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A960D898272FBCD500B7C0BC /* DownloadTableViewCell.xib */; };
 		A97CFDA426D5E65700CC72B4 /* WBPopCoverBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97CFDA326D5E65700CC72B4 /* WBPopCoverBackgroundView.swift */; };
 		A97F52032537EC93008B872A /* CategoryChooseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97F52022537EC93008B872A /* CategoryChooseViewController.swift */; };
 		A97F5206253848F1008B872A /* VideoCategoryCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97F5205253848F1008B872A /* VideoCategoryCollectionView.swift */; };
@@ -125,6 +129,10 @@
 		A950E2CC24E67515000CBB92 /* WebsiteTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteTableView.swift; sourceTree = "<group>"; };
 		A950E2CE24E677D9000CBB92 /* VideoListCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListCollectionView.swift; sourceTree = "<group>"; };
 		A950E2D224E67871000CBB92 /* VideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModel.swift; sourceTree = "<group>"; };
+		A960D893272FBC0800B7C0BC /* DownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
+		A960D895272FBC1D00B7C0BC /* DownloadTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadTableView.swift; sourceTree = "<group>"; };
+		A960D897272FBCD500B7C0BC /* DownloadTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadTableViewCell.swift; sourceTree = "<group>"; };
+		A960D898272FBCD500B7C0BC /* DownloadTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DownloadTableViewCell.xib; sourceTree = "<group>"; };
 		A97CFDA326D5E65700CC72B4 /* WBPopCoverBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBPopCoverBackgroundView.swift; sourceTree = "<group>"; };
 		A97F52022537EC93008B872A /* CategoryChooseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryChooseViewController.swift; sourceTree = "<group>"; };
 		A97F5205253848F1008B872A /* VideoCategoryCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCategoryCollectionView.swift; sourceTree = "<group>"; };
@@ -305,6 +313,7 @@
 				A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */,
 				A9B378F8261089DD00EBC4EF /* HistoryViewController.swift */,
 				A91F3CA5263504B1006E6DA6 /* CollectViewController.swift */,
+				A960D893272FBC0800B7C0BC /* DownloadViewController.swift */,
 			);
 			path = Phone;
 			sourceTree = "<group>";
@@ -356,6 +365,9 @@
 				A9CCBF322608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift */,
 				A9B898662716C736006889C3 /* padVideoDetailCollectionView.swift */,
 				A9FEB1282721634D00BA70F6 /* PageView.swift */,
+				A960D895272FBC1D00B7C0BC /* DownloadTableView.swift */,
+				A960D897272FBCD500B7C0BC /* DownloadTableViewCell.swift */,
+				A960D898272FBCD500B7C0BC /* DownloadTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -444,6 +456,7 @@
 				A9FB285024E67B6900F53E74 /* VideoListCollectionViewCell.xib in Resources */,
 				A950E29924E67157000CBB92 /* Main.storyboard in Resources */,
 				A97F520B2538495C008B872A /* VideoCategoryCollectionViewCell.xib in Resources */,
+				A960D89A272FBCD500B7C0BC /* DownloadTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,6 +545,7 @@
 				A950E2BE24E67356000CBB92 /* Tool.swift in Sources */,
 				A9CBF74824EF9976002BD074 /* RightViewController.swift in Sources */,
 				A950E2D324E67871000CBB92 /* VideoModel.swift in Sources */,
+				A960D894272FBC0800B7C0BC /* DownloadViewController.swift in Sources */,
 				A97CFDA426D5E65700CC72B4 /* WBPopCoverBackgroundView.swift in Sources */,
 				A950E2CF24E677D9000CBB92 /* VideoListCollectionView.swift in Sources */,
 				A950E2B424E6733F000CBB92 /* UITextField+extension.swift in Sources */,
@@ -544,6 +558,7 @@
 				A97F52032537EC93008B872A /* CategoryChooseViewController.swift in Sources */,
 				A91F3CA6263504B1006E6DA6 /* CollectViewController.swift in Sources */,
 				A9FEB1292721634D00BA70F6 /* PageView.swift in Sources */,
+				A960D899272FBCD500B7C0BC /* DownloadTableViewCell.swift in Sources */,
 				A90F7121252414740000D1CF /* ListModel.swift in Sources */,
 				A950E2B024E6733F000CBB92 /* Dictionary+extension.swift in Sources */,
 				A950E2B524E6733F000CBB92 /* String+extension.swift in Sources */,
@@ -552,6 +567,7 @@
 				A906DB0E24EA680B00C070E4 /* BangumiViewController.swift in Sources */,
 				A906DB1524EBB08300C070E4 /* VideoTableCollectionViewCell.swift in Sources */,
 				A92AC00C25529D28001EBD12 /* NetVideoDetailCollectionView.swift in Sources */,
+				A960D896272FBC1D00B7C0BC /* DownloadTableView.swift in Sources */,
 				A9CCBF332608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift in Sources */,
 				A950E2C024E67356000CBB92 /* FileTool.swift in Sources */,
 				A9BAB51627157F3A00AF9779 /* UIViewController+RotationControl.m in Sources */,

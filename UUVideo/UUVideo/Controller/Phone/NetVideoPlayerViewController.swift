@@ -13,6 +13,7 @@ import SJVideoPlayer
 import WebKit
 import MRDLNA
 import ReactiveCocoa
+import NotificationBannerSwift
 
 class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
 

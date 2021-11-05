@@ -12,12 +12,16 @@ PODS:
   - Ji (5.0.0)
   - JXSegmentedView (1.2.7)
   - Kingfisher (7.0.0)
+  - MarqueeLabel (4.0.5)
   - Masonry (1.1.0)
   - MRDLNA (0.1.1):
     - CocoaAsyncSocket
     - MRDLNA/MRC (= 0.1.1)
   - MRDLNA/MRC (0.1.1):
     - CocoaAsyncSocket
+  - NotificationBannerSwift (3.0.6):
+    - MarqueeLabel (~> 4.0.5)
+    - SnapKit (~> 5.0.1)
   - ReactiveCocoa (11.2.2):
     - ReactiveSwift (~> 6.6)
   - ReactiveSwift (6.7.0)
@@ -98,6 +102,7 @@ DEPENDENCIES:
   - JXSegmentedView
   - Kingfisher
   - MRDLNA
+  - NotificationBannerSwift
   - ReactiveCocoa
   - SideMenu
   - SJVideoPlayer
@@ -118,8 +123,10 @@ SPEC REPOS:
     - Ji
     - JXSegmentedView
     - Kingfisher
+    - MarqueeLabel
     - Masonry
     - MRDLNA
+    - NotificationBannerSwift
     - ReactiveCocoa
     - ReactiveSwift
     - SideMenu
@@ -143,8 +150,10 @@ SPEC CHECKSUMS:
   Ji: d795fed288fe78658b404c88946d753b17d8d7f4
   JXSegmentedView: eb1cad21f57c2543c00c3e08b8fd3c7ca54f5acd
   Kingfisher: 5efc54fec3980f92354898532e562cc17f31efb4
+  MarqueeLabel: 00cc0bcd087111dca575878b3531af980559707d
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MRDLNA: 3fe35c6ac57c946413d07896faeb9101c4d8853d
+  NotificationBannerSwift: 7021be2338f8f29cf424b0aca43da462bf9e2a1a
   ReactiveCocoa: e539cd41c523c8c80851b88e9723235c933b024b
   ReactiveSwift: 208201d6ecc9734196d147aa76bc1f24b1b821fe
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
@@ -156,6 +165,6 @@ SPEC CHECKSUMS:
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: d42ba66af5e19d174630eaca2da7a3d3a48f4a45
+PODFILE CHECKSUM: 88c09b28134f54c3e7053c79bcfb48b9a77e50fd
 
 COCOAPODS: 1.11.2
