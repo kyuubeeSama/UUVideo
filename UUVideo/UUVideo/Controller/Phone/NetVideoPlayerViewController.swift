@@ -189,7 +189,7 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
                     self.model.serialArr = resultModel.serialArr
                     if (self.model.webType == 1) {
                         self.model.videoUrl = (resultModel.videoUrl.replacingOccurrences(of: "https://www.bfq168.com/m3u8.php?url=", with: ""))
-                    }else if(self.model.webType == 2){
+                    }else if(self.model.webType == 2 || self.model.webType == 3){
                         self.model.videoUrl = resultModel.videoUrl
                     }
                     // 此处已获取到所有剧集播放地址，根据选中的剧集，获取到播放地址。

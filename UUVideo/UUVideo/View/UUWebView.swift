@@ -22,6 +22,14 @@ class UUWebView: WKWebView, WKNavigationDelegate, WKUIDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        print("开始加载")
+    }
+    
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        print("加载失败")
+    }
+    
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         let urlStr: String = navigationAction.request.url!.absoluteString
         print("当前地址是" + urlStr)
@@ -33,6 +41,10 @@ class UUWebView: WKWebView, WKNavigationDelegate, WKUIDelegate {
             let valueDic = Tool.getKeyValueFromUrl(urlStr: urlStr)
             if getVideoUrlComplete != nil {
                 getVideoUrlComplete!(valueDic["url"]!)
+            }
+        }else if urlStr.contains("search/result"){
+            if getVideoUrlComplete != nil {
+                getVideoUrlComplete!(urlStr)
             }
         }
         decisionHandler(.allow)

@@ -33,8 +33,19 @@ class NetVideoListViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        urlStr = ["http://halihali2.com/", "https://www.laikuaibo.com/", "http://www.yhdm.so/"][webType.rawValue]
-        let videoTypeData = [["电视剧": "tv", "动漫": "acg", "电影": "mov", "综艺": "zongyi"], ["电影": "1", "剧集": "2", "综艺": "4", "动漫": "3", "伦理": "19"], ["日本动漫": "japan", "国产动漫": "china", "欧美动漫": "american", "动漫电影": "movie"]]
+        pageNum = webType == .benpig ? 0 : 1
+        urlStr = [
+            "http://halihali2.com/",
+            "https://www.laikuaibo.com/",
+            "http://www.yhdm.so/",
+            "http://www.benpig.com/"
+        ][webType.rawValue]
+        let videoTypeData = [
+            ["电视剧": "tv", "动漫": "acg", "电影": "mov", "综艺": "zongyi"],
+            ["电影": "1", "剧集": "2", "综艺": "4", "动漫": "3", "伦理": "19"],
+            ["日本动漫": "japan", "国产动漫": "china", "欧美动漫": "american", "动漫电影": "movie"],
+            ["电影":"1","电视剧":"2","综艺":"3","动漫":"4"]
+        ]
         if webType == .halihali {
             area = "all"
             videoCategory = "0"
@@ -138,12 +149,14 @@ class NetVideoListViewController: BaseViewController {
         } else if webType == .laikuaibo {
 //            detailUrlStr = urlStr + "list-select-id-\(videoType)-area-\(area)-order-\(order)-addtime-p-\(pageNum).html"
             detailUrlStr = urlStr + "list-select-id-\(videoType)-area--order-addtime-p-\(pageNum).html"
-        } else {
+        } else if webType == .sakura{
             var pageInfo = ""
             if pageNum > 1 {
                 pageInfo = "\(pageNum).html"
             }
             detailUrlStr = urlStr + "\(videoType)/" + pageInfo
+        }else{
+            detailUrlStr = "http://www.benpig.com/type/\(videoType)-0-0-0-0-\(pageNum).html"
         }
         DispatchQueue.global().async {
             DataManager.init().getVideoListData(urlStr: detailUrlStr, type: self.webType) { listData, allPageNum in
