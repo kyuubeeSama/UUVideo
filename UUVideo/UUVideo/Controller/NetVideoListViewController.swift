@@ -54,7 +54,12 @@ class NetVideoListViewController: BaseViewController {
             videoType = "1"
         }
         videoType = videoTypeData[webType.rawValue][title!]!
-        if webType == .halihali {
+        if webType == .halihali || webType == .benpig{
+            if webType == .benpig{
+                videoCategory = "0"
+                year = "0"
+                area = "0"
+            }
             setNav()
             getCategoryData()
         } else if webType == .sakura {
@@ -118,15 +123,21 @@ class NetVideoListViewController: BaseViewController {
                 print(resultArr)
                 if webType == .sakura {
                     videoType = resultArr[0]
-                } else {
+                } else if webType == .halihali{
                     videoCategory = resultArr[0]
                     year = resultArr[1]
                     area = resultArr[2]
+                }else if webType == .benpig {
+                    videoCategory = resultArr[1]
+                    year = resultArr[2]
+                    area = resultArr[0]
                 }
                 mainCollect.es.resetNoMoreData()
-                pageNum = 1
+                pageNum = webType == .benpig ? 0 : 1
                 listArr = []
-                getCategoryData()
+                if webType == .halihali{
+                    getCategoryData()
+                }
                 getListData()
             }
             VC.bottomView.cancelBtnBlock = {
@@ -140,7 +151,7 @@ class NetVideoListViewController: BaseViewController {
             view.makeToast("未获取到筛选数据")
         }
     }
-
+    
 //    获取列表信息
     func getListData() {
         var detailUrlStr = ""
@@ -156,11 +167,13 @@ class NetVideoListViewController: BaseViewController {
             }
             detailUrlStr = urlStr + "\(videoType)/" + pageInfo
         }else{
-            detailUrlStr = "http://www.benpig.com/type/\(videoType)-0-0-0-0-\(pageNum).html"
+            detailUrlStr = urlStr+"type/\(videoType)-\(videoCategory)-\(area)-\(year)-0-\(pageNum).html"
         }
+        view.makeToastActivity(.center)
         DispatchQueue.global().async {
             DataManager.init().getVideoListData(urlStr: detailUrlStr, type: self.webType) { listData, allPageNum in
                 DispatchQueue.main.async {
+                    self.view.hideToastActivity()
                     if (listData[0].list.count > 0) {
                         self.pageNum += 1
                         self.mainCollect.es.stopLoadingMore()
@@ -190,7 +203,13 @@ class NetVideoListViewController: BaseViewController {
 //     获取分类信息
     func getCategoryData() {
 //        http://halihali2.com/mov/0/0/all/1.html
-        DataManager.init().getWebsiteCategoryData(urlStr: urlStr + "\(videoType)/\(year)/\(videoCategory)/\(area)/\(pageNum).html", type: .halihali) { (dataArr) in
+        var categoryUrlStr:String = ""
+        if webType == .halihali {
+            categoryUrlStr = urlStr + "\(videoType)/\(year)/\(videoCategory)/\(area)/\(pageNum).html"
+        }else if webType == .benpig {
+            categoryUrlStr = urlStr+"type/\(videoType)-0-0-0-0-0.html"
+        }
+        DataManager.init().getWebsiteCategoryData(urlStr: categoryUrlStr, type: webType) { (dataArr) in
             self.categoryListArr = dataArr
         } failure: { (error) in
             print(error)

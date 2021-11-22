@@ -10,6 +10,7 @@ import Foundation
 import Ji
 import Alamofire
 import SwiftyJSON
+import GRDB
 
 enum XPathError: Error {
     case getContentFail
@@ -157,7 +158,8 @@ class DataManager: NSObject {
     ///   - failure: 失败
     /// - Returns: nil
     func getVideoListData(urlStr: String, type: websiteType, success: @escaping (_ listData: [ListModel],_ allPageNum:NSInteger) -> (), failure: @escaping (_ error: Error) -> ()) {
-        let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
+        let newUrlStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        let jiDoc = Ji(htmlURL: URL.init(string: newUrlStr)!)
         if jiDoc == nil {
             failure(XPathError.getContentFail)
         } else {
@@ -237,7 +239,7 @@ class DataManager: NSObject {
             failure(XPathError.getContentFail)
         } else {
             var listArr: [CategoryListModel] = []
-            let titleArr = [["按剧情", "按年代", "按地区"]]
+            let titleArr = [["按剧情", "按年代", "按地区"],[],[],["地区","剧情","年代"]]
             if type == .halihali {
                 for item in 1...3 {
                     let chooseArr = ["", "", "js-tongjip "]
@@ -271,8 +273,24 @@ class DataManager: NSObject {
                     listArr.append(listModel)
                 }
                 success(listArr)
-            } else {
-                // TODO:待完善
+            } else if type == .benpig{
+                // 地区，剧情，年代
+                for index in 1...3 {
+                    let nodeArr = jiDoc?.xPath("/html/body/section/div[1]/div[\(index)]/div/a")
+                    let listModel = CategoryListModel.init()
+                    listModel.name = titleArr[type.rawValue][index-1]
+                    listModel.list = []
+                    for (index,item) in nodeArr!.enumerated() {
+                        let categoryModel = CategoryModel.init()
+                        categoryModel.name = item.content
+                        categoryModel.value = index == 0 ? "0" : item.content
+                        categoryModel.ischoose = index == 0
+                        listModel.list.append(categoryModel)
+                    }
+                    listArr.append(listModel)
+                }
+                success(listArr)
+            }else {
                 // 地区
                 let areaNodeArr = jiDoc?.xPath("/html/body/div[1]/dl/dd[2]/div/div/a")
                 let areaChooseNodeArr = jiDoc?.xPath("/html/body/div[1]/dl/dd[2]/div/div/a[@class='btn-success']")

@@ -64,7 +64,6 @@
 		A9B378F9261089DD00EBC4EF /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B378F8261089DD00EBC4EF /* HistoryViewController.swift */; };
 		A9B898672716C736006889C3 /* padVideoDetailCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B898662716C736006889C3 /* padVideoDetailCollectionView.swift */; };
 		A9B9CE1C24E9569700CFBE69 /* LocalVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CE1B24E9569700CFBE69 /* LocalVideoPlayerViewController.swift */; };
-		A9BAB5102715752500AF9779 /* PadFullPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BAB50F2715752400AF9779 /* PadFullPlayerViewController.swift */; };
 		A9BAB51627157F3A00AF9779 /* UIViewController+RotationControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A9BAB51527157F3A00AF9779 /* UIViewController+RotationControl.m */; };
 		A9CBF74824EF9976002BD074 /* RightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBF74724EF9976002BD074 /* RightViewController.swift */; };
 		A9CCBF332608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CCBF322608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift */; };
@@ -149,7 +148,6 @@
 		A9B9CE1524E933E000CFBE69 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		A9B9CE1624E933E100CFBE69 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		A9B9CE1B24E9569700CFBE69 /* LocalVideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalVideoPlayerViewController.swift; sourceTree = "<group>"; };
-		A9BAB50F2715752400AF9779 /* PadFullPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadFullPlayerViewController.swift; sourceTree = "<group>"; };
 		A9BAB51327157F3900AF9779 /* UUVideo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UUVideo-Bridging-Header.h"; sourceTree = "<group>"; };
 		A9BAB51427157F3A00AF9779 /* UIViewController+RotationControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RotationControl.h"; sourceTree = "<group>"; };
 		A9BAB51527157F3A00AF9779 /* UIViewController+RotationControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RotationControl.m"; sourceTree = "<group>"; };
@@ -324,7 +322,6 @@
 				A906DB0B24EA575700C070E4 /* PadIndexViewController.swift */,
 				A9CBF74724EF9976002BD074 /* RightViewController.swift */,
 				A9DF206F27118E90004C1263 /* PadVideoPlayerViewController.swift */,
-				A9BAB50F2715752400AF9779 /* PadFullPlayerViewController.swift */,
 			);
 			path = Pad;
 			sourceTree = "<group>";
@@ -517,7 +514,6 @@
 				A923747225FF0B4900CE21F4 /* UILabel+extension.swift in Sources */,
 				A950E2B624E6733F000CBB92 /* UIView+extension.swift in Sources */,
 				A984955B25513FCE0007D0B8 /* NetVideoDetailViewController.swift in Sources */,
-				A9BAB5102715752500AF9779 /* PadFullPlayerViewController.swift in Sources */,
 				A9B9CE1C24E9569700CFBE69 /* LocalVideoPlayerViewController.swift in Sources */,
 				A950E29624E67157000CBB92 /* ViewController.swift in Sources */,
 				A98794EC2553983B00DD62EE /* VideoInfoCollectionViewCell.swift in Sources */,
