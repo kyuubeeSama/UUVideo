@@ -26,7 +26,7 @@ target 'UUVideo' do
   pod 'SwiftyJSON'
   pod 'HandyJSON'
   #  应用内自定义通知
-#  pod 'NotificationBannerSwift'
+  pod 'NotificationBannerSwift'
   # 侧滑菜单
   pod 'SideMenu'
   # 暗黑模式

@@ -13,7 +13,7 @@ class SearchResultViewController: BaseViewController {
 
     var keyword: String = ""
     var pageNum: Int = 1
-    var webType: websiteType?
+    var webType: websiteType = .halihali
     var listArr: [ListModel] = []
     var searchArr: [String] = []
 
@@ -21,22 +21,46 @@ class SearchResultViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        setNavColor(navColor: .white, titleColor: .black, barStyle: .default)
         getResultList()
     }
 
     //获取搜索数据
     func getResultList() {
-        var urlStr: String?
-        if webType! == .halihali {
-            urlStr = "http://www.halihali2.com/search.php"
-        } else if webType! == .laikuaibo {
-            urlStr = "https://www.laikuaibo.com/vod-search-wd-" + keyword + "-p-\(pageNum).html"
+        self.view.makeToastActivity(.center)
+        if webType == .benpig{
+            let webView = UUWebView.init()
+            view.addSubview(webView)
+            let body = "show=title%2Cstarring&tbname=movie&tempid=1&keyboard=\(keyword)"
+            var request = URLRequest.init(url: URL.init(string: "http://www.benpig.com/e/search/index.php")!)
+            request.httpMethod = "POST"
+            request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            request.httpBody = body.data(using: .utf8)
+            webView.load(request)
+            webView.getVideoUrlComplete = { urlStr in
+                self.getSearchData(urlStr: urlStr)
+            }
         }else{
-            urlStr = "http://www.yhdm.so/search/\(keyword)/?page=\(pageNum)"
+            var urlStr: String?
+            if webType == .halihali {
+                urlStr = "http://www.halihali2.com/search.php"
+            } else if webType == .laikuaibo {
+                urlStr = "https://www.laikuaibo.com/vod-search-wd-" + keyword + "-p-\(pageNum).html"
+            }else if webType == .sakura{
+                urlStr = "http://www.yhdm.so/search/\(keyword)/?page=\(pageNum)"
+            }
+            getSearchData(urlStr: urlStr!)
         }
+    }
+
+    func getSearchData (urlStr:String){
         DispatchQueue.global().async {
-            DataManager.init().getSearchData(urlStr: urlStr!, keyword: self.keyword, website: self.webType!) { (dataArr) in
+            DataManager.init().getSearchData(urlStr: urlStr, keyword: self.keyword, website: self.webType) { (dataArr) in
                 DispatchQueue.main.async {
+                    self.view.hideToastActivity()
+                    if self.webType == .benpig || self.webType == .halihali{
+                        self.mainCollect.es.noticeNoMoreData()
+                    }
                     if self.checkSearchResult(searchArr: dataArr) {
                         self.pageNum += 1
                         self.mainCollect.es.stopLoadingMore()
@@ -60,7 +84,7 @@ class SearchResultViewController: BaseViewController {
             }
         }
     }
-
+    
     // 判断是否有重复的内容
     func checkSearchResult(searchArr: [ListModel]) -> Bool {
         if searchArr.count > 0 {

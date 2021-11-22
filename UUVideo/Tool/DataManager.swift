@@ -10,6 +10,7 @@ import Foundation
 import Ji
 import Alamofire
 import SwiftyJSON
+import GRDB
 
 enum XPathError: Error {
     case getContentFail
@@ -19,6 +20,7 @@ enum websiteType: Int {
     case halihali = 0
     case laikuaibo = 1
     case sakura = 2
+    case benpig = 3
 }
 
 class DataManager: NSObject {
@@ -77,13 +79,13 @@ class DataManager: NSObject {
     ///   - failure: 失败
     /// - Returns: nil
     func getWebsiteIndexData(type: websiteType, success: @escaping (_ listData: [ListModel]) -> (), failure: @escaping (_ error: Error) -> ()) {
-        let urlArr = ["http://halihali2.com/", "https://www.laikuaibo.com/","http://www.yhdm.so/"]
+        let urlArr = ["http://halihali2.com/", "https://www.laikuaibo.com/","http://www.yhdm.so/","http://www.benpig.com/"]
         let jiDoc = Ji(htmlURL: URL.init(string: urlArr[type.rawValue])!)
         if jiDoc == nil {
             failure(XPathError.getContentFail)
         } else {
-            let divArr = [[5, 6, 7, 8], [3, 5, 7, 9, 0],[4,6,8,10]]
-            let titleArr = [["动漫", "电视剧", "电影", "综艺"], ["电影", "剧集", "综艺", "动漫", "伦理"],["日本动漫","国产动漫","欧美动漫","动漫电影"]]
+            let divArr = [[5, 6, 7, 8], [3, 5, 7, 9, 0],[4,6,8,10],[1,2,3,4]]
+            let titleArr = [["动漫", "电视剧", "电影", "综艺"], ["电影", "剧集", "综艺", "动漫", "伦理"],["日本动漫","国产动漫","欧美动漫","动漫电影"],["电影","电视剧","综艺","动漫"]]
             var resultArr: [ListModel] = []
             for (index, value) in divArr[type.rawValue].enumerated() {
                 let listModel = ListModel.init()
@@ -101,11 +103,16 @@ class DataManager: NSObject {
                     urlXpath = "/html/body/div[\(value)]/div[2]/div[1]/ul/li/p/a/@href"
                     imgXpath = "/html/body/div[\(value)]/div[2]/div[1]/ul/li/p/a/img/@data-original"
                     updateXpath = "/html/body/div[\(value)]/div[2]/div[1]/ul/li/p/a/span"
-                }else{
+                }else if type == .sakura{
                     titleXpath = "/html/body/div[8]/div[1]/div[\(value)]/ul[1]/li/p[1]/a"
                     urlXpath = "/html/body/div[8]/div[1]/div[\(value)]/ul[1]/li/a/@href"
                     imgXpath = "/html/body/div[8]/div[1]/div[\(value)]/ul[1]/li/a/img/@src"
                     updateXpath = "/html/body/div[8]/div[1]/div[\(value)]/ul[1]/li/p[2]/a"
+                }else{
+                    titleXpath = "/html/body/section/div/div/div[\(value)]/article/a/h2"
+                    urlXpath = "/html/body/section/div/div/div[\(value)]/article/a/@href"
+                    imgXpath = "/html/body/section/div/div/div[\(value)]/article/a/div/img/@data-original"
+                    updateXpath = "/html/body/section/div/div/div[\(value)]/article/div[2]/span"
                 }
                 let titleNodeArr = jiDoc?.xPath(titleXpath)
                 let urlNodeArr = jiDoc?.xPath(urlXpath)
@@ -151,7 +158,8 @@ class DataManager: NSObject {
     ///   - failure: 失败
     /// - Returns: nil
     func getVideoListData(urlStr: String, type: websiteType, success: @escaping (_ listData: [ListModel],_ allPageNum:NSInteger) -> (), failure: @escaping (_ error: Error) -> ()) {
-        let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
+        let newUrlStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        let jiDoc = Ji(htmlURL: URL.init(string: newUrlStr)!)
         if jiDoc == nil {
             failure(XPathError.getContentFail)
         } else {
@@ -180,11 +188,16 @@ class DataManager: NSObject {
                 imgXpath = "/html/body/div[1]/ul/li/p/a/img/@data-original"
                 updateXpath = "/html/body/div[1]/ul/li/p/a/span"
                 pageNumXpath = ""
-            }else {
+            }else if type == .sakura{
                 titleXpath = "/html/body/div[4]/div[3]/div[1]/ul/li/h2/a/@title"
                 urlXpath = "/html/body/div[4]/div[3]/div[1]/ul/li/h2/a/@href"
                 imgXpath = "/html/body/div[4]/div[3]/div[1]/ul/li/a/img/@src"
                 pageNumXpath = "//*[@id=\"lastn\"]"
+            }else {
+                titleXpath = "/html/body/section/div[2]/div/div/div/article/a/h2"
+                urlXpath = "/html/body/section/div[2]/div/div/div/article/a/@href"
+                imgXpath = "/html/body/section/div[2]/div/div/div/article/a/div/img/@data-original"
+                updateXpath = "/html/body/section/div[2]/div/div/div/article/div[1]/span"
             }
             let titleNodeArr = jiDoc?.xPath(titleXpath)
             let urlNodeArr = jiDoc?.xPath(urlXpath)
@@ -226,7 +239,7 @@ class DataManager: NSObject {
             failure(XPathError.getContentFail)
         } else {
             var listArr: [CategoryListModel] = []
-            let titleArr = [["按剧情", "按年代", "按地区"]]
+            let titleArr = [["按剧情", "按年代", "按地区"],[],[],["地区","剧情","年代"]]
             if type == .halihali {
                 for item in 1...3 {
                     let chooseArr = ["", "", "js-tongjip "]
@@ -260,8 +273,24 @@ class DataManager: NSObject {
                     listArr.append(listModel)
                 }
                 success(listArr)
-            } else {
-                // TODO:待完善
+            } else if type == .benpig{
+                // 地区，剧情，年代
+                for index in 1...3 {
+                    let nodeArr = jiDoc?.xPath("/html/body/section/div[1]/div[\(index)]/div/a")
+                    let listModel = CategoryListModel.init()
+                    listModel.name = titleArr[type.rawValue][index-1]
+                    listModel.list = []
+                    for (index,item) in nodeArr!.enumerated() {
+                        let categoryModel = CategoryModel.init()
+                        categoryModel.name = item.content
+                        categoryModel.value = index == 0 ? "0" : item.content
+                        categoryModel.ischoose = index == 0
+                        listModel.list.append(categoryModel)
+                    }
+                    listArr.append(listModel)
+                }
+                success(listArr)
+            }else {
                 // 地区
                 let areaNodeArr = jiDoc?.xPath("/html/body/div[1]/dl/dd[2]/div/div/a")
                 let areaChooseNodeArr = jiDoc?.xPath("/html/body/div[1]/dl/dd[2]/div/div/a[@class='btn-success']")
@@ -365,14 +394,20 @@ class DataManager: NSObject {
                 urlXPath = "/html/body/div[1]/ul[2]/li/h2/a/@href"
                 imgXPath = "/html/body/div[1]/ul[2]/li/p/a/img/@data-original"
                 updateXpath = "/html/body/div[1]/ul[2]/li/p/a/span"
-            }else{
+            }else if type == .sakura{
                 videoPicXpath = "/html/body/div[2]/div[2]/div[1]/img/@src"
                 serialPathXpath = "//*[@id=\"main0\"]/div/ul/li/a/@href"
                 serialNameXpath = "//*[@id=\"main0\"]/div/ul/li/a"
                 titleXPath = "/html/body/div[2]/div[3]/div[2]/ul/li/a/img/@alt"
                 urlXPath = "/html/body/div[2]/div[3]/div[2]/ul/li/h2/a/@href"
                 imgXPath = "/html/body/div[2]/div[3]/div[2]/ul/li/a/img/@src"
-                
+            }else {
+                videoPicXpath = "/html/body/section/div/div/div/article/div[1]/div[1]/img/@src"
+                serialPathXpath = "//*[@id=\"video_list_li\"][1]/div/a/@href"
+                serialNameXpath = "//*[@id=\"video_list_li\"][1]/div/a"
+                titleXPath = "/html/body/section/div/div/div/div/article/a/h2"
+                urlXPath = "/html/body/section/div/div/div/div/article/a/@href"
+                imgXPath = "/html/body/section/div/div/div/div/article/a/div/img/@data-original"
             }
             let videoPicNodeArr = jiDoc?.xPath(videoPicXpath)
             let picurl: String = videoPicNodeArr![0].content!
@@ -404,7 +439,7 @@ class DataManager: NSObject {
                     let recommandUrlStr: String = urlNodeArr![index].content!
                     model.detailUrl = checkUrl(urlStr: recommandUrlStr, domainUrlStr: baseUrl)
                     model.webType = type.rawValue
-                    if type == .halihali || type == .sakura {
+                    if type == .halihali || type == .sakura || type == .benpig{
                         model.num = ""
                     } else {
                         model.num = updateNodeArr![index].content!
@@ -469,11 +504,16 @@ class DataManager: NSObject {
                     detailXpath = "/html/body/div[1]/ul/li/h2/a/@href"
                     imgXpath = "/html/body/div[1]/ul/li/p/a/img/@data-original"
                     updateXpath = "/html/body/div[1]/ul/li/p/a/span"
-                }else{
+                }else if website == .sakura{
                     titleXpath = "/html/body/div[4]/div[2]/div/ul/li/h2/a/@title"
                     detailXpath = "/html/body/div[4]/div[2]/div/ul/li/h2/a/@href"
                     imgXpath = "/html/body/div[4]/div[2]/div/ul/li/a/img/@src"
                     updateXpath = ""
+                }else {
+                    titleXpath = "/html/body/section/div/div/div/div/article/a/h2"
+                    detailXpath = "/html/body/section/div/div/div/div/article/a/@href"
+                    imgXpath = "/html/body/section/div/div/div/div/article/a/div/img/@data-original"
+                    updateXpath = "/html/body/section/div/div/div/div/article/div[1]/span"
                 }
                 let titleNodeArr = jiDoc?.xPath(titleXpath)
                 let detailNodeArr = jiDoc?.xPath(detailXpath)
@@ -600,7 +640,7 @@ class DataManager: NSObject {
                     recommendImgXpath = "/html/body/div[1]/ul[1]/li/p/a/img/@data-original"
                     recommendUpdateXpath = "/html/body/div[1]/ul[1]/li/p/a/span"
                 }
-            }else {
+            }else if website == .sakura{
 //                备注，视频获取地址的js逻辑
                 /*
                 if ($('#playbox').length>0){
@@ -640,6 +680,28 @@ class DataManager: NSObject {
                 recommendTitleXpath = "/html/body/div[9]/div[2]/ul/li/a/img/@alt"
                 recommendUrlXpath = "/html/body/div[9]/div[2]/ul/li/p[1]/a/@href"
                 recommendImgXpath = "/html/body/div[9]/div[2]/ul/li/a/img/@src"
+            }else{
+                let jscontent:String = (jiDoc?.xPath("//*[@id=\"player\"]/script[1]")![0].content)!
+                let array = jscontent.split(separator: ";")
+                var urlStr:String = String(array[1])
+                urlStr = urlStr.replacingOccurrences(of: "var player_url=", with: "")
+                urlStr = urlStr.replacingOccurrences(of: "\"", with: "")
+                print(urlStr)
+                videoModel.videoUrl = urlStr
+                //        标题
+                let serialTitleNodeArr = jiDoc?.xPath("//*[@id=\"video_list_li\"][1]/div/a")
+                //        详情
+                let serialUrlNodeArr = jiDoc?.xPath("//*[@id=\"video_list_li\"][1]/div/a/@href")
+                for (index, _) in serialTitleNodeArr!.enumerated() {
+                    let serialModel = SerialModel.init()
+                    serialModel.name = serialTitleNodeArr![index].content!
+                    serialModel.detailUrl = checkUrl(urlStr: serialUrlNodeArr![index].content!, domainUrlStr: baseUrl)
+                    videoModel.serialArr.append(serialModel)
+                }
+                recommendTitleXpath = "//*[@class=\"mgbox\"]/div[1]/article/a/h2"
+                recommendUrlXpath = "//*[@class=\"mgbox\"]/div[1]/article/a/@href"
+                recommendImgXpath = "//*[@class=\"mgbox\"]/div[1]/article/a/div/img/@data-original"
+                recommendUpdateXpath = "//*[@class=\"mgbox\"]/div[1]/article/div/span"
             }
             // 获取推荐视频
             let recommendTitleNodeArr = jiDoc?.xPath(recommendTitleXpath)

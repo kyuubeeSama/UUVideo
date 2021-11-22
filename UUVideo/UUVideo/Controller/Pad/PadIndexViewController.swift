@@ -25,7 +25,7 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
         } catch (let error) {
             print(error)
         }
-        mainTable.listArr = ["本地视频", "新番时间表", "哈哩哈哩","来快播","樱花动漫","历史记录","收藏"]
+        mainTable.listArr = ["本地视频", "新番时间表", "哈哩哈哩","来快播","樱花动漫","笨猪","历史记录","收藏"]
         view.bringSubviewToFront(localView)
         NotificationCenter.default.addObserver(self, selector: #selector(didChangeRotate(notice:)), name: UIApplication.didChangeStatusBarFrameNotification, object: nil)
     }
@@ -63,13 +63,15 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
                 self.view.bringSubviewToFront(self.bangumiView)
             } else if (string == "哈哩哈哩") {
                 self.view.bringSubviewToFront(self.haliView)
-            }else if (string == "樱花动漫") {
+            } else if (string == "樱花动漫") {
                 self.view.bringSubviewToFront(self.sakuraView)
-            }else if (string == "历史记录"){
+            } else if(string == "笨猪"){
+                self.view.bringSubviewToFront(self.benpigView)
+            } else if (string == "历史记录"){
                 self.view.bringSubviewToFront(self.historyView)
-            }else if(string == "收藏"){
+            } else if(string == "收藏"){
                 self.view.bringSubviewToFront(self.collectView)
-            }else if (string == "来快播") {
+            } else if (string == "来快播") {
                 self.view.bringSubviewToFront(self.laikuaiboView)
             }
         }
@@ -109,6 +111,12 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
         let VC = NetVideoIndexViewController.init()
         VC.webType = .laikuaibo
         return getView(controller:VC)
+    }()
+    
+    lazy var benpigView: UIView = {
+        let VC = NetVideoIndexViewController.init()
+        VC.webType = .benpig
+        return getView(controller: VC)
     }()
     
     func getView(controller: UIViewController) -> UIView {

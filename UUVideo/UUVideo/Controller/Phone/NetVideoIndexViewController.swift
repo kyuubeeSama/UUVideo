@@ -24,7 +24,7 @@ class NetVideoIndexViewController: BaseViewController, UISearchBarDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        title = ["哈哩哈哩", "来快播","樱花动漫"][webType.rawValue]
+        title = ["哈哩哈哩", "来快播","樱花动漫","笨猪"][webType.rawValue]
         // 获取哈哩tv数据
         getVideoData()
     }
