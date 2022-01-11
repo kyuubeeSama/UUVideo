@@ -56,8 +56,17 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
         setNav()
         getData()
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinish), name: NSNotification.Name.SJMediaPlayerPlaybackDidFinish, object: nil)
+        NotificationCenter.default.reactive.notifications(forName: UIApplication.willResignActiveNotification, object: nil).observe { notification in
+            print("进入后台")
+            if !(self.model.videoUrl.isEmpty) {
+                // 有播放地址才保存
+                self.model.progress = Int(self.player.currentTime)
+                SqlTool.init().saveHistory(model: self.model)
+                self.player.stop()
+            }
+        }
     }
-    
+        
     @objc func playerDidFinish(){
         self.player.defaultEdgeControlLayer.centerContainerView.isHidden = false
     }
