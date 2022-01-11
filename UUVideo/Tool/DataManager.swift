@@ -410,8 +410,10 @@ class DataManager: NSObject {
                 imgXPath = "/html/body/section/div/div/div/div/article/a/div/img/@data-original"
             }
             let videoPicNodeArr = jiDoc?.xPath(videoPicXpath)
-            let picurl: String = videoPicNodeArr![0].content!
-            videoModel.picUrl = checkUrl(urlStr: picurl, domainUrlStr: baseUrl)
+            if videoPicNodeArr!.count > 0{
+                let picurl: String = videoPicNodeArr![0].content!
+                videoModel.picUrl = checkUrl(urlStr: picurl, domainUrlStr: baseUrl)
+            }
             //        剧集
             let serialTitleNodeArr = jiDoc?.xPath(serialNameXpath)
             let serialUrlNodeArr = jiDoc?.xPath(serialPathXpath)
@@ -725,6 +727,7 @@ class DataManager: NSObject {
                     videoModel.videoArr.append(model)
                 }
             }
+            videoModel.videoUrl = videoModel.videoUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
             success(videoModel)
         }
     }

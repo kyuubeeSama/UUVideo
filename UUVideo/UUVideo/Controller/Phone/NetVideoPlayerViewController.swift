@@ -21,6 +21,7 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
     // 创建右侧投屏按钮。如果获取到了播放地址，显示投屏按钮，点击弹出选择按钮。
     private let toupingBtn = UIButton.init(type: .custom)
     private let downloadBtn = UIButton.init(type: .custom)
+    public var isFromHistory:Bool = false
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -79,6 +80,7 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
             }else{
                 self.player.defaultEdgeControlLayer.centerContainerView.isHidden = true
                 model.videoUrl = (serialModel.playerUrl)
+                model.progress = 0
                 playerVideo()
                 model.serialIndex = model.serialIndex+1
                 model.serialName = serialModel.name
@@ -113,6 +115,16 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
         downloadBtn.setImage(UIImage.init(systemName: "arrow.down.square"), for: .normal)
         downloadBtn.reactive.controlEvents(.touchUpInside).observeValues { button in
             // 下载操作
+            let alert = UIAlertController.init(title: "提醒", message: self.model.videoUrl, preferredStyle: .alert)
+            let copyAction = UIAlertAction.init(title: "复制", style: .default) { action in
+                UIPasteboard.general.string = self.model.videoUrl
+            }
+            alert.addAction(copyAction)
+            let openAction = UIAlertAction.init(title: "浏览器打开", style: .default) { action in
+                UIApplication.shared.open(URL.init(string: self.model.videoUrl)!, options: [:], completionHandler: nil)
+            }
+            alert.addAction(openAction)
+            self.present(alert, animated: true, completion: nil)
         }
         downloadBtn.isHidden = true
         let rightBtnItem = UIBarButtonItem.init(customView: rightBtnView)
@@ -168,11 +180,8 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
         }else{
             let asset = AVURLAsset.init(url: URL.init(string: model.videoUrl)!, options: ["AVURLAssetHTTPHeaderFieldsKey":headers])
             player.urlAsset = SJVideoPlayerURLAsset.init(avAsset: asset, startPosition: TimeInterval(model.progress), playModel: SJPlayModel.init())
-        }
-        // 判断视频是否可以播放
-        if !model.videoUrl.contains("m3u8") || !model.videoUrl.contains("html"){
-//            暂时不支持m3u8下载
-            self.downloadBtn.isHidden = false
+            // 判断视频是否可以播放
+            self.downloadBtn.isHidden = (model.videoUrl.contains("m3u8") || model.videoUrl.contains("html"))
         }
         print("播放地址是"+model.videoUrl)
     }
@@ -193,7 +202,7 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
                         self.model.videoUrl = resultModel.videoUrl
                     }
                     // 此处已获取到所有剧集播放地址，根据选中的剧集，获取到播放地址。
-                    if self.model.type == 5 {
+                    if self.model.type == 5 && self.isFromHistory{
                         // 当是从历史记录进入时，播放的是第几集，根据名字匹配是第几集
                         for (index,serialModel) in resultModel.serialArr.enumerated() {
                             if serialModel.name == self.model.serialName {
@@ -280,15 +289,19 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
                         self.present(alert, animated: true, completion: nil)
                     }else{
                         self.model.videoUrl = (serialModel.playerUrl)
-                        self.playerVideo()
+                        self.model.progress = 0
                         self.model.serialIndex = indexPath.row
                         self.model.serialName = serialModel.name
+                        self.isFromHistory = false
+                        self.playerVideo()
                         mainCollection.model = self.model
                     }
                 } else {
                     let serialModel = self.model.serialArr[indexPath.row]
                     self.model.serialDetailUrl = serialModel.detailUrl
                     self.model.serialIndex = indexPath.row
+                    self.model.progress = 0
+                    self.isFromHistory = false
                     self.getData()
                 }
             } else {

@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 struct VideoModel {
-    //1.本地视频 2.相册视频 3.在线视频 4.番剧 5.哈哩哈哩视频
+    //1.本地视频 2.相册视频 3.在线视频 4.番剧 5.普通视频
     var type:Int?
 //    视频名
     var name:String?

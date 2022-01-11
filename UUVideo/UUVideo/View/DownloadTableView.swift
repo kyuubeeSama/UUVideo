@@ -29,9 +29,6 @@ class DownloadTableView: UITableView,UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! DownloadTableViewCell
-        if cell == nil{
-            cell = Bundle.main.loadNibNamed("DownloadTableViewCell", owner: self, options: nil)?.last as! DownloadTableViewCell
-        }
         return cell
     }
     

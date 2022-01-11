@@ -21,7 +21,7 @@ class SearchResultViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        setNavColor(navColor: .white, titleColor: .black, barStyle: .default)
+//        setNavColor(navColor: .white, titleColor: .black, barStyle: .default)
         getResultList()
     }
 

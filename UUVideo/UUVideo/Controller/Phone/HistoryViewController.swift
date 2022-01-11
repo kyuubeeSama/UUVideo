@@ -60,6 +60,7 @@ class HistoryViewController: BaseViewController {
                 let VC = NetVideoPlayerViewController.init()
                 let videoModel = listModel.list[indexPath.row]
                 VC.model = videoModel
+                VC.isFromHistory = true
                 self.navigationController?.pushViewController(VC, animated: true)
             }else{
                 let VC = PadVideoPlayerViewController.init()
