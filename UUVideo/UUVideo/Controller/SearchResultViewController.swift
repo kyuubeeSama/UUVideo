@@ -32,7 +32,7 @@ class SearchResultViewController: BaseViewController {
             let webView = UUWebView.init()
             view.addSubview(webView)
             let body = "show=title%2Cstarring&tbname=movie&tempid=1&keyboard=\(keyword)"
-            var request = URLRequest.init(url: URL.init(string: "http://www.benpig.com/e/search/index.php")!)
+            var request = URLRequest.init(url: URL.init(string: "https://www.benpig.com/e/search/index.php")!)
             request.httpMethod = "POST"
             request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
             request.httpBody = body.data(using: .utf8)

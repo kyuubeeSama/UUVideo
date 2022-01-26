@@ -56,6 +56,20 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
         // Do any additional setup after loading the view.
         setNav()
         getData()
+        NotificationCenter.default.reactive.notifications(forName: UIApplication.willResignActiveNotification, object: nil).observe { notification in
+            print("进入后台")
+            if !(self.model.videoUrl.isEmpty) {
+                // 有播放地址才保存
+                self.model.progress = Int(self.player.currentTime)
+                SqlTool.init().saveHistory(model: self.model)
+                self.player.stop()
+            }
+        }
+        NotificationCenter.default.reactive.notifications(forName: UIApplication.didBecomeActiveNotification, object: nil).observe{ notification in
+            if !self.model.videoUrl.isEmpty {
+                self.playerVideo()
+            }
+        }
     }
     
     lazy var dlnaManager: MRDLNA = {

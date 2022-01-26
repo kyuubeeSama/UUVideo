@@ -65,6 +65,11 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
                 self.player.stop()
             }
         }
+        NotificationCenter.default.reactive.notifications(forName: UIApplication.didBecomeActiveNotification, object: nil).observe{ notification in
+            if !self.model.videoUrl.isEmpty {
+                self.playerVideo()
+            }
+        }
     }
         
     @objc func playerDidFinish(){
