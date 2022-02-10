@@ -157,7 +157,12 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
             if devicesArray.isEmpty {
                 self.view.makeToast("当前未发现可投屏设备")
             }else{
+                
                 let alert = UIAlertController.init(title: "", message: "请选择设备", preferredStyle: .actionSheet)
+                if let popoverController = alert.popoverPresentationController {
+                    popoverController.sourceView = self.view
+                    popoverController.sourceRect = self.view.bounds
+                }
                 for item in devicesArray {
                     let device:CLUPnPDevice = item as! CLUPnPDevice
                     let deviceAction = UIAlertAction.init(title: device.friendlyName, style: .default) { [self] action in

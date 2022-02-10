@@ -42,7 +42,7 @@ class UUWebView: WKWebView, WKNavigationDelegate, WKUIDelegate {
             if getVideoUrlComplete != nil {
                 getVideoUrlComplete!(valueDic["url"]!)
             }
-        }else if urlStr.contains("search/result"){
+        }else if urlStr.contains("search"){
             if getVideoUrlComplete != nil {
                 getVideoUrlComplete!(urlStr)
             }

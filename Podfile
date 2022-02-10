@@ -6,6 +6,7 @@ target 'UUVideo' do
   pod 'SJVideoPlayer'
   # 投屏
   pod 'MRDLNA'
+  pod 'Popover.OC'
 
   use_frameworks!
   #  网络请求

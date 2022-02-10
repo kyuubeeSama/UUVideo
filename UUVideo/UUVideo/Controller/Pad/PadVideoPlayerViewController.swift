@@ -14,6 +14,7 @@ import SJVideoPlayer
 import WebKit
 import MRDLNA
 import SnapKit
+import Popover_OC
 
 class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
     
@@ -90,21 +91,24 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
             if devicesArray.isEmpty {
                 self.view.makeToast("当前未发现可投屏设备")
             }else{
-                let alert = UIAlertController.init(title: "", message: "请选择设备", preferredStyle: .actionSheet)
+                let keyWindows = UIApplication.shared.windows[0]
+                let lastPopoverView:PopoverView = keyWindows.viewWithTag(100)! as! PopoverView
+                lastPopoverView.removeFromSuperview()
+                var actionArr:[PopoverAction] = []
                 for item in devicesArray {
                     let device:CLUPnPDevice = item as! CLUPnPDevice
-                    let deviceAction = UIAlertAction.init(title: device.friendlyName, style: .default) { [self] action in
+                    let deviceAction = PopoverAction.init(title: device.friendlyName) { action in
                         self.dlnaManager.device = device
                         self.dlnaManager.playUrl = self.model.videoUrl
                         self.dlnaManager.start()
                         self.dlnaManager.dlnaPlay()
                         self.player.pause()
                     }
-                    alert.addAction(deviceAction)
+                    actionArr.append(deviceAction!)
                 }
-                let cancelAction = UIAlertAction.init(title: "取消", style: .cancel, handler: nil)
-                alert.addAction(cancelAction)
-                self.present(alert, animated: true, completion: nil)
+                let popoverView = PopoverView.init()
+                popoverView.tag = 100
+                popoverView.show(to: CGPoint(x: screenW-40, y: top_height), with: actionArr)
             }
         }
     }

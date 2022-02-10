@@ -29,7 +29,7 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
         view.bringSubviewToFront(localView)
         NotificationCenter.default.addObserver(self, selector: #selector(didChangeRotate(notice:)), name: UIApplication.didChangeStatusBarFrameNotification, object: nil)
     }
-
+        
     @objc func showUser() {
         print("显示个人中心")
         let VC = UserViewController.init()

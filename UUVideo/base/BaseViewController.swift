@@ -44,7 +44,7 @@ class BaseViewController: UIViewController {
         Tool.showSystemAlert(viewController:self,title: "提示", message: "文件\(fileName)已存在") {
         }
     }
-    
+        
     func setNavColor(navColor:UIColor,titleColor:UIColor,barStyle:UIBarStyle) {
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.isTranslucent = false

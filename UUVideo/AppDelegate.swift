@@ -45,11 +45,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        if Tool.isPhone(){
+//        if Tool.isPhone(){
             return .all
-        }else{
-            return .landscape
-        }
+//        }else{
+//            return .landscape
+//        }
     }
 }
 
