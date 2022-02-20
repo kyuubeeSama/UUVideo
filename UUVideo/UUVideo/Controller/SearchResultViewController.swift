@@ -22,9 +22,14 @@ class SearchResultViewController: BaseViewController {
 
         // Do any additional setup after loading the view.
 //        setNavColor(navColor: .white, titleColor: .black, barStyle: .default)
+        setNav()
         getResultList()
     }
 
+    func setNav() {
+        self.title = "搜索结果"
+    }
+    
     //获取搜索数据
     func getResultList() {
         self.view.makeToastActivity(.center)

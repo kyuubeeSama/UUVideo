@@ -22,6 +22,7 @@ PODS:
   - NotificationBannerSwift (3.0.6):
     - MarqueeLabel (~> 4.0.5)
     - SnapKit (~> 5.0.1)
+  - Popover.OC (2.2)
   - ReactiveCocoa (12.0.0):
     - ReactiveSwift (~> 7.0)
   - ReactiveSwift (7.0.0)
@@ -103,6 +104,7 @@ DEPENDENCIES:
   - Kingfisher
   - MRDLNA
   - NotificationBannerSwift
+  - Popover.OC
   - ReactiveCocoa
   - SideMenu
   - SJVideoPlayer
@@ -127,6 +129,7 @@ SPEC REPOS:
     - Masonry
     - MRDLNA
     - NotificationBannerSwift
+    - Popover.OC
     - ReactiveCocoa
     - ReactiveSwift
     - SideMenu
@@ -154,6 +157,7 @@ SPEC CHECKSUMS:
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MRDLNA: 3fe35c6ac57c946413d07896faeb9101c4d8853d
   NotificationBannerSwift: 7021be2338f8f29cf424b0aca43da462bf9e2a1a
+  Popover.OC: bfcce8307f77593e1e1d7cf58604077f74e114bc
   ReactiveCocoa: 5d10386f0ce09f922006efbf784881c5fade27c5
   ReactiveSwift: 48c4b9d3b497e8dd20b10300bb1a28ff93550f13
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
@@ -165,6 +169,6 @@ SPEC CHECKSUMS:
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 88c09b28134f54c3e7053c79bcfb48b9a77e50fd
+PODFILE CHECKSUM: d7e43bf23323e3d1cd837e8396df6ee9a80a8157
 
 COCOAPODS: 1.11.2

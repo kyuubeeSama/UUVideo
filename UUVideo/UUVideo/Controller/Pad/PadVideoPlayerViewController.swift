@@ -17,7 +17,8 @@ import SnapKit
 import Popover_OC
 
 class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
-    
+    private var isPlaying:Bool = false
+    private var deviceArr:[Any] = []
     public var model: VideoModel = VideoModel.init()
     private let toupingBtn = UIButton.init(type: .custom)
     
@@ -32,11 +33,11 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
     }
     
     @objc func playerDidFinish(){
-        print("全屏")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        isPlaying = false
         player.vc_viewWillDisappear()
     }
     
@@ -57,6 +58,7 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
         // Do any additional setup after loading the view.
         setNav()
         getData()
+        dlnaManager.startSearch()
         NotificationCenter.default.reactive.notifications(forName: UIApplication.willResignActiveNotification, object: nil).observe { notification in
             print("进入后台")
             if !(self.model.videoUrl.isEmpty) {
@@ -67,7 +69,7 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
             }
         }
         NotificationCenter.default.reactive.notifications(forName: UIApplication.didBecomeActiveNotification, object: nil).observe{ notification in
-            if !self.model.videoUrl.isEmpty {
+            if !self.model.videoUrl.isEmpty && self.isPlaying == true {
                 self.playerVideo()
             }
         }
@@ -80,37 +82,30 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
     }()
     
     @objc func touping(){
-        // 投屏
-        dlnaManager.startSearch()
+        if deviceArr.isEmpty {
+            self.view.makeToast("当前未发现可投屏设备")
+        }else{
+            var actionArr:[PopoverAction] = []
+            for item in deviceArr {
+                let device:CLUPnPDevice = item as! CLUPnPDevice
+                let deviceAction = PopoverAction.init(title: device.friendlyName) { action in
+                    self.dlnaManager.device = device
+                    self.dlnaManager.playUrl = self.model.videoUrl
+                    self.dlnaManager.start()
+                    self.dlnaManager.dlnaPlay()
+                    self.player.pause()
+                    self.isPlaying = false
+                }
+                actionArr.append(deviceAction!)
+            }
+            let popoverView = PopoverView.init()
+            popoverView.tag = 100
+            popoverView.show(to: CGPoint(x: screenW-40, y: top_height), with: actionArr)
+        }
     }
     
     func searchDLNAResult(_ devicesArray: [Any]!) {
-        view.makeToastActivity(.center)
-        DispatchQueue.main.asyncAfter(deadline: .now()+3) {
-            self.view.hideToastActivity()
-            if devicesArray.isEmpty {
-                self.view.makeToast("当前未发现可投屏设备")
-            }else{
-                let keyWindows = UIApplication.shared.windows[0]
-                let lastPopoverView:PopoverView = keyWindows.viewWithTag(100)! as! PopoverView
-                lastPopoverView.removeFromSuperview()
-                var actionArr:[PopoverAction] = []
-                for item in devicesArray {
-                    let device:CLUPnPDevice = item as! CLUPnPDevice
-                    let deviceAction = PopoverAction.init(title: device.friendlyName) { action in
-                        self.dlnaManager.device = device
-                        self.dlnaManager.playUrl = self.model.videoUrl
-                        self.dlnaManager.start()
-                        self.dlnaManager.dlnaPlay()
-                        self.player.pause()
-                    }
-                    actionArr.append(deviceAction!)
-                }
-                let popoverView = PopoverView.init()
-                popoverView.tag = 100
-                popoverView.show(to: CGPoint(x: screenW-40, y: top_height), with: actionArr)
-            }
-        }
+        deviceArr = devicesArray
     }
     
     func dlnaStartPlay() {
@@ -185,6 +180,7 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
         }else{
             let asset = AVURLAsset.init(url: URL.init(string: model.videoUrl)!, options: ["AVURLAssetHTTPHeaderFieldsKey":headers])
             player.urlAsset = SJVideoPlayerURLAsset.init(avAsset: asset, startPosition: TimeInterval(model.progress), playModel: SJPlayModel.init())
+            isPlaying = true
         }
         print("播放地址是"+model.videoUrl)
     }

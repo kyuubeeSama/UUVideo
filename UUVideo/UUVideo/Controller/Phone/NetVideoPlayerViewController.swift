@@ -17,6 +17,9 @@ import NotificationBannerSwift
 
 class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
 
+//    投屏设备
+    private var deviceArr:[Any] = []
+    private var isPlaying:Bool = false
     public var model: VideoModel = VideoModel.init()
     // 创建右侧投屏按钮。如果获取到了播放地址，显示投屏按钮，点击弹出选择按钮。
     private let toupingBtn = UIButton.init(type: .custom)
@@ -34,6 +37,7 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        isPlaying = false
         player.vc_viewWillDisappear()
     }
 
@@ -66,10 +70,11 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
             }
         }
         NotificationCenter.default.reactive.notifications(forName: UIApplication.didBecomeActiveNotification, object: nil).observe{ notification in
-            if !self.model.videoUrl.isEmpty {
+            if !self.model.videoUrl.isEmpty && self.isPlaying == true{
                 self.playerVideo()
             }
         }
+        dlnaManager.startSearch()
     }
         
     @objc func playerDidFinish(){
@@ -78,6 +83,7 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
 
     @objc func replayPlayer(){
         self.player.defaultEdgeControlLayer.centerContainerView.isHidden = true
+        self.isPlaying = true
         self.player.replay()
     }
     
@@ -146,39 +152,32 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
     }
     
     @objc func touping(){
+        if deviceArr.isEmpty {
+            self.view.makeToast("当前未发现可投屏设备")
+        }else{
+            let alert = UIAlertController.init(title: "", message: "请选择设备", preferredStyle: .actionSheet)
+            for item in deviceArr {
+                let device:CLUPnPDevice = item as! CLUPnPDevice
+                let deviceAction = UIAlertAction.init(title: device.friendlyName, style: .default) { [self] action in
+                    self.dlnaManager.device = device
+                    self.dlnaManager.playUrl = self.model.videoUrl
+                    self.dlnaManager.start()
+                    self.dlnaManager.dlnaPlay()
+                    self.player.pause()
+                    self.isPlaying = false
+                }
+                alert.addAction(deviceAction)
+            }
+            let cancelAction = UIAlertAction.init(title: "取消", style: .cancel, handler: nil)
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
+        }
         // 投屏
         dlnaManager.startSearch()
     }
     
     func searchDLNAResult(_ devicesArray: [Any]!) {
-        view.makeToastActivity(.center)
-        DispatchQueue.main.asyncAfter(deadline: .now()+3) {
-            self.view.hideToastActivity()
-            if devicesArray.isEmpty {
-                self.view.makeToast("当前未发现可投屏设备")
-            }else{
-                
-                let alert = UIAlertController.init(title: "", message: "请选择设备", preferredStyle: .actionSheet)
-                if let popoverController = alert.popoverPresentationController {
-                    popoverController.sourceView = self.view
-                    popoverController.sourceRect = self.view.bounds
-                }
-                for item in devicesArray {
-                    let device:CLUPnPDevice = item as! CLUPnPDevice
-                    let deviceAction = UIAlertAction.init(title: device.friendlyName, style: .default) { [self] action in
-                        self.dlnaManager.device = device
-                        self.dlnaManager.playUrl = self.model.videoUrl
-                        self.dlnaManager.start()
-                        self.dlnaManager.dlnaPlay()
-                        self.player.pause()
-                    }
-                    alert.addAction(deviceAction)
-                }
-                let cancelAction = UIAlertAction.init(title: "取消", style: .cancel, handler: nil)
-                alert.addAction(cancelAction)
-                self.present(alert, animated: true, completion: nil)
-            }
-        }
+        self.deviceArr = devicesArray
     }
     
     func dlnaStartPlay() {
@@ -196,11 +195,13 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
             }
             alert.addAction(alertAction)
             present(alert, animated: true, completion: nil)
+            isPlaying = false
         }else{
             let asset = AVURLAsset.init(url: URL.init(string: model.videoUrl)!, options: ["AVURLAssetHTTPHeaderFieldsKey":headers])
             player.urlAsset = SJVideoPlayerURLAsset.init(avAsset: asset, startPosition: TimeInterval(model.progress), playModel: SJPlayModel.init())
             // 判断视频是否可以播放
             self.downloadBtn.isHidden = (model.videoUrl.contains("m3u8") || model.videoUrl.contains("html"))
+            isPlaying = true
         }
         print("播放地址是"+model.videoUrl)
     }
@@ -333,7 +334,10 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
         }
         return mainCollection
     }()
-
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     /*
      // MARK: - Navigation
      
