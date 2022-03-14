@@ -197,7 +197,8 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
             present(alert, animated: true, completion: nil)
             isPlaying = false
         }else{
-            let asset = AVURLAsset.init(url: URL.init(string: model.videoUrl)!, options: ["AVURLAssetHTTPHeaderFieldsKey":headers])
+            //FIXME:视频播放地址解包错误
+            let asset = try AVURLAsset.init(url: URL.init(string: model.videoUrl)!, options: ["AVURLAssetHTTPHeaderFieldsKey":headers])
             player.urlAsset = SJVideoPlayerURLAsset.init(avAsset: asset, startPosition: TimeInterval(model.progress), playModel: SJPlayModel.init())
             // 判断视频是否可以播放
             self.downloadBtn.isHidden = (model.videoUrl.contains("m3u8") || model.videoUrl.contains("html"))

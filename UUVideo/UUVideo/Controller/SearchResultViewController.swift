@@ -84,6 +84,7 @@ class SearchResultViewController: BaseViewController {
             } failure: { (error) in
                 print(error)
                 DispatchQueue.main.async {
+                    self.view.hideToastActivity()
                     self.mainCollect.es.noticeNoMoreData()
                 }
             }
