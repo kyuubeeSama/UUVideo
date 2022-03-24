@@ -11,6 +11,7 @@ import Ji
 import Alamofire
 import SwiftyJSON
 import GRDB
+import HandyJSON
 
 enum XPathError: Error {
     case getContentFail
@@ -475,6 +476,7 @@ class DataManager: NSObject {
                 switch response.result {
                 case .success(let value):
                     let json = JSON(value)
+                     /*
                     for item in json {
                         var videoModel = VideoModel.init()
                         videoModel.name = item.1["title"].string
@@ -486,6 +488,15 @@ class DataManager: NSObject {
                         listModel.list.append(videoModel)
                     }
                     success([listModel])
+                     */
+                    if let videoArr:[VideoModel] = [VideoModel].deserialize(from: json.rawString()) as? [VideoModel]{
+                        print("成功")
+                        listModel.list = videoArr;
+                        success([listModel])
+                    }else{
+                        print("失败")
+                    }
+                    
                 case .failure(let error):
                     print(error)
                     failure(error)
