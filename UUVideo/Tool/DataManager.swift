@@ -490,8 +490,12 @@ class DataManager: NSObject {
                     success([listModel])
                      */
                     if let videoArr:[VideoModel] = [VideoModel].deserialize(from: json.rawString()) as? [VideoModel]{
-                        print("成功")
-                        listModel.list = videoArr;
+                        for var item in videoArr {
+                            item.detailUrl = checkUrl(urlStr: item.detailUrl!, domainUrlStr: baseUrl)
+                            item.type = 3
+                            item.webType = 0
+                            listModel.list.append(item)
+                        }
                         success([listModel])
                     }else{
                         print("失败")
