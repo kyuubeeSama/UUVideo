@@ -25,7 +25,7 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
         } catch (let error) {
             print(error)
         }
-        mainTable.listArr = ["本地视频", "新番时间表", "哈哩哈哩","来快播","樱花动漫","笨猪","历史记录","收藏"]
+        mainTable.listArr = ["本地视频", "新番时间表", "哈哩哈哩","来快播","樱花动漫",/*"笨猪",*/"历史记录","收藏"]
         view.bringSubviewToFront(localView)
         NotificationCenter.default.addObserver(self, selector: #selector(didChangeRotate(notice:)), name: UIApplication.didChangeStatusBarFrameNotification, object: nil)
     }

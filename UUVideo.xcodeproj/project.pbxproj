@@ -286,6 +286,7 @@
 		A950E2C524E674B8000CBB92 /* UUVideo */ = {
 			isa = PBXGroup;
 			children = (
+				A9CE79B728AF68BA00BFCA68 /* 个人中心 */,
 				A950E2C824E674D0000CBB92 /* Controller */,
 				A950E2CB24E674E8000CBB92 /* View */,
 				A950E2D024E6781E000CBB92 /* Model */,
@@ -304,9 +305,6 @@
 				A997538625666B9600179FCB /* NetVideoPlayerViewController.swift */,
 				A950E2C924E674E4000CBB92 /* PhoneIndexViewController.swift */,
 				A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */,
-				A9B378F8261089DD00EBC4EF /* HistoryViewController.swift */,
-				A91F3CA5263504B1006E6DA6 /* CollectViewController.swift */,
-				A960D893272FBC0800B7C0BC /* DownloadViewController.swift */,
 			);
 			path = Phone;
 			sourceTree = "<group>";
@@ -373,6 +371,16 @@
 				A92AC00E25529E9F001EBD12 /* SerialModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		A9CE79B728AF68BA00BFCA68 /* 个人中心 */ = {
+			isa = PBXGroup;
+			children = (
+				A9B378F8261089DD00EBC4EF /* HistoryViewController.swift */,
+				A91F3CA5263504B1006E6DA6 /* CollectViewController.swift */,
+				A960D893272FBC0800B7C0BC /* DownloadViewController.swift */,
+			);
+			path = "个人中心";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -733,7 +741,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.quanyihulian.UUVideo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "UUVideo/extension/UUVideo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -759,7 +769,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.quanyihulian.UUVideo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "UUVideo/extension/UUVideo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -27,7 +27,7 @@ class PhoneIndexViewController: BaseViewController {
             print(error)
         }
         print(FileTool.init().getDocumentPath())
-        mainTable.listArr = ["本地视频", "新番时间表", "哈哩TV", "来快播","樱花动漫", "笨猪","历史记录", "我的收藏"]
+        mainTable.listArr = ["本地视频", "新番时间表", "哈哩TV", "来快播","樱花动漫", /*"笨猪",*/"历史记录", "我的收藏"]
     }
 
     lazy var mainTable: WebsiteTableView = {

@@ -3,7 +3,8 @@ platform :ios,'13.0'
 
 target 'UUVideo' do
 
-  pod 'SJVideoPlayer'
+  pod 'SJVideoPlayer','3.3.2'
+  pod 'SJBaseVideoPlayer','3.6.6'
   # 投屏
   pod 'MRDLNA'
   pod 'Popover.OC'
