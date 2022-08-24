@@ -34,13 +34,13 @@ class NetVideoIndexViewController: BaseViewController, UISearchBarDelegate {
         DispatchQueue.global().async { [self] in
             DataManager.init().getWebsiteIndexData(type: webType) { (dataArr) in
                 DispatchQueue.main.async {
-                    self.view.hideToastActivity()
-                    self.mainCollect.listArr = dataArr
+                    view.hideToastActivity()
+                    mainCollect.listArr = dataArr
                 }
             } failure: { (error) in
                 print(error)
                 DispatchQueue.main.async {
-                    self.view.hideToastActivity()
+                    view.hideToastActivity()
                 }
             }
         }

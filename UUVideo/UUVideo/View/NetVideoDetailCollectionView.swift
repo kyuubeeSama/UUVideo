@@ -148,7 +148,7 @@ class NetVideoDetailCollectionView: UICollectionView, UICollectionViewDelegate, 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             // 剧集点击，修改为选中状态
-            let model: SerialModel = (self.model?.serialArr[indexPath.row])!
+            let model: SerialModel = (model?.serialArr[indexPath.row])!
             model.ischoose = !model.ischoose!
         }
         if cellItemSelected != nil {

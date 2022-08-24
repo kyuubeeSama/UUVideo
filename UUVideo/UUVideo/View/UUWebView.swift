@@ -14,8 +14,8 @@ class UUWebView: WKWebView, WKNavigationDelegate, WKUIDelegate {
 
     override init(frame: CGRect, configuration: WKWebViewConfiguration) {
         super.init(frame: frame, configuration: configuration)
-        self.uiDelegate = self
-        self.navigationDelegate = self
+        uiDelegate = self
+        navigationDelegate = self
     }
 
     required init?(coder: NSCoder) {

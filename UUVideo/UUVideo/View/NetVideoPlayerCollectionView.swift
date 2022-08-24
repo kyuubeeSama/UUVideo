@@ -49,7 +49,7 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
             let serialModel = model?.serialArr[indexPath.row]
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "serialCell", for: indexPath) as! VideoCategoryCollectionViewCell
             cell.titleLab.text = serialModel!.name
-            if self.model?.serialIndex == indexPath.row {
+            if model?.serialIndex == indexPath.row {
                 serialModel?.ischoose = true
             }else{
                 serialModel?.ischoose = false

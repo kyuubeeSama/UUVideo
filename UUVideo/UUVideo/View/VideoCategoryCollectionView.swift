@@ -97,8 +97,8 @@ class VideoCategoryCollectionView: UICollectionView, UICollectionViewDelegate, U
         let model = listModel.list[indexPath.row]
         model.ischoose = !model.ischoose!
         reloadData()
-        if self.cellItemClick != nil {
-            self.cellItemClick!(indexPath)
+        if cellItemClick != nil {
+            cellItemClick!(indexPath)
         }
     }
 

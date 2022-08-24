@@ -22,7 +22,7 @@ class BaseViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(FileSaveFieldFileNotification(notification:)), name: NSNotification.Name(rawValue: "FileSaveFieldFileNotification"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(FileExistsNotification(notification:)), name: NSNotification.Name(rawValue: "FileExistsNotification"), object: nil)
         
-        self.view.backgroundColor = UIColor.systemBackground
+        view.backgroundColor = UIColor.systemBackground
         
     }
     @objc func FileSaveSuccessNotification(notification:Notification){
@@ -46,12 +46,12 @@ class BaseViewController: UIViewController {
     }
         
     func setNavColor(navColor:UIColor,titleColor:UIColor,barStyle:UIBarStyle) {
-        self.navigationController?.isNavigationBarHidden = false
-        self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.barStyle = barStyle
-        self.navigationController?.navigationBar.barTintColor = navColor
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:titleColor]
-        self.navigationController?.navigationBar.tintColor = titleColor
+        navigationController?.isNavigationBarHidden = false
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.barStyle = barStyle
+        navigationController?.navigationBar.barTintColor = navColor
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:titleColor]
+        navigationController?.navigationBar.tintColor = titleColor
         if #available(iOS 13.0, *) {
             let statusBarView = UIView(frame: view.window?.windowScene?.statusBarManager?.statusBarFrame ?? CGRect.zero)
             statusBarView.backgroundColor = navColor
@@ -66,7 +66,7 @@ class BaseViewController: UIViewController {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
+        view.endEditing(true)
     }
     
     lazy var headerAnimator: ESRefreshFooterAnimator = {

@@ -14,7 +14,7 @@ class FileTool: NSObject {
     
     /// 获取document文件夹
     func getDocumentPath()->String{
-        return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
     }
     //    创建文件夹
     func createDirectory(path:String) throws ->Bool{
@@ -36,7 +36,7 @@ class FileTool: NSObject {
     }
     //    TODO:创建文件
     func createFile(document:String,fileData:Data) -> Bool {
-        let path = self.getDocumentPath().appending(document)
+        let path = getDocumentPath().appending(document)
         let fileManager = FileManager.default
         let isDirExist = fileManager.fileExists(atPath: path)
         if !isDirExist {
@@ -63,7 +63,7 @@ class FileTool: NSObject {
     // TODO:获取本地视频相关信息
     func getVideoFileList()->Array<VideoModel>{
         var array:[VideoModel] = []
-        let path = self.getDocumentPath().appending("/video")
+        let path = getDocumentPath().appending("/video")
 //        print("路径是\(path)")
         //        let dirEnum = fileManager.enumerator(atPath: path)
 
@@ -84,8 +84,8 @@ class FileTool: NSObject {
                         model.type = 1
                         model.name = fileName
                         model.filePath = filePath
-                        model.time = self.getVideoTime(path: filePath)
-                        model.pic = self.getVideoImage(path: filePath)
+                        model.time = getVideoTime(path: filePath)
+                        model.pic = getVideoImage(path: filePath)
                         array.append(model)
                     }
                 case .typeDirectory:

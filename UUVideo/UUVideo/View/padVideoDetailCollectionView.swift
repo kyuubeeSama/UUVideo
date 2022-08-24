@@ -49,7 +49,7 @@ class padVideoDetailCollectionView: UICollectionView, UICollectionViewDelegate, 
             let serialModel = model?.serialArr[indexPath.row]
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "serialCell", for: indexPath) as! VideoCategoryCollectionViewCell
             cell.titleLab.text = serialModel!.name
-            if self.model?.serialIndex == indexPath.row {
+            if model?.serialIndex == indexPath.row {
                 serialModel?.ischoose = true
             }else{
                 serialModel?.ischoose = false
@@ -85,12 +85,12 @@ class padVideoDetailCollectionView: UICollectionView, UICollectionViewDelegate, 
             }
             return CGSize(width: width, height: 30.0)
         } else {
-            return CGSize(width: self.bounds.width, height: 40)
+            return CGSize(width: bounds.width, height: 40)
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        CGSize(width: self.bounds.width, height: section == 0 ? 0 : 60)
+        CGSize(width: bounds.width, height: section == 0 ? 0 : 60)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

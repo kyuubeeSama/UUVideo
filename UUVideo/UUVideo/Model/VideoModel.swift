@@ -62,12 +62,12 @@ struct VideoModel:HandyJSON {
     }
     mutating func mapping(mapper: HelpingMapper) {
         mapper <<<
-            self.name <-- "title"
+            name <-- "title"
         mapper <<<
-            self.num  <-- "lianzaijs"
+            num  <-- "lianzaijs"
         mapper <<<
-            self.detailUrl <-- "url"
+            detailUrl <-- "url"
         mapper <<<
-            self.picUrl <-- "thumb"
+            picUrl <-- "thumb"
     }
 }

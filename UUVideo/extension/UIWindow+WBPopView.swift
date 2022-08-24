@@ -27,7 +27,7 @@ extension UIWindow {
     static var popview_animationTime = 0.25
     public var hasPopView:Bool? {
         get{
-            return objc_getAssociatedObject(self, &AssociatedKeys.hasPopViewKey) as? Bool
+            objc_getAssociatedObject(self, &AssociatedKeys.hasPopViewKey) as? Bool
         }
         set{
             objc_setAssociatedObject(self, &AssociatedKeys.hasPopViewKey, newValue, .OBJC_ASSOCIATION_ASSIGN)
@@ -35,7 +35,7 @@ extension UIWindow {
     }
     public var popContentView:UIView? {
         get{
-            return objc_getAssociatedObject(self, &AssociatedKeys.popContentViewKey) as? UIView
+            objc_getAssociatedObject(self, &AssociatedKeys.popContentViewKey) as? UIView
         }
         set{
             objc_setAssociatedObject(self, &AssociatedKeys.popContentViewKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
@@ -43,9 +43,9 @@ extension UIWindow {
     }
     
     func QY_ShowPopView(popStyle:WBPopStyle,popView:UIView,offset:CGPoint,dismissWhenClickCoverView:Bool,isBlur:Bool,alpha:Float) {
-        self.addCoverView(dismissWhenClickCoverView: dismissWhenClickCoverView, popStyle: popStyle, isBlur: isBlur, alpha: alpha)
-        self.addSubview(popView)
-        self.popContentView = popView
+        addCoverView(dismissWhenClickCoverView: dismissWhenClickCoverView, popStyle: popStyle, isBlur: isBlur, alpha: alpha)
+        addSubview(popView)
+        popContentView = popView
         let width = popView.frame.size.width
         let height = popView.frame.size.height
         switch popStyle {
@@ -102,13 +102,13 @@ extension UIWindow {
     }
     
     func wb_dismissPopView(popStyle:WBPopStyle,completion:@escaping()->()){
-        if !self.hasPopView! {
+        if !hasPopView! {
             return;
         }
-        self.hasPopView = false
-        let width = self.popContentView?.frame.size.width
-        let height = self.popContentView?.frame.size.height
-        let x = self.popContentView?.frame.origin.x
+        hasPopView = false
+        let width = popContentView?.frame.size.width
+        let height = popContentView?.frame.size.height
+        let x = popContentView?.frame.origin.x
         UIView.animate(withDuration: UIWindow.popview_animationTime) {
             switch popStyle {
             case .top:
@@ -158,14 +158,14 @@ extension UIWindow {
         popCoverView.isBlur = isBlur
         popCoverView.coverAlpha = alpha
         popCoverView.removeFromSuperview()
-        self.addSubview(popCoverView)
-        self.hasPopView = true
+        addSubview(popCoverView)
+        hasPopView = true
     }
     
     func clear() {
         WBPopCoverBackgroundView.instance.clickCoverViewCallBack = nil;
         WBPopCoverBackgroundView.instance.removeFromSuperview()
-        self.hasPopView = false
-        self.popContentView!.removeFromSuperview()
+        hasPopView = false
+        popContentView!.removeFromSuperview()
     }
 }

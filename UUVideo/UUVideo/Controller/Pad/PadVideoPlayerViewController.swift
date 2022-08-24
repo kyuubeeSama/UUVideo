@@ -83,7 +83,7 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
     
     @objc func touping(){
         if deviceArr.isEmpty {
-            self.view.makeToast("当前未发现可投屏设备")
+            view.makeToast("当前未发现可投屏设备")
         }else{
             var actionArr:[PopoverAction] = []
             for item in deviceArr {

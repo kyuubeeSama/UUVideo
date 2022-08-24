@@ -78,17 +78,17 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
     }
         
     @objc func playerDidFinish(){
-        self.player.defaultEdgeControlLayer.centerContainerView.isHidden = false
+        player.defaultEdgeControlLayer.centerContainerView.isHidden = false
     }
 
     @objc func replayPlayer(){
-        self.player.defaultEdgeControlLayer.centerContainerView.isHidden = true
-        self.isPlaying = true
-        self.player.replay()
+        player.defaultEdgeControlLayer.centerContainerView.isHidden = true
+        isPlaying = true
+        player.replay()
     }
     
     @objc func playNextVideo(){
-        self.player.defaultEdgeControlLayer.centerAdapter.removeItem(forTag: 10)
+        player.defaultEdgeControlLayer.centerAdapter.removeItem(forTag: 10)
         if model.webType == 0 {
             // 查看剧集是否有播放地址，如果没有就提示无法播放
             let serialModel = model.serialArr[model.serialIndex+1]
@@ -98,7 +98,7 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
                 alert.addAction(sureAction)
                 present(alert, animated: true, completion: nil)
             }else{
-                self.player.defaultEdgeControlLayer.centerContainerView.isHidden = true
+                player.defaultEdgeControlLayer.centerContainerView.isHidden = true
                 model.videoUrl = (serialModel.playerUrl)
                 model.progress = 0
                 playerVideo()
@@ -107,7 +107,7 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
                 mainCollect.model = model
             }
         } else {
-            self.player.defaultEdgeControlLayer.centerContainerView.isHidden = true
+            player.defaultEdgeControlLayer.centerContainerView.isHidden = true
             let serialModel = model.serialArr[model.serialIndex+1]
             model.serialDetailUrl = serialModel.detailUrl
             model.serialIndex = model.serialIndex+1
@@ -153,31 +153,31 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
     
     @objc func touping(){
         if deviceArr.isEmpty {
-            self.view.makeToast("当前未发现可投屏设备")
+            view.makeToast("当前未发现可投屏设备")
         }else{
             let alert = UIAlertController.init(title: "", message: "请选择设备", preferredStyle: .actionSheet)
             for item in deviceArr {
                 let device:CLUPnPDevice = item as! CLUPnPDevice
                 let deviceAction = UIAlertAction.init(title: device.friendlyName, style: .default) { [self] action in
-                    self.dlnaManager.device = device
-                    self.dlnaManager.playUrl = self.model.videoUrl
-                    self.dlnaManager.start()
-                    self.dlnaManager.dlnaPlay()
-                    self.player.pause()
-                    self.isPlaying = false
+                    dlnaManager.device = device
+                    dlnaManager.playUrl = model.videoUrl
+                    dlnaManager.start()
+                    dlnaManager.dlnaPlay()
+                    player.pause()
+                    isPlaying = false
                 }
                 alert.addAction(deviceAction)
             }
             let cancelAction = UIAlertAction.init(title: "取消", style: .cancel, handler: nil)
             alert.addAction(cancelAction)
-            self.present(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)
         }
         // 投屏
         dlnaManager.startSearch()
     }
     
     func searchDLNAResult(_ devicesArray: [Any]!) {
-        self.deviceArr = devicesArray
+        deviceArr = devicesArray
     }
     
     func dlnaStartPlay() {
@@ -201,7 +201,7 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
             let asset = try AVURLAsset.init(url: URL.init(string: model.videoUrl)!, options: ["AVURLAssetHTTPHeaderFieldsKey":headers])
             player.urlAsset = SJVideoPlayerURLAsset.init(avAsset: asset, startPosition: TimeInterval(model.progress), playModel: SJPlayModel.init())
             // 判断视频是否可以播放
-            self.downloadBtn.isHidden = (model.videoUrl.contains("m3u8") || model.videoUrl.contains("html"))
+            downloadBtn.isHidden = (model.videoUrl.contains("m3u8") || model.videoUrl.contains("html"))
             isPlaying = true
         }
         print("播放地址是"+model.videoUrl)

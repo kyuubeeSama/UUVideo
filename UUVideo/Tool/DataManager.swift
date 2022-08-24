@@ -340,7 +340,9 @@ class DataManager: NSObject {
     /// 获取视频详情界面相关数据
     /// - Parameters:
     ///   - urlStr: 视频地址
+    ///   - type:
     ///   - success: 成功返回
+    ///   - failure:
     /// - Returns: listArr:[videoModel]
     func getVideoDetailData(urlStr: String, type: websiteType, success: @escaping (_ VideoModel: VideoModel) -> (), failure: @escaping (_ error: Error) -> ()) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)

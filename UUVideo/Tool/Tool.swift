@@ -45,7 +45,7 @@ class Tool:NSObject {
     }
     
 //    弹窗
-    static func showSystemAlert(viewController:UIViewController,title:String,message:String,sureBtnClick:@escaping(()->())) {
+    static func showSystemAlert(viewController:UIViewController,title:String,message:String,sureBtnClick: @escaping ()->()) {
         let alert = UIAlertController.init(title: title, message: message, preferredStyle: .alert)
         let sureAction = UIAlertAction.init(title: "确定", style: .default) { (sureAction) in
             sureBtnClick()

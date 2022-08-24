@@ -37,7 +37,7 @@ class HistoryViewController: BaseViewController {
         alert.addAction(sureAction)
         let cancelAction = UIAlertAction.init(title: "取消", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     func getHistoryData(){

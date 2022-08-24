@@ -15,16 +15,16 @@ class WBPopCoverBackgroundView: UIView {
         didSet{
             if isBlur {
                 blurCloverView?.isHidden = false
-                self.backgroundColor = .clear
+                backgroundColor = .clear
             }else{
                 blurCloverView?.isHidden = true
-                self.backgroundColor = UIColor.init(white: 0, alpha: 0.65)
+                backgroundColor = UIColor.init(white: 0, alpha: 0.65)
             }
         }
     }
     public var coverAlpha:Float = 1{
         didSet{
-            self.backgroundColor = UIColor.init(white: 0, alpha: CGFloat(coverAlpha))
+            backgroundColor = UIColor.init(white: 0, alpha: CGFloat(coverAlpha))
         }
     }
     public var blurCloverView:UIView?
@@ -33,20 +33,20 @@ class WBPopCoverBackgroundView: UIView {
     private override init(frame: CGRect) {
         super.init(frame: frame)
         if (blurCloverView == nil) {
-            self.backgroundColor = .clear
+            backgroundColor = .clear
             let blur = UIBlurEffect.init(style: .dark)
             blurCloverView = UIVisualEffectView.init(effect: blur)
             blurCloverView?.frame = UIScreen.main.bounds
             blurCloverView?.isUserInteractionEnabled = true
-            self.addSubview(blurCloverView!)
+            addSubview(blurCloverView!)
             let tap = UITapGestureRecognizer.init(target: self, action: #selector(clickCoverView))
-            self.addGestureRecognizer(tap)
+            addGestureRecognizer(tap)
         }
     }
     
     @objc func clickCoverView(){
-        if isDismissPopView && (self.clickCoverViewCallBack != nil) {
-            self.clickCoverViewCallBack!()
+        if isDismissPopView && (clickCoverViewCallBack != nil) {
+            clickCoverViewCallBack!()
         }
     }
     

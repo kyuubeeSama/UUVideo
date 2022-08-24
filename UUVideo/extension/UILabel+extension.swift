@@ -10,11 +10,11 @@ import UIKit
 
 extension UILabel{
     func alignTop(){
-        let text = self.text! as NSString
-        let size = text.size(withAttributes: [NSAttributedString.Key.font:self.font!])
-        let rect = text.boundingRect(with: CGSize(width: self.frame.size.width, height: CGFloat(MAXFLOAT)), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font:self.font!], context: nil)
-        self.numberOfLines = 0
-        var newLineToPad = (self.frame.size.height-rect.size.height)/size.height
+        let text = text! as NSString
+        let size = text.size(withAttributes: [NSAttributedString.Key.font: font!])
+        let rect = text.boundingRect(with: CGSize(width: frame.size.width, height: CGFloat(MAXFLOAT)), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font!], context: nil)
+        numberOfLines = 0
+        var newLineToPad = (frame.size.height-rect.size.height)/size.height
         if newLineToPad < 2 {
             newLineToPad = 0
         }else{
@@ -23,15 +23,15 @@ extension UILabel{
         for _ in 0...Int(newLineToPad) {
             self.text! += "\n "
         }
-        self.lineBreakMode = .byClipping
+        lineBreakMode = .byClipping
     }
     
     func alignBottom() {
-        let text = self.text! as NSString
-        let size = text.size(withAttributes: [NSAttributedString.Key.font:self.font!])
-        let rect = text.boundingRect(with: CGSize(width: self.frame.size.width, height: CGFloat(MAXFLOAT)), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font:self.font!], context: nil)
-        self.numberOfLines = 0
-        var newLineToPad = (self.frame.size.height-rect.size.height)/size.height
+        let text = text! as NSString
+        let size = text.size(withAttributes: [NSAttributedString.Key.font: font!])
+        let rect = text.boundingRect(with: CGSize(width: frame.size.width, height: CGFloat(MAXFLOAT)), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font!], context: nil)
+        numberOfLines = 0
+        var newLineToPad = (frame.size.height-rect.size.height)/size.height
         if newLineToPad < 2 {
             newLineToPad = 0
         }else{

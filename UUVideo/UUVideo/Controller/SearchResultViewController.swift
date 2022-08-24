@@ -27,12 +27,12 @@ class SearchResultViewController: BaseViewController {
     }
 
     func setNav() {
-        self.title = "搜索结果"
+        title = "搜索结果"
     }
     
     //获取搜索数据
     func getResultList() {
-        self.view.makeToastActivity(.center)
+        view.makeToastActivity(.center)
         if webType == .benpig{
             let webView = UUWebView.init()
             view.addSubview(webView)
