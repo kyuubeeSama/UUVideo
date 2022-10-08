@@ -10,7 +10,7 @@ import UIKit
 
 class NetVideoDetailViewController: BaseViewController {
 
-    var videoModel: VideoModel?
+    var videoModel: VideoModel = VideoModel.init()
     let collectBtn = UIButton.init(type: .custom)
 
     override func viewDidLoad() {
@@ -36,16 +36,16 @@ class NetVideoDetailViewController: BaseViewController {
     }
 
     @objc func collectClick() {
-        if SqlTool.init().isCollect(model: videoModel!) {
+        if SqlTool.init().isCollect(model: videoModel) {
             // 删除收藏
-            if SqlTool.init().deleteCollect(model: videoModel!) {
+            if SqlTool.init().deleteCollect(model: videoModel) {
                 collectBtn.setImage(UIImage.init(systemName: "heart"), for: .normal)
             } else {
                 view.makeToast("操作失败")
             }
         } else {
             // 添加收藏
-            if SqlTool.init().saveCollect(model: videoModel!) {
+            if SqlTool.init().saveCollect(model: videoModel) {
                 // 修改bar按钮
                 collectBtn.setImage(UIImage.init(systemName: "heart.fill"), for: .normal)
             } else {
@@ -58,15 +58,15 @@ class NetVideoDetailViewController: BaseViewController {
     func getDetailData() {
         view.makeToastActivity(.center)
         DispatchQueue.global().async { [self] in
-            DataManager.init().getVideoDetailData(urlStr: (videoModel?.detailUrl)!, type: websiteType(rawValue: (videoModel?.webType)!)!) { (resultModel) in
+            DataManager.init().getVideoDetailData(urlStr: (videoModel.detailUrl)!, type: websiteType(rawValue: (videoModel.webType)!)!) { (resultModel) in
                 DispatchQueue.main.async {
                     view.hideToastActivity()
-                    videoModel?.picUrl = resultModel.picUrl
-                    videoModel?.videoArr = resultModel.videoArr
-                    videoModel?.serialArr = resultModel.serialArr
-                    videoModel?.serialNum = resultModel.serialNum
+                    videoModel.picUrl = resultModel.picUrl
+                    videoModel.videoArr = resultModel.videoArr
+                    videoModel.serialArr = resultModel.serialArr
+                    videoModel.serialNum = resultModel.serialNum
                     mainCollect.model = videoModel
-                    addCollectItem(videoModel: videoModel!)
+                    addCollectItem(videoModel: videoModel)
                     if resultModel.serialArr.isEmpty {
                         let alert = UIAlertController.init(title: "提示", message: "当前视频没有剧集", preferredStyle: .alert)
                         let alertAction = UIAlertAction.init(title: "返回上一页", style: .default) { action in
@@ -98,16 +98,16 @@ class NetVideoDetailViewController: BaseViewController {
             if indexPath.section == 1 {
                 if Tool.isPhone() {
                     let VC = NetVideoPlayerViewController.init()
-                    VC.model = self.videoModel!
-                    let serialModel = self.videoModel?.serialArr[indexPath.row]
-                    VC.model.serialDetailUrl = serialModel!.detailUrl
+                    VC.model = self.videoModel
+                    let serialModel = self.videoModel.serialArr[indexPath.row]
+                    VC.model.serialDetailUrl = serialModel.detailUrl
                     VC.model.serialIndex = indexPath.row
                     self.navigationController?.pushViewController(VC, animated: true)
                 }else{
                     let VC = PadVideoPlayerViewController.init()
-                    VC.model = self.videoModel!
-                    let serialModel = self.videoModel?.serialArr[indexPath.row]
-                    VC.model.serialDetailUrl = serialModel!.detailUrl
+                    VC.model = self.videoModel
+                    let serialModel = self.videoModel.serialArr[indexPath.row]
+                    VC.model.serialDetailUrl = serialModel.detailUrl
                     VC.model.serialIndex = indexPath.row
                     self.navigationController?.pushViewController(VC, animated: true)
                 }
@@ -122,15 +122,5 @@ class NetVideoDetailViewController: BaseViewController {
         }
         return mainCollection
     }()
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

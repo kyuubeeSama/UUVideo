@@ -13,19 +13,8 @@ import SwiftyJSON
 import GRDB
 import HandyJSON
 
-enum XPathError: Error {
-    case getContentFail
-}
-
-enum websiteType: Int {
-    case halihali = 0
-    case laikuaibo = 1
-    case sakura = 2
-    case benpig = 3
-}
-
 class DataManager: NSObject {
-    /// 获取新番数据
+    /// MARK: 获取新番数据
     /// - Parameters:
     ///   - dayIndex: 当前为第几天
     ///   - success: 返回视频列表
@@ -73,7 +62,7 @@ class DataManager: NSObject {
         }
     }
 
-    /// 获取站点首页数据
+    /// MARK: 获取站点首页数据
     /// - Parameters:
     ///   - type: 站点
     ///   - success: 成功
@@ -151,7 +140,7 @@ class DataManager: NSObject {
         }
     }
 
-    /// 获取视频列表
+    /// MARK: 获取视频列表
     /// - Parameters:
     ///   - urlStr: 站点地址
     ///   - type: 站点
@@ -227,7 +216,7 @@ class DataManager: NSObject {
         }
     }
 
-    /// 获取分类数据
+    /// MARK: 获取分类数据
     /// - Parameters:
     ///   - urlStr: 请求地址
     ///   - type: 站点
@@ -337,7 +326,7 @@ class DataManager: NSObject {
         }
     }
 
-    /// 获取视频详情界面相关数据
+    /// MARK: 获取视频详情界面相关数据
     /// - Parameters:
     ///   - urlStr: 视频地址
     ///   - type:
@@ -466,7 +455,7 @@ class DataManager: NSObject {
         }
     }
 
-    // 搜索数据
+    // MARK: 搜索数据
     func getSearchData(urlStr: String, keyword: String, website: websiteType, success: @escaping (_ searchData: [ListModel]) -> (), failure: @escaping (_ error: Error) -> ()) {
         let listModel = ListModel.init()
         listModel.title = "搜索关键字:" + keyword
@@ -478,19 +467,6 @@ class DataManager: NSObject {
                 switch response.result {
                 case .success(let value):
                     let json = JSON(value)
-                     /*
-                    for item in json {
-                        var videoModel = VideoModel.init()
-                        videoModel.name = item.1["title"].string
-                        videoModel.num = item.1["lianzaijs"].string!
-                        videoModel.detailUrl = checkUrl(urlStr: item.1["url"].string!, domainUrlStr: baseUrl)
-                        videoModel.picUrl = item.1["thumb"].string!
-                        videoModel.type = 3
-                        videoModel.webType = 0
-                        listModel.list.append(videoModel)
-                    }
-                    success([listModel])
-                     */
                     if let videoArr:[VideoModel] = [VideoModel].deserialize(from: json.rawString()) as? [VideoModel]{
                         for var item in videoArr {
                             item.detailUrl = checkUrl(urlStr: item.detailUrl!, domainUrlStr: baseUrl)
@@ -555,7 +531,7 @@ class DataManager: NSObject {
         }
     }
 
-    //获取播放界面
+    //MARK: 获取播放界面
     func getVideoPlayerData(urlStr: String, website: websiteType, videoNum:Int, success: @escaping (_ videoModel: VideoModel) -> (), failure: @escaping (_ error: Error) -> ()) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
@@ -660,19 +636,6 @@ class DataManager: NSObject {
                     recommendUpdateXpath = "/html/body/div[1]/ul[1]/li/p/a/span"
                 }
             }else if website == .sakura{
-//                备注，视频获取地址的js逻辑
-                /*
-                if ($('#playbox').length>0){
-                        var vid = $('#playbox').attr('data-vid');
-                        var gf = $('#playbox').attr('data-gf');
-                        if (gf=='1'){
-                            $.post('http://tup.yhdm.so/playgf.php',{vid:vid},function(data){
-                                $('#playbox').html(data);
-                            });
-                        }else
-                            playit(vid);
-                    }
- */
                 let vidXpath = "//*[@id=\"playbox\"]/@data-vid"
                 let gfXpath = "//*[@id=\"playbox\"]/@data-gf"
                 let vidNodeArr = jiDoc?.xPath(vidXpath)

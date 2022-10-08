@@ -20,6 +20,7 @@ class PhoneIndexViewController: BaseViewController {
 
         // Do any additional setup after loading the view.
         // 创建video文件夹
+        title = "悠悠视频"
         do {
             let path = FileTool.init().getDocumentPath().appending("/video")
             _ = try FileTool.init().createDirectory(path: path)
@@ -27,17 +28,17 @@ class PhoneIndexViewController: BaseViewController {
             print(error)
         }
         print(FileTool.init().getDocumentPath())
-        mainTable.listArr = ["本地视频", "新番时间表", "哈哩TV", "来快播","樱花动漫", /*"笨猪",*/"历史记录", "我的收藏"]
+        mainTable.listArr = indexArr
     }
 
     lazy var mainTable: WebsiteTableView = {
-        let table = WebsiteTableView.init(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH), style: .plain)
+        let table = WebsiteTableView.init(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH), style: .insetGrouped)
         self.view.addSubview(table)
         table.snp.makeConstraints { (make) in
             make.left.right.top.bottom.equalToSuperview()
         }
         table.cellItemDidSelect = { indexPath in
-            let string = table.listArr![indexPath.row]
+            let string = table.listArr[indexPath.section].list[indexPath.row]
             if (string == "新番时间表") {
                 let VC = BangumiViewController.init()
                 self.navigationController?.pushViewController(VC, animated: true)
@@ -58,15 +59,5 @@ class PhoneIndexViewController: BaseViewController {
         }
         return table
     }()
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

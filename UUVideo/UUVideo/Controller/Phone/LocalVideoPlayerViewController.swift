@@ -13,7 +13,7 @@ import Photos
 
 class LocalVideoPlayerViewController: BaseViewController {
 
-    var model: VideoModel?
+    var model: VideoModel = VideoModel.init()
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -34,12 +34,12 @@ class LocalVideoPlayerViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        if model?.type == 1 {
+        if model.type == 1 {
             // 本地视频
-            player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(fileURLWithPath: (model?.filePath)!))
-        } else if model?.type == 2 {
+            player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(fileURLWithPath: (model.filePath)!))
+        } else if model.type == 2 {
             // 相册视频
-            PHImageManager.default().requestAVAsset(forVideo: (model?.asset)!, options: PHVideoRequestOptions.init()) { (avasset, mix, info) in
+            PHImageManager.default().requestAVAsset(forVideo: (model.asset)!, options: PHVideoRequestOptions.init()) { (avasset, mix, info) in
                 DispatchQueue.main.async {
                     self.player.urlAsset = SJVideoPlayerURLAsset.init(avAsset: avasset!)
                 }
@@ -58,15 +58,5 @@ class LocalVideoPlayerViewController: BaseViewController {
         player.controlLayerNeedAppear()
         return player
     }()
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

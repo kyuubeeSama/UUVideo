@@ -10,7 +10,7 @@ import UIKit
 
 class RightViewController: BaseViewController {
     var cellItemSelected:((_ indexPath:IndexPath)->())?
-    var listArr:[ListModel]?
+    var listArr:[ListModel] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -37,14 +37,4 @@ class RightViewController: BaseViewController {
         return collectionView
     }()
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

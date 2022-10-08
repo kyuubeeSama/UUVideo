@@ -61,20 +61,10 @@ class BangumiListViewController: BaseViewController,JXSegmentedListContainerView
             let listModel = collection.listArr![indexPath.section]
             let VC = NetVideoDetailViewController.init()
             VC.videoModel = listModel.list[indexPath.row]
-            VC.videoModel?.webType = 0
+            VC.videoModel.webType = 0
             self.navigationController?.pushViewController(VC, animated: true)
         }
         return collection
     }()
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

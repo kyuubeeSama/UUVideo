@@ -25,7 +25,7 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
         } catch (let error) {
             print(error)
         }
-        mainTable.listArr = ["本地视频", "新番时间表", "哈哩哈哩","来快播","樱花动漫",/*"笨猪",*/"历史记录","收藏"]
+        mainTable.listArr = indexArr
         view.bringSubviewToFront(localView)
         NotificationCenter.default.addObserver(self, selector: #selector(didChangeRotate(notice:)), name: UIApplication.didChangeStatusBarFrameNotification, object: nil)
     }
@@ -55,7 +55,7 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
         mainTable.cellItemDidSelect = { [self] indexPath in
             self.view.endEditing(true)
             self.tableIndex = indexPath.row
-            let string = mainTable.listArr![indexPath.row]
+            let string = mainTable.listArr[indexPath.section].list[indexPath.row]
             // 点击切换数据源
             if (string == "本地视频") {
                 self.view.bringSubviewToFront(self.localView)
@@ -69,7 +69,7 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
                 self.view.bringSubviewToFront(self.benpigView)
             } else if (string == "历史记录"){
                 self.view.bringSubviewToFront(self.historyView)
-            } else if(string == "收藏"){
+            } else if(string == "我的收藏"){
                 self.view.bringSubviewToFront(self.collectView)
             } else if (string == "来快播") {
                 self.view.bringSubviewToFront(self.laikuaiboView)
@@ -128,15 +128,5 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
         }
         return controller.view
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

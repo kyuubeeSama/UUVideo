@@ -11,7 +11,7 @@ import Kingfisher
 
 class NetVideoIndexViewController: BaseViewController, UISearchBarDelegate {
 
-    var listArr: [ListModel]?
+    var listArr: [ListModel] = []
     var isSearch: Bool = false
     var webType: websiteType = .halihali
     
@@ -107,15 +107,5 @@ class NetVideoIndexViewController: BaseViewController, UISearchBarDelegate {
         }
         return mainCollection
     }()
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
