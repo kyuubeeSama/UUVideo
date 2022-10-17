@@ -21,6 +21,7 @@ class HistoryViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        title = "历史记录"
         if Tool.isPhone() {
             getHistoryData()
         }
@@ -55,7 +56,7 @@ class HistoryViewController: BaseViewController {
         }
         mainCollection.cellItemSelected = { indexPath in
             //            进入剧集界面
-            let listModel = mainCollection.listArr![indexPath.section]
+            let listModel = mainCollection.listArr[indexPath.section]
             if Tool.isPhone() {
                 let VC = NetVideoPlayerViewController.init()
                 let videoModel = listModel.list[indexPath.row]

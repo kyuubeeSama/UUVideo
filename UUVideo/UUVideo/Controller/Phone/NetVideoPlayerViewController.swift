@@ -5,7 +5,6 @@
 //  Created by Galaxy on 2020/11/19.
 //  Copyright © 2020 qykj. All rights reserved.
 //  视频播放界面
-// TODO:添加播放记录到数据库
 
 import UIKit
 import GRDB
@@ -60,18 +59,21 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
         setNav()
         getData()
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinish), name: NSNotification.Name.SJMediaPlayerPlaybackDidFinish, object: nil)
-        NotificationCenter.default.reactive.notifications(forName: UIApplication.willResignActiveNotification, object: nil).observe { notification in
+        NotificationCenter.default.reactive.notifications(forName: UIApplication.didEnterBackgroundNotification, object: nil).observe { notification in
             print("进入后台")
             if !(self.model.videoUrl.isEmpty) {
                 // 有播放地址才保存
                 self.model.progress = Int(self.player.currentTime)
                 SqlTool.init().saveHistory(model: self.model)
-                self.player.stop()
+                self.player.pause()
             }
         }
+        NotificationCenter.default.reactive.notifications(forName: UIApplication.willResignActiveNotification, object: nil).observe { notification in
+            self.model.progress = Int(self.player.currentTime)
+        }
         NotificationCenter.default.reactive.notifications(forName: UIApplication.didBecomeActiveNotification, object: nil).observe{ notification in
-            if !self.model.videoUrl.isEmpty && self.isPlaying == true{
-                self.playerVideo()
+            if !self.model.videoUrl.isEmpty && self.isPlaying == true {
+                self.player.play()
             }
         }
         dlnaManager.startSearch()
@@ -339,14 +341,4 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-
 }

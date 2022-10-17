@@ -91,7 +91,7 @@ class NetVideoIndexViewController: BaseViewController, UISearchBarDelegate {
             make.top.equalTo(self.searchBar.snp.bottom)
         }
         mainCollection.cellItemSelected = { indexPath in
-            let listModel = mainCollection.listArr![indexPath.section]
+            let listModel = mainCollection.listArr[indexPath.section]
             let VC = NetVideoDetailViewController.init()
             VC.videoModel = listModel.list[indexPath.row]
             self.navigationController?.pushViewController(VC, animated: true)
@@ -99,7 +99,7 @@ class NetVideoIndexViewController: BaseViewController, UISearchBarDelegate {
         mainCollection.headerRightClicked = { indexPath in
             // 根据选中的行跳转对应的分类列表
             print(indexPath.section)
-            let model = mainCollection.listArr![indexPath.section]
+            let model = mainCollection.listArr[indexPath.section]
             let VC = NetVideoListViewController.init()
             VC.title = model.title
             VC.webType = self.webType

@@ -33,18 +33,13 @@ class NetVideoListViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        pageNum = webType == .benpig ? 0 : 1
-        urlStr = [
-            "http://halihali2.com/",
-            "https://www.laikuaibo.com/",
-            "http://www.yhdm.so/",
-            "http://www.benpig.com/"
-        ][webType.rawValue]
+        pageNum = 1
+        urlStr = urlArr[webType.rawValue]
         let videoTypeData = [
             ["电视剧": "tv", "动漫": "acg", "电影": "mov", "综艺": "zongyi"],
             ["电影": "1", "剧集": "2", "综艺": "4", "动漫": "3", "伦理": "19"],
             ["日本动漫": "japan", "国产动漫": "china", "欧美动漫": "american", "动漫电影": "movie"],
-            ["电影":"1","电视剧":"2","综艺":"3","动漫":"4"]
+            ["电视剧":"17","电影":"1","综艺":"4","动漫":"3"]
         ]
         if webType == .halihali {
             area = "all"
@@ -54,8 +49,8 @@ class NetVideoListViewController: BaseViewController {
             videoType = "1"
         }
         videoType = videoTypeData[webType.rawValue][title!]!
-        if webType == .halihali || webType == .benpig{
-            if webType == .benpig{
+        if webType == .halihali || webType == .juzhixiao{
+            if webType == .juzhixiao{
                 videoCategory = "0"
                 year = "0"
                 area = "0"
@@ -127,13 +122,13 @@ class NetVideoListViewController: BaseViewController {
                     videoCategory = resultArr[0]
                     year = resultArr[1]
                     area = resultArr[2]
-                }else if webType == .benpig {
+                }else if webType == .juzhixiao {
                     videoCategory = resultArr[1]
                     year = resultArr[2]
                     area = resultArr[0]
                 }
                 mainCollect.es.resetNoMoreData()
-                pageNum = webType == .benpig ? 0 : 1
+                pageNum = 1
                 listArr = []
                 if webType == .halihali{
                     getCategoryData()
@@ -206,7 +201,7 @@ class NetVideoListViewController: BaseViewController {
         var categoryUrlStr:String = ""
         if webType == .halihali {
             categoryUrlStr = urlStr + "\(videoType)/\(year)/\(videoCategory)/\(area)/\(pageNum).html"
-        }else if webType == .benpig {
+        }else if webType == .juzhixiao {
             categoryUrlStr = urlStr+"type/\(videoType)-0-0-0-0-0.html"
         }
         DataManager.init().getWebsiteCategoryData(urlStr: categoryUrlStr, type: webType) { (dataArr) in
@@ -229,7 +224,7 @@ class NetVideoListViewController: BaseViewController {
             }
         }
         mainCollection.cellItemSelected = { indexPath in
-            let listModel = mainCollection.listArr![indexPath.section]
+            let listModel = mainCollection.listArr[indexPath.section]
             let VC = NetVideoDetailViewController.init()
             VC.videoModel = listModel.list[indexPath.row]
             self.navigationController?.pushViewController(VC, animated: true)

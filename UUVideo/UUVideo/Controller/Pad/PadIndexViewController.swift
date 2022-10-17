@@ -66,7 +66,7 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
             } else if (string == "樱花动漫") {
                 self.view.bringSubviewToFront(self.sakuraView)
             } else if(string == "笨猪"){
-                self.view.bringSubviewToFront(self.benpigView)
+                self.view.bringSubviewToFront(self.juzhixiaoView)
             } else if (string == "历史记录"){
                 self.view.bringSubviewToFront(self.historyView)
             } else if(string == "我的收藏"){
@@ -113,9 +113,9 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
         return getView(controller:VC)
     }()
     
-    lazy var benpigView: UIView = {
+    lazy var juzhixiaoView: UIView = {
         let VC = NetVideoIndexViewController.init()
-        VC.webType = .benpig
+        VC.webType = .juzhixiao
         return getView(controller: VC)
     }()
     

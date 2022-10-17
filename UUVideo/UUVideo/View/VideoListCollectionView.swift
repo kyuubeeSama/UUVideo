@@ -10,11 +10,16 @@ import UIKit
 import Kingfisher
 class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
-    var listArr:[ListModel]?{
+    var listArr:[ListModel] = []{
         didSet{
             reloadData()
         }
     }
+    // 删除数据
+    var deleteItemBlock:((_ indexPath:IndexPath)->())?
+    
+    // 是否是收藏
+    var is_collect = false
     
     var cellItemSelected:((_ indexPath:IndexPath)->())?
     var headerRightClicked:((_ indexPath:IndexPath)->())?
@@ -34,16 +39,16 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        listArr!.count
+        listArr.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let listModel = listArr![section]
+        let listModel = listArr[section]
         return listModel.list.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let listModel = listArr![indexPath.section]
+        let listModel = listArr[indexPath.section]
         let model = listModel.list[indexPath.row]
         // 5的类型为
         if model.type == 4 || model.type == 5{
@@ -56,6 +61,16 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
                 cell.numLab.text = "播放到：\(model.serialName as String)"
             }else{
                 cell.numLab.text = model.num
+            }
+            if is_collect {
+                let longTap = UILongPressGestureRecognizer.init()
+                cell.addGestureRecognizer(longTap)
+                longTap.reactive.stateChanged.take(until: cell.reactive.prepareForReuse).observeValues { tap in
+                    // 删除
+                    if self.deleteItemBlock != nil {
+                        self.deleteItemBlock!(indexPath)
+                    }
+                }
             }
             return cell
         }else {
@@ -72,7 +87,7 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let listModel = listArr![indexPath.section]
+        let listModel = listArr[indexPath.section]
         let model = listModel.list[indexPath.row]
         if Tool.isPhone() {
             if model.type == 4 || model.type == 5{
@@ -106,7 +121,7 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
         let header:HeaderTitleCollectionReusableView
         if kind == UICollectionView.elementKindSectionHeader {
             header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header", for: indexPath) as! HeaderTitleCollectionReusableView
-            let listModel = listArr![indexPath.section]
+            let listModel = listArr[indexPath.section]
             header.titleLab.text = listModel.title
             if listModel.more! {
                 header.rightBtn.isHidden = false
@@ -125,7 +140,7 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let listModel = listArr![section]
+        let listModel = listArr[section]
         if (String.myStringIsNULL(string: listModel.title)){
             return CGSize(width: screenW, height: 0)
         }else {

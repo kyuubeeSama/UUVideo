@@ -53,7 +53,7 @@ class PhoneVideoListViewController: BaseViewController {
             make.left.right.top.bottom.equalToSuperview()
         }
         mainCollection.cellItemSelected = { indexPath in
-            let listModel = mainCollection.listArr![indexPath.section]
+            let listModel = mainCollection.listArr[indexPath.section]
             let VC = LocalVideoPlayerViewController.init()
             VC.model = listModel.list[indexPath.row]
             VC.modalPresentationStyle = .fullScreen

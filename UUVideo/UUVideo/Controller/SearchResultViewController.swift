@@ -33,7 +33,7 @@ class SearchResultViewController: BaseViewController {
     //获取搜索数据
     func getResultList() {
         view.makeToastActivity(.center)
-        if webType == .benpig{
+        if webType == .juzhixiao{
             let webView = UUWebView.init()
             view.addSubview(webView)
             let body = "show=title%2Cstarring&tbname=movie&tempid=1&keyboard=\(keyword)"
@@ -63,7 +63,7 @@ class SearchResultViewController: BaseViewController {
             DataManager.init().getSearchData(urlStr: urlStr, keyword: self.keyword, website: self.webType) { (dataArr) in
                 DispatchQueue.main.async {
                     self.view.hideToastActivity()
-                    if self.webType == .benpig || self.webType == .halihali{
+                    if self.webType == .juzhixiao || self.webType == .halihali{
                         self.mainCollect.es.noticeNoMoreData()
                     }
                     if self.checkSearchResult(searchArr: dataArr) {
@@ -119,7 +119,7 @@ class SearchResultViewController: BaseViewController {
             make.left.right.top.bottom.equalToSuperview()
         }
         mainCollection.cellItemSelected = { [self] indexPath in
-            let listModel = mainCollection.listArr![indexPath.section]
+            let listModel = mainCollection.listArr[indexPath.section]
             let VC = NetVideoDetailViewController.init()
             VC.videoModel = listModel.list[indexPath.row]
             self.navigationController?.pushViewController(VC, animated: true)

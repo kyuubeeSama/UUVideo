@@ -69,7 +69,6 @@ class DataManager: NSObject {
     ///   - failure: 失败
     /// - Returns: nil
     func getWebsiteIndexData(type: websiteType, success: @escaping (_ listData: [ListModel]) -> (), failure: @escaping (_ error: Error) -> ()) {
-        let urlArr = ["http://halihali2.com/", "https://www.laikuaibo.com/","http://www.yhdm.so/","http://www.benpig.com/"]
         let jiDoc = Ji(htmlURL: URL.init(string: urlArr[type.rawValue])!)
         if jiDoc == nil {
             failure(XPathError.getContentFail)
@@ -263,7 +262,7 @@ class DataManager: NSObject {
                     listArr.append(listModel)
                 }
                 success(listArr)
-            } else if type == .benpig{
+            } else if type == .juzhixiao{
                 // 地区，剧情，年代
                 for index in 1...3 {
                     let nodeArr = jiDoc?.xPath("/html/body/section/div[1]/div[\(index)]/div/a")
@@ -433,7 +432,7 @@ class DataManager: NSObject {
                     let recommandUrlStr: String = urlNodeArr![index].content!
                     model.detailUrl = checkUrl(urlStr: recommandUrlStr, domainUrlStr: baseUrl)
                     model.webType = type.rawValue
-                    if type == .halihali || type == .sakura || type == .benpig{
+                    if type == .halihali || type == .sakura || type == .juzhixiao{
                         model.num = ""
                     } else {
                         model.num = updateNodeArr![index].content!
