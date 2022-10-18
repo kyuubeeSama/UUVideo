@@ -60,7 +60,6 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
         getData()
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinish), name: NSNotification.Name.SJMediaPlayerPlaybackDidFinish, object: nil)
         NotificationCenter.default.reactive.notifications(forName: UIApplication.didEnterBackgroundNotification, object: nil).observe { notification in
-            print("进入后台")
             if !(self.model.videoUrl.isEmpty) {
                 // 有播放地址才保存
                 self.model.progress = Int(self.player.currentTime)
@@ -206,7 +205,6 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
             downloadBtn.isHidden = (model.videoUrl.contains("m3u8") || model.videoUrl.contains("html"))
             isPlaying = true
         }
-        print("播放地址是"+model.videoUrl)
     }
     
     // 获取数据
@@ -214,7 +212,7 @@ class NetVideoPlayerViewController: BaseViewController,DLNADelegate{
         // 正常流程下，需要先获取当前剧集的详情地址，然后再操作播放
         view.makeToastActivity(.center)
         DispatchQueue.global().async {
-            DataManager.init().getVideoPlayerData(urlStr: (self.model.serialDetailUrl), website:websiteType(rawValue: (self.model.webType)!)!, videoNum: self.model.serialNum) { (resultModel) in
+            DataManager.init().getVideoPlayerData(urlStr: (self.model.serialDetailUrl), website:websiteType(rawValue: (self.model.webType))!, videoNum: self.model.serialNum) { (resultModel) in
                 DispatchQueue.main.async {
                     self.view.hideToastActivity()
                     self.model.videoArr = resultModel.videoArr

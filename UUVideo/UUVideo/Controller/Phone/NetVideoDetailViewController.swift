@@ -58,28 +58,28 @@ class NetVideoDetailViewController: BaseViewController {
     func getDetailData() {
         view.makeToastActivity(.center)
         DispatchQueue.global().async { [self] in
-            DataManager.init().getVideoDetailData(urlStr: (videoModel.detailUrl)!, type: websiteType(rawValue: (videoModel.webType)!)!) { (resultModel) in
+            DataManager.init().getVideoDetailData(urlStr: (videoModel.detailUrl)!, type: websiteType(rawValue: (videoModel.webType))!) { (resultModel) in
                 DispatchQueue.main.async {
-                    view.hideToastActivity()
-                    videoModel.picUrl = resultModel.picUrl
-                    videoModel.videoArr = resultModel.videoArr
-                    videoModel.serialArr = resultModel.serialArr
-                    videoModel.serialNum = resultModel.serialNum
-                    mainCollect.model = videoModel
-                    addCollectItem(videoModel: videoModel)
+                    self.view.hideToastActivity()
+                    self.videoModel.picUrl = resultModel.picUrl
+                    self.videoModel.videoArr = resultModel.videoArr
+                    self.videoModel.serialArr = resultModel.serialArr
+                    self.videoModel.serialNum = resultModel.serialNum
+                    self.mainCollect.model = self.videoModel
+                    self.addCollectItem(videoModel: self.videoModel)
                     if resultModel.serialArr.isEmpty {
                         let alert = UIAlertController.init(title: "提示", message: "当前视频没有剧集", preferredStyle: .alert)
                         let alertAction = UIAlertAction.init(title: "返回上一页", style: .default) { action in
-                            navigationController?.popViewController(animated: true)
+                            self.navigationController?.popViewController(animated: true)
                         }
                         alert.addAction(alertAction)
-                        present(alert, animated: true, completion: nil)
+                        self.present(alert, animated: true, completion: nil)
                     }
                 }
             } failure: { (error) in
                 DispatchQueue.main.async {
-                    view.hideToastActivity()
-                    view.makeToast("加载失败")
+                    self.view.hideToastActivity()
+                    self.view.makeToast("加载失败")
                 }
                 print(error)
             }

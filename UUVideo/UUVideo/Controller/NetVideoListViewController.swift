@@ -25,7 +25,9 @@ class NetVideoListViewController: BaseViewController {
     private var year: String = ""
     // 排序
     var order: String = ""
-    private var urlStr: String = ""
+    private var urlStr: String {
+        urlArr[webType.rawValue]
+    }
     private var listArr: [ListModel] = []
     private var categoryListArr: [CategoryListModel] = []
 
@@ -33,13 +35,11 @@ class NetVideoListViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        pageNum = 1
-        urlStr = urlArr[webType.rawValue]
         let videoTypeData = [
             ["电视剧": "tv", "动漫": "acg", "电影": "mov", "综艺": "zongyi"],
             ["电影": "1", "剧集": "2", "综艺": "4", "动漫": "3", "伦理": "19"],
             ["日本动漫": "japan", "国产动漫": "china", "欧美动漫": "american", "动漫电影": "movie"],
-            ["电视剧":"17","电影":"1","综艺":"4","动漫":"3"]
+            ["电视剧":"2","电影":"1","综艺":"4","动漫":"3"]
         ]
         if webType == .halihali {
             area = "all"
@@ -48,12 +48,13 @@ class NetVideoListViewController: BaseViewController {
         } else {
             videoType = "1"
         }
+//    https://www.qybfb.com/index.php?s=home-vod-type-id-2-mcid-114-area-泰国-year-2022-letter--order--picm-1-p-1
         videoType = videoTypeData[webType.rawValue][title!]!
         if webType == .halihali || webType == .juzhixiao{
             if webType == .juzhixiao{
-                videoCategory = "0"
-                year = "0"
-                area = "0"
+                videoCategory = "mcid-0"
+                year = "year-0"
+                area = "area-0"
             }
             setNav()
             getCategoryData()
@@ -72,6 +73,7 @@ class NetVideoListViewController: BaseViewController {
     }
 
     func setNav() {
+//        setNavColor(navColor: .systemBackground, titleColor: UIColor.init(.dm, light: .black, dark: .white), barStyle: .default)
         let rightItem = UIBarButtonItem.init(title: "筛选", style: .plain, target: self, action: #selector(rightBtnClick))
         navigationItem.rightBarButtonItem = rightItem
     }
@@ -115,7 +117,6 @@ class NetVideoListViewController: BaseViewController {
                 } else {
                     view.window?.wb_dismissPopView(popStyle: .center, completion: {})
                 }
-                print(resultArr)
                 if webType == .sakura {
                     videoType = resultArr[0]
                 } else if webType == .halihali{
@@ -162,7 +163,8 @@ class NetVideoListViewController: BaseViewController {
             }
             detailUrlStr = urlStr + "\(videoType)/" + pageInfo
         }else{
-            detailUrlStr = urlStr+"type/\(videoType)-\(videoCategory)-\(area)-\(year)-0-\(pageNum).html"
+            // 剧知晓
+            detailUrlStr = urlStr + "index.php?s=home-vod-type-id-\(videoType)-\(videoCategory)--\(area)--\(year)--letter--order--picm-1-p-\(pageNum)"
         }
         view.makeToastActivity(.center)
         DispatchQueue.global().async {
@@ -202,12 +204,14 @@ class NetVideoListViewController: BaseViewController {
         if webType == .halihali {
             categoryUrlStr = urlStr + "\(videoType)/\(year)/\(videoCategory)/\(area)/\(pageNum).html"
         }else if webType == .juzhixiao {
-            categoryUrlStr = urlStr+"type/\(videoType)-0-0-0-0-0.html"
+//            categoryUrlStr = urlStr+"type/\(videoType)-0-0-0-0-0.html"
+            categoryUrlStr = urlStr + "index.php?s=home-vod-type-id-\(videoType)-mcid--area--year--letter--order--picm-1-p-\(pageNum)"
         }
         DataManager.init().getWebsiteCategoryData(urlStr: categoryUrlStr, type: webType) { (dataArr) in
             self.categoryListArr = dataArr
         } failure: { (error) in
             print(error)
+            self.view.makeToast("获取分类失败")
         }
     }
 

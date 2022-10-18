@@ -46,7 +46,7 @@ struct VideoModel:HandyJSON {
     // 数据库中存储的id
     var video_id:Int?
     // 站点
-    var webType:Int?
+    var webType:Int = 0
     //当前播放的剧集
     var serialIndex:Int = 0
     // 当前剧集播放的进度,与播放的剧集搭配使用

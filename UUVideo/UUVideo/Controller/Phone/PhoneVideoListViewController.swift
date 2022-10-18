@@ -28,9 +28,6 @@ class PhoneVideoListViewController: BaseViewController {
         listModel1.list = localArr
         var videoArr: [ListModel] = [listModel1]
         mainCollect.listArr = videoArr
-//        for item:VideoModel in localArr {
-//            print("视频名字是\(item.name),时长是\(item.time)")
-//        }
         // 相册视频
         ftool.getPhoneVideo()
         ftool.getPhoneVideoComplete = { result in

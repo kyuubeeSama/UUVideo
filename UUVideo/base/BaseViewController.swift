@@ -23,7 +23,7 @@ class BaseViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(FileExistsNotification(notification:)), name: NSNotification.Name(rawValue: "FileExistsNotification"), object: nil)
         
         view.backgroundColor = UIColor.systemBackground
-        
+        ToastManager.shared.position = .center
     }
     @objc func FileSaveSuccessNotification(notification:Notification){
         let info = notification.userInfo
@@ -52,17 +52,9 @@ class BaseViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = navColor
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:titleColor]
         navigationController?.navigationBar.tintColor = titleColor
-        if #available(iOS 13.0, *) {
-            let statusBarView = UIView(frame: view.window?.windowScene?.statusBarManager?.statusBarFrame ?? CGRect.zero)
-            statusBarView.backgroundColor = navColor
-            view.addSubview(statusBarView)
-        } else {
-            // Fallback on earlier versions
-            //            let statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
-            //            print(statusBarView.frame.origin.x,statusBarView.frame.origin.y,statusBarView.frame.size.width,statusBarView.frame.size.height)
-            //            statusBarView.backgroundColor = navColor
-            //            view.addSubview(statusBarView)
-        }
+        let statusBarView = UIView(frame: view.window?.windowScene?.statusBarManager?.statusBarFrame ?? CGRect.zero)
+        statusBarView.backgroundColor = navColor
+        view.addSubview(statusBarView)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -76,14 +68,5 @@ class BaseViewController: UIViewController {
         animator.noMoreDataDescription = "已经加载完毕"
         return animator
     }()
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }

@@ -24,7 +24,7 @@ class NetVideoIndexViewController: BaseViewController, UISearchBarDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        title = ["哈哩哈哩", "来快播","樱花动漫","笨猪"][webType.rawValue]
+        title = ["哈哩哈哩", "来快播","樱花动漫","剧知晓"][webType.rawValue]
         // 获取哈哩tv数据
         getVideoData()
     }
@@ -34,13 +34,13 @@ class NetVideoIndexViewController: BaseViewController, UISearchBarDelegate {
         DispatchQueue.global().async { [self] in
             DataManager.init().getWebsiteIndexData(type: webType) { (dataArr) in
                 DispatchQueue.main.async {
-                    view.hideToastActivity()
-                    mainCollect.listArr = dataArr
+                    self.view.hideToastActivity()
+                    self.mainCollect.listArr = dataArr
                 }
             } failure: { (error) in
                 print(error)
                 DispatchQueue.main.async {
-                    view.hideToastActivity()
+                    self.view.hideToastActivity()
                 }
             }
         }
@@ -98,7 +98,6 @@ class NetVideoIndexViewController: BaseViewController, UISearchBarDelegate {
         }
         mainCollection.headerRightClicked = { indexPath in
             // 根据选中的行跳转对应的分类列表
-            print(indexPath.section)
             let model = mainCollection.listArr[indexPath.section]
             let VC = NetVideoListViewController.init()
             VC.title = model.title

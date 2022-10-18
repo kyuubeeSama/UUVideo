@@ -31,7 +31,6 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
     }
         
     @objc func showUser() {
-        print("显示个人中心")
         let VC = UserViewController.init()
         let menu = SideMenuNavigationController(rootViewController: VC)
         menu.presentationStyle = .menuSlideIn
@@ -65,7 +64,7 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
                 self.view.bringSubviewToFront(self.haliView)
             } else if (string == "樱花动漫") {
                 self.view.bringSubviewToFront(self.sakuraView)
-            } else if(string == "笨猪"){
+            } else if(string == "剧知晓"){
                 self.view.bringSubviewToFront(self.juzhixiaoView)
             } else if (string == "历史记录"){
                 self.view.bringSubviewToFront(self.historyView)

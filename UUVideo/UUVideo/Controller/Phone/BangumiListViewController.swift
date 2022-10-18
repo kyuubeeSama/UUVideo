@@ -32,16 +32,16 @@ class BangumiListViewController: BaseViewController,JXSegmentedListContainerView
         DispatchQueue.global().async { [self] in
             dataManager.getBangumiData(dayIndex: index!) { (dataArr) in
                 DispatchQueue.main.async {
-                    view.hideToastActivity()
+                    self.view.hideToastActivity()
                     let model = ListModel.init()
                     model.title = ""
                     model.list = dataArr
-                    mainCollection.listArr = [model]
+                    self.mainCollection.listArr = [model]
                 }
             } failure: { (error) in
                 DispatchQueue.main.async {
-                    view.hideToastActivity()
-                    view.makeToast("获取内容失败")
+                    self.view.hideToastActivity()
+                    self.view.makeToast("获取内容失败")
                 }
                 print(error)
             }

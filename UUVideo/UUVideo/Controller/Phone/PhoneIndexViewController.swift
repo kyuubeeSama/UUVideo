@@ -27,7 +27,6 @@ class PhoneIndexViewController: BaseViewController {
         } catch (let error) {
             print(error)
         }
-        print(FileTool.init().getDocumentPath())
         mainTable.listArr = indexArr
     }
 

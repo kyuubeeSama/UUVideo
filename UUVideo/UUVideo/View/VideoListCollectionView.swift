@@ -78,7 +78,13 @@ class VideoListCollectionView: UICollectionView,UICollectionViewDelegate,UIColle
             let cell:VideoListCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! VideoListCollectionViewCell
             cell.titleLab.text = model.name
             if model.type == 3 {
-                cell.picImage.kf.setImage(with: URL.init(string: model.picUrl))
+                print(model.picUrl)
+                let modifier = AnyModifier { request in
+                    var r = request
+                    r.setValue(urlArr[model.webType], forHTTPHeaderField: "Referer")
+                    return r
+                }
+                cell.picImage.kf.setImage(with: URL.init(string: model.picUrl), options: [.requestModifier(modifier)], completionHandler: nil)
             }else{
                 cell.picImage.image = model.pic
             }

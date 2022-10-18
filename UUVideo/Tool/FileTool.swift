@@ -64,16 +64,12 @@ class FileTool: NSObject {
     func getVideoFileList()->Array<VideoModel>{
         var array:[VideoModel] = []
         let path = getDocumentPath().appending("/video")
-//        print("路径是\(path)")
-        //        let dirEnum = fileManager.enumerator(atPath: path)
-
         let enumerator = FileManager.default.enumerator(atPath: path)
         while let fileName = enumerator?.nextObject() as? String {
             print(fileName)
             if let fType = enumerator?.fileAttributes?[FileAttributeKey.type] as? FileAttributeType{
                 switch fType{
                 case .typeRegular:
-                    print("文件")
                     // 简化文件名截取功能
                     let fileType = fileName.split(separator: ".")[1]
                     print(fileType)

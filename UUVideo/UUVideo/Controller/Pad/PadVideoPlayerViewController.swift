@@ -60,7 +60,6 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
         getData()
         dlnaManager.startSearch()
         NotificationCenter.default.reactive.notifications(forName: UIApplication.willResignActiveNotification, object: nil).observe { notification in
-            print("进入后台")
             if !(self.model.videoUrl.isEmpty) {
                 // 有播放地址才保存
                 self.model.progress = Int(self.player.currentTime)
@@ -128,7 +127,7 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
         // 正常流程下，需要先获取当前剧集的详情地址，然后再操作播放
         view.makeToastActivity(.center)
         DispatchQueue.global().async {
-            DataManager.init().getVideoPlayerData(urlStr: (self.model.serialDetailUrl), website:websiteType(rawValue: (self.model.webType)!)!, videoNum: self.model.serialNum) { (resultModel) in
+            DataManager.init().getVideoPlayerData(urlStr: (self.model.serialDetailUrl), website:websiteType(rawValue: (self.model.webType))!, videoNum: self.model.serialNum) { (resultModel) in
                 DispatchQueue.main.async {
                     self.view.hideToastActivity()
                     self.model.videoArr = resultModel.videoArr
@@ -182,7 +181,6 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
             player.urlAsset = SJVideoPlayerURLAsset.init(avAsset: asset, startPosition: TimeInterval(model.progress), playModel: SJPlayModel.init())
             isPlaying = true
         }
-        print("播放地址是"+model.videoUrl)
     }
     
     lazy var playerContainerView: UIView = {

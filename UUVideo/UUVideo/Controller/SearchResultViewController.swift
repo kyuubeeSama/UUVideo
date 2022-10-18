@@ -21,41 +21,44 @@ class SearchResultViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-//        setNavColor(navColor: .white, titleColor: .black, barStyle: .default)
         setNav()
         getResultList()
     }
 
     func setNav() {
-        title = "搜索结果"
+        title = keyword
+        setNavColor(navColor: .systemBackground, titleColor: UIColor.init(.dm, light: .black, dark: .white), barStyle: .default)
     }
     
     //获取搜索数据
     func getResultList() {
         view.makeToastActivity(.center)
-        if webType == .juzhixiao{
-            let webView = UUWebView.init()
-            view.addSubview(webView)
-            let body = "show=title%2Cstarring&tbname=movie&tempid=1&keyboard=\(keyword)"
-            var request = URLRequest.init(url: URL.init(string: "https://www.benpig.com/e/search/index.php")!)
-            request.httpMethod = "POST"
-            request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-            request.httpBody = body.data(using: .utf8)
-            webView.load(request)
-            webView.getVideoUrlComplete = { urlStr in
-                self.getSearchData(urlStr: urlStr)
-            }
-        }else{
-            var urlStr: String?
+//        if webType == .juzhixiao{
+//            let webView = UUWebView.init()
+//            view.addSubview(webView)
+//            let body = "show=title%2Cstarring&tbname=movie&tempid=1&keyboard=\(keyword)"
+//            var request = URLRequest.init(url: URL.init(string: "https://www.benpig.com/e/search/index.php")!)
+//            request.httpMethod = "POST"
+//            request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+//            request.httpBody = body.data(using: .utf8)
+//            webView.load(request)
+//            webView.getVideoUrlComplete = { urlStr in
+//                self.getSearchData(urlStr: urlStr)
+//            }
+//        }else{
+            var urlStr = ""
             if webType == .halihali {
                 urlStr = "http://www.halihali2.com/search.php"
             } else if webType == .laikuaibo {
                 urlStr = "https://www.laikuaibo.com/vod-search-wd-" + keyword + "-p-\(pageNum).html"
             }else if webType == .sakura{
                 urlStr = "http://www.yhdm.so/search/\(keyword)/?page=\(pageNum)"
+            }else {
+//            https://www.qybfb.com/search/%E6%88%91%E7%9A%84-1.html
+                urlStr = "https://www.qybfb.com/search/"+keyword+"-\(pageNum).html"
             }
-            getSearchData(urlStr: urlStr!)
-        }
+        getSearchData(urlStr: urlStr)
+//        }
     }
 
     func getSearchData (urlStr:String){
@@ -63,7 +66,7 @@ class SearchResultViewController: BaseViewController {
             DataManager.init().getSearchData(urlStr: urlStr, keyword: self.keyword, website: self.webType) { (dataArr) in
                 DispatchQueue.main.async {
                     self.view.hideToastActivity()
-                    if self.webType == .juzhixiao || self.webType == .halihali{
+                    if self.webType == .halihali{
                         self.mainCollect.es.noticeNoMoreData()
                     }
                     if self.checkSearchResult(searchArr: dataArr) {

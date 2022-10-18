@@ -69,12 +69,17 @@ class DataManager: NSObject {
     ///   - failure: 失败
     /// - Returns: nil
     func getWebsiteIndexData(type: websiteType, success: @escaping (_ listData: [ListModel]) -> (), failure: @escaping (_ error: Error) -> ()) {
-        let jiDoc = Ji(htmlURL: URL.init(string: urlArr[type.rawValue])!)
+        var jiDoc = Ji(htmlURL: URL.init(string: urlArr[type.rawValue])!)
         if jiDoc == nil {
             failure(XPathError.getContentFail)
         } else {
+            if type == .juzhixiao {
+                var htmlStr = String.init(data: (jiDoc?.data)!, encoding: .utf8)
+                htmlStr = htmlStr?.replacingOccurrences(of: "</header>", with: "</div></header>")
+                jiDoc = Ji(htmlString: htmlStr!)
+            }
             let divArr = [[5, 6, 7, 8], [3, 5, 7, 9, 0],[4,6,8,10],[1,2,3,4]]
-            let titleArr = [["动漫", "电视剧", "电影", "综艺"], ["电影", "剧集", "综艺", "动漫", "伦理"],["日本动漫","国产动漫","欧美动漫","动漫电影"],["电影","电视剧","综艺","动漫"]]
+            let titleArr = [["动漫", "电视剧", "电影", "综艺"], ["电影", "剧集", "综艺", "动漫", "伦理"],["日本动漫","国产动漫","欧美动漫","动漫电影"],["电视剧","电影","综艺","动漫"]]
             var resultArr: [ListModel] = []
             for (index, value) in divArr[type.rawValue].enumerated() {
                 let listModel = ListModel.init()
@@ -98,10 +103,20 @@ class DataManager: NSObject {
                     imgXpath = "/html/body/div[8]/div[1]/div[\(value)]/ul[1]/li/a/img/@src"
                     updateXpath = "/html/body/div[8]/div[1]/div[\(value)]/ul[1]/li/p[2]/a"
                 }else{
-                    titleXpath = "/html/body/section/div/div/div[\(value)]/article/a/h2"
-                    urlXpath = "/html/body/section/div/div/div[\(value)]/article/a/@href"
-                    imgXpath = "/html/body/section/div/div/div[\(value)]/article/a/div/img/@data-original"
-                    updateXpath = "/html/body/section/div/div/div[\(value)]/article/div[2]/span"
+                    var divindex = 1
+                    if index > 1 {
+                        divindex = 2
+                    }
+                    titleXpath = "/html/body/div[3]/div[\(value)]/div[2]/div[\(divindex)]/ul[1]/li/div[1]/a"
+                    urlXpath = "/html/body/div[3]/div[\(value)]/div[2]/div[\(divindex)]/ul[1]/li/div[1]/a/@href"
+                    imgXpath = "/html/body/div[3]/div[\(value)]/div[2]/div[\(divindex)]/ul[1]/li/a/img/@data-original"
+                    var spanindex = 4
+                    if index == 1 || index == 3 {
+                        spanindex = 3
+                    }else if index == 2 {
+                        spanindex = 2
+                    }
+                    updateXpath = "/html/body/div[3]/div[\(value)]/div[2]/div[\(divindex)]/ul[1]/li/a/span[\(spanindex)]"
                 }
                 let titleNodeArr = jiDoc?.xPath(titleXpath)
                 let urlNodeArr = jiDoc?.xPath(urlXpath)
@@ -183,10 +198,10 @@ class DataManager: NSObject {
                 imgXpath = "/html/body/div[4]/div[3]/div[1]/ul/li/a/img/@src"
                 pageNumXpath = "//*[@id=\"lastn\"]"
             }else {
-                titleXpath = "/html/body/section/div[2]/div/div/div/article/a/h2"
-                urlXpath = "/html/body/section/div[2]/div/div/div/article/a/@href"
-                imgXpath = "/html/body/section/div[2]/div/div/div/article/a/div/img/@data-original"
-                updateXpath = "/html/body/section/div[2]/div/div/div/article/div[1]/span"
+                titleXpath = "//*[@id=\"content\"]/li/div/a"
+                urlXpath = "//*[@id=\"content\"]/li/a/@href"
+                imgXpath = "//*[@id=\"content\"]/li/a/img/@data-original"
+                updateXpath = "//*[@id=\"content\"]/li/a/span[3]"
             }
             let titleNodeArr = jiDoc?.xPath(titleXpath)
             let urlNodeArr = jiDoc?.xPath(urlXpath)
@@ -228,7 +243,7 @@ class DataManager: NSObject {
             failure(XPathError.getContentFail)
         } else {
             var listArr: [CategoryListModel] = []
-            let titleArr = [["按剧情", "按年代", "按地区"],[],[],["地区","剧情","年代"]]
+            let titleArr = [["按剧情", "按年代", "按地区"],[],[],["类型","地区","年代"]]
             if type == .halihali {
                 for item in 1...3 {
                     let chooseArr = ["", "", "js-tongjip "]
@@ -263,17 +278,20 @@ class DataManager: NSObject {
                 }
                 success(listArr)
             } else if type == .juzhixiao{
+                let nodeValue = ["mcid","area","year"]
                 // 地区，剧情，年代
-                for index in 1...3 {
-                    let nodeArr = jiDoc?.xPath("/html/body/section/div[1]/div[\(index)]/div/a")
+                for (index,item) in nodeValue.enumerated() {
+                    let dataNodeArr = jiDoc?.xPath("//*[@id=\"\(item)\"]/li[position()>1]/a/@data")
+                    let titleNodeArr = jiDoc?.xPath("//*[@id=\"\(item)\"]/li[position()>1]/a")
                     let listModel = CategoryListModel.init()
-                    listModel.name = titleArr[type.rawValue][index-1]
+                    listModel.name = titleArr[type.rawValue][index]
                     listModel.list = []
-                    for (index,item) in nodeArr!.enumerated() {
+                    for (index1,item1) in dataNodeArr!.enumerated() {
                         let categoryModel = CategoryModel.init()
-                        categoryModel.name = item.content
-                        categoryModel.value = index == 0 ? "0" : item.content
-                        categoryModel.ischoose = index == 0
+                        let titleNode = titleNodeArr![index1]
+                        categoryModel.name = titleNode.content
+                        categoryModel.value = item1.content
+                        categoryModel.ischoose = index1 == 0
                         listModel.list.append(categoryModel)
                     }
                     listArr.append(listModel)
@@ -504,10 +522,10 @@ class DataManager: NSObject {
                     imgXpath = "/html/body/div[4]/div[2]/div/ul/li/a/img/@src"
                     updateXpath = ""
                 }else {
-                    titleXpath = "/html/body/section/div/div/div/div/article/a/h2"
-                    detailXpath = "/html/body/section/div/div/div/div/article/a/@href"
-                    imgXpath = "/html/body/section/div/div/div/div/article/a/div/img/@data-original"
-                    updateXpath = "/html/body/section/div/div/div/div/article/div[1]/span"
+                    titleXpath = "//*[@id=\"content\"]/ul/li/div[1]/a/span"
+                    detailXpath = "//*[@id=\"content\"]/ul/li/div[2]/div[1]/h2/a/@href"
+                    imgXpath = "//*[@id=\"content\"]/ul/li/div[1]/a/img/@data-original"
+                    updateXpath = ""
                 }
                 let titleNodeArr = jiDoc?.xPath(titleXpath)
                 let detailNodeArr = jiDoc?.xPath(detailXpath)
@@ -516,7 +534,7 @@ class DataManager: NSObject {
                 for (index, _) in titleNodeArr!.enumerated() {
                     var videoModel = VideoModel.init()
                     videoModel.name = titleNodeArr![index].content
-                    if website != .sakura {
+                    if website != .sakura && website != .juzhixiao {
                         videoModel.num = updateNodeArr![index].content!
                     }
                     videoModel.detailUrl = checkUrl(urlStr: detailNodeArr![index].content!, domainUrlStr: baseUrl)
