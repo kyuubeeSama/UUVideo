@@ -351,10 +351,15 @@ class DataManager: NSObject {
     ///   - failure:
     /// - Returns: listArr:[videoModel]
     func getVideoDetailData(urlStr: String, type: websiteType, success: @escaping (_ VideoModel: VideoModel) -> (), failure: @escaping (_ error: Error) -> ()) {
-        let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
+        var jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             failure(XPathError.getContentFail)
         } else {
+            if type == .juzhixiao {
+                var htmlStr = String.init(data: (jiDoc?.data)!, encoding: .utf8)
+                htmlStr = htmlStr?.replacingOccurrences(of: "</header>", with: "</div></header>")
+                jiDoc = Ji(htmlString: htmlStr!)
+            }
             let baseUrl = Tool.getRegularData(regularExpress: "((http://)|(https://))[^\\.]*\\.(?<domain>[^/|?]*)", content: urlStr)[0]
             var videoModel = VideoModel.init()
             videoModel.detailUrl = urlStr
@@ -411,12 +416,12 @@ class DataManager: NSObject {
                 urlXPath = "/html/body/div[2]/div[3]/div[2]/ul/li/h2/a/@href"
                 imgXPath = "/html/body/div[2]/div[3]/div[2]/ul/li/a/img/@src"
             }else {
-                videoPicXpath = "/html/body/section/div/div/div/article/div[1]/div[1]/img/@src"
-                serialPathXpath = "//*[@id=\"video_list_li\"][1]/div/a/@href"
-                serialNameXpath = "//*[@id=\"video_list_li\"][1]/div/a"
-                titleXPath = "/html/body/section/div/div/div/div/article/a/h2"
-                urlXPath = "/html/body/section/div/div/div/div/article/a/@href"
-                imgXPath = "/html/body/section/div/div/div/div/article/a/div/img/@data-original"
+                videoPicXpath = "/html/body/div[2]/div/div[1]/div[1]/a/img/@src"
+                serialPathXpath = "//*[@id=\"con_playlist_1\"]/li/a/@href"
+                serialNameXpath = "//*[@id=\"con_playlist_1\"]/li/a"
+                titleXPath = "/html/body/div[5]/div/div[1]/div[last()]/ul/li/a/@title"
+                urlXPath = "/html/body/div[5]/div/div[1]/div[last()]/ul/li/a/@href"
+                imgXPath = "/html/body/div[5]/div/div[1]/div[last()]/ul/li/a/img/@data-original"
             }
             let videoPicNodeArr = jiDoc?.xPath(videoPicXpath)
             if videoPicNodeArr!.count > 0{
@@ -550,10 +555,15 @@ class DataManager: NSObject {
 
     //MARK: 获取播放界面
     func getVideoPlayerData(urlStr: String, website: websiteType, videoNum:Int, success: @escaping (_ videoModel: VideoModel) -> (), failure: @escaping (_ error: Error) -> ()) {
-        let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
+        var jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             failure(XPathError.getContentFail)
         } else {
+            if website == .juzhixiao {
+                var htmlStr = String.init(data: (jiDoc?.data)!, encoding: .utf8)
+                htmlStr = htmlStr?.replacingOccurrences(of: "</header>", with: "</div></header>")
+                jiDoc = Ji(htmlString: htmlStr!)
+            }
             let baseUrl = Tool.getRegularData(regularExpress: "((http://)|(https://))[^\\.]*\\.(?<domain>[^/|?]*)", content: urlStr)[0]
             var videoModel = VideoModel.init()
             videoModel.videoArr = []
@@ -680,27 +690,49 @@ class DataManager: NSObject {
                 recommendUrlXpath = "/html/body/div[9]/div[2]/ul/li/p[1]/a/@href"
                 recommendImgXpath = "/html/body/div[9]/div[2]/ul/li/a/img/@src"
             }else{
-                let jscontent:String = (jiDoc?.xPath("//*[@id=\"player\"]/script[1]")![0].content)!
-                let array = jscontent.split(separator: ";")
-                var urlStr:String = String(array[1])
-                urlStr = urlStr.replacingOccurrences(of: "var player_url=", with: "")
-                urlStr = urlStr.replacingOccurrences(of: "\"", with: "")
-                print(urlStr)
-                videoModel.videoUrl = urlStr
+//                let jscontent:String = (jiDoc?.xPath("//*[@id=\"player\"]/script[1]")![0].content)!
+//                let array = jscontent.split(separator: ";")
+//                var urlStr:String = String(array[1])
+//                urlStr = urlStr.replacingOccurrences(of: "var player_url=", with: "")
+//                urlStr = urlStr.replacingOccurrences(of: "\"", with: "")
+//                print(urlStr)
+//                videoModel.videoUrl = urlStr
+//                //        标题
+//                let serialTitleNodeArr = jiDoc?.xPath("//*[@id=\"video_list_li\"][1]/div/a")
+//                //        详情
+//                let serialUrlNodeArr = jiDoc?.xPath("//*[@id=\"video_list_li\"][1]/div/a/@href")
+//                for (index, _) in serialTitleNodeArr!.enumerated() {
+//                    let serialModel = SerialModel.init()
+//                    serialModel.name = serialTitleNodeArr![index].content!
+//                    serialModel.detailUrl = checkUrl(urlStr: serialUrlNodeArr![index].content!, domainUrlStr: baseUrl)
+//                    videoModel.serialArr.append(serialModel)
+//                }
+//                recommendTitleXpath = "//*[@class=\"mgbox\"]/div[1]/article/a/h2"
+//                recommendUrlXpath = "//*[@class=\"mgbox\"]/div[1]/article/a/@href"
+//                recommendImgXpath = "//*[@class=\"mgbox\"]/div[1]/article/a/div/img/@data-original"
+//                recommendUpdateXpath = "//*[@class=\"mgbox\"]/div[1]/article/div/span"
+                let jscontent:String = (jiDoc?.xPath("//*[@id=\"cms_play\"]/script[1]/text()")![0].content)!
+                var htmlStr = jscontent.replacingOccurrences(of: "var zanpiancms_player =", with: "")
+                htmlStr = htmlStr.replacingOccurrences(of: "\\/", with: "/")
+                let valueArr = htmlStr.split(separator: ",")
+                var urlStr1 = String(valueArr[1])
+                urlStr1 = urlStr1.replacingOccurrences(of: "\"url\":\"", with: "")
+                urlStr1 = urlStr1.replacingOccurrences(of: "\"", with: "")
+                videoModel.videoUrl = urlStr1
                 //        标题
-                let serialTitleNodeArr = jiDoc?.xPath("//*[@id=\"video_list_li\"][1]/div/a")
+                let serialTitleNodeArr = jiDoc?.xPath("//*[@id=\"con_playlist_1\"]/li/a")
                 //        详情
-                let serialUrlNodeArr = jiDoc?.xPath("//*[@id=\"video_list_li\"][1]/div/a/@href")
+                let serialUrlNodeArr = jiDoc?.xPath("//*[@id=\"con_playlist_1\"]/li/a/@href")
                 for (index, _) in serialTitleNodeArr!.enumerated() {
                     let serialModel = SerialModel.init()
                     serialModel.name = serialTitleNodeArr![index].content!
                     serialModel.detailUrl = checkUrl(urlStr: serialUrlNodeArr![index].content!, domainUrlStr: baseUrl)
                     videoModel.serialArr.append(serialModel)
                 }
-                recommendTitleXpath = "//*[@class=\"mgbox\"]/div[1]/article/a/h2"
-                recommendUrlXpath = "//*[@class=\"mgbox\"]/div[1]/article/a/@href"
-                recommendImgXpath = "//*[@class=\"mgbox\"]/div[1]/article/a/div/img/@data-original"
-                recommendUpdateXpath = "//*[@class=\"mgbox\"]/div[1]/article/div/span"
+                recommendTitleXpath = "/html/body/div[2]/div[2]/div[1]/div/ul/li/div/a"
+                recommendUrlXpath = "/html/body/div[2]/div[2]/div[1]/div/ul/li/a/@href"
+                recommendImgXpath = "/html/body/div[2]/div[2]/div[1]/div/ul/li/a/img/@data-original"
+                recommendUpdateXpath = "/html/body/div[2]/div[2]/div[1]/div/ul/li/a/span[3]"
             }
             // 获取推荐视频
             let recommendTitleNodeArr = jiDoc?.xPath(recommendTitleXpath)
