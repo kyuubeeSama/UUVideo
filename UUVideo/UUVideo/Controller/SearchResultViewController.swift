@@ -33,19 +33,6 @@ class SearchResultViewController: BaseViewController {
     //获取搜索数据
     func getResultList() {
         view.makeToastActivity(.center)
-//        if webType == .juzhixiao{
-//            let webView = UUWebView.init()
-//            view.addSubview(webView)
-//            let body = "show=title%2Cstarring&tbname=movie&tempid=1&keyboard=\(keyword)"
-//            var request = URLRequest.init(url: URL.init(string: "https://www.benpig.com/e/search/index.php")!)
-//            request.httpMethod = "POST"
-//            request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-//            request.httpBody = body.data(using: .utf8)
-//            webView.load(request)
-//            webView.getVideoUrlComplete = { urlStr in
-//                self.getSearchData(urlStr: urlStr)
-//            }
-//        }else{
             var urlStr = ""
             if webType == .halihali {
                 urlStr = "http://www.halihali2.com/search.php"
@@ -54,11 +41,9 @@ class SearchResultViewController: BaseViewController {
             }else if webType == .sakura{
                 urlStr = "http://www.yhdm.so/search/\(keyword)/?page=\(pageNum)"
             }else {
-//            https://www.qybfb.com/search/%E6%88%91%E7%9A%84-1.html
                 urlStr = "https://www.qybfb.com/search/"+keyword+"-\(pageNum).html"
             }
         getSearchData(urlStr: urlStr)
-//        }
     }
 
     func getSearchData (urlStr:String){
@@ -99,12 +84,12 @@ class SearchResultViewController: BaseViewController {
         if searchArr.count > 0 {
             let resultModel = searchArr[0]
             for videoModel in resultModel.list {
-                if self.searchArr.contains(videoModel.detailUrl!) {
+                if self.searchArr.contains(videoModel.detailUrl) {
                     // 已存在，说明已经到底了，结束循环
                     // 因为每次出现重复，说明是整页的重复，表明整页都是无用数据
                     return false
                 } else {
-                    self.searchArr.append(videoModel.detailUrl!)
+                    self.searchArr.append(videoModel.detailUrl)
                 }
             }
             return true

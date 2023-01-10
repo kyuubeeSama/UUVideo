@@ -12,7 +12,7 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
     // 标题
     // 剧集
     // 下面放推荐视频
-    var model: VideoModel? {
+    var model: VideoModel = VideoModel.init() {
         didSet {
             reloadData()
         }
@@ -31,30 +31,35 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        2
+        model.circuitArr.count+1
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if section == 0 {
-            return (model?.serialArr.count)!
+        if section == model.circuitArr.count {
+            return model.videoArr.count
         } else {
-            return (model?.videoArr.count)!
+            let circuitModel = model.circuitArr[section]
+            return circuitModel.serialArr.count
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // 三种样式，一种是剧集介绍
-        if indexPath.section == 0 {
+        if indexPath.section == model.circuitArr.count {
+            //            推荐列表
+            let videoModel = model.videoArr[indexPath.row]
+            let cell: VideoListCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "videoCell", for: indexPath) as! VideoListCollectionViewCell
+            cell.titleLab.text = videoModel.name
+            cell.picImage.kf.setImage(with: URL.init(string: videoModel.picUrl))
+            return cell
+        } else {
             //            剧集列表
-            let serialModel = model?.serialArr[indexPath.row]
+            let circuitModel = model.circuitArr[indexPath.section]
+            let serialModel = circuitModel.serialArr[indexPath.row]
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "serialCell", for: indexPath) as! VideoCategoryCollectionViewCell
-            cell.titleLab.text = serialModel!.name
-            if model?.serialIndex == indexPath.row {
-                serialModel?.ischoose = true
-            }else{
-                serialModel?.ischoose = false
-            }
-            if serialModel!.ischoose == true {
+            cell.titleLab.text = serialModel.name
+            serialModel.ischoose = (model.serialIndex == indexPath.row && model.circuitIndex == indexPath.section)
+            if serialModel.ischoose == true {
                 cell.layer.borderColor = UIColor.red.cgColor
                 cell.titleLab.textColor = UIColor.red
             } else {
@@ -62,30 +67,24 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
                 cell.titleLab.textColor = UIColor.init(.dm, light: UIColor.colorWithHexString(hexString: "333333"), dark: .white)
             }
             return cell
-        } else {
-            //            推荐列表
-            let videoModel = model?.videoArr[indexPath.row]
-            let cell: VideoListCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "videoCell", for: indexPath) as! VideoListCollectionViewCell
-            cell.titleLab.text = videoModel!.name
-            cell.picImage.kf.setImage(with: URL.init(string: videoModel!.picUrl))
-            return cell
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if indexPath.section == 0 {
-            let serialModel = model?.serialArr[indexPath.row]
+        if indexPath.section == model.circuitArr.count {
+            let width: CGFloat = screenW / 2 - 15
+            let height = (width - 20) * 379 / 270 + 70
+            return CGSize(width: width, height: height)
+        } else {
+            let circuitModel = model.circuitArr[indexPath.section]
+            let serialModel = circuitModel.serialArr[indexPath.row]
             // 根据字体大小计算
-            let size = serialModel!.name.getStringSize(font: UIFont.systemFont(ofSize: 15), size: CGSize(width: Double(MAXFLOAT), height: 15.0))
+            let size = serialModel.name.getStringSize(font: UIFont.systemFont(ofSize: 15), size: CGSize(width: Double(MAXFLOAT), height: 15.0))
             var width = size.width + 30
             if width < 50 {
                 width = 50
             }
             return CGSize(width: width, height: 30.0)
-        } else {
-            let width: CGFloat = screenW / 2 - 15
-            let height = (width - 20) * 379 / 270 + 70
-            return CGSize(width: width, height: height)
         }
     }
 
@@ -108,8 +107,12 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header", for: indexPath) as! HeaderTitleCollectionReusableView
         if kind == UICollectionView.elementKindSectionHeader {
-            let titleArr = [ "播放线路", "猜你喜欢"]
-            header.titleLab.text = titleArr[indexPath.section]
+            if indexPath.section == model.circuitArr.count {
+                header.titleLab.text = "猜你喜欢"
+            }else{
+                let circuitModel = model.circuitArr[indexPath.section]
+                header.titleLab.text = "播放线路"+circuitModel.name
+            }
             header.rightBtn.isHidden = true
         }
         return header

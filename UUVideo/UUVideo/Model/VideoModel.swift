@@ -11,21 +11,21 @@ import Photos
 import HandyJSON
 struct VideoModel:HandyJSON {
     //1.本地视频 2.相册视频 3.在线视频 4.番剧 5.普通视频
-    var type:Int?
+    var type:Int = 1
 //    视频名
-    var name:String?
+    var name:String = ""
     // 本地地址
-    var filePath:String?
+    var filePath:String = ""
     // 时长
-    var time:Int?
+    var time:Int = 0
     // 封面图片
-    var pic:UIImage?
+    var pic:UIImage = UIImage.init()
     // 本地相册文件
-    var asset:PHAsset?
+    var asset:PHAsset = PHAsset.init()
     // 视频线上地址
     var videoUrl:String = ""
     // 线上详情地址
-    var detailUrl:String?
+    var detailUrl:String = ""
     //线上封面地址
     var picUrl:String = ""
     // 最新集或者评分等信息
@@ -34,6 +34,8 @@ struct VideoModel:HandyJSON {
     var videoArr:[VideoModel] = []
     // 剧集列表
     var serialArr:[SerialModel] = []
+    // 线路列表
+    var circuitArr:[CircuitModel] = []
     // 剧集总个数
     var serialNum:Int = 0
     // 详情地址
@@ -47,6 +49,8 @@ struct VideoModel:HandyJSON {
     var video_id:Int?
     // 站点
     var webType:Int = 0
+    // 当前播放的线路
+    var circuitIndex:Int = 0
     //当前播放的剧集
     var serialIndex:Int = 0
     // 当前剧集播放的进度,与播放的剧集搭配使用

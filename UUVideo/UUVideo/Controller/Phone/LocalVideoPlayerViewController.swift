@@ -36,10 +36,10 @@ class LocalVideoPlayerViewController: BaseViewController {
         // Do any additional setup after loading the view.
         if model.type == 1 {
             // 本地视频
-            player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(fileURLWithPath: (model.filePath)!))
+            player.urlAsset = SJVideoPlayerURLAsset.init(url: URL.init(fileURLWithPath: (model.filePath)))
         } else if model.type == 2 {
             // 相册视频
-            PHImageManager.default().requestAVAsset(forVideo: (model.asset)!, options: PHVideoRequestOptions.init()) { (avasset, mix, info) in
+            PHImageManager.default().requestAVAsset(forVideo: (model.asset), options: PHVideoRequestOptions.init()) { (avasset, mix, info) in
                 DispatchQueue.main.async {
                     self.player.urlAsset = SJVideoPlayerURLAsset.init(avAsset: avasset!)
                 }

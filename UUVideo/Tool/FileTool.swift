@@ -140,7 +140,7 @@ class FileTool: NSObject {
                             model.asset = item
                             model.time = Int(item.duration)
                             PHImageManager.default().requestImage(for: item, targetSize: CGSize(width: 160, height: 90), contentMode: .default, options: PHImageRequestOptions.init()) { (image, info) in
-                                model.pic = image
+                                model.pic = image!
                             }
                             result.append(model)
                         }

@@ -5,7 +5,6 @@
 //  Created by Galaxy on 2021/10/9.
 //  Copyright © 2021 qykj. All rights reserved.
 //
-
 // 界面分三部分，右侧为推荐视频，单竖排. 左上视频播放地址。 左下，视频名称，视频介绍，剧集选择
 
 import UIKit
@@ -16,12 +15,11 @@ import MRDLNA
 import SnapKit
 import Popover_OC
 
-class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
-    private var isPlaying:Bool = false
-    private var deviceArr:[Any] = []
+class PadVideoPlayerViewController: BaseViewController, DLNADelegate {
+    private var isPlaying: Bool = false
+    private var deviceArr: [Any] = []
     public var model: VideoModel = VideoModel.init()
     private let toupingBtn = UIButton.init(type: .custom)
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         player.vc_viewDidAppear()
@@ -31,16 +29,13 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
         }
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinish), name: NSNotification.Name.SJMediaPlayerPlaybackDidFinish, object: nil)
     }
-    
-    @objc func playerDidFinish(){
+    @objc func playerDidFinish() {
     }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         isPlaying = false
         player.vc_viewWillDisappear()
     }
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         // 当视频要退出时，保存视频记录，视频进度
@@ -52,7 +47,6 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
             player.stop()
         }
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -67,26 +61,24 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
                 self.player.stop()
             }
         }
-        NotificationCenter.default.reactive.notifications(forName: UIApplication.didBecomeActiveNotification, object: nil).observe{ notification in
+        NotificationCenter.default.reactive.notifications(forName: UIApplication.didBecomeActiveNotification, object: nil).observe { notification in
             if !self.model.videoUrl.isEmpty && self.isPlaying == true {
                 self.playerVideo()
             }
         }
     }
-    
     lazy var dlnaManager: MRDLNA = {
         let dlnaManager = MRDLNA.sharedMRDLNAManager()
         dlnaManager?.delegate = self
         return dlnaManager!
     }()
-    
-    @objc func touping(){
+    @objc func touping() {
         if deviceArr.isEmpty {
             view.makeToast("当前未发现可投屏设备")
-        }else{
-            var actionArr:[PopoverAction] = []
+        } else {
+            var actionArr: [PopoverAction] = []
             for item in deviceArr {
-                let device:CLUPnPDevice = item as! CLUPnPDevice
+                let device: CLUPnPDevice = item as! CLUPnPDevice
                 let deviceAction = PopoverAction.init(title: device.friendlyName) { action in
                     self.dlnaManager.device = device
                     self.dlnaManager.playUrl = self.model.videoUrl
@@ -99,21 +91,18 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
             }
             let popoverView = PopoverView.init()
             popoverView.tag = 100
-            popoverView.show(to: CGPoint(x: screenW-40, y: top_height), with: actionArr)
+            popoverView.show(to: CGPoint(x: screenW - 40, y: top_height), with: actionArr)
         }
     }
-    
     func searchDLNAResult(_ devicesArray: [Any]!) {
         deviceArr = devicesArray
     }
-    
     func dlnaStartPlay() {
         DispatchQueue.main.async {
             self.view.makeToast("投屏成功，开始播放")
         }
     }
-    
-    func setNav(){
+    func setNav() {
         // 添加右上角投屏按钮
         toupingBtn.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         toupingBtn.setImage(UIImage.init(systemName: "tv"), for: .normal)
@@ -121,34 +110,33 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
         let rightBtnItem = UIBarButtonItem.init(customView: toupingBtn)
         navigationItem.rightBarButtonItem = rightBtnItem
     }
-    
     // 获取数据
     func getData() {
         // 正常流程下，需要先获取当前剧集的详情地址，然后再操作播放
         view.makeToastActivity(.center)
         DispatchQueue.global().async {
-            DataManager.init().getVideoPlayerData(urlStr: (self.model.serialDetailUrl), website:websiteType(rawValue: (self.model.webType))!, videoNum: self.model.serialNum) { (resultModel) in
+            DataManager.init().getVideoPlayerData(urlStr: (self.model.serialDetailUrl), website: websiteType(rawValue: (self.model.webType))!) { (resultModel) in
                 DispatchQueue.main.async {
                     self.view.hideToastActivity()
                     self.model.videoArr = resultModel.videoArr
                     self.model.serialArr = resultModel.serialArr
                     if (self.model.webType == 1) {
                         self.model.videoUrl = (resultModel.videoUrl.replacingOccurrences(of: "https://www.bfq168.com/m3u8.php?url=", with: ""))
-                    }else if(self.model.webType == 2 || self.model.webType == 3){
+                    } else if (self.model.webType == 2 || self.model.webType == 3) {
                         self.model.videoUrl = resultModel.videoUrl
                     }
                     // 此处已获取到所有剧集播放地址，根据选中的剧集，获取到播放地址。
                     if self.model.type == 5 {
                         // 当是从历史记录进入时，播放的是第几集，根据名字匹配是第几集
-                        for (index,serialModel) in resultModel.serialArr.enumerated() {
+                        for (index, serialModel) in resultModel.serialArr.enumerated() {
                             if serialModel.name == self.model.serialName {
                                 self.model.serialIndex = index
                             }
                         }
                     }
-                    let currentSerialModel:SerialModel = resultModel.serialArr[self.model.serialIndex]
+                    let currentSerialModel: SerialModel = resultModel.serialArr[self.model.serialIndex]
                     self.model.serialName = currentSerialModel.name
-                    if(self.model.webType == 0){
+                    if (self.model.webType == 0) {
                         self.model.videoUrl = currentSerialModel.playerUrl
                     }
                     self.playerVideo()
@@ -166,9 +154,8 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
             }
         }
     }
-    
-    func playerVideo(){
-        let headers = ["User-Agent":"Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/92.0.4515.107"];
+    func playerVideo() {
+        let headers = ["User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/92.0.4515.107"];
         if model.videoUrl.isEmpty {
             let alert = UIAlertController.init(title: "提示", message: "当前视频没有播放地址", preferredStyle: .alert)
             let alertAction = UIAlertAction.init(title: "返回上一页", style: .default) { action in
@@ -176,13 +163,12 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
             }
             alert.addAction(alertAction)
             present(alert, animated: true, completion: nil)
-        }else{
-            let asset = AVURLAsset.init(url: URL.init(string: model.videoUrl)!, options: ["AVURLAssetHTTPHeaderFieldsKey":headers])
+        } else {
+            let asset = AVURLAsset.init(url: URL.init(string: model.videoUrl)!, options: ["AVURLAssetHTTPHeaderFieldsKey": headers])
             player.urlAsset = SJVideoPlayerURLAsset.init(avAsset: asset, startPosition: TimeInterval(model.progress), playModel: SJPlayModel.init())
             isPlaying = true
         }
     }
-    
     lazy var playerContainerView: UIView = {
         let playerView = UIView.init()
         view.addSubview(playerView)
@@ -194,7 +180,6 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
         }
         return playerView
     }()
-    
     // MARK:视频播放器
     lazy var player: SJVideoPlayer = {
         let player = SJVideoPlayer.init()
@@ -210,7 +195,6 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
         player.controlLayerNeedAppear()
         return player
     }()
-        
     // MARK:底部内容
     lazy var mainCollection: padVideoDetailCollectionView = {
         let layout = UICollectionViewLeftAlignedLayout.init()
@@ -227,32 +211,15 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
                 self.player.stop()
                 let serialModel = self.model.serialArr[indexPath.row]
                 // 在当前页面获取数据并刷新
-                if self.model.webType == 0 {
-                    // 查看剧集是否有播放地址，如果没有就提示无法播放
-                    if serialModel.playerUrl.isEmpty {
-                        let alert = UIAlertController.init(title: "提醒", message: "该集无法播放", preferredStyle: .alert)
-                        let sureAction = UIAlertAction.init(title: "确定", style: .cancel, handler: nil)
-                        alert.addAction(sureAction)
-                        self.present(alert, animated: true, completion: nil)
-                    }else{
-                        self.model.videoUrl = (serialModel.playerUrl)
-                        self.playerVideo()
-                        self.model.serialIndex = indexPath.row
-                        self.model.serialName = serialModel.name
-                        mainCollection.model = self.model
-                    }
-                }else{
-                    // 重新获取数据，并刷新页面
-                    self.model.serialDetailUrl = serialModel.detailUrl
-                    self.model.serialIndex = indexPath.row
-                    self.model.serialName = serialModel.name
-                    self.getData()
-                }
+                // 重新获取数据，并刷新页面
+                self.model.serialDetailUrl = serialModel.detailUrl
+                self.model.serialIndex = indexPath.row
+                self.model.serialName = serialModel.name
+                self.getData()
             }
         }
         return mainCollection
     }()
-    
     //MARK:右侧推荐视频
     lazy var recommendVideoList: VideoListCollectionView = {
         let layout = UICollectionViewFlowLayout.init()
@@ -266,23 +233,18 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
         }
         collectionView.cellItemSelected = { indexPath in
             // cell点击，跳转到视频详情
-            
         }
         return collectionView
     }()
-    
-    func prefersStatusBarHidden()->Bool{
+    func prefersStatusBarHidden() -> Bool {
         player.vc_prefersStatusBarHidden()
     }
-    
-    func preferredStatusBarStyle()->UIStatusBarStyle{
+    func preferredStatusBarStyle() -> UIStatusBarStyle {
         player.vc_preferredStatusBarStyle()
     }
-    
-    func prefersHomeIndicatorAutoHidden()->Bool{
+    func prefersHomeIndicatorAutoHidden() -> Bool {
         true
     }
-    
     /*
      // MARK: - Navigation
      
@@ -292,5 +254,4 @@ class PadVideoPlayerViewController: BaseViewController,DLNADelegate {
      // Pass the selected object to the new view controller.
      }
      */
-    
 }

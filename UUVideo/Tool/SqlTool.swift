@@ -82,6 +82,11 @@ class SqlTool: NSObject {
         }
     }
     
+    // 在表中删除某个字段
+    func deleteColum(table:String,column:String){
+        
+    }
+    
     // 保存历史浏览记录
     func saveHistory(model: VideoModel) {
         do {

@@ -111,5 +111,13 @@ class Tool:NSObject {
         }
         return paramer
     }
-
+    
+    // 判断是否有http，并拼接地址
+    static func checkUrl(urlStr: String, domainUrlStr: String) -> String {
+        if urlStr.contains("http") || urlStr.contains("https") {
+            return urlStr
+        } else {
+            return domainUrlStr + urlStr
+        }
+    }
 }
