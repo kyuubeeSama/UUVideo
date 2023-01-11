@@ -120,25 +120,30 @@ class PadVideoPlayerViewController: BaseViewController, DLNADelegate {
                     self.view.hideToastActivity()
                     self.model.videoArr = resultModel.videoArr
                     self.model.serialArr = resultModel.serialArr
+                    self.model.circuitArr = resultModel.circuitArr
                     if (self.model.webType == 1) {
                         self.model.videoUrl = (resultModel.videoUrl.replacingOccurrences(of: "https://www.bfq168.com/m3u8.php?url=", with: ""))
-                    } else if (self.model.webType == 2 || self.model.webType == 3) {
+                    } else {
                         self.model.videoUrl = resultModel.videoUrl
                     }
                     // 此处已获取到所有剧集播放地址，根据选中的剧集，获取到播放地址。
-                    if self.model.type == 5 {
-                        // 当是从历史记录进入时，播放的是第几集，根据名字匹配是第几集
-                        for (index, serialModel) in resultModel.serialArr.enumerated() {
-                            if serialModel.name == self.model.serialName {
-                                self.model.serialIndex = index
-                            }
-                        }
-                    }
-                    let currentSerialModel: SerialModel = resultModel.serialArr[self.model.serialIndex]
+//                    if self.model.type == 5 {
+//                        // 当是从历史记录进入时，播放的是第几集，根据名字匹配是第几集
+//                        for (index, serialModel) in resultModel.serialArr.enumerated() {
+//                            if serialModel.name == self.model.serialName {
+//                                self.model.serialIndex = index
+//                            }
+//                        }
+//                    }
+//                    let currentSerialModel: SerialModel = resultModel.serialArr[self.model.serialIndex]
+//                    self.model.serialName = currentSerialModel.name
+//                    if (self.model.webType == 0) {
+//                        self.model.videoUrl = currentSerialModel.playerUrl
+//                    }
+                    let circuitModel = self.model.circuitArr[self.model.circuitIndex]
+                    let currentSerialModel: SerialModel = circuitModel.serialArr[self.model.serialIndex]
+                    currentSerialModel.ischoose = true
                     self.model.serialName = currentSerialModel.name
-                    if (self.model.webType == 0) {
-                        self.model.videoUrl = currentSerialModel.playerUrl
-                    }
                     self.playerVideo()
                     let listModel = ListModel.init()
                     listModel.title = "推荐视频"
@@ -206,10 +211,11 @@ class PadVideoPlayerViewController: BaseViewController, DLNADelegate {
             make.right.equalToSuperview().offset(-375)
         }
         mainCollection.cellItemSelected = { [self] indexPath in
-            if indexPath.section == 1 {
+            if indexPath.section != 0 {
                 // 剧集
                 self.player.stop()
-                let serialModel = self.model.serialArr[indexPath.row]
+                let circuitModel = self.model.circuitArr[indexPath.section]
+                let serialModel = circuitModel.serialArr[indexPath.row]
                 // 在当前页面获取数据并刷新
                 // 重新获取数据，并刷新页面
                 self.model.serialDetailUrl = serialModel.detailUrl

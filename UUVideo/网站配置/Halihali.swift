@@ -154,22 +154,82 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
             videoModel.picUrl = Tool.checkUrl(urlStr: picurl, domainUrlStr: baseUrl)
         }
         //        剧集
-        let serialPathXpath = "//*[@id=\"stab_1_71\"]/ul/li/a/@href"
-        let serialNameXpath = "//*[@id=\"stab_1_71\"]/ul/li/a"
-        let serialTitleNodeArr = jiDoc?.xPath(serialNameXpath)
-        let serialUrlNodeArr = jiDoc?.xPath(serialPathXpath)
-        let circuitModel = CircuitModel.init()
-        if serialUrlNodeArr!.count > 0 {
-            for (index, item) in serialUrlNodeArr!.enumerated() {
-                let serial = SerialModel.init()
-                serial.name = serialTitleNodeArr![index].content!
-                let serialDetailUrl: String = item.content!
-                serial.detailUrl = Tool.checkUrl(urlStr: serialDetailUrl, domainUrlStr: baseUrl)
-                circuitModel.serialArr.append(serial)
+//        let serialPathXpath = "//*[@id=\"stab_1_71\"]/ul/li/a/@href"
+//        let serialNameXpath = "//*[@id=\"stab_1_71\"]/ul/li/a"
+//        let serialTitleNodeArr = jiDoc?.xPath(serialNameXpath)
+//        let serialUrlNodeArr = jiDoc?.xPath(serialPathXpath)
+//        let circuitModel = CircuitModel.init()
+//        if serialUrlNodeArr!.count > 0 {
+//            for (index, item) in serialUrlNodeArr!.enumerated() {
+//                let serial = SerialModel.init()
+//                serial.name = serialTitleNodeArr![index].content!
+//                let serialDetailUrl: String = item.content!
+//                serial.detailUrl = Tool.checkUrl(urlStr: serialDetailUrl, domainUrlStr: baseUrl)
+//                circuitModel.serialArr.append(serial)
+//            }
+//        }
+//        videoModel.circuitArr = [circuitModel]
+        let jsXPath = "/html/body/div[2]/script[2]/@src"
+        let jsNodeArr = jiDoc?.xPath(jsXPath)
+        let playarrNameArr = [
+            (jsvalue: "", value: "", title: "主线"),
+            (jsvalue: "2", value: "yj", title: "永久"),
+            (jsvalue: "1", value: "zd", title: "最大"),
+            (jsvalue: "wj", value: "wj", title: "无天"),
+            (jsvalue: "lz", value: "lz", title: "良子"),
+            (jsvalue: "ff", value: "ff", title: "飞飞"),
+            (jsvalue: "fs", value: "fs", title: "F速"),
+            (jsvalue: "uk", value: "uk", title: "酷U"),
+            (jsvalue: "hn", value: "hn", title: "牛牛"),
+            (jsvalue: "sn", value: "sn", title: "新朗"),
+            (jsvalue: "sd", value: "sd", title: "闪电"),
+            (jsvalue: "bj", value: "bj", title: "八戒"),
+            (jsvalue: "tp", value: "tp", title: "淘淘"),
+            (jsvalue: "wl", value: "wl", title: "涡轮"),
+            (jsvalue: "bd", value: "bd", title: "百度"),
+            (jsvalue: "kb", value: "kb", title: "酷播"),
+            (jsvalue: "xk", value: "xk", title: "看看"),
+            (jsvalue: "ss", value: "ss", title: "速速"),
+            (jsvalue: "tk", value: "tk", title: "天空")
+        ]
+        if jsNodeArr!.count > 0 {
+            // 获取到js
+            var jsContent = ""
+            do {
+//                print(jsNodeArr![0].content!)
+                let data = try Data.init(contentsOf: URL.init(string: jsNodeArr![0].content!)!, options: [])
+                jsContent = String.init(data: data, encoding: .utf8)!
+                let valueArr = jsContent.split(separator: ";")
+                let baseUrl = Tool.getRegularData(regularExpress: "((http://)|(https://))[^\\.]*\\.(?<domain>[^/|?]*)", content: urlStr)[0]
+                let detailUrlStr = urlStr.replacingOccurrences(of: baseUrl, with: "") as! String
+                var circuitArr:[CircuitModel] = []
+                for item in playarrNameArr {
+                    let jsNameStr = item.jsvalue.isEmpty ? "lianzaijs" : "lianzaijs_\(item.jsvalue)"
+                    var countStr = ""
+                    for item1 in valueArr {
+                        if item1.contains("var \(jsNameStr)="){
+                            let circuitModel = CircuitModel.init()
+                            circuitModel.name = item.title
+                            countStr = String(item1)
+                            // 获取剧集长度
+                            let countArr = countStr.split(separator: "=")
+                            for index in 1...Int(countArr[1])!{
+                                let serialModel = SerialModel.init()
+                                serialModel.name = "第\(index)集"
+                                let videoDetailUrlStr = detailUrlStr+"\(index).html?qp="+item.value
+                                serialModel.detailUrl = Tool.checkUrl(urlStr: videoDetailUrlStr, domainUrlStr: baseUrl)
+                                circuitModel.serialArr.append(serialModel)
+                            }
+                            circuitArr.append(circuitModel)
+                        }
+                    }
+                }
+                videoModel.circuitArr = circuitArr
+            } catch {
+                return (result: false, model: VideoModel.init())
             }
         }
-        videoModel.circuitArr = [circuitModel]
-//        videoModel.serialNum = videoModel.serialArr.count
+        //        videoModel.serialNum = videoModel.serialArr.count
         //        推荐视频
         let titleXPath = "/html/body/div[2]/div[4]/div[8]/ul/li/a/@title"
         let urlXPath = "/html/body/div[2]/div[4]/div[8]/ul/li/a/@href"
@@ -202,9 +262,6 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
             var videoModel = VideoModel.init()
             videoModel.videoArr = []
             videoModel.serialArr = []
-            var recommendTitleXpath = ""
-            var recommendUrlXpath = ""
-            var recommendImgXpath = ""
             // 获取剧集
             // http://t.mtyee.com/ne2/s51696.js?1619401415
             // 从js中获取视频信息，组装剧集model
@@ -219,50 +276,93 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
                     print(jsNodeArr![0].content!)
                     let data = try Data.init(contentsOf: URL.init(string: jsNodeArr![0].content!)!, options: [])
                     jsContent = String.init(data: data, encoding: .utf8)!
-                    var array = jsContent.split(separator: ";")
-                    let firstIndex = 0
-                    array.removeFirst(firstIndex)
-                    let titleItem = array[0]
-                    // 起始位置是空格，结束位置是=号
-                    var title: String = String(titleItem[..<titleItem.firstIndex(of: "=")!])
-                    title = title.replacingOccurrences(of: "var ", with: "")
-                    array.removeFirst(4)
-                    // 获取结尾位置
-                    let index = array.firstIndex(of: "\(title)_ed=1")
-                    // 删除结尾后的所有数据
-                    let newArr = array[..<index!]
-                    //此处获取的顺序是从小到大，与首页的从大到小相反
-                    let newArr1 = newArr.reversed()
-                    for item in newArr1 {
-                        // 从数组中提取出数据
-                        var itemStr: String = String(item) as String
-                        itemStr = itemStr.replacingOccurrences(of: "\"", with: "")
-                        itemStr = String(itemStr[itemStr.firstIndex(of: "=")!...])
-                        itemStr.removeFirst()
-                        let serial = SerialModel.init()
-                        let valueArr = itemStr.split(separator: ",")
-                        print(valueArr)
-                        if valueArr.count < 3 {
-                            serial.name = String(valueArr.last!.replacingOccurrences(of: "%", with: "\\"))
-                            serial.name = serial.name.unicodeToUtf8()
-                            serial.playerUrl = ""
-                        } else {
-                            //编码错误,需要转换
-                            serial.name = String(valueArr[2].replacingOccurrences(of: "%", with: "\\"))
-                            serial.name = serial.name.unicodeToUtf8()
-                            serial.playerUrl = Tool.checkUrl(urlStr: String(valueArr[0]), domainUrlStr: baseUrl)
+                    let valueArr = jsContent.split(separator: ";")
+                    let playarrNameArr = [
+                        (jsvalue:"",value:"",title:"主线"),
+                        (jsvalue:"2",value:"yj",title:"永久"),
+                        (jsvalue:"1",value:"zd",title:"最大"),
+                        (jsvalue:"wj",value:"wj",title:"无天"),
+                        (jsvalue:"lz",value:"lz",title:"良子"),
+                        (jsvalue:"ff",value:"ff",title:"飞飞"),
+                        (jsvalue:"fs",value:"fs",title:"F速"),
+                        (jsvalue:"uk",value:"uk",title:"酷U"),
+                        (jsvalue:"hn",value:"hn",title:"牛牛"),
+                        (jsvalue:"sn",value:"sn",title:"新朗"),
+                        (jsvalue:"sd",value:"sd",title:"闪电"),
+                        (jsvalue:"bj",value:"bj",title:"八戒"),
+                        (jsvalue:"tp",value:"tp",title:"淘淘"),
+                        (jsvalue:"wl",value:"wl",title:"涡轮"),
+                        (jsvalue:"bd",value:"bd",title:"百度"),
+                        (jsvalue:"kb",value:"kb",title:"酷播"),
+                        (jsvalue:"xk",value:"xk",title:"看看"),
+                        (jsvalue:"ss",value:"ss",title:"速速"),
+                        (jsvalue:"tk",value:"tk",title:"天空")
+                    ]
+                    let baseUrl = Tool.getRegularData(regularExpress: "((http://)|(https://))[^\\.]*\\.(?<domain>[^/|?]*)", content: urlStr)[0]
+                    let playerDetailUrlStr:NSString = urlStr.replacingOccurrences(of: baseUrl, with: "") as NSString
+                    let array1 = playerDetailUrlStr.components(separatedBy: ".html")
+                    let array2 = (array1.first?.split(separator: "/"))!
+                    let idStr:String = String(array2.last!)
+                    let postDic = Tool.getKeyValueFromUrl(urlStr: urlStr)
+                    let qp = postDic["qp"]
+                    var jsItem = (jsvalue:"",value:"",title:"")
+                    for item in playarrNameArr {
+                        if item.value == qp {
+                            jsItem = item
+                            break
                         }
-                        circuitModel.serialArr.append(serial)
                     }
-                    videoModel.circuitArr = [circuitModel]
+                    var playerJsStr:String = ""
+                    for item in valueArr {
+                        let jsArrNameStr = jsItem.jsvalue.isEmpty ? "playarr" : "playarr_"+jsItem.jsvalue
+                        let whereStr = jsArrNameStr+"[\(idStr)]="
+                        if item.contains(whereStr) {
+                            playerJsStr = String(item)
+                            playerJsStr = playerJsStr.replacingOccurrences(of: whereStr, with: "")
+                            playerJsStr = playerJsStr.replacingOccurrences(of: "\"", with: "")
+                            let playerStrArr:[Substring] = playerJsStr.split(separator: ",")
+                            playerJsStr = String(playerStrArr.first!)
+                            break
+                        }
+                    }
+                    videoModel.videoUrl = playerJsStr
+
+//                    /acg/4111//26.html?qp=ff
+                    let detailUrlStr1:String = urlStr.replacingOccurrences(of: baseUrl, with: "")
+                    let detailUrlArr = detailUrlStr1.components(separatedBy: "/")
+                    let detailUrlStr = "/\(detailUrlArr[1])/\(detailUrlArr[2])/"
+                    var circuitArr:[CircuitModel] = []
+                    for item in playarrNameArr {
+                        let jsNameStr = item.jsvalue.isEmpty ? "lianzaijs" : "lianzaijs_\(item.jsvalue)"
+                        var countStr = ""
+                        for item1 in valueArr {
+                            if item1.contains("var \(jsNameStr)="){
+                                let circuitModel = CircuitModel.init()
+                                circuitModel.name = item.title
+                                countStr = String(item1)
+                                // 获取剧集长度
+                                let countArr = countStr.split(separator: "=")
+                                for index in 1...Int(countArr[1])!{
+                                    let serialModel = SerialModel.init()
+                                    serialModel.name = "第\(index)集"
+                                    let videoDetailUrlStr = detailUrlStr+"\(index).html?qp="+item.value
+                                    serialModel.detailUrl = Tool.checkUrl(urlStr: videoDetailUrlStr, domainUrlStr: baseUrl)
+                                    circuitModel.serialArr.append(serialModel)
+                                }
+                                circuitArr.append(circuitModel)
+                            }
+                        }
+                    }
+                    videoModel.circuitArr = circuitArr
                 } catch {
                     return (result: false, model: VideoModel.init())
                 }
             }
+            // 详情地址
             // 获取推荐视频
-            recommendTitleXpath = "/html/body/div[3]/div[6]/div/ul/li/a/@title"
-            recommendImgXpath = "/html/body/div[3]/div[6]/div/ul/li/a/div[1]/img/@data-original"
-            recommendUrlXpath = "/html/body/div[3]/div[6]/div/ul/li/a/@href"
+            let recommendTitleXpath = "/html/body/div[3]/div[6]/div/ul/li/a/@title"
+            let recommendImgXpath = "/html/body/div[3]/div[6]/div/ul/li/a/div[1]/img/@data-original"
+            let recommendUrlXpath = "/html/body/div[3]/div[6]/div/ul/li/a/@href"
             let recommendTitleNodeArr = jiDoc?.xPath(recommendTitleXpath)
             let recommendUrlNodeArr = jiDoc?.xPath(recommendUrlXpath)
             let recommendImgNodeArr = jiDoc?.xPath(recommendImgXpath)

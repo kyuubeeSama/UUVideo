@@ -104,6 +104,9 @@ class NetVideoDetailViewController: BaseViewController {
                     VC.model.serialDetailUrl = serialModel.detailUrl
                     VC.model.serialIndex = indexPath.row
                     VC.model.circuitIndex = indexPath.section-1
+                    VC.reloadFatherVC = {
+                        mainCollection.reloadData()
+                    }
                     self.navigationController?.pushViewController(VC, animated: true)
                 } else {
                     let VC = PadVideoPlayerViewController.init()

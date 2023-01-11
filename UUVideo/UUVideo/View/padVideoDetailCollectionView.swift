@@ -12,7 +12,7 @@ class padVideoDetailCollectionView: UICollectionView, UICollectionViewDelegate, 
     // 标题
     // 剧集
     // 下面放推荐视频
-    var model: VideoModel? {
+    var model: VideoModel = VideoModel.init() {
         didSet {
             reloadData()
         }
@@ -31,30 +31,36 @@ class padVideoDetailCollectionView: UICollectionView, UICollectionViewDelegate, 
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        2
+        model.circuitArr.count
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if section == 1 {
-            return (model?.serialArr.count)!
-        } else {
+        if section == 0 {
             return 1
+        } else {
+            return model.circuitArr[section-1].serialArr.count
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // 三种样式，一种是剧集介绍
-        if indexPath.section == 1 {
+        if indexPath.section == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "infoCell", for: indexPath)
+            let titleLab = UILabel.init()
+            cell.contentView.addSubview(titleLab)
+            titleLab.center = cell.contentView.center
+            titleLab.bounds = CGRect(x: 10, y: 0, width: cell.contentView.bounds.width, height: cell.contentView.bounds.height)
+            titleLab.text = model.name
+            titleLab.font = UIFont.systemFont(ofSize: 15)
+            return cell
+        } else {
             //            剧集列表
-            let serialModel = model?.serialArr[indexPath.row]
+            let circuitModel = model.circuitArr[indexPath.section]
+            let serialModel = circuitModel.serialArr[indexPath.row]
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "serialCell", for: indexPath) as! VideoCategoryCollectionViewCell
-            cell.titleLab.text = serialModel!.name
-            if model?.serialIndex == indexPath.row {
-                serialModel?.ischoose = true
-            }else{
-                serialModel?.ischoose = false
-            }
-            if serialModel!.ischoose == true {
+            cell.titleLab.text = serialModel.name
+            serialModel.ischoose = (model.serialIndex == indexPath.row && model.circuitIndex == indexPath.section)
+            if serialModel.ischoose == true {
                 cell.layer.borderColor = UIColor.red.cgColor
                 cell.titleLab.textColor = UIColor.red
             } else {
@@ -62,30 +68,22 @@ class padVideoDetailCollectionView: UICollectionView, UICollectionViewDelegate, 
                 cell.titleLab.textColor = UIColor.init(.dm, light: UIColor.colorWithHexString(hexString: "333333"), dark: .white)
             }
             return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "infoCell", for: indexPath)
-            let titleLab = UILabel.init()
-            cell.contentView.addSubview(titleLab)
-            titleLab.center = cell.contentView.center
-            titleLab.bounds = CGRect(x: 10, y: 0, width: cell.contentView.bounds.width, height: cell.contentView.bounds.height)
-            titleLab.text = model?.name
-            titleLab.font = UIFont.systemFont(ofSize: 15)
-            return cell
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if indexPath.section == 1 {
-            let serialModel = model?.serialArr[indexPath.row]
+        if indexPath.section == 0 {
+            return CGSize(width: bounds.width, height: 40)
+        } else {
+            let circuitModel = model.circuitArr[indexPath.section]
+            let serialModel = circuitModel.serialArr[indexPath.row]
             // 根据字体大小计算
-            let size = serialModel!.name.getStringSize(font: UIFont.systemFont(ofSize: 15), size: CGSize(width: Double(MAXFLOAT), height: 15.0))
+            let size = serialModel.name.getStringSize(font: UIFont.systemFont(ofSize: 15), size: CGSize(width: Double(MAXFLOAT), height: 15.0))
             var width = size.width + 30
             if width < 50 {
                 width = 50
             }
             return CGSize(width: width, height: 30.0)
-        } else {
-            return CGSize(width: bounds.width, height: 40)
         }
     }
 
@@ -108,8 +106,9 @@ class padVideoDetailCollectionView: UICollectionView, UICollectionViewDelegate, 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header", for: indexPath) as! HeaderTitleCollectionReusableView
         header.rightBtn.isHidden = true
-        if kind == UICollectionView.elementKindSectionHeader && indexPath.section == 1{
-            header.titleLab.text = "播放线路"
+        if kind == UICollectionView.elementKindSectionHeader && indexPath.section != 1{
+            let circuitModel = model.circuitArr[indexPath.section]
+            header.titleLab.text = "播放线路："+circuitModel.name
         }else{
             header.titleLab.text = ""
         }

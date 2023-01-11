@@ -30,7 +30,8 @@ class SqlTool: NSObject {
                                      webtype INTEGER NOT NULL,
                                      serialIndex INTEGER NOT NULL,
                                      progress FLOAT NOT NULL,
-                                     serialNum INTEGER DEFAULT (1)
+                                     serialNum INTEGER DEFAULT (1),
+                                     circuitIndex INTEGER DEFAULT (0)
                                       )
                                      """)
 //                创建收藏表
@@ -93,8 +94,8 @@ class SqlTool: NSObject {
             let dbQueue = try DatabaseQueue(path: databasePath)
             try dbQueue.write { db in
                 try db.execute(sql: """
-                                        REPLACE INTO history ('name','url','serialName','picurl',add_time,webtype,serialIndex,progress,serialNum) VALUES(:name,:url,:serialName,:picurl,:add_time,:webtype,:serialIndex,:progress,:serialNum)
-                                    """, arguments: [model.name, model.serialDetailUrl, model.serialName, model.picUrl, Date.getCurrentTimeInterval(), model.webType, model.serialIndex, model.progress,model.serialNum])
+                                        REPLACE INTO history ('name','url','serialName','picurl',add_time,webtype,serialIndex,progress,serialNum,circuitIndex) VALUES(:name,:url,:serialName,:picurl,:add_time,:webtype,:serialIndex,:progress,:serialNum,:circuitIndex)
+                                    """, arguments: [model.name, model.serialDetailUrl, model.serialName, model.picUrl, Date.getCurrentTimeInterval(), model.webType, model.serialIndex, model.progress,model.serialNum,model.circuitIndex])
             }
         } catch {
             print(error.localizedDescription)
@@ -123,6 +124,7 @@ class SqlTool: NSObject {
                 videoModel.webType = items[Column("webtype")]
                 videoModel.progress = items[Column("progress")]
                 videoModel.serialNum = items[Column("serialNum")]
+                videoModel.circuitIndex = items[Column("circuitIndex")]
                 model.list.append(videoModel)
             }
         } catch {

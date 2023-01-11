@@ -111,7 +111,7 @@ class NetVideoPlayerCollectionView: UICollectionView, UICollectionViewDelegate, 
                 header.titleLab.text = "猜你喜欢"
             }else{
                 let circuitModel = model.circuitArr[indexPath.section]
-                header.titleLab.text = "播放线路"+circuitModel.name
+                header.titleLab.text = "播放线路："+circuitModel.name
             }
             header.rightBtn.isHidden = true
         }

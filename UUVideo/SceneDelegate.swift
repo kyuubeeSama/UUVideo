@@ -23,6 +23,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UNUserNotificationCente
         if !(SqlTool.init().findCoumExist(table: "history", column: "serialNum")) {
             SqlTool.init().addColum(table: "history", column: "serialNum", type: .integer, defalut: "1")
         }
+        if !(SqlTool.init().findCoumExist(table: "history", column: "circuitIndex")) {
+            SqlTool.init().addColum(table: "history", column: "circuitIndex", type: .integer, defalut: "0")
+        }
         print(FileTool.init().getDocumentPath())
         let windowScene = scene as! UIWindowScene
         window = UIWindow.init(windowScene: windowScene)

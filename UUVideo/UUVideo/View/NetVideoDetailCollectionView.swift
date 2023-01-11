@@ -158,6 +158,7 @@ class NetVideoDetailCollectionView: UICollectionView, UICollectionViewDelegate, 
             let circuitModel = model.circuitArr[indexPath.section-1]
             let model: SerialModel = circuitModel.serialArr[indexPath.row]
             model.ischoose = !model.ischoose!
+            reloadData()
         }
         if cellItemSelected != nil {
             cellItemSelected!(indexPath)
