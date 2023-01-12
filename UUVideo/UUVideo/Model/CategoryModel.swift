@@ -14,10 +14,10 @@ class CategoryListModel:NSObject {
 }
 
 class CategoryModel: NSObject {
-    var name:String?
-    var value:String?
+    var name:String = ""
+    var value:String = ""
 //    默认未选中
-    var ischoose:Bool? = false
+    var ischoose:Bool = false
     
     static func getSakuraCategoryData() -> [CategoryListModel] {
         let titleArr = ["年代","地区","语言","类型"]

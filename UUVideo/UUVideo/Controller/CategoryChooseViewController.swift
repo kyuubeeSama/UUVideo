@@ -61,7 +61,7 @@ class CategoryChooseViewController: BaseViewController {
                 for categoryModel in listModel.list {
                     if categoryModel.ischoose == true {
                         //            videoCategory videoType area
-                        valueArr.append(categoryModel.value!)
+                        valueArr.append(categoryModel.value)
                     }
                 }
             }

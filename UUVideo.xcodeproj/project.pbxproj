@@ -64,6 +64,7 @@
 		A98794ED2553983B00DD62EE /* VideoInfoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A98794EB2553983B00DD62EE /* VideoInfoCollectionViewCell.xib */; };
 		A9967C1D256265AA00752CB7 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9967C1C256265AA00752CB7 /* UserViewController.swift */; };
 		A997538725666B9600179FCB /* NetVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A997538625666B9600179FCB /* NetVideoPlayerViewController.swift */; };
+		A9AD86AA296F9E4400D64467 /* Mianfei.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AD86A9296F9E4400D64467 /* Mianfei.swift */; };
 		A9B378F9261089DD00EBC4EF /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B378F8261089DD00EBC4EF /* HistoryViewController.swift */; };
 		A9B898672716C736006889C3 /* padVideoDetailCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B898662716C736006889C3 /* padVideoDetailCollectionView.swift */; };
 		A9B9CE1C24E9569700CFBE69 /* LocalVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CE1B24E9569700CFBE69 /* LocalVideoPlayerViewController.swift */; };
@@ -151,6 +152,7 @@
 		A98794EB2553983B00DD62EE /* VideoInfoCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoInfoCollectionViewCell.xib; sourceTree = "<group>"; };
 		A9967C1C256265AA00752CB7 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		A997538625666B9600179FCB /* NetVideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoPlayerViewController.swift; sourceTree = "<group>"; };
+		A9AD86A9296F9E4400D64467 /* Mianfei.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mianfei.swift; sourceTree = "<group>"; };
 		A9B378F8261089DD00EBC4EF /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		A9B898662716C736006889C3 /* padVideoDetailCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = padVideoDetailCollectionView.swift; sourceTree = "<group>"; };
 		A9B9CE1524E933E000CFBE69 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 				A9D34754296BB3BC00DD0BBC /* Sakura.swift */,
 				A9D34756296BB3C800DD0BBC /* Laikuaibo.swift */,
 				A9D34758296BB3D300DD0BBC /* Juzhixiao.swift */,
+				A9AD86A9296F9E4400D64467 /* Mianfei.swift */,
 			);
 			path = "网站配置";
 			sourceTree = "<group>";
@@ -541,6 +544,7 @@
 				A906DB0C24EA575700C070E4 /* PadIndexViewController.swift in Sources */,
 				A97F520A2538495C008B872A /* VideoCategoryCollectionViewCell.swift in Sources */,
 				A923747225FF0B4900CE21F4 /* UILabel+extension.swift in Sources */,
+				A9AD86AA296F9E4400D64467 /* Mianfei.swift in Sources */,
 				A950E2B624E6733F000CBB92 /* UIView+extension.swift in Sources */,
 				A984955B25513FCE0007D0B8 /* NetVideoDetailViewController.swift in Sources */,
 				A9B9CE1C24E9569700CFBE69 /* LocalVideoPlayerViewController.swift in Sources */,

@@ -35,13 +35,15 @@ class SearchResultViewController: BaseViewController {
         view.makeToastActivity(.center)
             var urlStr = ""
             if webType == .halihali {
-                urlStr = "http://www.halihali2.com/search.php"
+                urlStr = Halihali.init().webUrlStr+"search.php"
             } else if webType == .laikuaibo {
-                urlStr = "https://www.laikuaibo.com/vod-search-wd-" + keyword + "-p-\(pageNum).html"
+                urlStr = Laikuaibo.init().webUrlStr+"vod-search-wd-" + keyword + "-p-\(pageNum).html"
             }else if webType == .sakura{
-                urlStr = "http://www.yhdm.so/search/\(keyword)/?page=\(pageNum)"
-            }else {
-                urlStr = "https://www.qybfb.com/search/"+keyword+"-\(pageNum).html"
+                urlStr = Sakura.init().webUrlStr+"search/\(keyword)/?page=\(pageNum)"
+            }else if webType == .juzhixiao{
+                urlStr = Juzhixiao.init().webUrlStr+"search/"+keyword+"-\(pageNum).html"
+            }else if webType == .mianfei{
+                urlStr = Mianfei.init().webUrlStr+"search/-------------.html?wd=\(keyword)"
             }
         getSearchData(urlStr: urlStr)
     }

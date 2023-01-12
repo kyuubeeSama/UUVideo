@@ -39,7 +39,8 @@ class NetVideoListViewController: BaseViewController {
             ["电视剧": "tv", "动漫": "acg", "电影": "mov", "综艺": "zongyi"],
             ["电影": "1", "剧集": "2", "综艺": "4", "动漫": "3", "伦理": "19"],
             ["日本动漫": "japan", "国产动漫": "china", "欧美动漫": "american", "动漫电影": "movie"],
-            ["电视剧":"2","电影":"1","综艺":"4","动漫":"3"]
+            ["电视剧":"2","电影":"1","综艺":"4","动漫":"3"],
+            ["电影":"dy","电视剧":"tv","综艺":"zy","动漫":"dm"]
         ]
         if webType == .halihali {
             area = "all"
@@ -50,7 +51,7 @@ class NetVideoListViewController: BaseViewController {
         }
 //    https://www.qybfb.com/index.php?s=home-vod-type-id-2-mcid-114-area-泰国-year-2022-letter--order--picm-1-p-1
         videoType = videoTypeData[webType.rawValue][title!]!
-        if webType == .halihali || webType == .juzhixiao{
+        if webType == .halihali || webType == .juzhixiao {
             if webType == .juzhixiao{
                 videoCategory = "mcid-0"
                 year = "year-0"
@@ -127,6 +128,10 @@ class NetVideoListViewController: BaseViewController {
                     videoCategory = resultArr[1]
                     year = resultArr[2]
                     area = resultArr[0]
+                }else if webType == .mianfei {
+                    videoCategory = resultArr[0]
+                    year = resultArr[2]
+                    area = resultArr[1]
                 }
                 mainCollect.es.resetNoMoreData()
                 pageNum = 1
@@ -162,9 +167,20 @@ class NetVideoListViewController: BaseViewController {
                 pageInfo = "\(pageNum).html"
             }
             detailUrlStr = urlStr + "\(videoType)/" + pageInfo
-        }else{
+        }else if webType == .juzhixiao{
             // 剧知晓
             detailUrlStr = urlStr + "index.php?s=home-vod-type-id-\(videoType)-\(videoCategory)--\(area)--\(year)--letter--order--picm-1-p-\(pageNum)"
+        }else if webType == .mianfei {
+            if pageNum == 1 {
+                detailUrlStr = urlStr + videoType
+            } else {
+                detailUrlStr = urlStr + videoType + "/index_\(pageNum).html"
+            }
+//            if area.isEmpty && videoCategory.isEmpty && year.isEmpty {
+//                detailUrlStr = urlStr + "/"+videoType
+//            }else{
+//                detailUrlStr = urlStr+"haokan/\(videoType)-\(videoCategory)----------\(year).html"
+//            }
         }
         view.makeToastActivity(.center)
         DispatchQueue.global().async {
@@ -206,6 +222,8 @@ class NetVideoListViewController: BaseViewController {
         }else if webType == .juzhixiao {
 //            categoryUrlStr = urlStr+"type/\(videoType)-0-0-0-0-0.html"
             categoryUrlStr = urlStr + "index.php?s=home-vod-type-id-\(videoType)-mcid--area--year--letter--order--picm-1-p-\(pageNum)"
+        }else if webType == .mianfei {
+            categoryUrlStr = urlStr + "/\(videoType)/"
         }
         DataManager.init().getWebsiteCategoryData(urlStr: categoryUrlStr, type: webType) { (dataArr) in
             self.categoryListArr = dataArr

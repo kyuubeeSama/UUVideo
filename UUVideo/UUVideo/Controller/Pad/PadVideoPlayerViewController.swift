@@ -127,19 +127,6 @@ class PadVideoPlayerViewController: BaseViewController, DLNADelegate {
                         self.model.videoUrl = resultModel.videoUrl
                     }
                     // 此处已获取到所有剧集播放地址，根据选中的剧集，获取到播放地址。
-//                    if self.model.type == 5 {
-//                        // 当是从历史记录进入时，播放的是第几集，根据名字匹配是第几集
-//                        for (index, serialModel) in resultModel.serialArr.enumerated() {
-//                            if serialModel.name == self.model.serialName {
-//                                self.model.serialIndex = index
-//                            }
-//                        }
-//                    }
-//                    let currentSerialModel: SerialModel = resultModel.serialArr[self.model.serialIndex]
-//                    self.model.serialName = currentSerialModel.name
-//                    if (self.model.webType == 0) {
-//                        self.model.videoUrl = currentSerialModel.playerUrl
-//                    }
                     let circuitModel = self.model.circuitArr[self.model.circuitIndex]
                     let currentSerialModel: SerialModel = circuitModel.serialArr[self.model.serialIndex]
                     currentSerialModel.ischoose = true

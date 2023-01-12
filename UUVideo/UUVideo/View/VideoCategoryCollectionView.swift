@@ -59,8 +59,8 @@ class VideoCategoryCollectionView: UICollectionView, UICollectionViewDelegate, U
         let listModel = listArr![indexPath.section]
         let model = listModel.list[indexPath.row]
         // 根据字体大小计算
-        let size = model.name?.getStringSize(font: UIFont.systemFont(ofSize: 15), size: CGSize(width: Double(MAXFLOAT), height: 15.0))
-        return CGSize(width: size!.width + 20.0, height: 20.0)
+        let size = model.name.getStringSize(font: UIFont.systemFont(ofSize: 15), size: CGSize(width: Double(MAXFLOAT), height: 15.0))
+        return CGSize(width: size.width + 20.0, height: 20.0)
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -95,7 +95,7 @@ class VideoCategoryCollectionView: UICollectionView, UICollectionViewDelegate, U
             model.ischoose = false
         }
         let model = listModel.list[indexPath.row]
-        model.ischoose = !model.ischoose!
+        model.ischoose = !model.ischoose
         reloadData()
         if cellItemClick != nil {
             cellItemClick!(indexPath)

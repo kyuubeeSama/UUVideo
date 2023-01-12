@@ -115,7 +115,7 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
                 for (index, _) in titleNodeArr!.enumerated() {
                     let categoryModel = CategoryModel.init()
                     let name = titleNodeArr![index].content
-                    categoryModel.name = name
+                    categoryModel.name = name!
                     let detailUrl = urlNodeArr![index].content
                     let detailUrlArr = detailUrl?.components(separatedBy: "/")
                     if chooseNodeArr!.count > 0 && name == chooseNodeArr![0].content {
@@ -153,22 +153,6 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
             let picurl: String = videoPicNodeArr![0].content!
             videoModel.picUrl = Tool.checkUrl(urlStr: picurl, domainUrlStr: baseUrl)
         }
-        //        剧集
-//        let serialPathXpath = "//*[@id=\"stab_1_71\"]/ul/li/a/@href"
-//        let serialNameXpath = "//*[@id=\"stab_1_71\"]/ul/li/a"
-//        let serialTitleNodeArr = jiDoc?.xPath(serialNameXpath)
-//        let serialUrlNodeArr = jiDoc?.xPath(serialPathXpath)
-//        let circuitModel = CircuitModel.init()
-//        if serialUrlNodeArr!.count > 0 {
-//            for (index, item) in serialUrlNodeArr!.enumerated() {
-//                let serial = SerialModel.init()
-//                serial.name = serialTitleNodeArr![index].content!
-//                let serialDetailUrl: String = item.content!
-//                serial.detailUrl = Tool.checkUrl(urlStr: serialDetailUrl, domainUrlStr: baseUrl)
-//                circuitModel.serialArr.append(serial)
-//            }
-//        }
-//        videoModel.circuitArr = [circuitModel]
         let jsXPath = "/html/body/div[2]/script[2]/@src"
         let jsNodeArr = jiDoc?.xPath(jsXPath)
         let playarrNameArr = [

@@ -102,7 +102,7 @@ class Sakura: WebsiteBaseModel, WebsiteProtocol {
             for (index, _) in areaNodeArr!.enumerated() {
                 let categoryModel = CategoryModel.init()
                 let name = areaNodeArr![index].content
-                categoryModel.name = name
+                categoryModel.name = name!
                 // 获取当前选中的分类
                 for chooseNode in areaChooseNodeArr! {
                     if name == chooseNode.content {
@@ -122,7 +122,7 @@ class Sakura: WebsiteBaseModel, WebsiteProtocol {
             for (index, _) in orderNodeArr!.enumerated() {
                 let categoryModel = CategoryModel.init()
                 let name = orderNodeArr![index].content
-                categoryModel.name = name
+                categoryModel.name = name!
                 // 获取当前选中的分类
                 for chooseNode in orderChooseNodeArr! {
                     if name == chooseNode.content {

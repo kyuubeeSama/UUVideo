@@ -1,47 +1,35 @@
 //
-//  Juzhixiao.swift
+//  Mianfei.swift
 //  UUVideo
 //
-//  Created by Galaxy on 2023/1/9.
+//  Created by Galaxy on 2023/1/12.
 //  Copyright © 2023 qykj. All rights reserved.
 //
 
 import UIKit
 import Ji
-
-class Juzhixiao: WebsiteBaseModel, WebsiteProtocol {
-    required override init() {
+class Mianfei: WebsiteBaseModel,WebsiteProtocol {
+    
+    override init() {
         super.init()
-        webUrlStr = "https://www.xdwdn.com/"
-        websiteName = "剧知晓"
+        webUrlStr = "https://40088.cc/"
+        websiteName = "免费电影"
     }
+    
     func getIndexData() -> [ListModel] {
-        var jiDoc = Ji.init(htmlURL: URL.init(string: webUrlStr)!)
+        let jiDoc = Ji.init(htmlURL: URL.init(string: webUrlStr)!)
         if jiDoc == nil {
             return []
         }
-        var htmlStr = String.init(data: (jiDoc?.data)!, encoding: .utf8)
-        htmlStr = htmlStr?.replacingOccurrences(of: "</header>", with: "</div></header>")
-        jiDoc = Ji(htmlString: htmlStr!)
-        let divArr = [1, 2, 3, 4]
-        let titleArr = ["电视剧", "电影", "综艺", "动漫"]
+        let divArr = [2, 3, 4, 5]
+        let titleArr = ["电影", "电视剧", "综艺", "动漫"]
         var resultArr: [ListModel] = []
         for (index, item) in divArr.enumerated() {
             let listModel = ListModel.init()
-            var divindex = 1
-            if index > 1 {
-                divindex = 2
-            }
-            let titleXpath = "/html/body/div[3]/div[\(item)]/div[2]/div[\(divindex)]/ul[1]/li/div[1]/a"
-            let urlXpath = "/html/body/div[3]/div[\(item)]/div[2]/div[\(divindex)]/ul[1]/li/div[1]/a/@href"
-            let imgXpath = "/html/body/div[3]/div[\(item)]/div[2]/div[\(divindex)]/ul[1]/li/a/img/@data-original"
-            var spanindex = 4
-            if index == 1 || index == 3 {
-                spanindex = 3
-            } else if index == 2 {
-                spanindex = 2
-            }
-            let updateXpath = "/html/body/div[3]/div[\(item)]/div[2]/div[\(divindex)]/ul[1]/li/a/span[\(spanindex)]"
+            let titleXpath = "/html/body/section/div[4]/div/div[\(item)]/article/a/@title"
+            let urlXpath = "/html/body/section/div[4]/div/div[\(item)]/article/a/@href"
+            let imgXpath = "/html/body/section/div[4]/div/div[\(item)]/article/a/div/img/@src"
+            let updateXpath = "/html/body/section/div[4]/div/div[\(item)]/article/div[2]/span"
             let titleNodeArr = jiDoc?.xPath(titleXpath)
             let urlNodeArr = jiDoc?.xPath(urlXpath)
             let imgNodeArr = jiDoc?.xPath(imgXpath)
@@ -52,7 +40,7 @@ class Juzhixiao: WebsiteBaseModel, WebsiteProtocol {
             for (i, _) in titleNodeArr!.enumerated() {
                 var videoModel = VideoModel.init()
                 videoModel.name = titleNodeArr![i].content!
-                videoModel.webType = 3
+                videoModel.webType = 4
                 let detailUrl: String = urlNodeArr![i].content!
                 if detailUrl.contains("http") {
                     videoModel.detailUrl = detailUrl
@@ -73,6 +61,7 @@ class Juzhixiao: WebsiteBaseModel, WebsiteProtocol {
         }
         return resultArr
     }
+    
     func getVideoList(urlStr: String) -> [ListModel] {
         let newUrlStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let jiDoc = Ji(htmlURL: URL.init(string: newUrlStr)!)
@@ -83,10 +72,10 @@ class Juzhixiao: WebsiteBaseModel, WebsiteProtocol {
         listModel.title = ""
         listModel.more = false
         listModel.list = []
-        let titleXpath = "//*[@id=\"content\"]/li/div/a"
-        let urlXpath = "//*[@id=\"content\"]/li/a/@href"
-        let imgXpath = "//*[@id=\"content\"]/li/a/img/@data-original"
-        let updateXpath = "//*[@id=\"content\"]/li/a/span[3]"
+        let titleXpath = "/html/body/section/div[2]/div/div/div[2]/article/a/@title"
+        let urlXpath = "/html/body/section/div[2]/div/div/div[2]/article/a/@href"
+        let imgXpath = "/html/body/section/div[2]/div/div/div[2]/article/a/div/img/@src"
+        let updateXpath = "/html/body/section/div[2]/div/div/div[2]/article/div[2]/span"
         let titleNodeArr = jiDoc?.xPath(titleXpath)
         let urlNodeArr = jiDoc?.xPath(urlXpath)
         let imgNodeArr = jiDoc?.xPath(imgXpath)
@@ -100,32 +89,39 @@ class Juzhixiao: WebsiteBaseModel, WebsiteProtocol {
             let picUrl: String = imgNodeArr![i].content!
             videoModel.picUrl = Tool.checkUrl(urlStr: picUrl, domainUrlStr: webUrlStr)
             videoModel.type = 3
-            videoModel.webType = 3
+            videoModel.webType = 0
             listModel.list.append(videoModel)
         }
         return [listModel]
     }
+    
     func getVideoCategory(urlStr: String) -> [CategoryListModel] {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return []
         } else {
             var listArr: [CategoryListModel] = []
-            let titleArr = ["类型", "地区", "年代"]
-            let nodeValue = ["mcid", "area", "year"]
-            // 地区，剧情，年代
-            for (index, item) in nodeValue.enumerated() {
-                let dataNodeArr = jiDoc?.xPath("//*[@id=\"\(item)\"]/li[position()>1]/a/@data")
-                let titleNodeArr = jiDoc?.xPath("//*[@id=\"\(item)\"]/li[position()>1]/a")
+            let titleArr = ["按类型", "按地区", "按年份"]
+            for item in 1...3 {
+                let titleXpath = "/html/body/section/div[2]/div/div/div[1]/div[\(item)]/div/a"
+                let titleNodeArr = jiDoc?.xPath(titleXpath)
                 let listModel = CategoryListModel.init()
-                listModel.name = titleArr[index]
-                listModel.list = []
-                for (index1, item1) in dataNodeArr!.enumerated() {
+                listModel.name = titleArr[item - 1]
+                let categoryModel1 = CategoryModel.init()
+                categoryModel1.name = "全部"
+                categoryModel1.value = ""
+                categoryModel1.ischoose = true
+                listModel.list = [categoryModel1]
+                for item1 in titleNodeArr!{
                     let categoryModel = CategoryModel.init()
-                    let titleNode = titleNodeArr![index1]
-                    categoryModel.name = titleNode.content!
-                    categoryModel.value = item1.content!
-                    categoryModel.ischoose = index1 == 0
+                    var name = item1.content!
+                    categoryModel.name = name
+                    if item == 1 {
+                        name = name.replacingOccurrences(of: "片", with: "")
+                        categoryModel.value = name.transformToPinYin(yinbiao: false)
+                    }else{
+                        categoryModel.value = name.transformToPinYin(yinbiao: false)
+                    }
                     listModel.list.append(categoryModel)
                 }
                 listArr.append(listModel)
@@ -133,21 +129,19 @@ class Juzhixiao: WebsiteBaseModel, WebsiteProtocol {
             return listArr
         }
     }
+    
     func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
         var jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return (result: false, model: VideoModel.init())
         }
-        var htmlStr = String.init(data: (jiDoc?.data)!, encoding: .utf8)
-        htmlStr = htmlStr?.replacingOccurrences(of: "</header>", with: "</div></header>")
-        jiDoc = Ji(htmlString: htmlStr!)
         let baseUrl = Tool.getRegularData(regularExpress: "((http://)|(https://))[^\\.]*\\.(?<domain>[^/|?]*)", content: urlStr)[0]
         var videoModel = VideoModel.init()
         videoModel.detailUrl = urlStr
         videoModel.videoArr = []
         videoModel.tagArr = []
         videoModel.serialArr = []
-        let videoPicXpath = "/html/body/div[2]/div/div[1]/div[1]/a/img/@src"
+        let videoPicXpath = "/html/body/section/div[2]/div/div[1]/img/@src"
         let videoPicNodeArr = jiDoc?.xPath(videoPicXpath)
         if videoPicNodeArr!.count > 0 {
             let picurl: String = videoPicNodeArr![0].content!
@@ -155,15 +149,15 @@ class Juzhixiao: WebsiteBaseModel, WebsiteProtocol {
         }
         //        剧集
         // 获取线路
-        let circuitNameXpath = "/html/body/div[5]/div/div[1]/div[1]/ul[1]/li/a"
+        let circuitNameXpath = "/html/body/section/div[4]/div/div/h3/strong"
         let circuitNodeArr = jiDoc?.xPath(circuitNameXpath)
         var circuitArr:[CircuitModel] = []
         if circuitNodeArr!.count > 0 {
-            for (i,item) in circuitNodeArr!.enumerated() {
+            for item in 0...circuitNodeArr!.count-3 {
                 let model = CircuitModel.init()
-                model.name = item.content!
-                let serialPathXpath = "//*[@id=\"con_playlist_\(i+1)\"]/li/a/@href"
-                let serialNameXpath = "//*[@id=\"con_playlist_\(i+1)\"]/li/a"
+                model.name = circuitNodeArr![item].content!
+                let serialPathXpath = "/html/body/section/div[4]/div/div[\(item+1)]/li/a/@href"
+                let serialNameXpath = "/html/body/section/div[4]/div/div[\(item+1)]/li/a/@title"
                 let serialTitleNodeArr = jiDoc?.xPath(serialNameXpath)
                 let serialUrlNodeArr = jiDoc?.xPath(serialPathXpath)
                 if serialUrlNodeArr!.count > 0 {
@@ -181,9 +175,9 @@ class Juzhixiao: WebsiteBaseModel, WebsiteProtocol {
         videoModel.circuitArr = circuitArr
         videoModel.serialNum = videoModel.serialArr.count
         //        推荐视频
-        let titleXPath = "/html/body/div[5]/div/div[1]/div[last()]/ul/li/a/@title"
-        let urlXPath = "/html/body/div[5]/div/div[1]/div[last()]/ul/li/a/@href"
-        let imgXPath = "/html/body/div[5]/div/div[1]/div[last()]/ul/li/a/img/@data-original"
+        let titleXPath = "/html/body/section/div[4]/div/div[7]/article/a/@title"
+        let urlXPath = "/html/body/section/div[4]/div/div[7]/article/a/@href"
+        let imgXPath = "/html/body/section/div[4]/div/div[7]/article/a/div/img/@src"
         let titleNodeArr = jiDoc?.xPath(titleXPath)
         let urlNodeArr = jiDoc?.xPath(urlXPath)
         let imgNodeArr = jiDoc?.xPath(imgXPath)
@@ -195,7 +189,7 @@ class Juzhixiao: WebsiteBaseModel, WebsiteProtocol {
                 model.picUrl = Tool.checkUrl(urlStr: imgPic, domainUrlStr: baseUrl)
                 let recommandUrlStr: String = urlNodeArr![index].content!
                 model.detailUrl = Tool.checkUrl(urlStr: recommandUrlStr, domainUrlStr: baseUrl)
-                model.webType = 3
+                model.webType = 4
                 model.num = ""
                 model.type = 3
                 videoModel.videoArr.append(model)
@@ -203,37 +197,40 @@ class Juzhixiao: WebsiteBaseModel, WebsiteProtocol {
         }
         return (result: true, model: videoModel)
     }
+    
     func getVideoPlayerDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
         var jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return (result: false, model: VideoModel.init())
         } else {
-            var htmlStr = String.init(data: (jiDoc?.data)!, encoding: .utf8)
-            htmlStr = htmlStr?.replacingOccurrences(of: "</header>", with: "</div></header>")
-            jiDoc = Ji(htmlString: htmlStr!)
             let baseUrl = Tool.getRegularData(regularExpress: "((http://)|(https://))[^\\.]*\\.(?<domain>[^/|?]*)", content: urlStr)[0]
             var videoModel = VideoModel.init()
             videoModel.videoArr = []
             videoModel.serialArr = []
             // 播放地址
-            let jscontent: String = (jiDoc?.xPath("//*[@id=\"cms_play\"]/script[1]/text()")![0].content)!
-            var htmlStr1 = jscontent.replacingOccurrences(of: "var zanpiancms_player =", with: "")
-            htmlStr1 = htmlStr1.replacingOccurrences(of: "\\/", with: "/")
-            let valueArr = htmlStr1.split(separator: ",")
-            var urlStr1 = String(valueArr[1])
-            urlStr1 = urlStr1.replacingOccurrences(of: "\"url\":\"", with: "")
-            urlStr1 = urlStr1.replacingOccurrences(of: "\"", with: "")
-            videoModel.videoUrl = urlStr1
-            // 获取剧集
-            let circuitNameXpath = "/html/body/div[2]/div[1]/div[2]/ul[2]/li[2]/ul/li/a"
+            let jsXpath = "/html/body/section/div[2]/div/script[1]/text()"
+            let jxNodeArr = jiDoc?.xPath(jsXpath)
+            if jxNodeArr!.count>0{
+                var jsItem = jxNodeArr![0].content!
+                jsItem = jsItem.replacingOccurrences(of: "var player_aaaa=", with: "")
+                let jsonData = jsItem.data(using: .utf8)!
+                let js = try! JSONSerialization.jsonObject(with: jsonData)
+                if let dic:Dictionary<String,Any> = js as? Dictionary<String, Any> {
+                    videoModel.videoUrl = dic["url"] as! String
+                }
+            }else{
+                return (result: true, model: videoModel)
+            }
+            // 获取线路
+            let circuitNameXpath = "//*[@id=\"video_list_li\"]/h3/strong"
             let circuitNodeArr = jiDoc?.xPath(circuitNameXpath)
             var circuitArr:[CircuitModel] = []
             if circuitNodeArr!.count > 0 {
                 for (i,item) in circuitNodeArr!.enumerated() {
                     let model = CircuitModel.init()
                     model.name = item.content!
-                    let serialTitleNodeArr = jiDoc?.xPath("//*[@id=\"con_playlist_\(i+1)\"]/li/a")
-                    let serialUrlNodeArr = jiDoc?.xPath("//*[@id=\"con_playlist_\(i+1)\"]/li/a/@href")
+                    let serialTitleNodeArr = jiDoc?.xPath("/html/body/div[1]/div[1]/div/div[\(i+1)]/li/a/@title")
+                    let serialUrlNodeArr = jiDoc?.xPath("/html/body/div[1]/div[1]/div/div[\(i+1)]/li/a/@href")
                     for (index, _) in serialTitleNodeArr!.enumerated() {
                         let serialModel = SerialModel.init()
                         serialModel.name = serialTitleNodeArr![index].content!
@@ -244,11 +241,11 @@ class Juzhixiao: WebsiteBaseModel, WebsiteProtocol {
                 }
             }
             videoModel.circuitArr = circuitArr
-            
+
             // 获取推荐视频
-            let recommendTitleXpath = "/html/body/div[2]/div[2]/div[1]/div/ul/li/div/a"
-            let recommendUrlXpath = "/html/body/div[2]/div[2]/div[1]/div/ul/li/a/@href"
-            let recommendImgXpath = "/html/body/div[2]/div[2]/div[1]/div/ul/li/a/img/@data-original"
+            let recommendTitleXpath = "/html/body/div[1]/div[1]/div/div[7]/article/a/@title"
+            let recommendUrlXpath = "/html/body/div[1]/div[1]/div/div[7]/article/a/@href"
+            let recommendImgXpath = "/html/body/div[1]/div[1]/div/div[7]/article[1]/a/div/img/@src"
             let recommendTitleNodeArr = jiDoc?.xPath(recommendTitleXpath)
             let recommendUrlNodeArr = jiDoc?.xPath(recommendUrlXpath)
             let recommendImgNodeArr = jiDoc?.xPath(recommendImgXpath)
@@ -270,6 +267,7 @@ class Juzhixiao: WebsiteBaseModel, WebsiteProtocol {
             return (result: true, model: videoModel)
         }
     }
+    
     func getSearchData(urlStr: String, keyword: String) -> [ListModel] {
         let listModel = ListModel.init()
         listModel.title = "搜索关键字:" + keyword
@@ -281,9 +279,9 @@ class Juzhixiao: WebsiteBaseModel, WebsiteProtocol {
         if jiDoc == nil {
             return []
         }
-        let titleXpath = "//*[@id=\"content\"]/ul/li/div[1]/a/span"
-        let detailXpath = "//*[@id=\"content\"]/ul/li/div[2]/div[1]/h2/a/@href"
-        let imgXpath = "//*[@id=\"content\"]/ul/li/div[1]/a/img/@data-original"
+        let titleXpath = "/html/body/section/div[2]/div/div/article/a/@title"
+        let detailXpath = "/html/body/section/div[2]/div/div/article/a/@href"
+        let imgXpath = "/html/body/section/div[2]/div/div/article/a/div/img/@src"
         let titleNodeArr = jiDoc?.xPath(titleXpath)
         let detailNodeArr = jiDoc?.xPath(detailXpath)
         let imgNodeArr = jiDoc?.xPath(imgXpath)
