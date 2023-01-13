@@ -27,7 +27,7 @@ class SearchResultViewController: BaseViewController {
 
     func setNav() {
         title = keyword
-        setNavColor(navColor: .systemBackground, titleColor: UIColor.init(.dm, light: .black, dark: .white), barStyle: .default)
+//        setNavColor(navColor: .systemBackground, titleColor: UIColor.init(.dm, light: .black, dark: .white), barStyle: .default)
     }
     
     //获取搜索数据
@@ -45,7 +45,7 @@ class SearchResultViewController: BaseViewController {
             }else if webType == .mianfei{
                 urlStr = Mianfei.init().webUrlStr+"search/-------------.html?wd=\(keyword)"
             }else if webType == .qihaolou{
-                urlStr = Qihaolou.init().webUrlStr+"vodsearch/-------------.html?wd=\(keyword)"
+                urlStr = Qihaolou.init().webUrlStr+"vodsearch/----------\(pageNum)---.html?wd=\(keyword)"
             }
         getSearchData(urlStr: urlStr)
     }

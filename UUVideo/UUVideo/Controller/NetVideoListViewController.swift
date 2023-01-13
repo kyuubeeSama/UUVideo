@@ -220,6 +220,7 @@ class NetVideoListViewController: BaseViewController {
             } failure: { error in
                 print(error)
                 DispatchQueue.main.async {
+                    self.view.hideAllToasts()
                     self.view.makeToast("获取视频列表失败")
                 }
             }
