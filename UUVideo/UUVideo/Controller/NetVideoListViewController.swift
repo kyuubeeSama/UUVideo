@@ -40,7 +40,8 @@ class NetVideoListViewController: BaseViewController {
             ["电影": "1", "剧集": "2", "综艺": "4", "动漫": "3", "伦理": "19"],
             ["日本动漫": "japan", "国产动漫": "china", "欧美动漫": "american", "动漫电影": "movie"],
             ["电视剧":"2","电影":"1","综艺":"4","动漫":"3"],
-            ["电影":"dy","电视剧":"tv","综艺":"zy","动漫":"dm"]
+            ["电影":"dy","电视剧":"tv","综艺":"zy","动漫":"dm"],
+            ["电影":"dianying","电视剧":"lianxuju","综艺":"zongyi","动漫":"dongman"],
         ]
         if webType == .halihali {
             area = "all"
@@ -51,7 +52,7 @@ class NetVideoListViewController: BaseViewController {
         }
 //    https://www.qybfb.com/index.php?s=home-vod-type-id-2-mcid-114-area-泰国-year-2022-letter--order--picm-1-p-1
         videoType = videoTypeData[webType.rawValue][title!]!
-        if webType == .halihali || webType == .juzhixiao {
+        if webType == .halihali || webType == .juzhixiao || webType == .qihaolou{
             if webType == .juzhixiao{
                 videoCategory = "mcid-0"
                 year = "year-0"
@@ -132,6 +133,10 @@ class NetVideoListViewController: BaseViewController {
                     videoCategory = resultArr[0]
                     year = resultArr[2]
                     area = resultArr[1]
+                }else if webType == .qihaolou {
+                    videoCategory = resultArr[0]
+                    area = resultArr[1]
+                    year = resultArr[2]
                 }
                 mainCollect.es.resetNoMoreData()
                 pageNum = 1
@@ -181,6 +186,14 @@ class NetVideoListViewController: BaseViewController {
 //            }else{
 //                detailUrlStr = urlStr+"haokan/\(videoType)-\(videoCategory)----------\(year).html"
 //            }
+        }else if webType == .qihaolou {
+            if  area.isEmpty && videoCategory.isEmpty && year.isEmpty{
+
+                detailUrlStr = urlStr+"vodshow/\(videoType)--------\(pageNum)---.html"
+            }else{
+                //            https://qhlou.com/vodshow/dongzuopian-%E5%A4%A7%E9%99%86----------2020.html
+                detailUrlStr = urlStr + "vodshow/\(videoCategory)-\(area)-------\(pageNum)---\(year).html"
+            }
         }
         view.makeToastActivity(.center)
         DispatchQueue.global().async {
@@ -224,6 +237,8 @@ class NetVideoListViewController: BaseViewController {
             categoryUrlStr = urlStr + "index.php?s=home-vod-type-id-\(videoType)-mcid--area--year--letter--order--picm-1-p-\(pageNum)"
         }else if webType == .mianfei {
             categoryUrlStr = urlStr + "/\(videoType)/"
+        }else if webType == .qihaolou {
+            categoryUrlStr = urlStr+"vodtype/\(videoType).html"
         }
         DataManager.init().getWebsiteCategoryData(urlStr: categoryUrlStr, type: webType) { (dataArr) in
             self.categoryListArr = dataArr

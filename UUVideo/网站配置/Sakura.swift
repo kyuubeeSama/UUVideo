@@ -37,7 +37,7 @@ class Sakura: WebsiteBaseModel, WebsiteProtocol {
             for (i, _) in titleNodeArr!.enumerated() {
                 var videoModel = VideoModel.init()
                 videoModel.name = titleNodeArr![i].content!
-                videoModel.webType = 2
+                videoModel.webType = websiteType.sakura.rawValue
                 let detailUrl: String = urlNodeArr![i].content!
                 if detailUrl.contains("http") {
                     videoModel.detailUrl = detailUrl
@@ -81,7 +81,7 @@ class Sakura: WebsiteBaseModel, WebsiteProtocol {
             let picUrl: String = imgNodeArr![i].content!
             videoModel.picUrl = Tool.checkUrl(urlStr: picUrl, domainUrlStr: webUrlStr)
             videoModel.type = 3
-            videoModel.webType = 2
+            videoModel.webType = websiteType.sakura.rawValue
             listModel.list.append(videoModel)
         }
         return [listModel]
@@ -276,7 +276,7 @@ class Sakura: WebsiteBaseModel, WebsiteProtocol {
             videoModel.detailUrl = Tool.checkUrl(urlStr: detailNodeArr![index].content!, domainUrlStr: baseUrl)
             videoModel.picUrl = Tool.checkUrl(urlStr: imgNodeArr![index].content!, domainUrlStr: baseUrl)
             videoModel.type = 3
-            videoModel.webType = 2
+            videoModel.webType = websiteType.sakura.rawValue
             listModel.list.append(videoModel)
         }
         return [listModel]

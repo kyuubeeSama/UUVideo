@@ -14,10 +14,8 @@ import SideMenu
 class PadIndexViewController: BaseViewController, UISearchBarDelegate {
     var allVideoArr: [[Any]] = [[], [], []]
     var tableIndex: Int = 0
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
         do {
             let path = FileTool.init().getDocumentPath().appending("/video")
@@ -29,7 +27,6 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
         view.bringSubviewToFront(localView)
         NotificationCenter.default.addObserver(self, selector: #selector(didChangeRotate(notice:)), name: UIApplication.didChangeStatusBarFrameNotification, object: nil)
     }
-        
     @objc func showUser() {
         let VC = UserViewController.init()
         let menu = SideMenuNavigationController(rootViewController: VC)
@@ -38,11 +35,9 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
         menu.leftSide = true
         present(menu, animated: true, completion: nil)
     }
-
     @objc func didChangeRotate(notice: Notification) {
         // TODO:此处用于重新适配
     }
-
     // 左侧按钮
     lazy var mainTable: WebsiteTableView = {
         let mainTable = WebsiteTableView.init(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH), style: .plain)
@@ -64,60 +59,66 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
                 self.view.bringSubviewToFront(self.haliView)
             } else if (string == "樱花动漫") {
                 self.view.bringSubviewToFront(self.sakuraView)
-            } else if(string == "剧知晓"){
+            } else if (string == "剧知晓") {
                 self.view.bringSubviewToFront(self.juzhixiaoView)
-            } else if (string == "历史记录"){
+            } else if (string == "历史记录") {
                 self.view.bringSubviewToFront(self.historyView)
-            } else if(string == "我的收藏"){
+            } else if (string == "我的收藏") {
                 self.view.bringSubviewToFront(self.collectView)
             } else if (string == "来快播") {
                 self.view.bringSubviewToFront(self.laikuaiboView)
+            } else if (string == "免费电影") {
+                self.view.bringSubviewToFront(self.mianfeiView)
+            } else if (string == "七号楼") {
+                self.view.bringSubviewToFront(self.qihaolouView)
             }
         }
         return mainTable
     }()
     // 右侧显示内容
-//    三个controller的view，选择后将制定的view放在前台
+    //    三个controller的view，选择后将制定的view放在前台
     lazy var localView: UIView = {
         getView(controller: PhoneVideoListViewController.init())
     }()
-
     lazy var bangumiView: UIView = {
         getView(controller: BangumiViewController.init())
     }()
-    
     lazy var historyView: UIView = {
         getView(controller: HistoryViewController.init())
     }()
-    
     lazy var collectView: UIView = {
         getView(controller: CollectViewController.init())
     }()
-    
     lazy var haliView: UIView = {
         let VC = NetVideoIndexViewController.init()
         VC.webType = .halihali
-        return getView(controller:VC)
+        return getView(controller: VC)
     }()
-
     lazy var sakuraView: UIView = {
         let VC = NetVideoIndexViewController.init()
         VC.webType = .sakura
-        return getView(controller:VC)
+        return getView(controller: VC)
     }()
-    
     lazy var laikuaiboView: UIView = {
         let VC = NetVideoIndexViewController.init()
         VC.webType = .laikuaibo
-        return getView(controller:VC)
+        return getView(controller: VC)
     }()
-    
     lazy var juzhixiaoView: UIView = {
         let VC = NetVideoIndexViewController.init()
         VC.webType = .juzhixiao
         return getView(controller: VC)
     }()
-    
+    lazy var mianfeiView: UIView = {
+        let VC = NetVideoIndexViewController.init()
+        VC.webType = .mianfei
+        return getView(controller: VC)
+    }()
+    lazy var qihaolouView: UIView = {
+        let VC = NetVideoIndexViewController.init()
+        VC.webType = .qihaolou
+        return getView(controller: VC)
+    }()
     func getView(controller: UIViewController) -> UIView {
         addChild(controller)
         view.addSubview(controller.view)
@@ -127,5 +128,4 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
         }
         return controller.view
     }
-
 }

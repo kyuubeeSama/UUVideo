@@ -39,7 +39,7 @@ class Laikuaibo: WebsiteBaseModel, WebsiteProtocol {
             for (i, _) in titleNodeArr!.enumerated() {
                 var videoModel = VideoModel.init()
                 videoModel.name = titleNodeArr![i].content!
-                videoModel.webType = 1
+                videoModel.webType = websiteType.laikuaibo.rawValue
                 let detailUrl: String = urlNodeArr![i].content!
                 if detailUrl.contains("http") {
                     videoModel.detailUrl = detailUrl
@@ -88,7 +88,7 @@ class Laikuaibo: WebsiteBaseModel, WebsiteProtocol {
             let picUrl: String = imgNodeArr![i].content!
             videoModel.picUrl = Tool.checkUrl(urlStr: picUrl, domainUrlStr: baseUrl)
             videoModel.type = 3
-            videoModel.webType = 1
+            videoModel.webType = websiteType.laikuaibo.rawValue
             listModel.list.append(videoModel)
         }
         return [listModel]
@@ -260,7 +260,7 @@ class Laikuaibo: WebsiteBaseModel, WebsiteProtocol {
                 videoModel.detailUrl = Tool.checkUrl(urlStr: detailNodeArr![index].content!, domainUrlStr: baseUrl)
                 videoModel.picUrl = Tool.checkUrl(urlStr: imgNodeArr![index].content!, domainUrlStr: baseUrl)
                 videoModel.type = 3
-                videoModel.webType = 1
+                videoModel.webType = websiteType.laikuaibo.rawValue
                 listModel.list.append(videoModel)
             }
             return [listModel]

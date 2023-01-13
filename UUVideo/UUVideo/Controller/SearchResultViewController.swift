@@ -44,6 +44,8 @@ class SearchResultViewController: BaseViewController {
                 urlStr = Juzhixiao.init().webUrlStr+"search/"+keyword+"-\(pageNum).html"
             }else if webType == .mianfei{
                 urlStr = Mianfei.init().webUrlStr+"search/-------------.html?wd=\(keyword)"
+            }else if webType == .qihaolou{
+                urlStr = Qihaolou.init().webUrlStr+"vodsearch/-------------.html?wd=\(keyword)"
             }
         getSearchData(urlStr: urlStr)
     }

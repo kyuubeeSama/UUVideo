@@ -48,6 +48,8 @@ class DataManager: NSObject {
                 array = Juzhixiao.init().getIndexData()
             case .mianfei:
                 array = Mianfei.init().getIndexData()
+            case .qihaolou:
+                array = Qihaolou.init().getIndexData()
             }
             if array.isEmpty {
                 failure(XPathError.getContentFail)
@@ -76,6 +78,8 @@ class DataManager: NSObject {
             array = Juzhixiao.init().getVideoList(urlStr: urlStr)
         case .mianfei:
             array = Mianfei.init().getVideoList(urlStr: urlStr)
+        case .qihaolou:
+            array = Qihaolou.init().getVideoList(urlStr: urlStr)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -104,6 +108,8 @@ class DataManager: NSObject {
             array = Juzhixiao.init().getVideoCategory(urlStr: urlStr)
         case .mianfei:
             array = Mianfei.init().getVideoCategory(urlStr: urlStr)
+        case .qihaolou:
+            array = Qihaolou.init().getVideoCategory(urlStr: urlStr)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -132,6 +138,8 @@ class DataManager: NSObject {
             result = Juzhixiao.init().getVideoDetail(urlStr: urlStr)
         case .mianfei:
             result = Mianfei.init().getVideoDetail(urlStr: urlStr)
+        case .qihaolou:
+            result = Qihaolou.init().getVideoDetail(urlStr: urlStr)
         }
         if result.result == false {
             failure(XPathError.getContentFail)
@@ -154,6 +162,8 @@ class DataManager: NSObject {
             array = Juzhixiao.init().getSearchData(urlStr: urlStr, keyword: keyword)
         case .mianfei:
             array = Mianfei.init().getSearchData(urlStr: urlStr, keyword: keyword)
+        case .qihaolou:
+            array = Qihaolou.init().getSearchData(urlStr: urlStr, keyword: keyword)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -176,6 +186,8 @@ class DataManager: NSObject {
             result = Juzhixiao.init().getVideoPlayerDetail(urlStr: urlStr)
         case .mianfei:
             result = Mianfei.init().getVideoPlayerDetail(urlStr: urlStr)
+        case .qihaolou:
+            result = Qihaolou.init().getVideoPlayerDetail(urlStr: urlStr)
         }
         if result.result == false {
             failure(XPathError.getContentFail)

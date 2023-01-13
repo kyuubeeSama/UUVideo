@@ -40,7 +40,7 @@ class Mianfei: WebsiteBaseModel,WebsiteProtocol {
             for (i, _) in titleNodeArr!.enumerated() {
                 var videoModel = VideoModel.init()
                 videoModel.name = titleNodeArr![i].content!
-                videoModel.webType = 4
+                videoModel.webType = websiteType.mianfei.rawValue
                 let detailUrl: String = urlNodeArr![i].content!
                 if detailUrl.contains("http") {
                     videoModel.detailUrl = detailUrl
@@ -89,7 +89,7 @@ class Mianfei: WebsiteBaseModel,WebsiteProtocol {
             let picUrl: String = imgNodeArr![i].content!
             videoModel.picUrl = Tool.checkUrl(urlStr: picUrl, domainUrlStr: webUrlStr)
             videoModel.type = 3
-            videoModel.webType = 0
+            videoModel.webType = websiteType.mianfei.rawValue
             listModel.list.append(videoModel)
         }
         return [listModel]
@@ -131,7 +131,7 @@ class Mianfei: WebsiteBaseModel,WebsiteProtocol {
     }
     
     func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
-        var jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
+        let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return (result: false, model: VideoModel.init())
         }
@@ -175,9 +175,9 @@ class Mianfei: WebsiteBaseModel,WebsiteProtocol {
         videoModel.circuitArr = circuitArr
         videoModel.serialNum = videoModel.serialArr.count
         //        推荐视频
-        let titleXPath = "/html/body/section/div[4]/div/div[7]/article/a/@title"
-        let urlXPath = "/html/body/section/div[4]/div/div[7]/article/a/@href"
-        let imgXPath = "/html/body/section/div[4]/div/div[7]/article/a/div/img/@src"
+        let titleXPath = "//*[@class=\"relate\"]/article/a/@title"
+        let urlXPath = "//*[@class=\"relate\"]/article/a/@href"
+        let imgXPath = "//*[@class=\"relate\"]/article/a/div/img/@src"
         let titleNodeArr = jiDoc?.xPath(titleXPath)
         let urlNodeArr = jiDoc?.xPath(urlXPath)
         let imgNodeArr = jiDoc?.xPath(imgXPath)
@@ -199,7 +199,7 @@ class Mianfei: WebsiteBaseModel,WebsiteProtocol {
     }
     
     func getVideoPlayerDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
-        var jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
+        let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return (result: false, model: VideoModel.init())
         } else {
@@ -243,9 +243,9 @@ class Mianfei: WebsiteBaseModel,WebsiteProtocol {
             videoModel.circuitArr = circuitArr
 
             // 获取推荐视频
-            let recommendTitleXpath = "/html/body/div[1]/div[1]/div/div[7]/article/a/@title"
-            let recommendUrlXpath = "/html/body/div[1]/div[1]/div/div[7]/article/a/@href"
-            let recommendImgXpath = "/html/body/div[1]/div[1]/div/div[7]/article[1]/a/div/img/@src"
+            let recommendTitleXpath = "//*[@class=\"relate\"]/article/a/@title"
+            let recommendUrlXpath = "//*[@class=\"relate\"]/article/a/@href"
+            let recommendImgXpath = "//*[@class=\"relate\"]/article/a/div/img/@src"
             let recommendTitleNodeArr = jiDoc?.xPath(recommendTitleXpath)
             let recommendUrlNodeArr = jiDoc?.xPath(recommendUrlXpath)
             let recommendImgNodeArr = jiDoc?.xPath(recommendImgXpath)
@@ -291,7 +291,7 @@ class Mianfei: WebsiteBaseModel,WebsiteProtocol {
             videoModel.detailUrl = Tool.checkUrl(urlStr: detailNodeArr![index].content!, domainUrlStr: baseUrl)
             videoModel.picUrl = Tool.checkUrl(urlStr: imgNodeArr![index].content!, domainUrlStr: baseUrl)
             videoModel.type = 3
-            videoModel.webType = 3
+            videoModel.webType = websiteType.mianfei.rawValue
             listModel.list.append(videoModel)
         }
         return [listModel]

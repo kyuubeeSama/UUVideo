@@ -16,7 +16,7 @@ class NetVideoDetailViewController: BaseViewController {
         // Do any additional setup after loading the view.
         getDetailData()
     }
-    //TODO:nav上添加收藏按钮
+    //nav上添加收藏按钮
     func addCollectItem(videoModel: VideoModel) {
         // 判断用户是否收藏该视频
         var imageName = "heart"
@@ -73,8 +73,8 @@ class NetVideoDetailViewController: BaseViewController {
                 }
             } failure: { (error) in
                 DispatchQueue.main.async {
-                    self.view.hideToastActivity()
-                    self.view.makeToast("加载失败")
+                    view.hideToastActivity()
+                    view.makeToast("加载失败")
                 }
                 print(error)
             }

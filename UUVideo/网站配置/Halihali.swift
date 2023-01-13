@@ -41,7 +41,7 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
             for (i, _) in titleNodeArr!.enumerated() {
                 var videoModel = VideoModel.init()
                 videoModel.name = titleNodeArr![i].content!
-                videoModel.webType = 0
+                videoModel.webType = websiteType.halihali.rawValue
                 let detailUrl: String = urlNodeArr![i].content!
                 if detailUrl.contains("http") {
                     videoModel.detailUrl = detailUrl
@@ -89,7 +89,7 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
             let picUrl: String = imgNodeArr![i].content!
             videoModel.picUrl = Tool.checkUrl(urlStr: picUrl, domainUrlStr: webUrlStr)
             videoModel.type = 3
-            videoModel.webType = 0
+            videoModel.webType = websiteType.halihali.rawValue
             listModel.list.append(videoModel)
         }
         return [listModel]
