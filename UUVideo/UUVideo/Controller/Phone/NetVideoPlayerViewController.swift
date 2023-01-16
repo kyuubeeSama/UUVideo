@@ -96,21 +96,24 @@ class NetVideoPlayerViewController: BaseViewController, DLNADelegate {
         // TODO:添加下载按钮
         downloadBtn.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         rightBtnView.addSubview(downloadBtn)
-        downloadBtn.setImage(UIImage.init(systemName: "arrow.down.square"), for: .normal)
+        downloadBtn.setImage(UIImage.init(systemName: "doc.on.doc"), for: .normal)
         downloadBtn.reactive.controlEvents(.touchUpInside).observeValues { button in
+            UIPasteboard.general.string = self.model.serialDetailUrl
             // 下载操作
-            let alert = UIAlertController.init(title: "提醒", message: self.model.videoUrl, preferredStyle: .alert)
-            let copyAction = UIAlertAction.init(title: "复制", style: .default) { action in
-                UIPasteboard.general.string = self.model.videoUrl
-            }
-            alert.addAction(copyAction)
-            let openAction = UIAlertAction.init(title: "浏览器打开", style: .default) { action in
-                UIApplication.shared.open(URL.init(string: self.model.videoUrl)!, options: [:], completionHandler: nil)
-            }
-            alert.addAction(openAction)
+            let alert = UIAlertController.init(title: "提醒", message: "播放地址已复制到接切板", preferredStyle: .alert)
+//            let copyAction = UIAlertAction.init(title: "复制", style: .default) { action in
+//                UIPasteboard.general.string = self.model.videoUrl
+//            }
+//            alert.addAction(copyAction)
+//            let openAction = UIAlertAction.init(title: "浏览器打开", style: .default) { action in
+//                UIApplication.shared.open(URL.init(string: self.model.videoUrl)!, options: [:], completionHandler: nil)
+//            }
+//            alert.addAction(openAction)
+            let cancelAction = UIAlertAction.init(title: "确定", style: .cancel)
+            alert.addAction(cancelAction)
             self.present(alert, animated: true, completion: nil)
         }
-        downloadBtn.isHidden = true
+//        downloadBtn.isHidden = true
         let rightBtnItem = UIBarButtonItem.init(customView: rightBtnView)
         navigationItem.rightBarButtonItem = rightBtnItem
     }
@@ -161,7 +164,7 @@ class NetVideoPlayerViewController: BaseViewController, DLNADelegate {
             let asset = try AVURLAsset.init(url: URL.init(string: model.videoUrl)!, options: ["AVURLAssetHTTPHeaderFieldsKey": headers])
             player.urlAsset = SJVideoPlayerURLAsset.init(avAsset: asset, startPosition: TimeInterval(model.progress), playModel: SJPlayModel.init())
             // 判断视频是否可以播放
-            downloadBtn.isHidden = (model.videoUrl.contains("m3u8") || model.videoUrl.contains("html"))
+//            downloadBtn.isHidden = (model.videoUrl.contains("m3u8") || model.videoUrl.contains("html"))
             isPlaying = true
         }
     }

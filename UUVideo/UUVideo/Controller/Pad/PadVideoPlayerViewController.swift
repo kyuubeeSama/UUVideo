@@ -179,8 +179,8 @@ class PadVideoPlayerViewController: BaseViewController, DLNADelegate {
         player.view.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-        player.onlyUsedFitOnScreen = true
-        player.rotationManager.isDisabledAutorotation = true
+        player.onlyFitOnScreen = true
+        player.rotationManager!.isDisabledAutorotation = true
         player.defaultEdgeControlLayer.topAdapter.removeItem(forTag: SJEdgeControlLayerTopItem_Back)
         player.defaultEdgeControlLayer.topAdapter.reload()
         player.defaultEdgeControlLayer.automaticallyShowsPictureInPictureItem = true
