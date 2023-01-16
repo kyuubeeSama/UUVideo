@@ -287,14 +287,17 @@ class Juzhixiao: WebsiteBaseModel, WebsiteProtocol {
         let titleNodeArr = jiDoc?.xPath(titleXpath)
         let detailNodeArr = jiDoc?.xPath(detailXpath)
         let imgNodeArr = jiDoc?.xPath(imgXpath)
-        for (index, _) in titleNodeArr!.enumerated() {
-            var videoModel = VideoModel.init()
-            videoModel.name = titleNodeArr![index].content!
-            videoModel.detailUrl = Tool.checkUrl(urlStr: detailNodeArr![index].content!, domainUrlStr: baseUrl)
-            videoModel.picUrl = Tool.checkUrl(urlStr: imgNodeArr![index].content!, domainUrlStr: baseUrl)
-            videoModel.type = 3
-            videoModel.webType = websiteType.juzhixiao.rawValue
-            listModel.list.append(videoModel)
+        let titleCount = titleNodeArr?.count
+        if detailNodeArr?.count == titleCount && imgNodeArr?.count == titleCount {
+            for (index, _) in titleNodeArr!.enumerated() {
+                var videoModel = VideoModel.init()
+                videoModel.name = titleNodeArr![index].content!
+                videoModel.detailUrl = Tool.checkUrl(urlStr: detailNodeArr![index].content!, domainUrlStr: baseUrl)
+                videoModel.picUrl = Tool.checkUrl(urlStr: imgNodeArr![index].content!, domainUrlStr: baseUrl)
+                videoModel.type = 3
+                videoModel.webType = websiteType.juzhixiao.rawValue
+                listModel.list.append(videoModel)
+            }
         }
         return [listModel]
     }

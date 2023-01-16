@@ -12,7 +12,7 @@ import Ji
 class Laikuaibo: WebsiteBaseModel, WebsiteProtocol {
     required override init() {
         super.init()
-        webUrlStr = "https://www.laikuaibo.com/"
+        webUrlStr = "https://www.laikuaibo.top/"
         websiteName = "来快播"
     }
     func getIndexData() -> [ListModel] {
