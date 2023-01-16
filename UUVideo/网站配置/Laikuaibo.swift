@@ -168,7 +168,7 @@ class Laikuaibo: WebsiteBaseModel, WebsiteProtocol {
                 videoModel.videoArr.append(model)
             }
         }
-        return (result: false, model: videoModel)
+        return (result: true, model: videoModel)
     }
     func getVideoPlayerDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
