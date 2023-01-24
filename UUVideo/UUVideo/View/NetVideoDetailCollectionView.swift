@@ -155,6 +155,11 @@ class NetVideoDetailCollectionView: UICollectionView, UICollectionViewDelegate, 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section > 0 && indexPath.section <= model.circuitArr.count {
             // 剧集点击，修改为选中状态
+            for item in model.circuitArr{
+                for item1 in item.serialArr{
+                    item1.ischoose = false
+                }
+            }
             let circuitModel = model.circuitArr[indexPath.section-1]
             let model: SerialModel = circuitModel.serialArr[indexPath.row]
             model.ischoose = !model.ischoose!

@@ -73,8 +73,8 @@ class NetVideoDetailViewController: BaseViewController {
                 }
             } failure: { (error) in
                 DispatchQueue.main.async {
-                    view.hideToastActivity()
-                    view.makeToast("加载失败")
+                    self.view.hideToastActivity()
+                    self.view.makeToast("加载失败")
                 }
                 print(error)
             }

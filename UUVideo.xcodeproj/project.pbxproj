@@ -66,6 +66,7 @@
 		A9967C1D256265AA00752CB7 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9967C1C256265AA00752CB7 /* UserViewController.swift */; };
 		A997538725666B9600179FCB /* NetVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A997538625666B9600179FCB /* NetVideoPlayerViewController.swift */; };
 		A9AD86AA296F9E4400D64467 /* Mianfei.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AD86A9296F9E4400D64467 /* Mianfei.swift */; };
+		A9AE212F29798A0C00C8026F /* UIViewController+RotationControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A9AE212D29798A0C00C8026F /* UIViewController+RotationControl.m */; };
 		A9B378F9261089DD00EBC4EF /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B378F8261089DD00EBC4EF /* HistoryViewController.swift */; };
 		A9B898672716C736006889C3 /* padVideoDetailCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B898662716C736006889C3 /* padVideoDetailCollectionView.swift */; };
 		A9B9CE1C24E9569700CFBE69 /* LocalVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CE1B24E9569700CFBE69 /* LocalVideoPlayerViewController.swift */; };
@@ -155,6 +156,8 @@
 		A9967C1C256265AA00752CB7 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		A997538625666B9600179FCB /* NetVideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoPlayerViewController.swift; sourceTree = "<group>"; };
 		A9AD86A9296F9E4400D64467 /* Mianfei.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mianfei.swift; sourceTree = "<group>"; };
+		A9AE212D29798A0C00C8026F /* UIViewController+RotationControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RotationControl.m"; sourceTree = "<group>"; };
+		A9AE212E29798A0C00C8026F /* UIViewController+RotationControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RotationControl.h"; sourceTree = "<group>"; };
 		A9B378F8261089DD00EBC4EF /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		A9B898662716C736006889C3 /* padVideoDetailCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = padVideoDetailCollectionView.swift; sourceTree = "<group>"; };
 		A9B9CE1524E933E000CFBE69 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
@@ -274,6 +277,8 @@
 		A950E2A624E67318000CBB92 /* extension */ = {
 			isa = PBXGroup;
 			children = (
+				A9AE212E29798A0C00C8026F /* UIViewController+RotationControl.h */,
+				A9AE212D29798A0C00C8026F /* UIViewController+RotationControl.m */,
 				A9DFBD992680296F00BBA638 /* Array+extension.swift */,
 				A950E2A824E6733F000CBB92 /* Date+extension.swift */,
 				A950E2A724E6733E000CBB92 /* Dictionary+extension.swift */,
@@ -584,6 +589,7 @@
 				A950E2CF24E677D9000CBB92 /* VideoListCollectionView.swift in Sources */,
 				A9D34755296BB3BC00DD0BBC /* Sakura.swift in Sources */,
 				A9D34759296BB3D300DD0BBC /* Juzhixiao.swift in Sources */,
+				A9AE212F29798A0C00C8026F /* UIViewController+RotationControl.m in Sources */,
 				A9D34757296BB3C800DD0BBC /* Laikuaibo.swift in Sources */,
 				A950E2B424E6733F000CBB92 /* UITextField+extension.swift in Sources */,
 				A9B898672716C736006889C3 /* padVideoDetailCollectionView.swift in Sources */,

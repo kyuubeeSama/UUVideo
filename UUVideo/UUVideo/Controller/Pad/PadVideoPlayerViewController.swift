@@ -29,6 +29,9 @@ class PadVideoPlayerViewController: BaseViewController, DLNADelegate {
         }
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinish), name: NSNotification.Name.SJMediaPlayerPlaybackDidFinish, object: nil)
     }
+    func shouldAutorotate()->Bool{
+        false
+    }
     @objc func playerDidFinish() {
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -179,8 +182,8 @@ class PadVideoPlayerViewController: BaseViewController, DLNADelegate {
         player.view.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-        player.onlyFitOnScreen = true
-        player.rotationManager!.isDisabledAutorotation = true
+//        player.onlyFitOnScreen = true
+        player.rotationManager?.isDisabledAutorotation = true
         player.defaultEdgeControlLayer.topAdapter.removeItem(forTag: SJEdgeControlLayerTopItem_Back)
         player.defaultEdgeControlLayer.topAdapter.reload()
         player.defaultEdgeControlLayer.automaticallyShowsPictureInPictureItem = true
@@ -201,7 +204,9 @@ class PadVideoPlayerViewController: BaseViewController, DLNADelegate {
             if indexPath.section != 0 {
                 // 剧集
                 self.player.stop()
-                let circuitModel = self.model.circuitArr[indexPath.section]
+                self.model.circuitIndex = indexPath.section-1
+                self.model.serialIndex = indexPath.row
+                let circuitModel = self.model.circuitArr[indexPath.section-1]
                 let serialModel = circuitModel.serialArr[indexPath.row]
                 // 在当前页面获取数据并刷新
                 // 重新获取数据，并刷新页面
