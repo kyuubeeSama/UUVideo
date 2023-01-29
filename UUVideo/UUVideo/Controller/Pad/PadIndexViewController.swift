@@ -49,28 +49,36 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
         mainTable.cellItemDidSelect = { [self] indexPath in
             self.view.endEditing(true)
             self.tableIndex = indexPath.row
-            let string = mainTable.listArr[indexPath.section].list[indexPath.row]
+            let model = mainTable.listArr[indexPath.section].list[indexPath.row]
+            let string = model.title
             // 点击切换数据源
-            if (string == "本地视频") {
-                self.view.bringSubviewToFront(self.localView)
-            } else if (string == "新番时间表") {
-                self.view.bringSubviewToFront(self.bangumiView)
-            } else if (string == "哈哩哈哩") {
-                self.view.bringSubviewToFront(self.haliView)
-            } else if (string == "樱花动漫") {
-                self.view.bringSubviewToFront(self.sakuraView)
-            } else if (string == "剧知晓") {
-                self.view.bringSubviewToFront(self.juzhixiaoView)
-            } else if (string == "历史记录") {
-                self.view.bringSubviewToFront(self.historyView)
-            } else if (string == "我的收藏") {
-                self.view.bringSubviewToFront(self.collectView)
-            } else if (string == "来快播") {
-                self.view.bringSubviewToFront(self.laikuaiboView)
-            } else if (string == "免费电影") {
-                self.view.bringSubviewToFront(self.mianfeiView)
-            } else if (string == "七号楼") {
-                self.view.bringSubviewToFront(self.qihaolouView)
+            if model.type == 0 {
+                if (string == "本地视频") {
+                    self.view.bringSubviewToFront(self.localView)
+                } else if (string == "新番时间表") {
+                    self.view.bringSubviewToFront(self.bangumiView)
+                } else if (string == "历史记录") {
+                    self.view.bringSubviewToFront(self.historyView)
+                } else if (string == "我的收藏") {
+                    self.view.bringSubviewToFront(self.collectView)
+                } else if(string == "聚合搜索") {
+
+                }
+            } else {
+                switch model.webType {
+                case .halihali:
+                    self.view.bringSubviewToFront(self.haliView)
+                case .laikuaibo:
+                    self.view.bringSubviewToFront(self.laikuaiboView)
+                case .sakura:
+                    self.view.bringSubviewToFront(self.sakuraView)
+                case .juzhixiao:
+                    self.view.bringSubviewToFront(self.juzhixiaoView)
+                case .mianfei:
+                    self.view.bringSubviewToFront(self.mianfeiView)
+                case .qihaolou:
+                    self.view.bringSubviewToFront(self.qihaolouView)
+                }
             }
         }
         return mainTable

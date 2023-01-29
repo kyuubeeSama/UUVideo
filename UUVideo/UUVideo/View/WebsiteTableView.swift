@@ -9,7 +9,7 @@
 import UIKit
 
 class WebsiteTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
-    var listArr: [(title: String, list: [String])] = [] {
+    var listArr: [(title: String, list: [IndexModel])] = [] {
         didSet {
             reloadData()
         }
@@ -34,7 +34,7 @@ class WebsiteTableView: UITableView, UITableViewDelegate, UITableViewDataSource 
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell.init(style: .default, reuseIdentifier: "cell")
-        cell.textLabel?.text = listArr[indexPath.section].list[indexPath.row]
+        cell.textLabel?.text = listArr[indexPath.section].list[indexPath.row].title
         cell.textLabel?.font = .systemFont(ofSize: 15)
         return cell
     }

@@ -1,52 +1,44 @@
 //
-//  SearchResultViewController.swift
+//  SearchListViewController.swift
 //  UUVideo
 //
-//  Created by Galaxy on 2020/10/19.
-//  Copyright © 2020 qykj. All rights reserved.
-//  哈哩TV搜索结果列表页
+//  Created by Galaxy on 2023/1/29.
+//  Copyright © 2023 qykj. All rights reserved.
+//
 
 import UIKit
-import EmptyDataSet_Swift
-
-class SearchResultViewController: BaseViewController {
-
-    var keyword: String = ""
-    var pageNum: Int = 1
-    var webType: websiteType = .halihali
-    var listArr: [ListModel] = []
-    var searchArr: [String] = []
-
+import JXSegmentedView
+class SearchListViewController: BaseViewController,JXSegmentedListContainerViewListDelegate {
+    func listView() -> UIView {
+        view
+    }
+    public var webType:websiteType = .halihali
+    public var keyword = ""
+    private var pageNum = 1
+    private var listArr: [ListModel] = []
+    private var searchArr: [String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        setNav()
         getResultList()
     }
-
-    func setNav() {
-        title = keyword
-//        setNavColor(navColor: .systemBackground, titleColor: UIColor.init(.dm, light: .black, dark: .white), barStyle: .default)
-    }
-    
-    //获取搜索数据
     func getResultList() {
         view.makeToastActivity(.center)
-            var urlStr = ""
-            if webType == .halihali {
-                urlStr = Halihali.init().webUrlStr+"search.php"
-            } else if webType == .laikuaibo {
-                urlStr = Laikuaibo.init().webUrlStr+"vod-search-wd-" + keyword + "-p-\(pageNum).html"
-            }else if webType == .sakura{
-                urlStr = Sakura.init().webUrlStr+"search/\(keyword)/?page=\(pageNum)"
-            }else if webType == .juzhixiao{
-                urlStr = Juzhixiao.init().webUrlStr+"search/"+keyword+"-\(pageNum).html"
-            }else if webType == .mianfei{
-                urlStr = Mianfei.init().webUrlStr+"search/-------------.html?wd=\(keyword)"
-            }else if webType == .qihaolou{
-                urlStr = Qihaolou.init().webUrlStr+"vodsearch/----------\(pageNum)---.html?wd=\(keyword)"
-            }
+        var urlStr = ""
+        if webType == .halihali {
+            urlStr = Halihali.init().webUrlStr+"search.php"
+        } else if webType == .laikuaibo {
+            urlStr = Laikuaibo.init().webUrlStr+"vod-search-wd-" + keyword + "-p-\(pageNum).html"
+        }else if webType == .sakura{
+            urlStr = Sakura.init().webUrlStr+"search/\(keyword)/?page=\(pageNum)"
+        }else if webType == .juzhixiao{
+            urlStr = Juzhixiao.init().webUrlStr+"search/"+keyword+"-\(pageNum).html"
+        }else if webType == .mianfei{
+            urlStr = Mianfei.init().webUrlStr+"search/-------------.html?wd=\(keyword)"
+        }else if webType == .qihaolou{
+            urlStr = Qihaolou.init().webUrlStr+"vodsearch/----------\(pageNum)---.html?wd=\(keyword)"
+        }
         getSearchData(urlStr: urlStr)
     }
 
@@ -82,7 +74,7 @@ class SearchResultViewController: BaseViewController {
             }
         }
     }
-    
+
     // 判断是否有重复的内容
     func checkSearchResult(searchArr: [ListModel]) -> Bool {
         if searchArr.count > 0 {
@@ -107,7 +99,6 @@ class SearchResultViewController: BaseViewController {
         let layout = UICollectionViewLeftAlignedLayout.init()
         let mainCollection = VideoListCollectionView.init(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH), collectionViewLayout: layout)
         self.view.addSubview(mainCollection)
-        mainCollection.is_hiddenTitle = false
         mainCollection.snp.makeConstraints { (make) in
             make.left.right.top.bottom.equalToSuperview()
         }
@@ -125,5 +116,4 @@ class SearchResultViewController: BaseViewController {
         }
         return mainCollection
     }()
-
 }

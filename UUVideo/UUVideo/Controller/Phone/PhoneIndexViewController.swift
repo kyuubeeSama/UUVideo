@@ -37,7 +37,8 @@ class PhoneIndexViewController: BaseViewController {
             make.left.right.top.bottom.equalToSuperview()
         }
         table.cellItemDidSelect = { indexPath in
-            let string = table.listArr[indexPath.section].list[indexPath.row]
+            let model = table.listArr[indexPath.section].list[indexPath.row]
+            let string = model.title
             if (string == "新番时间表") {
                 let VC = BangumiViewController.init()
                 self.navigationController?.pushViewController(VC, animated: true)
@@ -50,9 +51,13 @@ class PhoneIndexViewController: BaseViewController {
             } else if (string == "我的收藏") {
                 let VC = CollectViewController.init()
                 self.navigationController?.pushViewController(VC, animated: true)
-            } else {
+            } else if(string == "聚合搜索"){
+                let VC = SearchIndexViewController.init()
+                self.navigationController?.pushViewController(VC, animated: true)
+            }
+            else {
                 let VC = NetVideoIndexViewController.init()
-                VC.webType = websiteType(rawValue: indexPath.row - 2)!
+                VC.webType = model.webType
                 self.navigationController?.pushViewController(VC, animated: true)
             }
         }
