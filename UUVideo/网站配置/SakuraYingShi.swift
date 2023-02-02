@@ -294,7 +294,7 @@ class SakuraYingShi: WebsiteBaseModel,WebsiteProtocol {
         }
         let titleXpath = "/html/body/div[1]/ul/li/h2/a"
         let detailXpath = "/html/body/div[1]/ul/li/h2/a/@href"
-        let imgXpath = "/html/body/div[1]/ul/li/p/a/img"
+        let imgXpath = "/html/body/div[1]/ul/li/p/a/img/@src"
         let titleNodeArr = jiDoc?.xPath(titleXpath)
         let detailNodeArr = jiDoc?.xPath(detailXpath)
         let imgNodeArr = jiDoc?.xPath(imgXpath)
@@ -304,7 +304,7 @@ class SakuraYingShi: WebsiteBaseModel,WebsiteProtocol {
             videoModel.detailUrl = Tool.checkUrl(urlStr: detailNodeArr![index].content!, domainUrlStr: baseUrl)
             videoModel.picUrl = Tool.checkUrl(urlStr: imgNodeArr![index].content!, domainUrlStr: baseUrl)
             videoModel.type = 3
-            videoModel.webType = websiteType.mianfei.rawValue
+            videoModel.webType = websiteType.SakuraYingShi.rawValue
             listModel.list.append(videoModel)
         }
         return [listModel]
