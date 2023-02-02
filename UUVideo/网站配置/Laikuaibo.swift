@@ -162,7 +162,7 @@ class Laikuaibo: WebsiteBaseModel, WebsiteProtocol {
                 model.picUrl = Tool.checkUrl(urlStr: imgPic, domainUrlStr: baseUrl)
                 let recommandUrlStr: String = urlNodeArr![index].content!
                 model.detailUrl = Tool.checkUrl(urlStr: recommandUrlStr, domainUrlStr: baseUrl)
-                model.webType = 1
+                model.webType = websiteType.laikuaibo.rawValue
                 model.num = updateNodeArr![index].content!
                 model.type = 3
                 videoModel.videoArr.append(model)
@@ -226,7 +226,7 @@ class Laikuaibo: WebsiteBaseModel, WebsiteProtocol {
                     model.num = recommendUPdateNodeArr![index].content!
                     model.num = ""
                     model.type = 3
-                    model.webType = 1
+                    model.webType = websiteType.laikuaibo.rawValue
                     videoModel.videoArr.append(model)
                 }
             }

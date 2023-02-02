@@ -24,7 +24,8 @@ class SearchIndexViewController: BaseViewController, UISearchBarDelegate, JXSegm
             Sakura.init().websiteName,
             Juzhixiao.init().websiteName,
             Mianfei.init().websiteName,
-            Qihaolou.init().websiteName
+            Qihaolou.init().websiteName,
+            SakuraYingShi.init().websiteName
         ]
     }()
     lazy var modelArr: [IndexModel] = {

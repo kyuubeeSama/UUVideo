@@ -42,6 +42,7 @@ class NetVideoListViewController: BaseViewController {
             ["电视剧":"2","电影":"1","综艺":"4","动漫":"3"],
             ["电影":"dy","电视剧":"tv","综艺":"zy","动漫":"dm"],
             ["电影":"dianying","电视剧":"lianxuju","综艺":"zongyi","动漫":"dongman"],
+            ["电视剧":"电视剧","电影":"电影","动漫":"动漫","综艺":"综艺"]
         ]
         if webType == .halihali {
             area = "all"
@@ -52,7 +53,7 @@ class NetVideoListViewController: BaseViewController {
         }
 //    https://www.qybfb.com/index.php?s=home-vod-type-id-2-mcid-114-area-泰国-year-2022-letter--order--picm-1-p-1
         videoType = videoTypeData[webType.rawValue][title!]!
-        if webType == .halihali || webType == .juzhixiao || webType == .qihaolou{
+        if webType == .halihali || webType == .juzhixiao || webType == .qihaolou || webType == .SakuraYingShi{
             if webType == .juzhixiao{
                 videoCategory = "mcid-0"
                 year = "year-0"
@@ -71,9 +72,13 @@ class NetVideoListViewController: BaseViewController {
                 }
             }
         }
-        getListData()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        getListData()
+    }
+    
     func setNav() {
 //        setNavColor(navColor: .systemBackground, titleColor: UIColor.init(.dm, light: .black, dark: .white), barStyle: .default)
         let rightItem = UIBarButtonItem.init(title: "筛选", style: .plain, target: self, action: #selector(rightBtnClick))
@@ -137,6 +142,10 @@ class NetVideoListViewController: BaseViewController {
                     videoCategory = resultArr[0]
                     area = resultArr[1]
                     year = resultArr[2]
+                }else if webType == .SakuraYingShi {
+                    area = resultArr[0]
+                    year = resultArr[1]
+                    videoCategory = resultArr[2]
                 }
                 mainCollect.es.resetNoMoreData()
                 pageNum = 1
@@ -194,6 +203,9 @@ class NetVideoListViewController: BaseViewController {
                 //            https://qhlou.com/vodshow/dongzuopian-%E5%A4%A7%E9%99%86----------2020.html
                 detailUrlStr = urlStr + "vodshow/\(videoCategory)-\(area)-------\(pageNum)---\(year).html"
             }
+        }else if webType == .SakuraYingShi {
+            detailUrlStr = urlStr + "v/type/\(videoType)-\(area)-\(year)-\(videoCategory)-----0-24.html?order=&page=\(pageNum-1)&size=24"
+            detailUrlStr = detailUrlStr.replacingOccurrences(of: " ", with: "")
         }
         view.makeToastActivity(.center)
         DispatchQueue.global().async {
@@ -240,6 +252,8 @@ class NetVideoListViewController: BaseViewController {
             categoryUrlStr = urlStr + "/\(videoType)/"
         }else if webType == .qihaolou {
             categoryUrlStr = urlStr+"vodtype/\(videoType).html"
+        }else if webType == .SakuraYingShi {
+            categoryUrlStr = urlStr+"v/type/--------0-24.html"
         }
         DataManager.init().getWebsiteCategoryData(urlStr: categoryUrlStr, type: webType) { (dataArr) in
             self.categoryListArr = dataArr

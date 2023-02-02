@@ -78,6 +78,8 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
                     self.view.bringSubviewToFront(self.mianfeiView)
                 case .qihaolou:
                     self.view.bringSubviewToFront(self.qihaolouView)
+                case .SakuraYingShi:
+                    self.view.bringSubviewToFront(self.sakuraYingshiView)
                 }
             }
         }
@@ -100,6 +102,11 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
     lazy var haliView: UIView = {
         let VC = NetVideoIndexViewController.init()
         VC.webType = .halihali
+        return getView(controller: VC)
+    }()
+    lazy var sakuraYingshiView: UIView = {
+        let VC = NetVideoIndexViewController.init()
+        VC.webType = .SakuraYingShi
         return getView(controller: VC)
     }()
     lazy var sakuraView: UIView = {

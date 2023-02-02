@@ -68,6 +68,7 @@
 		A98794ED2553983B00DD62EE /* VideoInfoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A98794EB2553983B00DD62EE /* VideoInfoCollectionViewCell.xib */; };
 		A9967C1D256265AA00752CB7 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9967C1C256265AA00752CB7 /* UserViewController.swift */; };
 		A997538725666B9600179FCB /* NetVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A997538625666B9600179FCB /* NetVideoPlayerViewController.swift */; };
+		A9A3B822298B8D7E0005CD6F /* SakuraYingShi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A3B821298B8D7E0005CD6F /* SakuraYingShi.swift */; };
 		A9AD86AA296F9E4400D64467 /* Mianfei.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AD86A9296F9E4400D64467 /* Mianfei.swift */; };
 		A9AE212F29798A0C00C8026F /* UIViewController+RotationControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A9AE212D29798A0C00C8026F /* UIViewController+RotationControl.m */; };
 		A9B378F9261089DD00EBC4EF /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B378F8261089DD00EBC4EF /* HistoryViewController.swift */; };
@@ -161,6 +162,7 @@
 		A98794EB2553983B00DD62EE /* VideoInfoCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoInfoCollectionViewCell.xib; sourceTree = "<group>"; };
 		A9967C1C256265AA00752CB7 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		A997538625666B9600179FCB /* NetVideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoPlayerViewController.swift; sourceTree = "<group>"; };
+		A9A3B821298B8D7E0005CD6F /* SakuraYingShi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SakuraYingShi.swift; sourceTree = "<group>"; };
 		A9AD86A9296F9E4400D64467 /* Mianfei.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mianfei.swift; sourceTree = "<group>"; };
 		A9AE212D29798A0C00C8026F /* UIViewController+RotationControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RotationControl.m"; sourceTree = "<group>"; };
 		A9AE212E29798A0C00C8026F /* UIViewController+RotationControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RotationControl.h"; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 				A9D34758296BB3D300DD0BBC /* Juzhixiao.swift */,
 				A9AD86A9296F9E4400D64467 /* Mianfei.swift */,
 				A985BE112970F2D400A64CBF /* Qihaolou.swift */,
+				A9A3B821298B8D7E0005CD6F /* SakuraYingShi.swift */,
 			);
 			path = "网站配置";
 			sourceTree = "<group>";
@@ -574,6 +577,7 @@
 				A92AC00F25529E9F001EBD12 /* SerialModel.swift in Sources */,
 				A9FB285224E67E9400F53E74 /* PhoneVideoListViewController.swift in Sources */,
 				A950E2B124E6733F000CBB92 /* Date+extension.swift in Sources */,
+				A9A3B822298B8D7E0005CD6F /* SakuraYingShi.swift in Sources */,
 				A985BE122970F2D400A64CBF /* Qihaolou.swift in Sources */,
 				A928D2202567917A003BF719 /* NetVideoPlayerCollectionView.swift in Sources */,
 				A950E2B224E6733F000CBB92 /* UIImage+extension.swift in Sources */,

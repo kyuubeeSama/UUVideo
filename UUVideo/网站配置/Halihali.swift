@@ -229,7 +229,7 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
                 model.picUrl = Tool.checkUrl(urlStr: imgPic, domainUrlStr: baseUrl)
                 let recommandUrlStr: String = urlNodeArr![index].content!
                 model.detailUrl = Tool.checkUrl(urlStr: recommandUrlStr, domainUrlStr: baseUrl)
-                model.webType = 0
+                model.webType = websiteType.halihali.rawValue
                 model.num = ""
                 model.type = 3
                 videoModel.videoArr.append(model)
@@ -360,7 +360,7 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
                     model.detailUrl = Tool.checkUrl(urlStr: recommandUrlStr, domainUrlStr: baseUrl)
                     model.num = ""
                     model.type = 3
-                    model.webType = 0
+                    model.webType = websiteType.halihali.rawValue
                     videoModel.videoArr.append(model)
                 }
             }
@@ -386,7 +386,7 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
                     }) {
                         item.detailUrl = Tool.checkUrl(urlStr: item.detailUrl, domainUrlStr: baseUrl)
                         item.type = 3
-                        item.webType = 0
+                        item.webType = websiteType.halihali.rawValue
                         listModel.list.append(item)
                     }
                     resultArr.append(listModel)
@@ -434,7 +434,7 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
                     model.num = update
                     model.type = 4
                     model.picUrl = ""
-                    model.webType = 0
+                    model.webType = websiteType.halihali.rawValue
                     listArr.append(model)
                 }
             }

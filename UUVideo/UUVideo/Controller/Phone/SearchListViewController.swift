@@ -38,6 +38,8 @@ class SearchListViewController: BaseViewController,JXSegmentedListContainerViewL
             urlStr = Mianfei.init().webUrlStr+"search/-------------.html?wd=\(keyword)"
         }else if webType == .qihaolou{
             urlStr = Qihaolou.init().webUrlStr+"vodsearch/----------\(pageNum)---.html?wd=\(keyword)"
+        }else if webType == .SakuraYingShi{
+            urlStr = SakuraYingShi.init().webUrlStr+"search?kw=\(keyword)&page=\(pageNum-1)"
         }
         getSearchData(urlStr: urlStr)
     }

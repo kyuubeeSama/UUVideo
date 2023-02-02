@@ -195,7 +195,7 @@ class Juzhixiao: WebsiteBaseModel, WebsiteProtocol {
                 model.picUrl = Tool.checkUrl(urlStr: imgPic, domainUrlStr: baseUrl)
                 let recommandUrlStr: String = urlNodeArr![index].content!
                 model.detailUrl = Tool.checkUrl(urlStr: recommandUrlStr, domainUrlStr: baseUrl)
-                model.webType = 3
+                model.webType = websiteType.juzhixiao.rawValue
                 model.num = ""
                 model.type = 3
                 videoModel.videoArr.append(model)
@@ -262,7 +262,7 @@ class Juzhixiao: WebsiteBaseModel, WebsiteProtocol {
                     model.detailUrl = Tool.checkUrl(urlStr: recommandUrlStr, domainUrlStr: baseUrl)
                     model.num = ""
                     model.type = 3
-                    model.webType = 3
+                    model.webType = websiteType.juzhixiao.rawValue
                     videoModel.videoArr.append(model)
                 }
             }

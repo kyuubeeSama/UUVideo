@@ -184,7 +184,7 @@ class Sakura: WebsiteBaseModel, WebsiteProtocol {
                 model.picUrl = Tool.checkUrl(urlStr: imgPic, domainUrlStr: baseUrl)
                 let recommandUrlStr: String = urlNodeArr![index].content!
                 model.detailUrl = Tool.checkUrl(urlStr: recommandUrlStr, domainUrlStr: baseUrl)
-                model.webType = 2
+                model.webType = websiteType.sakura.rawValue
                 model.num = ""
                 model.type = 3
                 videoModel.videoArr.append(model)
@@ -245,7 +245,7 @@ class Sakura: WebsiteBaseModel, WebsiteProtocol {
                     model.detailUrl = Tool.checkUrl(urlStr: recommandUrlStr, domainUrlStr: baseUrl)
                     model.num = ""
                     model.type = 3
-                    model.webType = 2
+                    model.webType = websiteType.sakura.rawValue
                     videoModel.videoArr.append(model)
                 }
             }
