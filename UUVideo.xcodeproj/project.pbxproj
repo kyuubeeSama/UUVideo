@@ -25,6 +25,7 @@
 		A928D2202567917A003BF719 /* NetVideoPlayerCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A928D21F2567917A003BF719 /* NetVideoPlayerCollectionView.swift */; };
 		A92AC00C25529D28001EBD12 /* NetVideoDetailCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92AC00B25529D28001EBD12 /* NetVideoDetailCollectionView.swift */; };
 		A92AC00F25529E9F001EBD12 /* SerialModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92AC00E25529E9F001EBD12 /* SerialModel.swift */; };
+		A93105132990CD3C00BA6044 /* Yklunli.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93105122990CD3C00BA6044 /* Yklunli.swift */; };
 		A950E29224E67157000CBB92 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E29124E67157000CBB92 /* AppDelegate.swift */; };
 		A950E29424E67157000CBB92 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E29324E67157000CBB92 /* SceneDelegate.swift */; };
 		A950E29624E67157000CBB92 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E29524E67157000CBB92 /* ViewController.swift */; };
@@ -116,6 +117,7 @@
 		A928D21F2567917A003BF719 /* NetVideoPlayerCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoPlayerCollectionView.swift; sourceTree = "<group>"; };
 		A92AC00B25529D28001EBD12 /* NetVideoDetailCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoDetailCollectionView.swift; sourceTree = "<group>"; };
 		A92AC00E25529E9F001EBD12 /* SerialModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerialModel.swift; sourceTree = "<group>"; };
+		A93105122990CD3C00BA6044 /* Yklunli.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yklunli.swift; sourceTree = "<group>"; };
 		A950E28E24E67157000CBB92 /* UUVideo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UUVideo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A950E29124E67157000CBB92 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A950E29324E67157000CBB92 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				A9AD86A9296F9E4400D64467 /* Mianfei.swift */,
 				A985BE112970F2D400A64CBF /* Qihaolou.swift */,
 				A9A3B821298B8D7E0005CD6F /* SakuraYingShi.swift */,
+				A93105122990CD3C00BA6044 /* Yklunli.swift */,
 			);
 			path = "网站配置";
 			sourceTree = "<group>";
@@ -594,6 +597,7 @@
 				A9D49EA726D530B6003BEDC2 /* UIWindow+WBPopView.swift in Sources */,
 				A950E2C424E6736F000CBB92 /* BaseViewController.swift in Sources */,
 				A950E2BE24E67356000CBB92 /* Tool.swift in Sources */,
+				A93105132990CD3C00BA6044 /* Yklunli.swift in Sources */,
 				A9CBF74824EF9976002BD074 /* RightViewController.swift in Sources */,
 				A950E2D324E67871000CBB92 /* VideoModel.swift in Sources */,
 				A960D894272FBC0800B7C0BC /* DownloadViewController.swift in Sources */,

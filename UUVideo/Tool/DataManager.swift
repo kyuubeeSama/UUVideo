@@ -52,6 +52,8 @@ class DataManager: NSObject {
                 array = Qihaolou.init().getIndexData()
             case .SakuraYingShi:
                 array = SakuraYingShi.init().getIndexData()
+            case .Yklunli:
+                array = Yklunli.init().getIndexData()
             }
             if array.isEmpty {
                 failure(XPathError.getContentFail)
@@ -84,6 +86,8 @@ class DataManager: NSObject {
             array = Qihaolou.init().getVideoList(urlStr: urlStr)
         case .SakuraYingShi:
             array = SakuraYingShi.init().getVideoList(urlStr: urlStr)
+        case .Yklunli:
+            array = Yklunli.init().getVideoList(urlStr: urlStr)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -116,6 +120,8 @@ class DataManager: NSObject {
             array = Qihaolou.init().getVideoCategory(urlStr: urlStr)
         case .SakuraYingShi:
             array = SakuraYingShi.init().getVideoCategory(urlStr: urlStr)
+        case .Yklunli:
+            array = Yklunli.init().getVideoCategory(urlStr: urlStr)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -148,6 +154,8 @@ class DataManager: NSObject {
             result = Qihaolou.init().getVideoDetail(urlStr: urlStr)
         case .SakuraYingShi:
             result = SakuraYingShi.init().getVideoDetail(urlStr: urlStr)
+        case .Yklunli:
+            result = Yklunli.init().getVideoDetail(urlStr: urlStr)
         }
         if result.result == false {
             failure(XPathError.getContentFail)
@@ -174,6 +182,8 @@ class DataManager: NSObject {
             array = Qihaolou.init().getSearchData(urlStr: urlStr, keyword: keyword)
         case .SakuraYingShi:
             array = SakuraYingShi.init().getSearchData(urlStr: urlStr, keyword: keyword)
+        case .Yklunli:
+            array = Yklunli.init().getSearchData(urlStr: urlStr, keyword: keyword)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -200,6 +210,8 @@ class DataManager: NSObject {
             result = Qihaolou.init().getVideoPlayerDetail(urlStr: urlStr)
         case .SakuraYingShi:
             result = SakuraYingShi.init().getVideoPlayerDetail(urlStr: urlStr)
+        case .Yklunli:
+            result = Yklunli.init().getVideoPlayerDetail(urlStr: urlStr)
         }
         if result.result == false {
             failure(XPathError.getContentFail)

@@ -42,7 +42,8 @@ class NetVideoListViewController: BaseViewController {
             ["电视剧":"2","电影":"1","综艺":"4","动漫":"3"],
             ["电影":"dy","电视剧":"tv","综艺":"zy","动漫":"dm"],
             ["电影":"dianying","电视剧":"lianxuju","综艺":"zongyi","动漫":"dongman"],
-            ["电视剧":"电视剧","电影":"电影","动漫":"动漫","综艺":"综艺"]
+            ["电视剧":"电视剧","电影":"电影","动漫":"动漫","综艺":"综艺"],
+            ["韩国伦理":"1","日本伦理":"2","欧美伦理":"3","香港伦理":"4"]
         ]
         if webType == .halihali {
             area = "all"
@@ -202,6 +203,8 @@ class NetVideoListViewController: BaseViewController {
         }else if webType == .SakuraYingShi {
             detailUrlStr = urlStr + "v/type/\(videoType)-\(area)-\(year)-\(videoCategory)-----0-24.html?order=&page=\(pageNum-1)&size=24"
             detailUrlStr = detailUrlStr.replacingOccurrences(of: " ", with: "")
+        }else if webType == .Yklunli {
+            detailUrlStr = urlStr + "list-select-id-\(videoType)-type--area--year--star--state--order-addtime-p-\(pageNum).html";
         }
         view.makeToastActivity(.center)
         DispatchQueue.global().async {
@@ -250,6 +253,8 @@ class NetVideoListViewController: BaseViewController {
             categoryUrlStr = urlStr+"vodtype/\(videoType).html"
         }else if webType == .SakuraYingShi {
             categoryUrlStr = urlStr+"v/type/--------0-24.html"
+        }else if webType == .Yklunli {
+            categoryUrlStr = urlStr+"list-select-id-1-type--area--year--star--state--order-addtime-p-1.html";
         }
         DataManager.init().getWebsiteCategoryData(urlStr: categoryUrlStr, type: webType) { (dataArr) in
             self.categoryListArr = dataArr
