@@ -98,22 +98,27 @@ class NetVideoPlayerViewController: BaseViewController, DLNADelegate {
         rightBtnView.addSubview(downloadBtn)
         downloadBtn.setImage(UIImage.init(systemName: "doc.on.doc"), for: .normal)
         downloadBtn.reactive.controlEvents(.touchUpInside).observeValues { button in
-            UIPasteboard.general.string = self.model.serialDetailUrl
-            // 下载操作
-            let alert = UIAlertController.init(title: "提醒", message: "播放地址已复制到接切板", preferredStyle: .alert)
-//            let copyAction = UIAlertAction.init(title: "复制", style: .default) { action in
-//                UIPasteboard.general.string = self.model.videoUrl
-//            }
-//            alert.addAction(copyAction)
-//            let openAction = UIAlertAction.init(title: "浏览器打开", style: .default) { action in
-//                UIApplication.shared.open(URL.init(string: self.model.videoUrl)!, options: [:], completionHandler: nil)
-//            }
-//            alert.addAction(openAction)
-            let cancelAction = UIAlertAction.init(title: "确定", style: .cancel)
-            alert.addAction(cancelAction)
-            self.present(alert, animated: true, completion: nil)
+            let actionSheetView = UIAlertController.init(title: "提示", message: "选择复制内容", preferredStyle: .actionSheet)
+            let videoUrlAction = UIAlertAction.init(title: "视频播放地址", style: .default) { action in
+                UIPasteboard.general.string = self.model.videoUrl
+                let alert = UIAlertController.init(title: "提醒", message: "播放地址已复制到接切板", preferredStyle: .alert)
+                let cancelAction = UIAlertAction.init(title: "确定", style: .cancel)
+                alert.addAction(cancelAction)
+                self.present(alert, animated: true, completion: nil)
+            }
+            actionSheetView.addAction(videoUrlAction)
+            let detailUrlAction = UIAlertAction.init(title: "视频详情地址", style: .default) { action in
+                UIPasteboard.general.string = self.model.serialDetailUrl
+                let alert = UIAlertController.init(title: "提醒", message: "播放地址已复制到接切板", preferredStyle: .alert)
+                let cancelAction = UIAlertAction.init(title: "确定", style: .cancel)
+                alert.addAction(cancelAction)
+                self.present(alert, animated: true, completion: nil)
+            }
+            actionSheetView.addAction(detailUrlAction)
+            let cancelAction = UIAlertAction.init(title: "取消", style: .cancel)
+            actionSheetView.addAction(cancelAction)
+            self.present(actionSheetView, animated: true)
         }
-//        downloadBtn.isHidden = true
         let rightBtnItem = UIBarButtonItem.init(customView: rightBtnView)
         navigationItem.rightBarButtonItem = rightBtnItem
     }
