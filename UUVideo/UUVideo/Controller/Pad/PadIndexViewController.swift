@@ -82,6 +82,8 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
                     self.view.bringSubviewToFront(self.sakuraYingshiView)
                 case .Yklunli:
                     self.view.bringSubviewToFront(self.YklunliView)
+                case .sixMovie:
+                    self.view.bringSubviewToFront(self.sixMovieView)
                 }
             }
         }
@@ -139,6 +141,11 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
     lazy var qihaolouView: UIView = {
         let VC = NetVideoIndexViewController.init()
         VC.webType = .qihaolou
+        return getView(controller: VC)
+    }()
+    lazy var sixMovieView: UIView = {
+        let VC = NetVideoIndexViewController.init()
+        VC.webType = .sixMovie
         return getView(controller: VC)
     }()
     func getView(controller: UIViewController) -> UIView {

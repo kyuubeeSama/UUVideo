@@ -40,6 +40,8 @@ class SearchListViewController: BaseViewController,JXSegmentedListContainerViewL
             urlStr = Qihaolou.init().webUrlStr+"vodsearch/----------\(pageNum)---.html?wd=\(keyword)"
         }else if webType == .SakuraYingShi{
             urlStr = SakuraYingShi.init().webUrlStr+"search?kw=\(keyword)&page=\(pageNum-1)"
+        }else if webType == .sixMovie{
+            urlStr = SixMovie.init().webUrlStr+"vodsearch/\(keyword)----------\(pageNum)---.html"
         }
         getSearchData(urlStr: urlStr)
     }

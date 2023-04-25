@@ -43,7 +43,8 @@ class NetVideoListViewController: BaseViewController {
             ["电影":"dy","电视剧":"tv","综艺":"zy","动漫":"dm"],
             ["电影":"dianying","电视剧":"lianxuju","综艺":"zongyi","动漫":"dongman"],
             ["电视剧":"电视剧","电影":"电影","动漫":"动漫","综艺":"综艺"],
-            ["韩国伦理":"1","日本伦理":"2","欧美伦理":"3","香港伦理":"4"]
+            ["韩国伦理":"1","日本伦理":"2","欧美伦理":"3","香港伦理":"4"],
+            ["电影":"1","电视剧":"6","综艺":"I","动漫":"u","福利":"i"]
         ]
         if webType == .halihali {
             area = "all"
@@ -205,6 +206,8 @@ class NetVideoListViewController: BaseViewController {
             detailUrlStr = detailUrlStr.replacingOccurrences(of: " ", with: "")
         }else if webType == .Yklunli {
             detailUrlStr = urlStr + "list-select-id-\(videoType)-type--area--year--star--state--order-addtime-p-\(pageNum).html";
+        }else if webType == .sixMovie {
+            detailUrlStr = urlStr + "vodshow/\(videoType)MMM1--------\(pageNum)---.html"
         }
         view.makeToastActivity(.center)
         DispatchQueue.global().async {

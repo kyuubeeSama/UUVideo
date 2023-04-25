@@ -54,6 +54,8 @@ class DataManager: NSObject {
                 array = SakuraYingShi.init().getIndexData()
             case .Yklunli:
                 array = Yklunli.init().getIndexData()
+            case .sixMovie:
+                array = SixMovie.init().getIndexData()
             }
             if array.isEmpty {
                 failure(XPathError.getContentFail)
@@ -88,6 +90,8 @@ class DataManager: NSObject {
             array = SakuraYingShi.init().getVideoList(urlStr: urlStr)
         case .Yklunli:
             array = Yklunli.init().getVideoList(urlStr: urlStr)
+        case .sixMovie:
+            array = SixMovie.init().getVideoList(urlStr: urlStr)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -122,6 +126,8 @@ class DataManager: NSObject {
             array = SakuraYingShi.init().getVideoCategory(urlStr: urlStr)
         case .Yklunli:
             array = Yklunli.init().getVideoCategory(urlStr: urlStr)
+        case .sixMovie:
+            array = SixMovie.init().getVideoCategory(urlStr: urlStr)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -156,6 +162,8 @@ class DataManager: NSObject {
             result = SakuraYingShi.init().getVideoDetail(urlStr: urlStr)
         case .Yklunli:
             result = Yklunli.init().getVideoDetail(urlStr: urlStr)
+        case .sixMovie:
+            result = SixMovie.init().getVideoDetail(urlStr: urlStr)
         }
         if result.result == false {
             failure(XPathError.getContentFail)
@@ -184,6 +192,8 @@ class DataManager: NSObject {
             array = SakuraYingShi.init().getSearchData(urlStr: urlStr, keyword: keyword)
         case .Yklunli:
             array = Yklunli.init().getSearchData(urlStr: urlStr, keyword: keyword)
+        case .sixMovie:
+            array = SixMovie.init().getSearchData(urlStr: urlStr, keyword: keyword)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -212,6 +222,8 @@ class DataManager: NSObject {
             result = SakuraYingShi.init().getVideoPlayerDetail(urlStr: urlStr)
         case .Yklunli:
             result = Yklunli.init().getVideoPlayerDetail(urlStr: urlStr)
+        case .sixMovie:
+            result = SixMovie.init().getVideoPlayerDetail(urlStr: urlStr)
         }
         if result.result == false {
             failure(XPathError.getContentFail)

@@ -10,6 +10,7 @@
 		144DF2DFA22E2DCF380E9066 /* IndexModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144DF971A9493EC8A5B001CF /* IndexModel.swift */; };
 		144DFC7785BA981A298D4B2B /* Halihali.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144DF59A43D6EE17747DB123 /* Halihali.swift */; };
 		144DFD4871DD0F3EE223D4B1 /* WebsiteBaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144DF260AB9E4879AA42ED66 /* WebsiteBaseModel.swift */; };
+		2F9B63EA24655CD73BDC047E /* Pods_UUVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9FA3DBEFB82D2160BCC81BE /* Pods_UUVideo.framework */; };
 		A906DB0C24EA575700C070E4 /* PadIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB0B24EA575700C070E4 /* PadIndexViewController.swift */; };
 		A906DB0E24EA680B00C070E4 /* BangumiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB0D24EA680B00C070E4 /* BangumiViewController.swift */; };
 		A906DB1224EB7E5C00C070E4 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB1124EB7E5C00C070E4 /* DataManager.swift */; };
@@ -83,6 +84,7 @@
 		A9D34759296BB3D300DD0BBC /* Juzhixiao.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D34758296BB3D300DD0BBC /* Juzhixiao.swift */; };
 		A9D49EA726D530B6003BEDC2 /* UIWindow+WBPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D49EA626D530B6003BEDC2 /* UIWindow+WBPopView.swift */; };
 		A9DF207027118E91004C1263 /* PadVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DF206F27118E90004C1263 /* PadVideoPlayerViewController.swift */; };
+		A9DF7C9029F77AA10074EF08 /* SixMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DF7C8F29F77AA10074EF08 /* SixMovie.swift */; };
 		A9DFBD9A2680297000BBA638 /* Array+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DFBD992680296F00BBA638 /* Array+extension.swift */; };
 		A9F0302326003F100095EC83 /* UUWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F0302226003F100095EC83 /* UUWebView.swift */; };
 		A9F03026260097B60095EC83 /* NetVideoIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F03025260097B60095EC83 /* NetVideoIndexViewController.swift */; };
@@ -93,7 +95,6 @@
 		A9FB285024E67B6900F53E74 /* VideoListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9FB284E24E67B6900F53E74 /* VideoListCollectionViewCell.xib */; };
 		A9FB285224E67E9400F53E74 /* PhoneVideoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */; };
 		A9FEB1292721634D00BA70F6 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FEB1282721634D00BA70F6 /* PageView.swift */; };
-		E3E64ED853A3FA7E3D6B354D /* Pods_UUVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21F46ABE3E603E7B9DE3EF7 /* Pods_UUVideo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -182,6 +183,7 @@
 		A9D34758296BB3D300DD0BBC /* Juzhixiao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Juzhixiao.swift; sourceTree = "<group>"; };
 		A9D49EA626D530B6003BEDC2 /* UIWindow+WBPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+WBPopView.swift"; sourceTree = "<group>"; };
 		A9DF206F27118E90004C1263 /* PadVideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadVideoPlayerViewController.swift; sourceTree = "<group>"; };
+		A9DF7C8F29F77AA10074EF08 /* SixMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SixMovie.swift; sourceTree = "<group>"; };
 		A9DFBD992680296F00BBA638 /* Array+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+extension.swift"; sourceTree = "<group>"; };
 		A9F0302226003F100095EC83 /* UUWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUWebView.swift; sourceTree = "<group>"; };
 		A9F03025260097B60095EC83 /* NetVideoIndexViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoIndexViewController.swift; sourceTree = "<group>"; };
@@ -192,7 +194,7 @@
 		A9FB284E24E67B6900F53E74 /* VideoListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoListCollectionViewCell.xib; sourceTree = "<group>"; };
 		A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVideoListViewController.swift; sourceTree = "<group>"; };
 		A9FEB1282721634D00BA70F6 /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
-		B21F46ABE3E603E7B9DE3EF7 /* Pods_UUVideo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UUVideo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9FA3DBEFB82D2160BCC81BE /* Pods_UUVideo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UUVideo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,7 +202,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E3E64ED853A3FA7E3D6B354D /* Pods_UUVideo.framework in Frameworks */,
+				2F9B63EA24655CD73BDC047E /* Pods_UUVideo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +220,7 @@
 				A985BE112970F2D400A64CBF /* Qihaolou.swift */,
 				A9A3B821298B8D7E0005CD6F /* SakuraYingShi.swift */,
 				A93105122990CD3C00BA6044 /* Yklunli.swift */,
+				A9DF7C8F29F77AA10074EF08 /* SixMovie.swift */,
 			);
 			path = "网站配置";
 			sourceTree = "<group>";
@@ -234,7 +237,7 @@
 		7D617D390BBB4986524DC52C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B21F46ABE3E603E7B9DE3EF7 /* Pods_UUVideo.framework */,
+				C9FA3DBEFB82D2160BCC81BE /* Pods_UUVideo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -446,13 +449,15 @@
 				A950E28A24E67157000CBB92 /* Sources */,
 				A950E28B24E67157000CBB92 /* Frameworks */,
 				A950E28C24E67157000CBB92 /* Resources */,
-				89972CC982553062797EACBB /* [CP] Embed Pods Frameworks */,
+				AA02D70FD7524325F2D5116C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = UUVideo;
+			packageProductDependencies = (
+			);
 			productName = UUVideo;
 			productReference = A950E28E24E67157000CBB92 /* UUVideo.app */;
 			productType = "com.apple.product-type.application";
@@ -537,7 +542,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		89972CC982553062797EACBB /* [CP] Embed Pods Frameworks */ = {
+		AA02D70FD7524325F2D5116C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -591,6 +596,7 @@
 				A97FF1F0253161890097C0F7 /* CategoryModel.swift in Sources */,
 				A9967C1D256265AA00752CB7 /* UserViewController.swift in Sources */,
 				A923746B25FF017100CE21F4 /* BangumiListViewController.swift in Sources */,
+				A9DF7C9029F77AA10074EF08 /* SixMovie.swift in Sources */,
 				A950E2B324E6733F000CBB92 /* NSObject+extension.swift in Sources */,
 				A9F03029260098280095EC83 /* NetVideoListViewController.swift in Sources */,
 				A90F71192524100F0000D1CF /* HeaderTitleCollectionReusableView.swift in Sources */,

@@ -125,6 +125,7 @@ class SqlTool: NSObject {
                 videoModel.progress = items[Column("progress")]
                 videoModel.serialNum = items[Column("serialNum")]
                 videoModel.circuitIndex = items[Column("circuitIndex")]
+                videoModel.serialIndex = items[Column("serialIndex")]
                 model.list.append(videoModel)
             }
         } catch {
