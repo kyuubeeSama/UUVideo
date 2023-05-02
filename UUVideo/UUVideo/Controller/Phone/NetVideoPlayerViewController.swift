@@ -24,6 +24,9 @@ class NetVideoPlayerViewController: BaseViewController, DLNADelegate {
     private let downloadBtn = UIButton.init(type: .custom)
     public var isFromHistory: Bool = false
     public var reloadFatherVC:(()->())?
+    func shouldAutorotate()->Bool{
+        false
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         player.vc_viewDidAppear()
@@ -123,6 +126,7 @@ class NetVideoPlayerViewController: BaseViewController, DLNADelegate {
         navigationItem.rightBarButtonItem = rightBtnItem
     }
     @objc func touping() {
+        // 投屏
         if deviceArr.isEmpty {
             view.makeToast("当前未发现可投屏设备")
         } else {
@@ -143,8 +147,6 @@ class NetVideoPlayerViewController: BaseViewController, DLNADelegate {
             alert.addAction(cancelAction)
             present(alert, animated: true, completion: nil)
         }
-        // 投屏
-        dlnaManager.startSearch()
     }
     func searchDLNAResult(_ devicesArray: [Any]!) {
         deviceArr = devicesArray

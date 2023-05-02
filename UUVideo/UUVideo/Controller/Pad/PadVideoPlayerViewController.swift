@@ -20,6 +20,7 @@ class PadVideoPlayerViewController: BaseViewController, DLNADelegate {
     private var deviceArr: [Any] = []
     public var model: VideoModel = VideoModel.init()
     private let toupingBtn = UIButton.init(type: .custom)
+    public var reloadFatherVC:(()->())?
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         player.vc_viewDidAppear()
@@ -182,7 +183,7 @@ class PadVideoPlayerViewController: BaseViewController, DLNADelegate {
         player.view.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-//        player.onlyFitOnScreen = true
+        player.onlyFitOnScreen = true
         player.rotationManager?.isDisabledAutorotation = true
         player.defaultEdgeControlLayer.topAdapter.removeItem(forTag: SJEdgeControlLayerTopItem_Back)
         player.defaultEdgeControlLayer.topAdapter.reload()
@@ -208,6 +209,9 @@ class PadVideoPlayerViewController: BaseViewController, DLNADelegate {
                 self.model.serialIndex = indexPath.row
                 let circuitModel = self.model.circuitArr[indexPath.section-1]
                 let serialModel = circuitModel.serialArr[indexPath.row]
+                if self.reloadFatherVC != nil {
+                    self.reloadFatherVC!()
+                }
                 // 在当前页面获取数据并刷新
                 // 重新获取数据，并刷新页面
                 self.model.serialDetailUrl = serialModel.detailUrl
@@ -243,13 +247,4 @@ class PadVideoPlayerViewController: BaseViewController, DLNADelegate {
     func prefersHomeIndicatorAutoHidden() -> Bool {
         true
     }
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
 }

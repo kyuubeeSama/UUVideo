@@ -20,8 +20,8 @@ class SixMovie: WebsiteBaseModel,WebsiteProtocol {
         if jiDoc == nil {
             return []
         }
-        let divArr = [3, 4, 5, 6, 0]
-        let titleArr = ["电影", "连续剧", "综艺", "动漫", "福利"]
+        let divArr = [3, 4, 5, 6, /*0*/]
+        let titleArr = ["电影", "连续剧", "综艺", "动漫",/* "福利"*/]
         var resultArr: [ListModel] = []
         for (index, item) in divArr.enumerated() {
             let listModel = ListModel.init()
