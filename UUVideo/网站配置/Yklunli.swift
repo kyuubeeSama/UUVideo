@@ -20,7 +20,7 @@ class Yklunli: WebsiteBaseModel,WebsiteProtocol {
         if jiDoc == nil {
             return []
         }
-        let divArr = [7, 9, 11, 13]
+        let divArr = [4, 6, 8, 10]
         let titleArr = ["韩国伦理", "日本伦理", "欧美伦理", "香港伦理"]
         var resultArr: [ListModel] = []
         for (index, item) in divArr.enumerated() {
@@ -72,10 +72,10 @@ class Yklunli: WebsiteBaseModel,WebsiteProtocol {
         listModel.title = ""
         listModel.more = false
         listModel.list = []
-        let titleXpath = "/html/body/div[6]/ul/li/h2/a"
-        let urlXpath = "/html/body/div[6]/ul/li/h2/a/@href"
-        let imgXpath = "/html/body/div[6]/ul/li/p/a/img/@data-original"
-        let updateXpath = "/html/body/div[6]/ul/li/p/a/span"
+        let titleXpath = "/html/body/div[3]/ul/li/h2/a"
+        let urlXpath = "/html/body/div[3]/ul/li/h2/a/@href"
+        let imgXpath = "/html/body/div[3]/ul/li/p/a/img/@data-original"
+        let updateXpath = "/html/body/div[3]/ul/li/p/a/span"
         let titleNodeArr = jiDoc?.xPath(titleXpath)
         let urlNodeArr = jiDoc?.xPath(urlXpath)
         let imgNodeArr = jiDoc?.xPath(imgXpath)
@@ -116,10 +116,10 @@ class Yklunli: WebsiteBaseModel,WebsiteProtocol {
         videoModel.videoArr = []
         videoModel.tagArr = []
         videoModel.serialArr = []
-        let videoPicXpath = "/html/body/div[6]/div[1]/div[1]/a/img/@data-original"
+        let videoPicXpath = "/html/body/div[3]/div[1]/div[1]/a/img/@data-original"
         let videoPicNodeArr = jiDoc?.xPath(videoPicXpath)
         if videoPicNodeArr!.count > 0 {
-            var picurl: String = videoPicNodeArr![0].content!
+            let picurl: String = videoPicNodeArr![0].content!
             videoModel.picUrl = Tool.checkUrl(urlStr: picurl, domainUrlStr: baseUrl)
         }
         //        剧集
@@ -135,8 +135,8 @@ class Yklunli: WebsiteBaseModel,WebsiteProtocol {
 //                for str in strArr {
 //                    model.name = model.name.replacingOccurrences(of: str, with: "")
 //                }
-                let serialPathXpath = "/html/body/div[8]/div/div[1]/ul/li/a/@href"
-                let serialNameXpath = "/html/body/div[8]/div/div[1]/ul/li/a"
+                let serialPathXpath = "/html/body/div[5]/div/div[1]/ul/li/a/@href"
+                let serialNameXpath = "/html/body/div[5]/div/div[1]/ul/li/a"
                 let serialTitleNodeArr = jiDoc?.xPath(serialNameXpath)
                 let serialUrlNodeArr = jiDoc?.xPath(serialPathXpath)
                 if serialUrlNodeArr!.count > 0 {
@@ -197,9 +197,9 @@ class Yklunli: WebsiteBaseModel,WebsiteProtocol {
                 videoModel.videoUrl = urlStr
                 //获取剧集信息
                 //        标题
-                let serialTitleNodeArr = jiDoc?.xPath("/html/body/div[10]/div[2]/ul/li/a")
+                let serialTitleNodeArr = jiDoc?.xPath("/html/body/div[7]/div[2]/ul/li/a")
                 //        详情
-                let serialUrlNodeArr = jiDoc?.xPath("/html/body/div[10]/div[2]/ul/li/a/@href")
+                let serialUrlNodeArr = jiDoc?.xPath("/html/body/div[7]/div[2]/ul/li/a/@href")
                 let circuitModel = CircuitModel.init()
                 for (index, _) in serialTitleNodeArr!.enumerated() {
                     let serialModel = SerialModel.init()
@@ -249,9 +249,9 @@ class Yklunli: WebsiteBaseModel,WebsiteProtocol {
         if jiDoc == nil {
             return []
         }
-        let titleXpath = "/html/body/div[6]/ul/li/h2/a"
-        let detailXpath = "/html/body/div[6]/ul/li/h2/a/@href"
-        let imgXpath = "/html/body/div[6]/ul/li/p/a/img/@data-original"
+        let titleXpath = "/html/body/div[3]/ul/li/h2/a"
+        let detailXpath = "/html/body/div[3]/ul/li/h2/a/@href"
+        let imgXpath = "/html/body/div[3]/ul/li/p/a/img/@data-original"
         let titleNodeArr = jiDoc?.xPath(titleXpath)
         let detailNodeArr = jiDoc?.xPath(detailXpath)
         let imgNodeArr = jiDoc?.xPath(imgXpath)

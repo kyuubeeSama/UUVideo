@@ -56,6 +56,8 @@ class DataManager: NSObject {
                 array = Yklunli.init().getIndexData()
             case .sixMovie:
                 array = SixMovie.init().getIndexData()
+            case .lawyering:
+                array = Lawyering.init().getIndexData()
             }
             if array.isEmpty {
                 failure(XPathError.getContentFail)
@@ -92,6 +94,8 @@ class DataManager: NSObject {
             array = Yklunli.init().getVideoList(urlStr: urlStr)
         case .sixMovie:
             array = SixMovie.init().getVideoList(urlStr: urlStr)
+        case .lawyering:
+            array = Lawyering.init().getVideoList(urlStr: urlStr)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -128,6 +132,8 @@ class DataManager: NSObject {
             array = Yklunli.init().getVideoCategory(urlStr: urlStr)
         case .sixMovie:
             array = SixMovie.init().getVideoCategory(urlStr: urlStr)
+        case .lawyering:
+            array = Lawyering.init().getVideoCategory(urlStr: urlStr)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -164,6 +170,8 @@ class DataManager: NSObject {
             result = Yklunli.init().getVideoDetail(urlStr: urlStr)
         case .sixMovie:
             result = SixMovie.init().getVideoDetail(urlStr: urlStr)
+        case .lawyering:
+            result = Lawyering.init().getVideoDetail(urlStr: urlStr)
         }
         if result.result == false {
             failure(XPathError.getContentFail)
@@ -194,6 +202,8 @@ class DataManager: NSObject {
             array = Yklunli.init().getSearchData(urlStr: urlStr, keyword: keyword)
         case .sixMovie:
             array = SixMovie.init().getSearchData(urlStr: urlStr, keyword: keyword)
+        case .lawyering:
+            array = Lawyering.init().getSearchData(urlStr: urlStr, keyword: keyword)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -224,6 +234,8 @@ class DataManager: NSObject {
             result = Yklunli.init().getVideoPlayerDetail(urlStr: urlStr)
         case .sixMovie:
             result = SixMovie.init().getVideoPlayerDetail(urlStr: urlStr)
+        case .lawyering:
+            result = Lawyering.init().getVideoPlayerDetail(urlStr: urlStr)
         }
         if result.result == false {
             failure(XPathError.getContentFail)

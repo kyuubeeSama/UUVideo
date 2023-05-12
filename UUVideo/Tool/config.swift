@@ -27,8 +27,9 @@ var indexArr:[(title:String,list:[IndexModel])] {
         IndexModel.init(title: "免费电影", type: 1, webType: .mianfei),
         IndexModel.init(title: "七号楼", type: 1, webType: .qihaolou),
         IndexModel.init(title: "樱花影视",type: 1,webType: .SakuraYingShi),
-//        IndexModel.init(title: "要看伦理", type: 1, webType: .Yklunli),
-        IndexModel.init(title: "第六电影网",type: 1,webType: .sixMovie)
+        IndexModel.init(title: "要看伦理", type: 1, webType: .Yklunli),
+        IndexModel.init(title: "第六电影网",type: 1,webType: .sixMovie),
+        IndexModel.init(title: "老野人",type: 1,webType: .lawyering)
 
      ]),
      (title:"个人中心",list:[
@@ -46,7 +47,8 @@ let urlArr = [
     Qihaolou.init().webUrlStr,
     SakuraYingShi.init().webUrlStr,
     Yklunli.init().webUrlStr,
-    SixMovie.init().webUrlStr
+    SixMovie.init().webUrlStr,
+    Lawyering.init().webUrlStr
 ]
 enum XPathError: Error {
     case getContentFail
@@ -62,4 +64,5 @@ enum websiteType: Int {
     case SakuraYingShi = 6
     case Yklunli = 7
     case sixMovie = 8
+    case lawyering = 9
 }

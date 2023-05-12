@@ -68,6 +68,7 @@
 		A985BE122970F2D400A64CBF /* Qihaolou.swift in Sources */ = {isa = PBXBuildFile; fileRef = A985BE112970F2D400A64CBF /* Qihaolou.swift */; };
 		A98794EC2553983B00DD62EE /* VideoInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98794EA2553983B00DD62EE /* VideoInfoCollectionViewCell.swift */; };
 		A98794ED2553983B00DD62EE /* VideoInfoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A98794EB2553983B00DD62EE /* VideoInfoCollectionViewCell.xib */; };
+		A98CF6262A03A30C006A868F /* Lawyering.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98CF6252A03A30C006A868F /* Lawyering.swift */; };
 		A9967C1D256265AA00752CB7 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9967C1C256265AA00752CB7 /* UserViewController.swift */; };
 		A997538725666B9600179FCB /* NetVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A997538625666B9600179FCB /* NetVideoPlayerViewController.swift */; };
 		A9A3B822298B8D7E0005CD6F /* SakuraYingShi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A3B821298B8D7E0005CD6F /* SakuraYingShi.swift */; };
@@ -163,6 +164,7 @@
 		A985BE112970F2D400A64CBF /* Qihaolou.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Qihaolou.swift; sourceTree = "<group>"; };
 		A98794EA2553983B00DD62EE /* VideoInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		A98794EB2553983B00DD62EE /* VideoInfoCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoInfoCollectionViewCell.xib; sourceTree = "<group>"; };
+		A98CF6252A03A30C006A868F /* Lawyering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lawyering.swift; sourceTree = "<group>"; };
 		A9967C1C256265AA00752CB7 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		A997538625666B9600179FCB /* NetVideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoPlayerViewController.swift; sourceTree = "<group>"; };
 		A9A3B821298B8D7E0005CD6F /* SakuraYingShi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SakuraYingShi.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				A9A3B821298B8D7E0005CD6F /* SakuraYingShi.swift */,
 				A93105122990CD3C00BA6044 /* Yklunli.swift */,
 				A9DF7C8F29F77AA10074EF08 /* SixMovie.swift */,
+				A98CF6252A03A30C006A868F /* Lawyering.swift */,
 			);
 			path = "网站配置";
 			sourceTree = "<group>";
@@ -602,6 +605,7 @@
 				A90F71192524100F0000D1CF /* HeaderTitleCollectionReusableView.swift in Sources */,
 				A9D49EA726D530B6003BEDC2 /* UIWindow+WBPopView.swift in Sources */,
 				A950E2C424E6736F000CBB92 /* BaseViewController.swift in Sources */,
+				A98CF6262A03A30C006A868F /* Lawyering.swift in Sources */,
 				A950E2BE24E67356000CBB92 /* Tool.swift in Sources */,
 				A93105132990CD3C00BA6044 /* Yklunli.swift in Sources */,
 				A9CBF74824EF9976002BD074 /* RightViewController.swift in Sources */,
