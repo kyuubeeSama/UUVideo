@@ -8,6 +8,7 @@
 
 import UIKit
 import SJVideoPlayer
+import AVFAudio
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,7 +28,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #if DEBUG
             Bundle.init(path: "/Applications/InjectionIII.app/Contents/Resources/iOSInjection.bundle")?.load()
             #endif
+        
+        let audioSession = AVAudioSession.sharedInstance()
+        try! audioSession.setCategory(.playback)
+        try! audioSession.setActive(true)
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+        self.becomeFirstResponder()
         return true
+    }
+    
+    override func remoteControlReceived(with event: UIEvent?) {
+        if event?.type != UIEvent.EventType.remoteControl {
+            return
+        }
+        switch event?.subtype {
+        case .remoteControlPlay:
+            print("播放")
+        case .remoteControlPause:
+        print("暂停")
+        case .remoteControlNextTrack:
+            print("下一首")
+        case .remoteControlPreviousTrack:
+            print("上一首")
+        case .remoteControlStop:
+            print("停止")
+        case .remoteControlTogglePlayPause:
+            print("暂停和播放切换")
+        default:
+            print("其他")
+        }
     }
 
     // MARK: UISceneSession Lifecycle

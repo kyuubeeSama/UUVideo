@@ -29,7 +29,7 @@ var indexArr:[(title:String,list:[IndexModel])] {
         IndexModel.init(title: "樱花影视",type: 1,webType: .SakuraYingShi),
         IndexModel.init(title: "要看伦理", type: 1, webType: .Yklunli),
         IndexModel.init(title: "第六电影网",type: 1,webType: .sixMovie),
-        IndexModel.init(title: "老野人",type: 1,webType: .lawyering)
+//        IndexModel.init(title: "老野人",type: 1,webType: .lawyering)
 
      ]),
      (title:"个人中心",list:[

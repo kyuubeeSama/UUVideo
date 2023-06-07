@@ -13,6 +13,7 @@ import WebKit
 import MRDLNA
 import ReactiveCocoa
 import NotificationBannerSwift
+import MediaPlayer
 
 class NetVideoPlayerViewController: BaseViewController, DLNADelegate {
     //    投屏设备
@@ -21,7 +22,7 @@ class NetVideoPlayerViewController: BaseViewController, DLNADelegate {
     public var model: VideoModel = VideoModel.init()
     // 创建右侧投屏按钮。如果获取到了播放地址，显示投屏按钮，点击弹出选择按钮。
     private let toupingBtn = UIButton.init(type: .custom)
-    private let downloadBtn = UIButton.init(type: .custom)
+    private let copyBtn = UIButton.init(type: .custom)
     public var isFromHistory: Bool = false
     public var reloadFatherVC:(()->())?
     func shouldAutorotate()->Bool{
@@ -39,6 +40,7 @@ class NetVideoPlayerViewController: BaseViewController, DLNADelegate {
         super.viewWillDisappear(animated)
         isPlaying = false
         player.vc_viewWillDisappear()
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = [:]
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -97,10 +99,10 @@ class NetVideoPlayerViewController: BaseViewController, DLNADelegate {
         toupingBtn.addTarget(self, action: #selector(touping), for: .touchUpInside)
         rightBtnView.addSubview(toupingBtn)
         // TODO:添加下载按钮
-        downloadBtn.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-        rightBtnView.addSubview(downloadBtn)
-        downloadBtn.setImage(UIImage.init(systemName: "doc.on.doc"), for: .normal)
-        downloadBtn.reactive.controlEvents(.touchUpInside).observeValues { button in
+        copyBtn.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        rightBtnView.addSubview(copyBtn)
+        copyBtn.setImage(UIImage.init(systemName: "doc.on.doc"), for: .normal)
+        copyBtn.reactive.controlEvents(.touchUpInside).observeValues { button in
             let actionSheetView = UIAlertController.init(title: "提示", message: "选择复制内容", preferredStyle: .actionSheet)
             let videoUrlAction = UIAlertAction.init(title: "视频播放地址", style: .default) { action in
                 UIPasteboard.general.string = self.model.videoUrl
@@ -168,11 +170,31 @@ class NetVideoPlayerViewController: BaseViewController, DLNADelegate {
             isPlaying = false
         } else {
             //FIXME:视频播放地址解包错误
-            let asset = try AVURLAsset.init(url: URL.init(string: model.videoUrl)!, options: ["AVURLAssetHTTPHeaderFieldsKey": headers])
+            let asset = AVURLAsset.init(url: URL.init(string: model.videoUrl)!, options: ["AVURLAssetHTTPHeaderFieldsKey": headers])
             player.urlAsset = SJVideoPlayerURLAsset.init(avAsset: asset, startPosition: TimeInterval(model.progress), playModel: SJPlayModel.init())
-            // 判断视频是否可以播放
-//            downloadBtn.isHidden = (model.videoUrl.contains("m3u8") || model.videoUrl.contains("html"))
             isPlaying = true
+            // MARK: 设置通知栏播放器内容
+            var videoInfo:[String:Any] = [:]
+            videoInfo[MPMediaItemPropertyTitle] = self.model.name
+            let albumArt = MPMediaItemArtwork.init(boundsSize: CGSize(width: screenW-60, height: 100)) { [self] size in
+                var data = Data.init()
+                do {
+                    data = try NSData.init(contentsOf: URL.init(string: model.picUrl)!) as Data
+                } catch  {
+                }
+                return UIImage.init(data: data)!
+            }
+            videoInfo[MPMediaItemPropertyArtwork] = albumArt
+            videoInfo[MPNowPlayingInfoPropertyPlaybackRate] = 1.0
+            player.playbackObserver.durationDidChangeExeBlock = { player in
+                videoInfo[MPMediaItemPropertyPlaybackDuration] = player.duration
+                MPNowPlayingInfoCenter.default().nowPlayingInfo = videoInfo
+            }
+            player.playbackObserver.currentTimeDidChangeExeBlock = { player in
+                videoInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.currentTime
+                MPNowPlayingInfoCenter.default().nowPlayingInfo = videoInfo
+            }
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = videoInfo
         }
     }
     // 获取数据
