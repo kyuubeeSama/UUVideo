@@ -8,6 +8,7 @@ target 'UUVideo' do
   # 投屏
   pod 'MRDLNA'
   pod 'Popover.OC'
+  pod 'UICollectionViewLeftAlignedLayout'
 
   use_frameworks!
   #  网络请求

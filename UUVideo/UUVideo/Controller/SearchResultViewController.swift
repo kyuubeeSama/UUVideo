@@ -8,7 +8,7 @@
 
 import UIKit
 import EmptyDataSet_Swift
-
+import UICollectionViewLeftAlignedLayout
 class SearchResultViewController: BaseViewController {
 
     var keyword: String = ""

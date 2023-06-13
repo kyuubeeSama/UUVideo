@@ -7,7 +7,7 @@
 //  视频详情界面
 
 import UIKit
-
+import UICollectionViewLeftAlignedLayout
 class NetVideoDetailViewController: BaseViewController {
     var videoModel: VideoModel = VideoModel.init()
     let collectBtn = UIButton.init(type: .custom)

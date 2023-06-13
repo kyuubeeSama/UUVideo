@@ -14,6 +14,7 @@ import MRDLNA
 import ReactiveCocoa
 import NotificationBannerSwift
 import MediaPlayer
+import UICollectionViewLeftAlignedLayout
 
 class NetVideoPlayerViewController: BaseViewController, DLNADelegate {
     //    投屏设备

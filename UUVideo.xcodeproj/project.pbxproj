@@ -78,7 +78,6 @@
 		A9B898672716C736006889C3 /* padVideoDetailCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B898662716C736006889C3 /* padVideoDetailCollectionView.swift */; };
 		A9B9CE1C24E9569700CFBE69 /* LocalVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CE1B24E9569700CFBE69 /* LocalVideoPlayerViewController.swift */; };
 		A9CBF74824EF9976002BD074 /* RightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CBF74724EF9976002BD074 /* RightViewController.swift */; };
-		A9CCBF332608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CCBF322608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift */; };
 		A9CCBF8C2608A16100427C47 /* SqlTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CCBF8B2608A16100427C47 /* SqlTool.swift */; };
 		A9D34755296BB3BC00DD0BBC /* Sakura.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D34754296BB3BC00DD0BBC /* Sakura.swift */; };
 		A9D34757296BB3C800DD0BBC /* Laikuaibo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D34756296BB3C800DD0BBC /* Laikuaibo.swift */; };
@@ -178,7 +177,6 @@
 		A9B9CE1B24E9569700CFBE69 /* LocalVideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalVideoPlayerViewController.swift; sourceTree = "<group>"; };
 		A9BAB51327157F3900AF9779 /* UUVideo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UUVideo-Bridging-Header.h"; sourceTree = "<group>"; };
 		A9CBF74724EF9976002BD074 /* RightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightViewController.swift; sourceTree = "<group>"; };
-		A9CCBF322608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewLeftAlignedLayout.swift; sourceTree = "<group>"; };
 		A9CCBF8B2608A16100427C47 /* SqlTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqlTool.swift; sourceTree = "<group>"; };
 		A9D34754296BB3BC00DD0BBC /* Sakura.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sakura.swift; sourceTree = "<group>"; };
 		A9D34756296BB3C800DD0BBC /* Laikuaibo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Laikuaibo.swift; sourceTree = "<group>"; };
@@ -408,7 +406,6 @@
 				A98794EB2553983B00DD62EE /* VideoInfoCollectionViewCell.xib */,
 				A928D21F2567917A003BF719 /* NetVideoPlayerCollectionView.swift */,
 				A9F0302226003F100095EC83 /* UUWebView.swift */,
-				A9CCBF322608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift */,
 				A9B898662716C736006889C3 /* padVideoDetailCollectionView.swift */,
 				A9FEB1282721634D00BA70F6 /* PageView.swift */,
 				A960D895272FBC1D00B7C0BC /* DownloadTableView.swift */,
@@ -640,7 +637,6 @@
 				A906DB1524EBB08300C070E4 /* VideoTableCollectionViewCell.swift in Sources */,
 				A92AC00C25529D28001EBD12 /* NetVideoDetailCollectionView.swift in Sources */,
 				A960D896272FBC1D00B7C0BC /* DownloadTableView.swift in Sources */,
-				A9CCBF332608800D00427C47 /* UICollectionViewLeftAlignedLayout.swift in Sources */,
 				A950E2C024E67356000CBB92 /* FileTool.swift in Sources */,
 				A9F44FE1253D379700224DA5 /* SearchResultViewController.swift in Sources */,
 				A950E2BF24E67356000CBB92 /* QYRequestData.swift in Sources */,

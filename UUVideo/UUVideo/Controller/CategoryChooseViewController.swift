@@ -7,7 +7,7 @@
 //  电影类型选择界面
 
 import UIKit
-
+import UICollectionViewLeftAlignedLayout
 class CategoryChooseViewController: BaseViewController {
 
     var listArr: [CategoryListModel]?

@@ -8,6 +8,7 @@
 
 import UIKit
 import JXSegmentedView
+import UICollectionViewLeftAlignedLayout
 class SearchListViewController: BaseViewController,JXSegmentedListContainerViewListDelegate {
     func listView() -> UIView {
         view

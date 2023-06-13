@@ -14,7 +14,7 @@ import WebKit
 import MRDLNA
 import SnapKit
 import Popover_OC
-
+import UICollectionViewLeftAlignedLayout
 class PadVideoPlayerViewController: BaseViewController, DLNADelegate {
     private var isPlaying: Bool = false
     private var deviceArr: [Any] = []
