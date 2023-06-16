@@ -52,6 +52,8 @@ class SearchResultViewController: BaseViewController {
                 urlStr = Yklunli.init().webUrlStr+"vod-search-wd-\(keyword)-p-\(pageNum).html"
             }else if webType == .sixMovie{
                 urlStr = SixMovie.init().webUrlStr+"vodsearch/\(keyword)----------\(pageNum)---.html"
+            }else if webType == .sese{
+                urlStr = SeSe.init().webUrlStr+"vodsearch/\(keyword)----------\(pageNum)---.html"
             }
         getSearchData(urlStr: urlStr)
     }

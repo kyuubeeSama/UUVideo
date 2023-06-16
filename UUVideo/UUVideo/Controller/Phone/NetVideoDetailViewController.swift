@@ -51,11 +51,11 @@ class NetVideoDetailViewController: BaseViewController {
     // 获取详情数据
     func getDetailData() {
         view.makeToastActivity(.center)
-        DispatchQueue.global().async { [self] in
-            DataManager.init().getVideoDetailData(urlStr: (videoModel.detailUrl), type: websiteType(rawValue: (videoModel.webType))!) { (resultModel) in
+        DispatchQueue.global().async {
+            DataManager.init().getVideoDetailData(urlStr: (self.videoModel.detailUrl), type: websiteType(rawValue: (self.videoModel.webType))!) { (resultModel) in
                 DispatchQueue.main.async {
                     self.view.hideToastActivity()
-                    self.videoModel.picUrl = resultModel.picUrl
+                    self.videoModel.picUrl = resultModel.picUrl.isEmpty ? self.videoModel.picUrl : resultModel.picUrl
                     self.videoModel.videoArr = resultModel.videoArr
                     self.videoModel.serialArr = resultModel.serialArr
                     self.videoModel.serialNum = resultModel.serialNum
