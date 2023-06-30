@@ -14,7 +14,7 @@ import Alamofire
 class Halihali: WebsiteBaseModel, WebsiteProtocol {
     required override init() {
         super.init()
-        webUrlStr = "http://halihali12.com/"
+        webUrlStr = "http://halihali14.com/"
         websiteName = "哈哩哈哩"
     }
     func getIndexData() -> [ListModel] {

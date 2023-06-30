@@ -255,7 +255,7 @@ class NetVideoPlayerViewController: BaseViewController, DLNADelegate {
         }
         player.defaultEdgeControlLayer.topAdapter.removeItem(forTag: SJEdgeControlLayerTopItem_Back)
         player.defaultEdgeControlLayer.topAdapter.reload()
-        player.defaultEdgeControlLayer.automaticallyShowsPictureInPictureItem = false
+        player.defaultEdgeControlLayer.automaticallyShowsPictureInPictureItem = true
         player.defaultEdgeControlLayer.centerAdapter.removeItem(forTag: SJEdgeControlLayerCenterItem_Replay)
         player.defaultEdgeControlLayer.centerContainerView.isHidden = true
         return player
