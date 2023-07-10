@@ -60,8 +60,8 @@ class DataManager: NSObject {
                 array = Lawyering.init().getIndexData()
             case .sese:
                 array = SeSe.init().getIndexData()
-            case .cechi:
-                array = CeChi.init().getIndexData()
+            case .thotsflix:
+                array = Thotsflix.init().getIndexData()
             }
             if array.isEmpty {
                 failure(XPathError.getContentFail)
@@ -102,8 +102,8 @@ class DataManager: NSObject {
             array = Lawyering.init().getVideoList(urlStr: urlStr)
         case .sese:
             array = SeSe.init().getVideoList(urlStr: urlStr)
-        case .cechi:
-            array = CeChi.init().getVideoList(urlStr: urlStr)
+        case .thotsflix:
+            array = Thotsflix.init().getVideoList(urlStr: urlStr)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -144,8 +144,8 @@ class DataManager: NSObject {
             array = Lawyering.init().getVideoCategory(urlStr: urlStr)
         case .sese:
             array = SeSe.init().getVideoCategory(urlStr: urlStr)
-        case .cechi:
-            array = CeChi.init().getVideoCategory(urlStr: urlStr)
+        case .thotsflix:
+            array = Thotsflix.init().getVideoCategory(urlStr: urlStr)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -186,8 +186,8 @@ class DataManager: NSObject {
             result = Lawyering.init().getVideoDetail(urlStr: urlStr)
         case .sese:
             result = SeSe.init().getVideoDetail(urlStr: urlStr)
-        case .cechi:
-            result = CeChi.init().getVideoDetail(urlStr: urlStr)
+        case .thotsflix:
+            result = Thotsflix.init().getVideoDetail(urlStr: urlStr)
         }
         if result.result == false {
             failure(XPathError.getContentFail)
@@ -222,8 +222,8 @@ class DataManager: NSObject {
             array = Lawyering.init().getSearchData(urlStr: urlStr, keyword: keyword)
         case .sese:
             array = SeSe.init().getSearchData(urlStr: urlStr, keyword: keyword)
-        case .cechi:
-            array = CeChi.init().getSearchData(urlStr: urlStr, keyword: keyword)
+        case .thotsflix:
+            array = Thotsflix.init().getSearchData(urlStr: urlStr, keyword: keyword)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -258,8 +258,8 @@ class DataManager: NSObject {
             result = Lawyering.init().getVideoPlayerDetail(urlStr: urlStr)
         case .sese:
             result = SeSe.init().getVideoPlayerDetail(urlStr: urlStr)
-        case .cechi:
-            result = CeChi.init().getVideoPlayerDetail(urlStr: urlStr)
+        case .thotsflix:
+            result = Thotsflix.init().getVideoPlayerDetail(urlStr: urlStr)
         }
         if result.result == false {
             failure(XPathError.getContentFail)

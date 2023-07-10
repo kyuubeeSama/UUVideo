@@ -160,7 +160,6 @@ class NetVideoPlayerViewController: BaseViewController, DLNADelegate {
         }
     }
     func playerVideo() {
-        let headers = ["User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/92.0.4515.107"];
         if model.videoUrl.isEmpty {
             let alert = UIAlertController.init(title: "提示", message: "当前视频没有播放地址", preferredStyle: .alert)
             let alertAction = UIAlertAction.init(title: "返回上一页", style: .default) { action in
@@ -170,6 +169,10 @@ class NetVideoPlayerViewController: BaseViewController, DLNADelegate {
             present(alert, animated: true, completion: nil)
             isPlaying = false
         } else {
+            let headers = [
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/92.0.4515.107",
+                "Referer":urlArr[model.webType]
+            ];
             //FIXME:视频播放地址解包错误
             let asset = AVURLAsset.init(url: URL.init(string: model.videoUrl)!, options: ["AVURLAssetHTTPHeaderFieldsKey": headers])
             player.urlAsset = SJVideoPlayerURLAsset.init(avAsset: asset, startPosition: TimeInterval(model.progress), playModel: SJPlayModel.init())

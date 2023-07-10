@@ -47,8 +47,7 @@ class NetVideoListViewController: BaseViewController {
             ["电影":"1","电视剧":"6","综艺":"I","动漫":"u","福利":"i"],
             ["中文":"1","欧美":"2","动漫":"3","主播":"4","制服":"5","人妻":"6","美乳":"7","伦理":"8"],
             ["精品推荐":"4","主播秀色":"5","日本有码":"6","日本无码":"7","中文字幕":"8","强奸乱伦":"9","三级伦理":"16","卡通动漫":"17","丝袜OL":"18","自拍偷拍":"19","传媒系列":"20","女同人妖":"21","国产精品":"22"],
-            ["中文":"1","欧美":"2","动漫":"3","主播":"4","制服":"5","人妻":"6","美乳":"7","伦理":"8"],
-            ["电影":"mov","电视剧":"tv","动漫":"cartoon","综艺":"fun"]
+            ["默认":"0"],
         ]
         if webType == .halihali {
             area = "all"
@@ -214,10 +213,10 @@ class NetVideoListViewController: BaseViewController {
             detailUrlStr = urlStr + "vodshow/\(videoType)MMM1--------\(pageNum)---.html"
         }else if webType == .lawyering {
             detailUrlStr = urlStr+"index.php/vod/type/id/\(videoType)/page/\(pageNum).html"
-        }else if webType == .cechi {
-            detailUrlStr = urlStr+"/\(videoType)/index_\(pageNum)_______.html"
         }else if webType == .sese {
             detailUrlStr = urlStr+"/vodtype/\(videoType)-\(pageNum).html"
+        }else if webType == .thotsflix{
+            detailUrlStr = urlStr+"/page/\(pageNum)/"
         }
         view.makeToastActivity(.center)
         DispatchQueue.global().async {
