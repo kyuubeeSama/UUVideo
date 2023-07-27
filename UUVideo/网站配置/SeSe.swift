@@ -37,12 +37,6 @@ class SeSe: WebsiteBaseModel,WebsiteProtocol {
                 let urlNodeArr = jiDoc?.xPath(urlXPath)
                 let imgNodeArr = jiDoc?.xPath(imgXPath)
                 let updateNodeArr = jiDoc?.xPath(updateXPath)
-//                if imgNodeArr?.count != titleNodeArr?.count{
-//                    // 两边长度不一致，表明中间有广告
-//                    let cha = (imgNodeArr!.count - titleNodeArr!.count)/2
-//                    imgNodeArr?.removeSubrange(0..<cha)
-//                    updateNodeArr?.removeSubrange(0..<cha)
-//                }
                 for (i, _) in titleNodeArr!.enumerated() {
                     if i < 8{
                         var videoModel = VideoModel.init()

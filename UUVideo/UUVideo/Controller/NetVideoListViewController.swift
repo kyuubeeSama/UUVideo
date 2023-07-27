@@ -48,6 +48,7 @@ class NetVideoListViewController: BaseViewController {
             ["中文":"1","欧美":"2","动漫":"3","主播":"4","制服":"5","人妻":"6","美乳":"7","伦理":"8"],
             ["精品推荐":"4","主播秀色":"5","日本有码":"6","日本无码":"7","中文字幕":"8","强奸乱伦":"9","三级伦理":"16","卡通动漫":"17","丝袜OL":"18","自拍偷拍":"19","传媒系列":"20","女同人妖":"21","国产精品":"22"],
             ["默认":"0"],
+            ["最新":"new","热门":"hot","推荐":"like","无码":"tags/100001"]
         ]
         if webType == .halihali {
             area = "all"
@@ -217,6 +218,8 @@ class NetVideoListViewController: BaseViewController {
             detailUrlStr = urlStr+"/vodtype/\(videoType)-\(pageNum).html"
         }else if webType == .thotsflix{
             detailUrlStr = urlStr+"/page/\(pageNum)/"
+        }else if webType == .HeiHD{
+            detailUrlStr = urlStr+"\(videoType)-\(pageNum).html"
         }
         view.makeToastActivity(.center)
         DispatchQueue.global().async {

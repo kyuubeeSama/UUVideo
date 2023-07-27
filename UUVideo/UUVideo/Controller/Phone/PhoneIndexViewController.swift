@@ -8,7 +8,6 @@
 
 import UIKit
 import SnapKit
-
 class PhoneIndexViewController: BaseViewController {
     
     @objc func injected(){

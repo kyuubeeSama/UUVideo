@@ -21,12 +21,12 @@ class Thotsflix: WebsiteBaseModel,WebsiteProtocol {
             return []
         }
         let htmlStr = String.init(data: (jiDoc?.data!)! as Data, encoding: .utf8)
-        print(htmlStr)
         var resultArr: [ListModel] = []
         let listModel = ListModel.init()
         let titleXpath = "//*[@id=\"preview_image\"]/@title"
         let urlXpath = "//*[@id=\"preview_image\"]/@href"
-        let imgXpath = "//*[@id=\"preview_image\"]/img/@data-original | //*[@id=\"preview_image\"]/div/@data-thumbs"
+        let imgXpath = "//*[@id=\"preview_image\"]/img/@src | //*[@id=\"preview_image\"]/img/@data-original | //*[@id=\"preview_image\"]/div/img/@src"
+        //"//*[@id=\"preview_image\"]/img/@data-original | //*[@id=\"preview_image\"]/div/@data-thumbs"
         let titleNodeArr = jiDoc?.xPath(titleXpath)
         let urlNodeArr = jiDoc?.xPath(urlXpath)
         let imgNodeArr = jiDoc?.xPath(imgXpath)
@@ -70,7 +70,7 @@ class Thotsflix: WebsiteBaseModel,WebsiteProtocol {
         listModel.list = []
         let titleXpath = "//*[@id=\"preview_image\"]/@title"
         let urlXpath = "//*[@id=\"preview_image\"]/@href"
-        let imgXpath = "//*[@id=\"preview_image\"]/img/@data-original | //*[@id=\"preview_image\"]/div/@data-thumbs"
+        let imgXpath = "//*[@id=\"preview_image\"]/img/@src | //*[@id=\"preview_image\"]/img/@data-original | //*[@id=\"preview_image\"]/div/img/@src"
         let titleNodeArr = jiDoc?.xPath(titleXpath)
         let urlNodeArr = jiDoc?.xPath(urlXpath)
         let imgNodeArr = jiDoc?.xPath(imgXpath)
@@ -119,7 +119,7 @@ class Thotsflix: WebsiteBaseModel,WebsiteProtocol {
         //        推荐视频
         let titleXPath = "//*[@id=\"preview_image\"]/@title"
         let urlXPath = "//*[@id=\"preview_image\"]/@href"
-        let imgXPath = "//*[@id=\"preview_image\"]/img/@data-original | //*[@id=\"preview_image\"]/div/@data-thumbs"
+        let imgXPath = "//*[@id=\"preview_image\"]/img/@src | //*[@id=\"preview_image\"]/img/@data-original | //*[@id=\"preview_image\"]/div/img/@src"
         let titleNodeArr = jiDoc?.xPath(titleXPath)
         let urlNodeArr = jiDoc?.xPath(urlXPath)
         let imgNodeArr = jiDoc?.xPath(imgXPath)
@@ -171,7 +171,7 @@ class Thotsflix: WebsiteBaseModel,WebsiteProtocol {
             // 获取推荐视频
             let recommendTitleXpath = "//*[@id=\"preview_image\"]/@title"
             let recommendUrlXpath = "//*[@id=\"preview_image\"]/@href"
-            let recommendImgXpath = "//*[@id=\"preview_image\"]/img/@data-original | //*[@id=\"preview_image\"]/div/@data-thumbs"
+            let recommendImgXpath = "//*[@id=\"preview_image\"]/img/@src | //*[@id=\"preview_image\"]/img/@data-original | //*[@id=\"preview_image\"]/div/img/@src"
             let recommendTitleNodeArr = jiDoc?.xPath(recommendTitleXpath)
             let recommendUrlNodeArr = jiDoc?.xPath(recommendUrlXpath)
             let recommendImgNodeArr = jiDoc?.xPath(recommendImgXpath)
@@ -207,7 +207,7 @@ class Thotsflix: WebsiteBaseModel,WebsiteProtocol {
         }
         let titleXpath = "//*[@id=\"preview_image\"]/@title"
         let detailXpath = "//*[@id=\"preview_image\"]/@href"
-        let imgXpath = "//*[@id=\"preview_image\"]/img/@data-original | //*[@id=\"preview_image\"]/div/@data-thumbs"
+        let imgXpath = "//*[@id=\"preview_image\"]/img/@src | //*[@id=\"preview_image\"]/img/@data-original | //*[@id=\"preview_image\"]/div/img/@src"
         let titleNodeArr = jiDoc?.xPath(titleXpath)
         let detailNodeArr = jiDoc?.xPath(detailXpath)
         let imgNodeArr = jiDoc?.xPath(imgXpath)

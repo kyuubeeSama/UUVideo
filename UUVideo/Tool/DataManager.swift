@@ -62,6 +62,8 @@ class DataManager: NSObject {
                 array = SeSe.init().getIndexData()
             case .thotsflix:
                 array = Thotsflix.init().getIndexData()
+            case .HeiHD:
+                array = HeiHD.init().getIndexData()
             }
             if array.isEmpty {
                 failure(XPathError.getContentFail)
@@ -104,6 +106,8 @@ class DataManager: NSObject {
             array = SeSe.init().getVideoList(urlStr: urlStr)
         case .thotsflix:
             array = Thotsflix.init().getVideoList(urlStr: urlStr)
+        case .HeiHD:
+            array = HeiHD.init().getVideoList(urlStr: urlStr)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -146,6 +150,8 @@ class DataManager: NSObject {
             array = SeSe.init().getVideoCategory(urlStr: urlStr)
         case .thotsflix:
             array = Thotsflix.init().getVideoCategory(urlStr: urlStr)
+        case .HeiHD:
+            array = HeiHD.init().getVideoCategory(urlStr: urlStr)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -188,6 +194,8 @@ class DataManager: NSObject {
             result = SeSe.init().getVideoDetail(urlStr: urlStr)
         case .thotsflix:
             result = Thotsflix.init().getVideoDetail(urlStr: urlStr)
+        case .HeiHD:
+            result = HeiHD.init().getVideoDetail(urlStr: urlStr)
         }
         if result.result == false {
             failure(XPathError.getContentFail)
@@ -224,6 +232,8 @@ class DataManager: NSObject {
             array = SeSe.init().getSearchData(urlStr: urlStr, keyword: keyword)
         case .thotsflix:
             array = Thotsflix.init().getSearchData(urlStr: urlStr, keyword: keyword)
+        case .HeiHD:
+            array = HeiHD.init().getSearchData(urlStr: urlStr, keyword: keyword)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -260,6 +270,8 @@ class DataManager: NSObject {
             result = SeSe.init().getVideoPlayerDetail(urlStr: urlStr)
         case .thotsflix:
             result = Thotsflix.init().getVideoPlayerDetail(urlStr: urlStr)
+        case .HeiHD:
+            result = HeiHD.init().getVideoPlayerDetail(urlStr: urlStr)
         }
         if result.result == false {
             failure(XPathError.getContentFail)

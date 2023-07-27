@@ -90,6 +90,8 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
                     self.view.bringSubviewToFront(self.lawyering)
                 case .thotsflix:
                     self.view.bringSubviewToFront(self.lawyering)
+                case .HeiHD:
+                    self.view.bringSubviewToFront(self.lawyering)
                 }
             }
         }
