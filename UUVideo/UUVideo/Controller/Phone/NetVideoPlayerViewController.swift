@@ -179,14 +179,15 @@ class NetVideoPlayerViewController: BaseViewController, DLNADelegate {
             isPlaying = true
             // MARK: 设置通知栏播放器内容
             var videoInfo:[String:Any] = [:]
-            videoInfo[MPMediaItemPropertyTitle] = self.model.name
+            videoInfo[MPMediaItemPropertyTitle] = model.name
             let albumArt = MPMediaItemArtwork.init(boundsSize: CGSize(width: screenW-60, height: 100)) { [self] size in
                 var data = Data.init()
                 do {
                     data = try NSData.init(contentsOf: URL.init(string: model.picUrl)!) as Data
+                    return UIImage.init(data: data)!
                 } catch  {
+                    return UIImage.init()
                 }
-                return UIImage.init(data: data)!
             }
             videoInfo[MPMediaItemPropertyArtwork] = albumArt
             videoInfo[MPNowPlayingInfoPropertyPlaybackRate] = 1.0

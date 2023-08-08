@@ -56,6 +56,8 @@ class SearchResultViewController: BaseViewController {
                 urlStr = SeSe.init().webUrlStr+"vodsearch/\(keyword)----------\(pageNum)---.html"
             }else if webType == .thotsflix{
                 urlStr = Thotsflix.init().webUrlStr+"page/\(pageNum)/?search_param=all&s=\(keyword)"
+            }else if webType == .avbro {
+                urlStr = AvBro.init().webUrlStr+"index.php/vod/search/page/\(pageNum)/wd/\(keyword).html"
             }
         getSearchData(urlStr: urlStr)
     }
