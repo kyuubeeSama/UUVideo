@@ -12,7 +12,7 @@ class SeSe: WebsiteBaseModel,WebsiteProtocol {
     override init() {
         super.init()
         websiteName = "未命名"
-        webUrlStr = "https://sex104.com/"
+        webUrlStr = "https://sex108.com/"
     }
     
     func getIndexData() -> [ListModel] {

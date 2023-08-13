@@ -14,6 +14,7 @@ import SideMenu
 class PadIndexViewController: BaseViewController, UISearchBarDelegate {
     var allVideoArr: [[Any]] = [[], [], []]
     var tableIndex: Int = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -27,6 +28,7 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
         view.bringSubviewToFront(localView)
         NotificationCenter.default.addObserver(self, selector: #selector(didChangeRotate(notice:)), name: UIApplication.didChangeStatusBarFrameNotification, object: nil)
     }
+
     @objc func showUser() {
         let VC = UserViewController.init()
         let menu = SideMenuNavigationController(rootViewController: VC)
@@ -35,9 +37,11 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
         menu.leftSide = true
         present(menu, animated: true, completion: nil)
     }
+
     @objc func didChangeRotate(notice: Notification) {
         // TODO:此处用于重新适配
     }
+
     // 左侧按钮
     lazy var mainTable: WebsiteTableView = {
         let mainTable = WebsiteTableView.init(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH), style: .plain)
@@ -61,7 +65,7 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
                     self.view.bringSubviewToFront(self.historyView)
                 } else if (string == "我的收藏") {
                     self.view.bringSubviewToFront(self.collectView)
-                } else if(string == "聚合搜索") {
+                } else if (string == "聚合搜索") {
 
                 }
             } else {
@@ -84,15 +88,7 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
                     self.view.bringSubviewToFront(self.YklunliView)
                 case .sixMovie:
                     self.view.bringSubviewToFront(self.sixMovieView)
-                case .lawyering:
-                    self.view.bringSubviewToFront(self.lawyering)
-                case .sese:
-                    self.view.bringSubviewToFront(self.lawyering)
-                case .thotsflix:
-                    self.view.bringSubviewToFront(self.lawyering)
-                case .HeiHD:
-                    self.view.bringSubviewToFront(self.lawyering)
-                case .avbro:
+                default:
                     self.view.bringSubviewToFront(self.lawyering)
                 }
             }
@@ -163,6 +159,7 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
         VC.webType = .sixMovie
         return getView(controller: VC)
     }()
+
     func getView(controller: UIViewController) -> UIView {
         addChild(controller)
         view.addSubview(controller.view)

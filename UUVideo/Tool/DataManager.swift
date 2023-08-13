@@ -66,6 +66,10 @@ class DataManager: NSObject {
                 array = HeiHD.init().getIndexData()
             case .avbro:
                 array = AvBro.init().getIndexData()
+            case .qiqi:
+                array = Qiqi.init().getIndexData()
+            case .avmenu:
+                array = AvMenu.init().getIndexData()
             }
             if array.isEmpty {
                 failure(XPathError.getContentFail)
@@ -112,6 +116,10 @@ class DataManager: NSObject {
             array = HeiHD.init().getVideoList(urlStr: urlStr)
         case .avbro:
             array = AvBro.init().getVideoList(urlStr: urlStr)
+        case .qiqi:
+            array = Qiqi.init().getVideoList(urlStr: urlStr)
+        case .avmenu:
+            array = AvMenu.init().getVideoList(urlStr: urlStr)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -158,6 +166,10 @@ class DataManager: NSObject {
             array = HeiHD.init().getVideoCategory(urlStr: urlStr)
         case .avbro:
             array = AvBro.init().getVideoCategory(urlStr: urlStr)
+        case .qiqi:
+            array = Qiqi.init().getVideoCategory(urlStr: urlStr)
+        case .avmenu:
+            array = AvMenu.init().getVideoCategory(urlStr: urlStr)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -204,6 +216,10 @@ class DataManager: NSObject {
             result = HeiHD.init().getVideoDetail(urlStr: urlStr)
         case .avbro:
             result = AvBro.init().getVideoDetail(urlStr: urlStr)
+        case .qiqi:
+            result = Qiqi.init().getVideoDetail(urlStr: urlStr)
+        case .avmenu:
+            result = AvMenu.init().getVideoDetail(urlStr: urlStr)
         }
         if result.result == false {
             failure(XPathError.getContentFail)
@@ -244,6 +260,10 @@ class DataManager: NSObject {
             array = HeiHD.init().getSearchData(urlStr: urlStr, keyword: keyword)
         case .avbro:
             array = AvBro.init().getSearchData(urlStr: urlStr, keyword: keyword)
+        case .qiqi:
+            array = Qiqi.init().getSearchData(urlStr: urlStr, keyword: keyword)
+        case .avmenu:
+            array = AvMenu.init().getSearchData(urlStr: urlStr, keyword: keyword)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -284,6 +304,10 @@ class DataManager: NSObject {
             result = HeiHD.init().getVideoPlayerDetail(urlStr: urlStr)
         case .avbro:
             result = AvBro.init().getVideoPlayerDetail(urlStr: urlStr)
+        case .qiqi:
+            result = Qiqi.init().getVideoPlayerDetail(urlStr: urlStr)
+        case .avmenu:
+            result = AvMenu.init().getVideoPlayerDetail(urlStr: urlStr)
         }
         if result.result == false {
             failure(XPathError.getContentFail)

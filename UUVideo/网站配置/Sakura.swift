@@ -12,7 +12,7 @@ import Ji
 class Sakura: WebsiteBaseModel, WebsiteProtocol {
     required override init() {
         super.init()
-        webUrlStr = "http://www.yinghuacd.com/"
+        webUrlStr = "http://www.yinghuavideo.com"
         websiteName = "樱花动漫"
     }
     func getIndexData() -> [ListModel] {

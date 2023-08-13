@@ -39,17 +39,19 @@ class NetVideoListViewController: BaseViewController {
             ["电视剧": "tv", "动漫": "acg", "电影": "mov", "综艺": "zongyi"],
             ["电影": "1", "剧集": "2", "综艺": "4", "动漫": "3", "伦理": "19"],
             ["日本动漫": "japan", "国产动漫": "china", "欧美动漫": "american", "动漫电影": "movie"],
-            ["电视剧":"2","电影":"1","综艺":"4","动漫":"3"],
-            ["电影":"dy","电视剧":"tv","综艺":"zy","动漫":"dm"],
-            ["电影":"dianying","电视剧":"lianxuju","综艺":"zongyi","动漫":"dongman"],
-            ["电视剧":"电视剧","电影":"电影","动漫":"动漫","综艺":"综艺"],
-            ["韩国伦理":"1","日本伦理":"2","欧美伦理":"3","香港伦理":"4"],
-            ["电影":"1","电视剧":"6","综艺":"I","动漫":"u","福利":"i"],
-            ["中文":"1","欧美":"2","动漫":"3","主播":"4","制服":"5","人妻":"6","美乳":"7","伦理":"8"],
-            ["精品推荐":"4","主播秀色":"5","日本有码":"6","日本无码":"7","中文字幕":"8","强奸乱伦":"9","三级伦理":"16","卡通动漫":"17","丝袜OL":"18","自拍偷拍":"19","传媒系列":"20","女同人妖":"21","国产精品":"22"],
-            ["默认":"0"],
-            ["最新":"new","热门":"hot","推荐":"like","无码":"tags/100001"],
-            ["日本":"1","中文":"10","无码":"12","卡通":"20","欧美":"5","国产":"67"]
+            ["电视剧": "2", "电影": "1", "综艺": "4", "动漫": "3"],
+            ["电影": "dy", "电视剧": "tv", "综艺": "zy", "动漫": "dm"],
+            ["电影": "dianying", "电视剧": "lianxuju", "综艺": "zongyi", "动漫": "dongman"],
+            ["电视剧": "电视剧", "电影": "电影", "动漫": "动漫", "综艺": "综艺"],
+            ["韩国伦理": "1", "日本伦理": "2", "欧美伦理": "3", "香港伦理": "4"],
+            ["电影": "1", "电视剧": "6", "综艺": "I", "动漫": "u", "福利": "i"],
+            ["中文": "1", "欧美": "2", "动漫": "3", "主播": "4", "制服": "5", "人妻": "6", "美乳": "7", "伦理": "8"],
+            ["精品推荐": "4", "主播秀色": "5", "日本有码": "6", "日本无码": "7", "中文字幕": "8", "强奸乱伦": "9", "三级伦理": "16", "卡通动漫": "17", "丝袜OL": "18", "自拍偷拍": "19", "传媒系列": "20", "女同人妖": "21", "国产精品": "22"],
+            ["默认": "0"],
+            ["最新": "new", "热门": "hot", "推荐": "like", "无码": "tags/100001"],
+            ["日本": "1", "中文": "10", "无码": "12", "卡通": "20", "欧美": "5", "国产": "67"],
+            ["电影":"dianying","连续剧":"lianxuju","综艺":"zongyi","动漫":"dongman"],
+            ["最新FC":"fc2","今日更新":"censored","最新无码":"uncensored","最新欧美":"western"]
         ]
         if webType == .halihali {
             area = "all"
@@ -60,8 +62,8 @@ class NetVideoListViewController: BaseViewController {
         }
 //    https://www.qybfb.com/index.php?s=home-vod-type-id-2-mcid-114-area-泰国-year-2022-letter--order--picm-1-p-1
         videoType = videoTypeData[webType.rawValue][title!]!
-        if webType == .halihali || webType == .juzhixiao || webType == .qihaolou || webType == .SakuraYingShi{
-            if webType == .juzhixiao{
+        if webType == .halihali || webType == .juzhixiao || webType == .qihaolou || webType == .SakuraYingShi {
+            if webType == .juzhixiao {
                 videoCategory = "mcid-0"
                 year = "year-0"
                 area = "area-0"
@@ -81,13 +83,13 @@ class NetVideoListViewController: BaseViewController {
         }
         getListData()
     }
-    
+
     func setNav() {
 //        setNavColor(navColor: .systemBackground, titleColor: UIColor.init(.dm, light: .black, dark: .white), barStyle: .default)
         let rightItem = UIBarButtonItem.init(title: "筛选", style: .plain, target: self, action: #selector(rightBtnClick))
         navigationItem.rightBarButtonItem = rightItem
     }
-    
+
     // 如果是macos，底部添加bottomview
     lazy var pageView: PageView = {
         let pageView = PageView.init()
@@ -103,7 +105,7 @@ class NetVideoListViewController: BaseViewController {
         }
         return pageView
     }()
-        
+
     // 右键筛选
     @objc func rightBtnClick() {
 //        HaliTVCategoryView
@@ -118,7 +120,7 @@ class NetVideoListViewController: BaseViewController {
                 menu.menuWidth = screenW * 0.9
                 present(menu, animated: true, completion: nil)
             } else {
-                VC.view.bounds = CGRect(x: 0, y: 0, width: Tool.isPad() ? screenW-80 : 500, height: 500);
+                VC.view.bounds = CGRect(x: 0, y: 0, width: Tool.isPad() ? screenW - 80 : 500, height: 500);
                 view.window?.QY_ShowPopView(popStyle: .center, popView: VC.view, offset: CGPoint(x: 0, y: 0), dismissWhenClickCoverView: true, isBlur: false, alpha: 0.3)
             }
             VC.sureBtnReturn = { [self] resultArr in
@@ -129,23 +131,23 @@ class NetVideoListViewController: BaseViewController {
                 }
                 if webType == .sakura {
                     videoType = resultArr[0]
-                } else if webType == .halihali{
+                } else if webType == .halihali {
                     videoCategory = resultArr[0]
                     year = resultArr[1]
                     area = resultArr[2]
-                }else if webType == .juzhixiao {
+                } else if webType == .juzhixiao {
                     videoCategory = resultArr[1]
                     year = resultArr[2]
                     area = resultArr[0]
-                }else if webType == .mianfei {
+                } else if webType == .mianfei {
                     videoCategory = resultArr[0]
                     year = resultArr[2]
                     area = resultArr[1]
-                }else if webType == .qihaolou {
+                } else if webType == .qihaolou {
                     videoCategory = resultArr[0]
                     area = resultArr[1]
                     year = resultArr[2]
-                }else if webType == .SakuraYingShi {
+                } else if webType == .SakuraYingShi {
                     area = resultArr[0]
                     year = resultArr[1]
                     videoCategory = resultArr[2]
@@ -153,7 +155,7 @@ class NetVideoListViewController: BaseViewController {
                 mainCollect.es.resetNoMoreData()
                 pageNum = 1
                 listArr = []
-                if webType == .halihali{
+                if webType == .halihali {
                     getCategoryData()
                 }
                 getListData()
@@ -169,7 +171,7 @@ class NetVideoListViewController: BaseViewController {
             view.makeToast("未获取到筛选数据")
         }
     }
-    
+
 //    获取列表信息
     func getListData() {
         var detailUrlStr = ""
@@ -178,16 +180,16 @@ class NetVideoListViewController: BaseViewController {
         } else if webType == .laikuaibo {
 //            detailUrlStr = urlStr + "list-select-id-\(videoType)-area-\(area)-order-\(order)-addtime-p-\(pageNum).html"
             detailUrlStr = urlStr + "list-select-id-\(videoType)-area--order-addtime-p-\(pageNum).html"
-        } else if webType == .sakura{
+        } else if webType == .sakura {
             var pageInfo = ""
             if pageNum > 1 {
                 pageInfo = "\(pageNum).html"
             }
             detailUrlStr = urlStr + "\(videoType)/" + pageInfo
-        }else if webType == .juzhixiao{
+        } else if webType == .juzhixiao {
             // 剧知晓
             detailUrlStr = urlStr + "index.php?s=home-vod-type-id-\(videoType)-\(videoCategory)--\(area)--\(year)--letter--order--picm-1-p-\(pageNum)"
-        }else if webType == .mianfei {
+        } else if webType == .mianfei {
             if pageNum == 1 {
                 detailUrlStr = urlStr + videoType
             } else {
@@ -198,31 +200,35 @@ class NetVideoListViewController: BaseViewController {
 //            }else{
 //                detailUrlStr = urlStr+"haokan/\(videoType)-\(videoCategory)----------\(year).html"
 //            }
-        }else if webType == .qihaolou {
-            if  area.isEmpty && videoCategory.isEmpty && year.isEmpty{
+        } else if webType == .qihaolou {
+            if area.isEmpty && videoCategory.isEmpty && year.isEmpty {
 
-                detailUrlStr = urlStr+"vodshow/\(videoType)--------\(pageNum)---.html"
-            }else{
+                detailUrlStr = urlStr + "vodshow/\(videoType)--------\(pageNum)---.html"
+            } else {
                 //            https://qhlou.com/vodshow/dongzuopian-%E5%A4%A7%E9%99%86----------2020.html
                 detailUrlStr = urlStr + "vodshow/\(videoCategory)-\(area)-------\(pageNum)---\(year).html"
             }
-        }else if webType == .SakuraYingShi {
-            detailUrlStr = urlStr + "v/type/\(videoType)-\(area)-\(year)-\(videoCategory)-----0-24.html?order=&page=\(pageNum-1)&size=24"
+        } else if webType == .SakuraYingShi {
+            detailUrlStr = urlStr + "v/type/\(videoType)-\(area)-\(year)-\(videoCategory)-----0-24.html?order=&page=\(pageNum - 1)&size=24"
             detailUrlStr = detailUrlStr.replacingOccurrences(of: " ", with: "")
-        }else if webType == .Yklunli {
+        } else if webType == .Yklunli {
             detailUrlStr = urlStr + "list-select-id-\(videoType)-type--area--year--star--state--order-addtime-p-\(pageNum).html";
-        }else if webType == .sixMovie {
+        } else if webType == .sixMovie {
             detailUrlStr = urlStr + "vodshow/\(videoType)MMM1--------\(pageNum)---.html"
-        }else if webType == .lawyering {
-            detailUrlStr = urlStr+"index.php/vod/type/id/\(videoType)/page/\(pageNum).html"
-        }else if webType == .sese {
-            detailUrlStr = urlStr+"/vodtype/\(videoType)-\(pageNum).html"
-        }else if webType == .thotsflix{
-            detailUrlStr = urlStr+"/page/\(pageNum)/"
-        }else if webType == .HeiHD{
-            detailUrlStr = urlStr+"\(videoType)-\(pageNum).html"
-        }else if webType == .avbro{
-            detailUrlStr = urlStr+"index.php/vod/show/id/\(videoType)/page/\(pageNum).html"
+        } else if webType == .lawyering {
+            detailUrlStr = urlStr + "index.php/vod/type/id/\(videoType)/page/\(pageNum).html"
+        } else if webType == .sese {
+            detailUrlStr = urlStr + "/vodtype/\(videoType)-\(pageNum).html"
+        } else if webType == .thotsflix {
+            detailUrlStr = urlStr + "/page/\(pageNum)/"
+        } else if webType == .HeiHD {
+            detailUrlStr = urlStr + "\(videoType)-\(pageNum).html"
+        } else if webType == .avbro {
+            detailUrlStr = urlStr + "index.php/vod/show/id/\(videoType)/page/\(pageNum).html"
+        } else if webType == .qiqi {
+            detailUrlStr = urlStr + "s/\(videoType)/page/\(pageNum).html"
+        }else if webType == .avmenu {
+            detailUrlStr = urlStr + "\(videoType)?sort=online&page=\(pageNum)"
         }
         view.makeToastActivity(.center)
         DispatchQueue.global().async {
@@ -241,7 +247,7 @@ class NetVideoListViewController: BaseViewController {
                         self.listArr.append(contentsOf: listData)
                     }
                     self.mainCollect.listArr = self.listArr
-                    if Tool.isMac(){
+                    if Tool.isMac() {
                         self.mainCollect.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
                         self.pageView.allPageNum = allPageNum
                     }
@@ -259,20 +265,20 @@ class NetVideoListViewController: BaseViewController {
 //     获取分类信息
     func getCategoryData() {
 //        http://halihali2.com/mov/0/0/all/1.html
-        var categoryUrlStr:String = ""
+        var categoryUrlStr: String = ""
         if webType == .halihali {
             categoryUrlStr = urlStr + "\(videoType)/\(year)/\(videoCategory)/\(area)/\(pageNum).html"
-        }else if webType == .juzhixiao {
+        } else if webType == .juzhixiao {
 //            categoryUrlStr = urlStr+"type/\(videoType)-0-0-0-0-0.html"
             categoryUrlStr = urlStr + "index.php?s=home-vod-type-id-\(videoType)-mcid--area--year--letter--order--picm-1-p-\(pageNum)"
-        }else if webType == .mianfei {
+        } else if webType == .mianfei {
             categoryUrlStr = urlStr + "/\(videoType)/"
-        }else if webType == .qihaolou {
-            categoryUrlStr = urlStr+"vodtype/\(videoType).html"
-        }else if webType == .SakuraYingShi {
-            categoryUrlStr = urlStr+"v/type/--------0-24.html"
-        }else if webType == .Yklunli {
-            categoryUrlStr = urlStr+"list-select-id-1-type--area--year--star--state--order-addtime-p-1.html";
+        } else if webType == .qihaolou {
+            categoryUrlStr = urlStr + "vodtype/\(videoType).html"
+        } else if webType == .SakuraYingShi {
+            categoryUrlStr = urlStr + "v/type/--------0-24.html"
+        } else if webType == .Yklunli {
+            categoryUrlStr = urlStr + "list-select-id-1-type--area--year--star--state--order-addtime-p-1.html";
         }
         DataManager.init().getWebsiteCategoryData(urlStr: categoryUrlStr, type: webType) { (dataArr) in
             self.categoryListArr = dataArr
@@ -288,9 +294,9 @@ class NetVideoListViewController: BaseViewController {
         self.view.addSubview(mainCollection)
         mainCollection.snp.makeConstraints { (make) in
             make.left.right.top.equalToSuperview()
-            if Tool.isMac(){
+            if Tool.isMac() {
                 make.bottom.equalToSuperview().offset(-60)
-            }else{
+            } else {
                 make.bottom.equalToSuperview()
             }
         }
@@ -300,7 +306,7 @@ class NetVideoListViewController: BaseViewController {
             VC.videoModel = listModel.list[indexPath.row]
             self.navigationController?.pushViewController(VC, animated: true)
         }
-        if !Tool.isMac(){
+        if !Tool.isMac() {
             mainCollection.es.addInfiniteScrolling(animator: headerAnimator) {
                 self.getListData()
             }

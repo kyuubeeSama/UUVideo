@@ -9,6 +9,7 @@
 import UIKit
 import EmptyDataSet_Swift
 import UICollectionViewLeftAlignedLayout
+
 class SearchResultViewController: BaseViewController {
 
     var keyword: String = ""
@@ -29,45 +30,49 @@ class SearchResultViewController: BaseViewController {
         title = keyword
 //        setNavColor(navColor: .systemBackground, titleColor: UIColor.init(.dm, light: .black, dark: .white), barStyle: .default)
     }
-    
+
     //获取搜索数据
     func getResultList() {
         view.makeToastActivity(.center)
-            var urlStr = ""
-            if webType == .halihali {
-                urlStr = Halihali.init().webUrlStr+"search.php"
-            } else if webType == .laikuaibo {
-                urlStr = Laikuaibo.init().webUrlStr+"vod-search-wd-" + keyword + "-p-\(pageNum).html"
-            }else if webType == .sakura{
-                urlStr = Sakura.init().webUrlStr+"search/\(keyword)/?page=\(pageNum)"
-            }else if webType == .juzhixiao{
-                urlStr = Juzhixiao.init().webUrlStr+"search/"+keyword+"-\(pageNum).html"
-            }else if webType == .mianfei{
-                urlStr = Mianfei.init().webUrlStr+"search/-------------.html?wd=\(keyword)"
-            }else if webType == .qihaolou{
-                urlStr = Qihaolou.init().webUrlStr+"vodsearch/----------\(pageNum)---.html?wd=\(keyword)"
-            }else if webType == .SakuraYingShi{
-                urlStr = SakuraYingShi.init().webUrlStr+"search?kw=\(keyword)&page=\(pageNum-1)"
-            }else if webType == .Yklunli{
-                urlStr = Yklunli.init().webUrlStr+"vod-search-wd-\(keyword)-p-\(pageNum).html"
-            }else if webType == .sixMovie{
-                urlStr = SixMovie.init().webUrlStr+"vodsearch/\(keyword)----------\(pageNum)---.html"
-            }else if webType == .sese{
-                urlStr = SeSe.init().webUrlStr+"vodsearch/\(keyword)----------\(pageNum)---.html"
-            }else if webType == .thotsflix{
-                urlStr = Thotsflix.init().webUrlStr+"page/\(pageNum)/?search_param=all&s=\(keyword)"
-            }else if webType == .avbro {
-                urlStr = AvBro.init().webUrlStr+"index.php/vod/search/page/\(pageNum)/wd/\(keyword).html"
-            }
+        var urlStr = ""
+        if webType == .halihali {
+            urlStr = Halihali.init().webUrlStr + "search.php"
+        } else if webType == .laikuaibo {
+            urlStr = Laikuaibo.init().webUrlStr + "vod-search-wd-" + keyword + "-p-\(pageNum).html"
+        } else if webType == .sakura {
+            urlStr = Sakura.init().webUrlStr + "search/\(keyword)/?page=\(pageNum)"
+        } else if webType == .juzhixiao {
+            urlStr = Juzhixiao.init().webUrlStr + "search/" + keyword + "-\(pageNum).html"
+        } else if webType == .mianfei {
+            urlStr = Mianfei.init().webUrlStr + "search/-------------.html?wd=\(keyword)"
+        } else if webType == .qihaolou {
+            urlStr = Qihaolou.init().webUrlStr + "vodsearch/----------\(pageNum)---.html?wd=\(keyword)"
+        } else if webType == .SakuraYingShi {
+            urlStr = SakuraYingShi.init().webUrlStr + "search?kw=\(keyword)&page=\(pageNum - 1)"
+        } else if webType == .Yklunli {
+            urlStr = Yklunli.init().webUrlStr + "vod-search-wd-\(keyword)-p-\(pageNum).html"
+        } else if webType == .sixMovie {
+            urlStr = SixMovie.init().webUrlStr + "vodsearch/\(keyword)----------\(pageNum)---.html"
+        } else if webType == .sese {
+            urlStr = SeSe.init().webUrlStr + "vodsearch/\(keyword)----------\(pageNum)---.html"
+        } else if webType == .thotsflix {
+            urlStr = Thotsflix.init().webUrlStr + "page/\(pageNum)/?search_param=all&s=\(keyword)"
+        } else if webType == .avbro {
+            urlStr = AvBro.init().webUrlStr + "index.php/vod/search/page/\(pageNum)/wd/\(keyword).html"
+        } else if webType == .qiqi {
+            urlStr = Qiqi.init().webUrlStr + "vodsearch/\(keyword)----------\(pageNum)---.html"
+        } else if webType == .avmenu {
+            urlStr = AvMenu.init().webUrlStr + "search?wd=\(keyword)&page=\(pageNum)"
+        }
         getSearchData(urlStr: urlStr)
     }
 
-    func getSearchData (urlStr:String){
+    func getSearchData(urlStr: String) {
         DispatchQueue.global().async {
             DataManager.init().getSearchData(urlStr: urlStr, keyword: self.keyword, website: self.webType) { (dataArr) in
                 DispatchQueue.main.async {
                     self.view.hideToastActivity()
-                    if self.webType == .halihali{
+                    if self.webType == .halihali {
                         self.mainCollect.es.noticeNoMoreData()
                     }
                     if self.checkSearchResult(searchArr: dataArr) {
@@ -94,7 +99,7 @@ class SearchResultViewController: BaseViewController {
             }
         }
     }
-    
+
     // 判断是否有重复的内容
     func checkSearchResult(searchArr: [ListModel]) -> Bool {
         if searchArr.count > 0 {

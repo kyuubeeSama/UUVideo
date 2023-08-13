@@ -98,6 +98,8 @@
 		A9FB285024E67B6900F53E74 /* VideoListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9FB284E24E67B6900F53E74 /* VideoListCollectionViewCell.xib */; };
 		A9FB285224E67E9400F53E74 /* PhoneVideoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */; };
 		A9FEB1292721634D00BA70F6 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FEB1282721634D00BA70F6 /* PageView.swift */; };
+		F15C9188B067402F66F3C66C /* Qiqi.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15C917B31A4495CA564B2CB /* Qiqi.swift */; };
+		F15C9AA61461012EFC4D99C9 /* AvMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15C95933E90D933D09DCC96 /* AvMenu.swift */; };
 		F15C9F32BAF76328ADB66FD0 /* AvBro.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15C9EE2638369DFF5FDEC84 /* AvBro.swift */; };
 /* End PBXBuildFile section */
 
@@ -202,6 +204,8 @@
 		A9FB285124E67E9400F53E74 /* PhoneVideoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVideoListViewController.swift; sourceTree = "<group>"; };
 		A9FEB1282721634D00BA70F6 /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		C9FA3DBEFB82D2160BCC81BE /* Pods_UUVideo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UUVideo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F15C917B31A4495CA564B2CB /* Qiqi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Qiqi.swift; sourceTree = "<group>"; };
+		F15C95933E90D933D09DCC96 /* AvMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvMenu.swift; sourceTree = "<group>"; };
 		F15C9EE2638369DFF5FDEC84 /* AvBro.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvBro.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -234,6 +238,8 @@
 				A982CCD02A5BAD23001887A6 /* Thotsflix.swift */,
 				144DFE6BD10316CE83C36D9B /* HeiHD.swift */,
 				F15C9EE2638369DFF5FDEC84 /* AvBro.swift */,
+				F15C917B31A4495CA564B2CB /* Qiqi.swift */,
+				F15C95933E90D933D09DCC96 /* AvMenu.swift */,
 			);
 			path = "网站配置";
 			sourceTree = "<group>";
@@ -659,6 +665,8 @@
 				144DF2DFA22E2DCF380E9066 /* IndexModel.swift in Sources */,
 				144DFBE0637E9A23BD770FE0 /* HeiHD.swift in Sources */,
 				F15C9F32BAF76328ADB66FD0 /* AvBro.swift in Sources */,
+				F15C9188B067402F66F3C66C /* Qiqi.swift in Sources */,
+				F15C9AA61461012EFC4D99C9 /* AvMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
