@@ -276,34 +276,7 @@ class Lawyering: WebsiteBaseModel,WebsiteProtocol {
         }
     }
     
-    func getSearchData(urlStr: String, keyword: String) -> [ListModel] {
-        return []
-//        let listModel = ListModel.init()
-//        listModel.title = "搜索关键字:" + keyword
-//        listModel.more = false
-//        listModel.list = []
-//        let baseUrl = Tool.getRegularData(regularExpress: "((http://)|(https://))[^\\.]*\\.(?<domain>[^/|?]*)", content: urlStr)[0]
-//        let newUrlStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-//        let jiDoc = Ji(htmlURL: URL.init(string: newUrlStr)!)
-//        if jiDoc == nil {
-//            return []
-//        }
-//        //*[@id=\"conch-content\"]/div/div[2]/div/div/div[1]/div/div[2]/div/ul[1]/li[1]/div/div/div[1]/a
-//        let titleXpath = "//*[@id=\"conch-content\"]/div/div[2]/div/div/div[1]/div/div[2]/div/ul[1]/li/div/div/div[1]/a/@title"
-//        let detailXpath = "//*[@id=\"conch-content\"]/div/div[2]/div/div/div[1]/div/div[2]/div/ul[1]/li/div/div/div[1]/a/@href"
-//        let imgXpath = "//*[@id=\"conch-content\"]/div/div[2]/div/div/div[1]/div/div[2]/div/ul[1]/li/div/div/div[1]/a/@data-original"
-//        let titleNodeArr = jiDoc?.xPath(titleXpath)
-//        let detailNodeArr = jiDoc?.xPath(detailXpath)
-//        let imgNodeArr = jiDoc?.xPath(imgXpath)
-//        for (index, _) in titleNodeArr!.enumerated() {
-//            var videoModel = VideoModel.init()
-//            videoModel.name = titleNodeArr![index].content!
-//            videoModel.detailUrl = Tool.checkUrl(urlStr: detailNodeArr![index].content!, domainUrlStr: baseUrl)
-//            videoModel.picUrl = Tool.checkUrl(urlStr: imgNodeArr![index].content!, domainUrlStr: baseUrl)
-//            videoModel.type = 3
-//            videoModel.webType = websiteType.lawyering.rawValue
-//            listModel.list.append(videoModel)
-//        }
-//        return [listModel]
+    func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
+        []
     }
 }

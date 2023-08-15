@@ -281,7 +281,8 @@ class SakuraYingShi: WebsiteBaseModel,WebsiteProtocol {
         }
     }
     
-    func getSearchData(urlStr: String, keyword: String) -> [ListModel] {
+    func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
+        let urlStr = webUrlStr + "search?kw=\(keyword)&page=\(pageNum - 1)"
         let listModel = ListModel.init()
         listModel.title = "搜索关键字:" + keyword
         listModel.more = false

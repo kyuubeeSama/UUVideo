@@ -230,7 +230,8 @@ class Laikuaibo: WebsiteBaseModel, WebsiteProtocol {
             return (result: true, model: videoModel)
         }
     }
-    func getSearchData(urlStr: String, keyword: String) -> [ListModel] {
+    func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
+        let urlStr = webUrlStr + "vod-search-wd-" + keyword + "-p-\(pageNum).html"
         let listModel = ListModel.init()
         listModel.title = "搜索关键字:" + keyword
         listModel.more = false

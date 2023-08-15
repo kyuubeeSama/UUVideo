@@ -229,41 +229,41 @@ class DataManager: NSObject {
     }
 
     // MARK: 搜索数据
-    func getSearchData(urlStr: String, keyword: String, website: websiteType, success: @escaping (_ searchData: [ListModel]) -> (), failure: @escaping (_ error: Error) -> ()) {
+    func getSearchData(pageNum: Int, keyword: String, website: websiteType, success: @escaping (_ searchData: [ListModel]) -> (), failure: @escaping (_ error: Error) -> ()) {
         var array:[ListModel] = []
         switch website{
         case .halihali:
-            array = Halihali.init().getSearchData(urlStr: urlStr, keyword: keyword)
+            array = Halihali.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .laikuaibo:
-            array = Laikuaibo.init().getSearchData(urlStr: urlStr, keyword: keyword)
+            array = Laikuaibo.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .sakura:
-            array = Sakura.init().getSearchData(urlStr: urlStr, keyword: keyword)
+            array = Sakura.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .juzhixiao:
-            array = Juzhixiao.init().getSearchData(urlStr: urlStr, keyword: keyword)
+            array = Juzhixiao.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .mianfei:
-            array = Mianfei.init().getSearchData(urlStr: urlStr, keyword: keyword)
+            array = Mianfei.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .qihaolou:
-            array = Qihaolou.init().getSearchData(urlStr: urlStr, keyword: keyword)
+            array = Qihaolou.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .SakuraYingShi:
-            array = SakuraYingShi.init().getSearchData(urlStr: urlStr, keyword: keyword)
+            array = SakuraYingShi.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .Yklunli:
-            array = Yklunli.init().getSearchData(urlStr: urlStr, keyword: keyword)
+            array = Yklunli.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .sixMovie:
-            array = SixMovie.init().getSearchData(urlStr: urlStr, keyword: keyword)
+            array = SixMovie.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .lawyering:
-            array = Lawyering.init().getSearchData(urlStr: urlStr, keyword: keyword)
+            array = Lawyering.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .sese:
-            array = SeSe.init().getSearchData(urlStr: urlStr, keyword: keyword)
+            array = SeSe.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .thotsflix:
-            array = Thotsflix.init().getSearchData(urlStr: urlStr, keyword: keyword)
+            array = Thotsflix.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .HeiHD:
-            array = HeiHD.init().getSearchData(urlStr: urlStr, keyword: keyword)
+            array = HeiHD.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .avbro:
-            array = AvBro.init().getSearchData(urlStr: urlStr, keyword: keyword)
+            array = AvBro.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .qiqi:
-            array = Qiqi.init().getSearchData(urlStr: urlStr, keyword: keyword)
+            array = Qiqi.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .avmenu:
-            array = AvMenu.init().getSearchData(urlStr: urlStr, keyword: keyword)
+            array = AvMenu.init().getSearchData(pageNum: pageNum, keyword: keyword)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)

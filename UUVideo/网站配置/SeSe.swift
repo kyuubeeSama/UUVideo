@@ -268,7 +268,8 @@ class SeSe: WebsiteBaseModel,WebsiteProtocol {
         }
     }
     
-    func getSearchData(urlStr: String, keyword: String) -> [ListModel] {
+    func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
+        let urlStr = webUrlStr + "vodsearch/\(keyword)----------\(pageNum)---.html"
         let listModel = ListModel.init()
         listModel.title = "搜索关键字:" + keyword
         listModel.more = false

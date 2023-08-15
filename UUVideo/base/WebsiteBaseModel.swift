@@ -32,5 +32,5 @@ protocol WebsiteProtocol {
     // 获取视频播放界面
     func getVideoPlayerDetail(urlStr:String)->(result:Bool,model:VideoModel)
     // 搜索功能
-    func getSearchData(urlStr:String,keyword:String)->[ListModel]
+    func getSearchData(pageNum:Int,keyword:String)->[ListModel]
 }

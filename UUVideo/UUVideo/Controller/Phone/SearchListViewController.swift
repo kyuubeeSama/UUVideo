@@ -22,34 +22,13 @@ class SearchListViewController: BaseViewController,JXSegmentedListContainerViewL
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        getResultList()
-    }
-    func getResultList() {
-        view.makeToastActivity(.center)
-        var urlStr = ""
-        if webType == .halihali {
-            urlStr = Halihali.init().webUrlStr+"search.php"
-        } else if webType == .laikuaibo {
-            urlStr = Laikuaibo.init().webUrlStr+"vod-search-wd-" + keyword + "-p-\(pageNum).html"
-        }else if webType == .sakura{
-            urlStr = Sakura.init().webUrlStr+"search/\(keyword)/?page=\(pageNum)"
-        }else if webType == .juzhixiao{
-            urlStr = Juzhixiao.init().webUrlStr+"search/"+keyword+"-\(pageNum).html"
-        }else if webType == .mianfei{
-            urlStr = Mianfei.init().webUrlStr+"search/-------------.html?wd=\(keyword)"
-        }else if webType == .qihaolou{
-            urlStr = Qihaolou.init().webUrlStr+"vodsearch/----------\(pageNum)---.html?wd=\(keyword)"
-        }else if webType == .SakuraYingShi{
-            urlStr = SakuraYingShi.init().webUrlStr+"search?kw=\(keyword)&page=\(pageNum-1)"
-        }else if webType == .sixMovie{
-            urlStr = SixMovie.init().webUrlStr+"vodsearch/\(keyword)----------\(pageNum)---.html"
-        }
-        getSearchData(urlStr: urlStr)
+        getSearchData()
     }
 
-    func getSearchData (urlStr:String){
+    func getSearchData (){
+        view.makeToastActivity(.center)
         DispatchQueue.global().async {
-            DataManager.init().getSearchData(urlStr: urlStr, keyword: self.keyword, website: self.webType) { (dataArr) in
+            DataManager.init().getSearchData(pageNum: self.pageNum, keyword: self.keyword, website: self.webType) { (dataArr) in
                 DispatchQueue.main.async {
                     self.view.hideToastActivity()
                     if self.webType == .halihali{
@@ -117,7 +96,7 @@ class SearchListViewController: BaseViewController,JXSegmentedListContainerViewL
             view.titleLabelString(NSAttributedString.init(string: "当前搜索无数据"))
         }
         mainCollection.es.addInfiniteScrolling {
-            self.getResultList()
+            self.getSearchData()
         }
         return mainCollection
     }()

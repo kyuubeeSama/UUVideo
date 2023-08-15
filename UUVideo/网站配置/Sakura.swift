@@ -253,7 +253,8 @@ class Sakura: WebsiteBaseModel, WebsiteProtocol {
             return (result: true, model: videoModel)
         }
     }
-    func getSearchData(urlStr: String, keyword: String) -> [ListModel] {
+    func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
+        let urlStr = webUrlStr + "search/\(keyword)/?page=\(pageNum)"
         let listModel = ListModel.init()
         listModel.title = "搜索关键字:" + keyword
         listModel.more = false

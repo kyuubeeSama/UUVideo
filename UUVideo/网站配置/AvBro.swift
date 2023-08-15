@@ -219,7 +219,8 @@ class AvBro: WebsiteBaseModel, WebsiteProtocol {
         }
     }
 
-    func getSearchData(urlStr: String, keyword: String) -> [ListModel] {
+    func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
+        let urlStr = webUrlStr + "index.php/vod/search/page/\(pageNum)/wd/\(keyword).html"
         let listModel = ListModel.init()
         listModel.title = "搜索关键字:" + keyword
         listModel.more = false

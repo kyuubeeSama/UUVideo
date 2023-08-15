@@ -244,7 +244,7 @@ class HeiHD: WebsiteBaseModel, WebsiteProtocol {
         videoModel.videoUrl = videoModel.videoUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         return (result: true, model: videoModel)
     }
-    func getSearchData(urlStr: String, keyword: String) -> [ListModel] {
+    func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
         []
     }
 }
