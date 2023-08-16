@@ -11,6 +11,7 @@ class AvMenu: WebsiteBaseModel, WebsiteProtocol {
         super.init()
         websiteName = "AVMenu"
         webUrlStr = "https://javmenu.com/zh/"
+        valueArr = ["fc2", "censored", "uncensored", "western"]
     }
 
     func getIndexData() -> [ListModel] {
@@ -53,8 +54,9 @@ class AvMenu: WebsiteBaseModel, WebsiteProtocol {
         }
         return resultArr
     }
-
-    func getVideoList(urlStr: String) -> [ListModel] {
+    func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
+        let videoType = valueArr[videoTypeIndex]
+        let urlStr = webUrlStr + "\(videoType)?sort=online&page=\(pageNum)"
         let newUrlStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let jiDoc = Ji(htmlURL: URL.init(string: newUrlStr)!)
         if jiDoc == nil {
@@ -87,8 +89,7 @@ class AvMenu: WebsiteBaseModel, WebsiteProtocol {
         }
         return [listModel]
     }
-
-    func getVideoCategory(urlStr: String) -> [CategoryListModel] {
+    func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
         []
     }
 

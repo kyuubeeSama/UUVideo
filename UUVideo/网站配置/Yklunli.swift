@@ -13,6 +13,7 @@ class Yklunli: WebsiteBaseModel,WebsiteProtocol {
         super.init()
         websiteName = "要看伦理"
         webUrlStr = "https://www.yklunli.com/"
+        valueArr = ["1", "2", "3", "4"]
     }
     
     func getIndexData() -> [ListModel] {
@@ -41,11 +42,7 @@ class Yklunli: WebsiteBaseModel,WebsiteProtocol {
                 videoModel.name = titleNodeArr![i].content!
                 videoModel.webType = websiteType.Yklunli.rawValue
                 let detailUrl: String = urlNodeArr![i].content!
-                if detailUrl.contains("http") {
-                    videoModel.detailUrl = detailUrl
-                } else {
-                    videoModel.detailUrl = webUrlStr + detailUrl
-                }
+                videoModel.detailUrl = Tool.checkUrl(urlStr: detailUrl, domainUrlStr: webUrlStr)
                 var picUrl: String = imgNodeArr![i].content!
                 if picUrl.contains("http") {
                     videoModel.picUrl = picUrl
@@ -62,7 +59,9 @@ class Yklunli: WebsiteBaseModel,WebsiteProtocol {
         return resultArr
     }
     
-    func getVideoList(urlStr: String) -> [ListModel] {
+    func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
+        let videoType = valueArr[videoTypeIndex]
+        let urlStr = webUrlStr + "list-select-id-\(videoType)-type--area--year--star--state--order-addtime-p-\(pageNum).html"
         let newUrlStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let jiDoc = Ji(htmlURL: URL.init(string: newUrlStr)!)
         if jiDoc == nil {
@@ -93,15 +92,13 @@ class Yklunli: WebsiteBaseModel,WebsiteProtocol {
                 picUrl.removeFirst()
                 videoModel.picUrl = webUrlStr + picUrl
             }
-//            videoModel.picUrl = Tool.checkUrl(urlStr: picUrl, domainUrlStr: webUrlStr)
             videoModel.type = 3
             videoModel.webType = websiteType.Yklunli.rawValue
             listModel.list.append(videoModel)
         }
         return [listModel]
     }
-    
-    func getVideoCategory(urlStr: String) -> [CategoryListModel] {
+    func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
         []
     }
     
@@ -124,33 +121,23 @@ class Yklunli: WebsiteBaseModel,WebsiteProtocol {
         }
         //        剧集
         // 获取线路
-//        let circuitNameXpath = "/html/body/div[1]/ul[1]/li/a"
-//        let circuitNodeArr = jiDoc?.xPath(circuitNameXpath)
         var circuitArr:[CircuitModel] = []
-//        if circuitNodeArr!.count > 0 {
-//            for item in 0...circuitNodeArr!.count-1 {
-                let model = CircuitModel.init()
-                model.name = "默认线路"
-//                let strArr = ["\r","\n","\t"]
-//                for str in strArr {
-//                    model.name = model.name.replacingOccurrences(of: str, with: "")
-//                }
-                let serialPathXpath = "/html/body/div[5]/div/div[1]/ul/li/a/@href"
-                let serialNameXpath = "/html/body/div[5]/div/div[1]/ul/li/a"
-                let serialTitleNodeArr = jiDoc?.xPath(serialNameXpath)
-                let serialUrlNodeArr = jiDoc?.xPath(serialPathXpath)
-                if serialUrlNodeArr!.count > 0 {
-                    for (index, item) in serialUrlNodeArr!.enumerated() {
-                        let serial = SerialModel.init()
-                        serial.name = serialTitleNodeArr![index].content!
-                        let serialDetailUrl: String = item.content!
-                        serial.detailUrl = Tool.checkUrl(urlStr: serialDetailUrl, domainUrlStr: baseUrl)
-                        model.serialArr.append(serial)
-                    }
-                }
-                circuitArr.append(model)
-//            }
-//        }
+        let model = CircuitModel.init()
+        model.name = "默认线路"
+        let serialPathXpath = "/html/body/div[5]/div/div[1]/ul/li/a/@href"
+        let serialNameXpath = "/html/body/div[5]/div/div[1]/ul/li/a"
+        let serialTitleNodeArr = jiDoc?.xPath(serialNameXpath)
+        let serialUrlNodeArr = jiDoc?.xPath(serialPathXpath)
+        if serialUrlNodeArr!.count > 0 {
+            for (index, item) in serialUrlNodeArr!.enumerated() {
+                let serial = SerialModel.init()
+                serial.name = serialTitleNodeArr![index].content!
+                let serialDetailUrl: String = item.content!
+                serial.detailUrl = Tool.checkUrl(urlStr: serialDetailUrl, domainUrlStr: baseUrl)
+                model.serialArr.append(serial)
+            }
+        }
+        circuitArr.append(model)
         videoModel.circuitArr = circuitArr
         videoModel.serialNum = videoModel.serialArr.count
         //        推荐视频

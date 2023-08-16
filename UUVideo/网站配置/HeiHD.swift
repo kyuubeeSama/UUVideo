@@ -12,6 +12,7 @@ class HeiHD: WebsiteBaseModel, WebsiteProtocol {
         super.init()
         webUrlStr = "https://www.heihd.com/"
         websiteName = "HeiHD"
+        valueArr = ["new", "hot", "like", "tags/100001"]
     }
     func getIndexData() -> [ListModel] {
         let idArr = ["new", "hot", "like", "tags/100001"]
@@ -41,17 +42,9 @@ class HeiHD: WebsiteBaseModel, WebsiteProtocol {
                         videoModel.name = titleNodeArr![i].content!
                         videoModel.webType = websiteType.HeiHD.rawValue
                         let detailUrl: String = urlNodeArr![i].content!
-                        if detailUrl.contains("http") {
-                            videoModel.detailUrl = detailUrl
-                        } else {
-                            videoModel.detailUrl = webUrlStr + detailUrl
-                        }
+                        videoModel.detailUrl = Tool.checkUrl(urlStr: detailUrl, domainUrlStr: webUrlStr)
                         var picUrl: String = imgNodeArr![i].content!
-                        if picUrl.contains("http") {
-                            videoModel.picUrl = picUrl
-                        } else {
-                            videoModel.picUrl = webUrlStr + picUrl
-                        }
+                        videoModel.detailUrl = Tool.checkUrl(urlStr: picUrl, domainUrlStr: webUrlStr)
                         videoModel.num = updateNodeArr![i].content!
                         videoModel.type = 3
                         listModel.list.append(videoModel)
@@ -62,7 +55,9 @@ class HeiHD: WebsiteBaseModel, WebsiteProtocol {
         }
         return resultArr
     }
-    func getVideoList(urlStr: String) -> [ListModel] {
+    func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
+        let videoType = valueArr[videoTypeIndex]
+        let urlStr = webUrlStr + "\(videoType)-\(pageNum).html"
         let newUrlStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let jiDoc = Ji(htmlURL: URL.init(string: newUrlStr)!)
         if jiDoc == nil {
@@ -94,46 +89,8 @@ class HeiHD: WebsiteBaseModel, WebsiteProtocol {
         }
         return [listModel]
     }
-    func getVideoCategory(urlStr: String) -> [CategoryListModel] {
-        let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
-        if jiDoc == nil {
-            return []
-        } else {
-            var listArr: [CategoryListModel] = []
-            let titleArr = ["按剧情", "按年代", "按地区"]
-            for item in 1...3 {
-                let chooseArr = ["", "", "js-tongjip "]
-                let titleXpath = "/html/body/div[2]/div[1]/div[2]/dl[\(item)]/dd/a"
-                let urlXpath = "/html/body/div[2]/div[1]/div[2]/dl[\(item)]/dd/a/@href"
-                let chooseXpath = "/html/body/div[2]/div[1]/div[2]/dl[\(item)]/dd/a[@class='\(chooseArr[item - 1])on']"
-                let titleNodeArr = jiDoc?.xPath(titleXpath)
-                let urlNodeArr = jiDoc?.xPath(urlXpath)
-                let chooseNodeArr = jiDoc?.xPath(chooseXpath)
-                let listModel = CategoryListModel.init()
-                listModel.name = titleArr[item - 1]
-                listModel.list = []
-                for (index, _) in titleNodeArr!.enumerated() {
-                    let categoryModel = CategoryModel.init()
-                    let name = titleNodeArr![index].content
-                    categoryModel.name = name!
-                    let detailUrl = urlNodeArr![index].content
-                    let detailUrlArr = detailUrl?.components(separatedBy: "/")
-                    if chooseNodeArr!.count > 0 && name == chooseNodeArr![0].content {
-                        categoryModel.ischoose = true
-                    }
-                    if item == 1 {
-                        categoryModel.value = detailUrlArr![5]
-                    } else if item == 2 {
-                        categoryModel.value = detailUrlArr![4]
-                    } else {
-                        categoryModel.value = detailUrlArr![6]
-                    }
-                    listModel.list.append(categoryModel)
-                }
-                listArr.append(listModel)
-            }
-            return listArr
-        }
+    func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
+        []
     }
     func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)

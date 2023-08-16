@@ -13,6 +13,7 @@ class CategoryChooseViewController: BaseViewController {
     var listArr: [CategoryListModel]?
     var sureBtnReturn: ((_ resultArr: [String]) -> ())?
     var type:websiteType?
+    var valueArr = ["","",""]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,17 +57,15 @@ class CategoryChooseViewController: BaseViewController {
         }
         bottomView.sureBtnBlock = {
             // 将选中的界面添加保存在数组中，并返回上一页
-            var valueArr: [String] = []
-            for listModel in self.mainCollect.listArr! {
+            for (index,listModel) in self.mainCollect.listArr!.enumerated() {
                 for categoryModel in listModel.list {
                     if categoryModel.ischoose == true {
-                        //            videoCategory videoType area
-                        valueArr.append(categoryModel.value)
+                        self.valueArr[index] = categoryModel.value
                     }
                 }
             }
             if (self.sureBtnReturn != nil) {
-                self.sureBtnReturn!(valueArr)
+                self.sureBtnReturn!(self.valueArr)
             }
         }
 

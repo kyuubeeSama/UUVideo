@@ -11,6 +11,7 @@ class Qiqi: WebsiteBaseModel, WebsiteProtocol {
         super.init()
         websiteName = "七七影视"
         webUrlStr = "https://www.qiqiyya1.com/"
+        valueArr = ["dianying","lianxuju","zongyi","dongman"]
     }
 
     func getIndexData() -> [ListModel] {
@@ -52,8 +53,9 @@ class Qiqi: WebsiteBaseModel, WebsiteProtocol {
         }
         return resultArr
     }
-
-    func getVideoList(urlStr: String) -> [ListModel] {
+    func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
+        let videoType = valueArr[videoTypeIndex]
+        let urlStr = webUrlStr + "s/\(videoType)/page/\(pageNum).html"
         let newUrlStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let jiDoc = Ji(htmlURL: URL.init(string: newUrlStr)!)
         if jiDoc == nil {
@@ -85,9 +87,8 @@ class Qiqi: WebsiteBaseModel, WebsiteProtocol {
         }
         return [listModel]
     }
-
-    func getVideoCategory(urlStr: String) -> [CategoryListModel] {
-        [];
+    func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
+        []
     }
 
     func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {

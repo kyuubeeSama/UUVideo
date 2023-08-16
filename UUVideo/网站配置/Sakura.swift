@@ -12,8 +12,9 @@ import Ji
 class Sakura: WebsiteBaseModel, WebsiteProtocol {
     required override init() {
         super.init()
-        webUrlStr = "http://www.yinghuavideo.com"
+        webUrlStr = "http://www.yinghuavideo.com/"
         websiteName = "樱花动漫"
+        valueArr = ["japan", "china", "american", "movie"]
     }
     func getIndexData() -> [ListModel] {
         let jiDoc = Ji.init(htmlURL: URL.init(string: webUrlStr)!)
@@ -39,17 +40,9 @@ class Sakura: WebsiteBaseModel, WebsiteProtocol {
                 videoModel.name = titleNodeArr![i].content!
                 videoModel.webType = websiteType.sakura.rawValue
                 let detailUrl: String = urlNodeArr![i].content!
-                if detailUrl.contains("http") {
-                    videoModel.detailUrl = detailUrl
-                } else {
-                    videoModel.detailUrl = webUrlStr + detailUrl
-                }
+                videoModel.detailUrl = Tool.checkUrl(urlStr: detailUrl, domainUrlStr: webUrlStr)
                 let picUrl: String = imgNodeArr![i].content!
-                if picUrl.contains("http") {
-                    videoModel.picUrl = picUrl
-                } else {
-                    videoModel.picUrl = webUrlStr + picUrl
-                }
+                videoModel.picUrl = Tool.checkUrl(urlStr: picUrl, domainUrlStr: webUrlStr)
                 videoModel.type = 3
                 listModel.list.append(videoModel)
             }
@@ -57,7 +50,22 @@ class Sakura: WebsiteBaseModel, WebsiteProtocol {
         }
         return resultArr
     }
-    func getVideoList(urlStr: String) -> [ListModel] {
+    func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
+        var pageInfo = ""
+        if pageNum > 1 {
+            pageInfo = "\(pageNum).html"
+        }
+        var videoType = valueArr[videoTypeIndex]
+        if !category.area.isEmpty {
+            videoType = category.area
+        }
+        if !category.year.isEmpty {
+            videoType = category.year
+        }
+        if !category.videoCategory.isEmpty {
+            videoType = category.videoCategory
+        }
+        let urlStr = webUrlStr + "\(videoType)/" + pageInfo
         let newUrlStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let jiDoc = Ji(htmlURL: URL.init(string: newUrlStr)!)
         if jiDoc == nil {
@@ -67,9 +75,13 @@ class Sakura: WebsiteBaseModel, WebsiteProtocol {
         listModel.title = ""
         listModel.more = false
         listModel.list = []
-        let titleXpath = "/html/body/div[4]/div[3]/div[1]/ul/li/h2/a/@title"
-        let urlXpath = "/html/body/div[4]/div[3]/div[1]/ul/li/h2/a/@href"
-        let imgXpath = "/html/body/div[4]/div[3]/div[1]/ul/li/a/img/@src"
+        var contentXpathStr = "/div[2]"
+        if videoTypeIndex < 3 {
+            contentXpathStr = "/div[3]/div[1]"
+        }
+        let titleXpath = "/html/body/div[4]\(contentXpathStr)/ul/li/a/img/@alt"
+        let urlXpath = "/html/body/div[4]\(contentXpathStr)/ul/li/a/@href"
+        let imgXpath = "/html/body/div[4]\(contentXpathStr)/ul/li/a/img/@src"
         let titleNodeArr = jiDoc?.xPath(titleXpath)
         let urlNodeArr = jiDoc?.xPath(urlXpath)
         let imgNodeArr = jiDoc?.xPath(imgXpath)
@@ -86,54 +98,31 @@ class Sakura: WebsiteBaseModel, WebsiteProtocol {
         }
         return [listModel]
     }
-    func getVideoCategory(urlStr: String) -> [CategoryListModel] {
-        let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
-        if jiDoc == nil {
-            return []
-        } else {
-            var listArr: [CategoryListModel] = []
-            // 地区
-            let areaNodeArr = jiDoc?.xPath("/html/body/div[1]/dl/dd[2]/div/div/a")
-            let areaChooseNodeArr = jiDoc?.xPath("/html/body/div[1]/dl/dd[2]/div/div/a[@class='btn-success']")
-            let areaListModel = CategoryListModel.init()
-            areaListModel.name = "地区"
-            areaListModel.list = []
-            // 将具体的分类编入数组
-            for (index, _) in areaNodeArr!.enumerated() {
-                let categoryModel = CategoryModel.init()
-                let name = areaNodeArr![index].content
-                categoryModel.name = name!
-                // 获取当前选中的分类
-                for chooseNode in areaChooseNodeArr! {
-                    if name == chooseNode.content {
-                        categoryModel.ischoose = true
-                    }
-                }
-                areaListModel.list.append(categoryModel)
+    func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
+        let titleArr = ["年代","地区","类型"]
+        let valueArr = [
+            ["2021","2020","2019","2018","2017","2016","2015","2014","2013","2012"],
+            ["japan","china","american","england","korea"],
+            ["66","64","91","70","67","111","83","81","75","74","84","73","72","102","61","69","62","103","85","99","80","119"]
+        ]
+        let nameArr = [
+            ["2021","2020","2019","2018","2017","2016","2015","2014","2013","2012"],
+            ["日本","大陆","美国","英国","韩国"],
+            ["热血","格斗","恋爱","校园","搞笑","萝莉","神魔","机战","科幻","真人","青春","魔法","美少女","神话","冒险","运动","竞技","童话","励志","后宫","战争","吸血鬼"]
+        ]
+        var resultArr:[CategoryListModel] = []
+        for (i,item) in nameArr.enumerated() {
+            let listModel = CategoryListModel.init()
+            for (index,_) in item.enumerated() {
+                let model = CategoryModel.init()
+                model.name = nameArr[i][index]
+                model.value = valueArr[i][index]
+                listModel.list.append(model)
             }
-            listArr.append(areaListModel)
-            // 排序
-            let orderNodeArr = jiDoc?.xPath("/html/body/div[1]/div[3]/div/a")
-            let orderChooseNodeArr = jiDoc?.xPath("/html/body/div[1]/div[3]/div/a[@class='btn-success']")
-            let orderListModel = CategoryListModel.init()
-            orderListModel.name = "排序"
-            orderListModel.list = []
-            // 将具体的分类编入数组
-            for (index, _) in orderNodeArr!.enumerated() {
-                let categoryModel = CategoryModel.init()
-                let name = orderNodeArr![index].content
-                categoryModel.name = name!
-                // 获取当前选中的分类
-                for chooseNode in orderChooseNodeArr! {
-                    if name == chooseNode.content {
-                        categoryModel.ischoose = true
-                    }
-                }
-                orderListModel.list.append(categoryModel)
-            }
-            listArr.append(orderListModel)
-            return listArr
+            listModel.name = titleArr[i]
+            resultArr.append(listModel)
         }
+        return resultArr
     }
     func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)

@@ -85,46 +85,46 @@ class DataManager: NSObject {
     ///   - success: 成功
     ///   - failure: 失败
     /// - Returns: nil
-    func getVideoListData(urlStr: String, type: websiteType, success: @escaping (_ listData: [ListModel],_ allPageNum:NSInteger) -> (), failure: @escaping (_ error: Error) -> ()) {
+    func getVideoListData(videoTypeIndex:Int, category:(area:String, year:String, videoCategory:String), type: websiteType, pageNum:Int, success: @escaping (_ listData: [ListModel]) -> (), failure: @escaping (_ error: Error) -> ()) {
         var array:[ListModel] = []
         switch type{
         case .halihali:
-            array = Halihali.init().getVideoList(urlStr: urlStr)
+            array = Halihali.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .laikuaibo:
-            array = Laikuaibo.init().getVideoList(urlStr: urlStr)
+            array = Laikuaibo.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .sakura:
-            array = Sakura.init().getVideoList(urlStr: urlStr)
+            array = Sakura.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .juzhixiao:
-            array = Juzhixiao.init().getVideoList(urlStr: urlStr)
+            array = Juzhixiao.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .mianfei:
-            array = Mianfei.init().getVideoList(urlStr: urlStr)
+            array = Mianfei.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .qihaolou:
-            array = Qihaolou.init().getVideoList(urlStr: urlStr)
+            array = Qihaolou.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .SakuraYingShi:
-            array = SakuraYingShi.init().getVideoList(urlStr: urlStr)
+            array = SakuraYingShi.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .Yklunli:
-            array = Yklunli.init().getVideoList(urlStr: urlStr)
+            array = Yklunli.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .sixMovie:
-            array = SixMovie.init().getVideoList(urlStr: urlStr)
+            array = SixMovie.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .lawyering:
-            array = Lawyering.init().getVideoList(urlStr: urlStr)
+            array = Lawyering.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .sese:
-            array = SeSe.init().getVideoList(urlStr: urlStr)
+            array = SeSe.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .thotsflix:
-            array = Thotsflix.init().getVideoList(urlStr: urlStr)
+            array = Thotsflix.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .HeiHD:
-            array = HeiHD.init().getVideoList(urlStr: urlStr)
+            array = HeiHD.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .avbro:
-            array = AvBro.init().getVideoList(urlStr: urlStr)
+            array = AvBro.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .qiqi:
-            array = Qiqi.init().getVideoList(urlStr: urlStr)
+            array = Qiqi.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .avmenu:
-            array = AvMenu.init().getVideoList(urlStr: urlStr)
+            array = AvMenu.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
         }else{
-            success(array,0)
+            success(array)
         }
     }
 
@@ -135,41 +135,41 @@ class DataManager: NSObject {
     ///   - success: 成功返回
     ///   - failure: 失败返回
     /// - Returns: 空
-    func getWebsiteCategoryData(urlStr: String, type: websiteType, success: @escaping (_ listData: [CategoryListModel]) -> (), failure: @escaping (_ error: Error) -> ()) {
+    func getWebsiteCategoryData(videoTypeIndex:Int, type: websiteType, success: @escaping (_ listData: [CategoryListModel]) -> (), failure: @escaping (_ error: Error) -> ()) {
         var array:[CategoryListModel] = []
         switch type{
         case .halihali:
-            array = Halihali.init().getVideoCategory(urlStr: urlStr)
+            array = Halihali.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         case .laikuaibo:
-            array = []
+            array = Laikuaibo.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         case .sakura:
-            array = Sakura.init().getVideoCategory(urlStr: urlStr)
+            array = Sakura.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         case .juzhixiao:
-            array = Juzhixiao.init().getVideoCategory(urlStr: urlStr)
+            array = Juzhixiao.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         case .mianfei:
-            array = Mianfei.init().getVideoCategory(urlStr: urlStr)
+            array = Mianfei.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         case .qihaolou:
-            array = Qihaolou.init().getVideoCategory(urlStr: urlStr)
+            array = Qihaolou.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         case .SakuraYingShi:
-            array = SakuraYingShi.init().getVideoCategory(urlStr: urlStr)
+            array = SakuraYingShi.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         case .Yklunli:
-            array = Yklunli.init().getVideoCategory(urlStr: urlStr)
+            array = Yklunli.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         case .sixMovie:
-            array = SixMovie.init().getVideoCategory(urlStr: urlStr)
+            array = SixMovie.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         case .lawyering:
-            array = Lawyering.init().getVideoCategory(urlStr: urlStr)
+            array = Lawyering.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         case .sese:
-            array = SeSe.init().getVideoCategory(urlStr: urlStr)
+            array = SeSe.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         case .thotsflix:
-            array = Thotsflix.init().getVideoCategory(urlStr: urlStr)
+            array = Thotsflix.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         case .HeiHD:
-            array = HeiHD.init().getVideoCategory(urlStr: urlStr)
+            array = HeiHD.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         case .avbro:
-            array = AvBro.init().getVideoCategory(urlStr: urlStr)
+            array = AvBro.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         case .qiqi:
-            array = Qiqi.init().getVideoCategory(urlStr: urlStr)
+            array = Qiqi.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         case .avmenu:
-            array = AvMenu.init().getVideoCategory(urlStr: urlStr)
+            array = AvMenu.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)

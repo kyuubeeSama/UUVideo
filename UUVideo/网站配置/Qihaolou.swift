@@ -14,6 +14,7 @@ class Qihaolou: WebsiteBaseModel, WebsiteProtocol {
         super.init()
         webUrlStr = "https://qhlou.com/"
         websiteName = "七号楼"
+        valueArr = ["dianying", "lianxuju", "zongyi", "dongman"]
     }
     func getIndexData() -> [ListModel] {
         let jiDoc = Ji.init(htmlURL: URL.init(string: webUrlStr)!)
@@ -41,17 +42,9 @@ class Qihaolou: WebsiteBaseModel, WebsiteProtocol {
                 videoModel.name = titleNodeArr![i].content!
                 videoModel.webType = websiteType.qihaolou.rawValue
                 let detailUrl: String = urlNodeArr![i].content!
-                if detailUrl.contains("http") {
-                    videoModel.detailUrl = detailUrl
-                } else {
-                    videoModel.detailUrl = webUrlStr + detailUrl
-                }
+                videoModel.detailUrl = Tool.checkUrl(urlStr: detailUrl, domainUrlStr: webUrlStr)
                 let picUrl: String = imgNodeArr![i].content!
-                if picUrl.contains("http") {
-                    videoModel.picUrl = picUrl
-                } else {
-                    videoModel.picUrl = webUrlStr + picUrl
-                }
+                videoModel.picUrl = Tool.checkUrl(urlStr: picUrl, domainUrlStr: webUrlStr)
                 videoModel.num = updateNodeArr![i].content!
                 videoModel.type = 3
                 listModel.list.append(videoModel)
@@ -60,7 +53,14 @@ class Qihaolou: WebsiteBaseModel, WebsiteProtocol {
         }
         return resultArr
     }
-    func getVideoList(urlStr: String) -> [ListModel] {
+    func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
+        let videoType = valueArr[videoTypeIndex]
+        var urlStr = ""
+        if category.area.isEmpty && category.videoCategory.isEmpty && category.year.isEmpty {
+            urlStr = webUrlStr + "vodshow/\(videoType)--------\(pageNum)---.html"
+        } else {
+            urlStr = webUrlStr + "vodshow/\(category.videoCategory)-\(category.area)-------\(pageNum)---\(category.year).html"
+        }
         let newUrlStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let jiDoc = Ji(htmlURL: URL.init(string: newUrlStr)!)
         if jiDoc == nil {
@@ -92,7 +92,9 @@ class Qihaolou: WebsiteBaseModel, WebsiteProtocol {
         }
         return [listModel]
     }
-    func getVideoCategory(urlStr: String) -> [CategoryListModel] {
+    func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
+        let videoType = valueArr[videoTypeIndex]
+        let urlStr = webUrlStr + "vodtype/\(videoType).html"
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return []

@@ -15,6 +15,8 @@ class WebsiteBaseModel: NSObject {
     public var websiteName = ""
     // 首页类型
     public var categoryDic: [String: String] = [:]
+    // 首页类型对应的值
+    public var valueArr:[String] = []
 }
 // 站点需要实现的方法
 protocol WebsiteProtocol {
@@ -22,10 +24,10 @@ protocol WebsiteProtocol {
     func getIndexData()->[ListModel]
 
     // 获取视频列表
-    func getVideoList(urlStr:String)->[ListModel]
+    func getVideoList(videoTypeIndex:Int, category:(area:String, year:String, videoCategory:String), pageNum:Int)->[ListModel]
 
     // 获取视频分类
-    func getVideoCategory(urlStr: String)->[CategoryListModel]
+    func getVideoCategory(videoTypeIndex:Int)->[CategoryListModel]
 
     // 获取视频详情
     func getVideoDetail(urlStr: String)->(result:Bool,model:VideoModel)

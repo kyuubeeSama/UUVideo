@@ -16,6 +16,7 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
         super.init()
         webUrlStr = "http://halihali14.com/"
         websiteName = "哈哩哈哩"
+        valueArr = [ "acg", "tv", "mov", "zongyi"]
     }
     func getIndexData() -> [ListModel] {
         let jiDoc = Ji.init(htmlURL: URL.init(string: webUrlStr)!)
@@ -43,17 +44,9 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
                 videoModel.name = titleNodeArr![i].content!
                 videoModel.webType = websiteType.halihali.rawValue
                 let detailUrl: String = urlNodeArr![i].content!
-                if detailUrl.contains("http") {
-                    videoModel.detailUrl = detailUrl
-                } else {
-                    videoModel.detailUrl = webUrlStr + detailUrl
-                }
+                videoModel.detailUrl = Tool.checkUrl(urlStr: detailUrl, domainUrlStr: webUrlStr)
                 let picUrl: String = imgNodeArr![i].content!
-                if picUrl.contains("http") {
-                    videoModel.picUrl = picUrl
-                } else {
-                    videoModel.picUrl = webUrlStr + picUrl
-                }
+                videoModel.picUrl = Tool.checkUrl(urlStr: picUrl, domainUrlStr: webUrlStr)
                 videoModel.num = updateNodeArr![i].content!
                 videoModel.type = 3
                 listModel.list.append(videoModel)
@@ -62,7 +55,21 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
         }
         return resultArr
     }
-    func getVideoList(urlStr: String) -> [ListModel] {
+    func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
+        let videoType = valueArr[videoTypeIndex]
+        var area = ""
+        if !category.area.isEmpty {
+            area = category.area
+        }
+        var year = "0"
+        if !category.year.isEmpty {
+            year = category.year
+        }
+        var videoCategory = "0"
+        if !category.videoCategory.isEmpty {
+            videoCategory = category.videoCategory
+        }
+        let urlStr = "http://121.4.190.96:9991/getsortdata_all_z.php?action=\(videoType)&page=\(pageNum)&year=\(year)&area=\(area)&class=\(videoCategory)&dect=&id="
         let newUrlStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let jiDoc = Ji(htmlURL: URL.init(string: newUrlStr)!)
         if jiDoc == nil {
@@ -94,7 +101,9 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
         }
         return [listModel]
     }
-    func getVideoCategory(urlStr: String) -> [CategoryListModel] {
+    func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
+        let videoType = valueArr[videoTypeIndex]
+        let urlStr = webUrlStr + "\(videoType)/0/0/all/1.html"
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return []
@@ -102,13 +111,10 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
             var listArr: [CategoryListModel] = []
             let titleArr = ["按剧情", "按年代", "按地区"]
             for item in 1...3 {
-                let chooseArr = ["", "", "js-tongjip "]
                 let titleXpath = "/html/body/div[2]/div[1]/div[2]/dl[\(item)]/dd/a"
                 let urlXpath = "/html/body/div[2]/div[1]/div[2]/dl[\(item)]/dd/a/@href"
-                let chooseXpath = "/html/body/div[2]/div[1]/div[2]/dl[\(item)]/dd/a[@class='\(chooseArr[item - 1])on']"
                 let titleNodeArr = jiDoc?.xPath(titleXpath)
                 let urlNodeArr = jiDoc?.xPath(urlXpath)
-                let chooseNodeArr = jiDoc?.xPath(chooseXpath)
                 let listModel = CategoryListModel.init()
                 listModel.name = titleArr[item - 1]
                 listModel.list = []
@@ -118,9 +124,6 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
                     categoryModel.name = name!
                     let detailUrl = urlNodeArr![index].content
                     let detailUrlArr = detailUrl?.components(separatedBy: "/")
-                    if chooseNodeArr!.count > 0 && name == chooseNodeArr![0].content {
-                        categoryModel.ischoose = true
-                    }
                     if item == 1 {
                         categoryModel.value = detailUrlArr![5]
                     } else if item == 2 {
@@ -185,7 +188,7 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
                 jsContent = String.init(data: data, encoding: .utf8)!
                 let valueArr = jsContent.split(separator: ";")
                 let baseUrl = Tool.getRegularData(regularExpress: "((http://)|(https://))[^\\.]*\\.(?<domain>[^/|?]*)", content: urlStr)[0]
-                let detailUrlStr = urlStr.replacingOccurrences(of: baseUrl, with: "") as! String
+                let detailUrlStr = urlStr.replacingOccurrences(of: baseUrl, with: "") 
                 var circuitArr:[CircuitModel] = []
                 for item in playarrNameArr {
                     let jsNameStr = item.jsvalue.isEmpty ? "lianzaijs" : "lianzaijs_\(item.jsvalue)"

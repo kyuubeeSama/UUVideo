@@ -13,6 +13,7 @@ class Lawyering: WebsiteBaseModel,WebsiteProtocol {
         super.init()
         websiteName = "老野人"
         webUrlStr = "http://china-lawyering.com/"
+        valueArr = ["1", "2", "3", "4", "5", "6", "7", "8"]
     }
     
     func getIndexData() -> [ListModel] {
@@ -64,8 +65,9 @@ class Lawyering: WebsiteBaseModel,WebsiteProtocol {
         }
         return resultArr
     }
-    
-    func getVideoList(urlStr: String) -> [ListModel] {
+    func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
+        let videoType = valueArr[videoTypeIndex]
+        let urlStr = webUrlStr + "index.php/vod/type/id/\(videoType)/page/\(pageNum).html"
         let newUrlStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let jiDoc = Ji(htmlURL: URL.init(string: newUrlStr)!)
         if jiDoc == nil {
@@ -97,50 +99,8 @@ class Lawyering: WebsiteBaseModel,WebsiteProtocol {
         }
         return [listModel]
     }
-    
-    func getVideoCategory(urlStr: String) -> [CategoryListModel] {
-        let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
-        if jiDoc == nil {
-            return []
-        } else {
-            var listArr: [CategoryListModel] = []
-            let titleArr = ["地区", "年代", "类型"]
-            let urlStr = "https://www.yhvod.org/dydysf/yh_js/labs_s.js"
-            let data = NSData.init(contentsOf: URL.init(string: urlStr)!)
-            let htmlStr = String.init(data: data! as Data, encoding: .utf8)
-            var strArr:[Substring] = (htmlStr?.split(separator: ";"))!
-            strArr.removeFirst()
-            strArr.removeLast()
-            for (index,item) in strArr.enumerated() {
-                let listModel = CategoryListModel.init()
-                listModel.name = titleArr[index]
-                listModel.list = []
-                let itemArr = item.split(separator: "=")
-                if itemArr.count > 1{
-                    var string = String(itemArr[1])
-                    string = string.replacingOccurrences(of: "[", with: "")
-                    string = string.replacingOccurrences(of: "]", with: "")
-                    string = string.replacingOccurrences(of: "\"", with: "")
-                    var strArr:[Substring] = string.split(separator: ",")
-                    strArr.removeFirst()
-                    strArr.removeFirst()
-                    for (i,item1) in strArr.enumerated() {
-                        let item1Str = String(item1)
-                        let categoryModel = CategoryModel.init()
-                        categoryModel.name = item1Str
-                        if i == 0 {
-                            categoryModel.ischoose = true
-                        }else{
-                            categoryModel.ischoose = false
-                            categoryModel.value = item1Str
-                        }
-                        listModel.list.append(categoryModel)
-                    }
-                    listArr.append(listModel)
-                }
-            }
-            return listArr
-        }
+    func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
+        []
     }
     
     func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {

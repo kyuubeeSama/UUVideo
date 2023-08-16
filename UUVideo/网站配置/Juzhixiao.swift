@@ -14,6 +14,7 @@ class Juzhixiao: WebsiteBaseModel, WebsiteProtocol {
         super.init()
         webUrlStr = "https://www.xdwdn.com/"
         websiteName = "剧知晓"
+        valueArr = ["2", "1", "4", "3"]
     }
     func getIndexData() -> [ListModel] {
         var jiDoc = Ji.init(htmlURL: URL.init(string: webUrlStr)!)
@@ -54,17 +55,9 @@ class Juzhixiao: WebsiteBaseModel, WebsiteProtocol {
                 videoModel.name = titleNodeArr![i].content!
                 videoModel.webType = websiteType.juzhixiao.rawValue
                 let detailUrl: String = urlNodeArr![i].content!
-                if detailUrl.contains("http") {
-                    videoModel.detailUrl = detailUrl
-                } else {
-                    videoModel.detailUrl = webUrlStr + detailUrl
-                }
+                videoModel.detailUrl = Tool.checkUrl(urlStr: detailUrl, domainUrlStr: webUrlStr)
                 let picUrl: String = imgNodeArr![i].content!
-                if picUrl.contains("http") {
-                    videoModel.picUrl = picUrl
-                } else {
-                    videoModel.picUrl = webUrlStr + picUrl
-                }
+                videoModel.picUrl = Tool.checkUrl(urlStr: picUrl, domainUrlStr: webUrlStr)
                 videoModel.num = updateNodeArr![i].content!
                 videoModel.type = 3
                 listModel.list.append(videoModel)
@@ -73,7 +66,9 @@ class Juzhixiao: WebsiteBaseModel, WebsiteProtocol {
         }
         return resultArr
     }
-    func getVideoList(urlStr: String) -> [ListModel] {
+    func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
+        let videoType = valueArr[videoTypeIndex]
+        let urlStr = webUrlStr + "index.php?s=home-vod-type-id-\(videoType)-\(category.videoCategory)--\(category.area)--\(category.year)--letter--order--picm-1-p-\(pageNum)"
         let newUrlStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let jiDoc = Ji(htmlURL: URL.init(string: newUrlStr)!)
         if jiDoc == nil {
@@ -105,7 +100,9 @@ class Juzhixiao: WebsiteBaseModel, WebsiteProtocol {
         }
         return [listModel]
     }
-    func getVideoCategory(urlStr: String) -> [CategoryListModel] {
+    func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
+        let videoType = valueArr[videoTypeIndex]
+        let urlStr = webUrlStr + "index.php?s=home-vod-type-id-\(videoType)-mcid--area--year--letter--order--picm-1-p-1"
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return []

@@ -14,6 +14,7 @@ class Mianfei: WebsiteBaseModel,WebsiteProtocol {
         super.init()
         webUrlStr = "http://ylsm5.com/"
         websiteName = "免费电影"
+        valueArr = ["dy", "tv", "zy", "dm"]
     }
     
     func getIndexData() -> [ListModel] {
@@ -42,17 +43,9 @@ class Mianfei: WebsiteBaseModel,WebsiteProtocol {
                 videoModel.name = titleNodeArr![i].content!
                 videoModel.webType = websiteType.mianfei.rawValue
                 let detailUrl: String = urlNodeArr![i].content!
-                if detailUrl.contains("http") {
-                    videoModel.detailUrl = detailUrl
-                } else {
-                    videoModel.detailUrl = webUrlStr + detailUrl
-                }
+                videoModel.detailUrl = Tool.checkUrl(urlStr: detailUrl, domainUrlStr: webUrlStr)
                 let picUrl: String = imgNodeArr![i].content!
-                if picUrl.contains("http") {
-                    videoModel.picUrl = picUrl
-                } else {
-                    videoModel.picUrl = webUrlStr + picUrl
-                }
+                videoModel.picUrl = Tool.checkUrl(urlStr: picUrl, domainUrlStr: webUrlStr)
                 videoModel.num = updateNodeArr![i].content!
                 videoModel.type = 3
                 listModel.list.append(videoModel)
@@ -62,7 +55,12 @@ class Mianfei: WebsiteBaseModel,WebsiteProtocol {
         return resultArr
     }
     
-    func getVideoList(urlStr: String) -> [ListModel] {
+    func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
+        let videoType = valueArr[videoTypeIndex]
+        var urlStr = webUrlStr + videoType + "/"
+        if pageNum > 1 {
+            urlStr += "/index_\(pageNum).html"
+        }
         let newUrlStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let jiDoc = Ji(htmlURL: URL.init(string: newUrlStr)!)
         if jiDoc == nil {
@@ -94,8 +92,9 @@ class Mianfei: WebsiteBaseModel,WebsiteProtocol {
         }
         return [listModel]
     }
-    
-    func getVideoCategory(urlStr: String) -> [CategoryListModel] {
+    func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
+        let videoType = valueArr[videoTypeIndex]
+        let urlStr = webUrlStr + "/\(videoType)/"
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return []
