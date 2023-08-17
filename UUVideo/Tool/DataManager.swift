@@ -70,6 +70,8 @@ class DataManager: NSObject {
                 array = Qiqi.init().getIndexData()
             case .avmenu:
                 array = AvMenu.init().getIndexData()
+            case .kanying:
+                array = KanYing.init().getIndexData()
             }
             if array.isEmpty {
                 failure(XPathError.getContentFail)
@@ -120,6 +122,8 @@ class DataManager: NSObject {
             array = Qiqi.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .avmenu:
             array = AvMenu.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
+        case .kanying:
+            array = KanYing.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -170,6 +174,8 @@ class DataManager: NSObject {
             array = Qiqi.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         case .avmenu:
             array = AvMenu.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
+        case .kanying:
+            array = KanYing.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -220,6 +226,8 @@ class DataManager: NSObject {
             result = Qiqi.init().getVideoDetail(urlStr: urlStr)
         case .avmenu:
             result = AvMenu.init().getVideoDetail(urlStr: urlStr)
+        case .kanying:
+            result = KanYing.init().getVideoDetail(urlStr: urlStr)
         }
         if result.result == false {
             failure(XPathError.getContentFail)
@@ -264,6 +272,8 @@ class DataManager: NSObject {
             array = Qiqi.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .avmenu:
             array = AvMenu.init().getSearchData(pageNum: pageNum, keyword: keyword)
+        case .kanying:
+            array = KanYing.init().getSearchData(pageNum: pageNum, keyword: keyword)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -308,6 +318,8 @@ class DataManager: NSObject {
             result = Qiqi.init().getVideoPlayerDetail(urlStr: urlStr)
         case .avmenu:
             result = AvMenu.init().getVideoPlayerDetail(urlStr: urlStr)
+        case .kanying:
+            result = KanYing.init().getVideoPlayerDetail(urlStr: urlStr)
         }
         if result.result == false {
             failure(XPathError.getContentFail)

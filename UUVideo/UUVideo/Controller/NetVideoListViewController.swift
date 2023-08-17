@@ -39,7 +39,7 @@ class NetVideoListViewController: BaseViewController {
             videoCategory = "0"
             year = "0"
         }
-        if webType == .halihali || webType == .juzhixiao || webType == .qihaolou || webType == .SakuraYingShi || webType == .sakura {
+        if webType == .halihali || webType == .juzhixiao || webType == .qihaolou || webType == .SakuraYingShi || webType == .sakura || webType == .kanying{
             if webType == .juzhixiao {
                 videoCategory = "mcid-0"
                 year = "year-0"
@@ -75,7 +75,6 @@ class NetVideoListViewController: BaseViewController {
 
     // 右键筛选
     @objc func rightBtnClick() {
-//        HaliTVCategoryView
         if categoryListArr.count > 0 {
             // 滑出筛选界面
             let VC = CategoryChooseViewController.init()
@@ -97,26 +96,21 @@ class NetVideoListViewController: BaseViewController {
                     view.window?.wb_dismissPopView(popStyle: .center, completion: {})
                 }
                 if webType == .sakura {
-//                    videoType = resultArr[0]
-                    year = resultArr[0]
                     area = resultArr[1]
+                    year = resultArr[0]
                     videoCategory = resultArr[2]
                 } else if webType == .halihali {
-                    videoCategory = resultArr[0]
-                    year = resultArr[1]
                     area = resultArr[2]
+                    year = resultArr[1]
+                    videoCategory = resultArr[0]
                 } else if webType == .juzhixiao {
-                    videoCategory = resultArr[1]
-                    year = resultArr[2]
                     area = resultArr[0]
-                } else if webType == .mianfei {
-                    videoCategory = resultArr[0]
                     year = resultArr[2]
-                    area = resultArr[1]
-                } else if webType == .qihaolou {
-                    videoCategory = resultArr[0]
+                    videoCategory = resultArr[1]
+                } else if webType == .mianfei || webType == .qihaolou || webType == .kanying{
                     area = resultArr[1]
                     year = resultArr[2]
+                    videoCategory = resultArr[0]
                 } else if webType == .SakuraYingShi {
                     area = resultArr[0]
                     year = resultArr[1]
@@ -171,11 +165,15 @@ class NetVideoListViewController: BaseViewController {
 
 //     获取分类信息
     func getCategoryData() {
-        DataManager.init().getWebsiteCategoryData(videoTypeIndex: self.videoCategoryIndex, type: webType) { (dataArr) in
-            self.categoryListArr = dataArr
-        } failure: { (error) in
-            print(error)
-            self.view.makeToast("获取分类失败")
+        DispatchQueue.global().async {
+            DataManager.init().getWebsiteCategoryData(videoTypeIndex: self.videoCategoryIndex, type: self.webType) { (dataArr) in
+                DispatchQueue.main.async {
+                    self.categoryListArr = dataArr
+                }
+            } failure: { (error) in
+                print(error)
+                self.view.makeToast("获取分类失败")
+            }
         }
     }
 
