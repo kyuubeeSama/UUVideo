@@ -22,7 +22,7 @@ struct VideoModel:HandyJSON {
     var pic:UIImage = UIImage.init()
     // 本地相册文件
     var asset:PHAsset = PHAsset.init()
-    // 视频线上地址
+    /// 视频线上播放地址
     var videoUrl:String = ""
     // 线上详情地址
     var detailUrl:String = ""

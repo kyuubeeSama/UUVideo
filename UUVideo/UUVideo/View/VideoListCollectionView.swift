@@ -49,14 +49,7 @@ class VideoListCollectionView: UICollectionView, UICollectionViewDelegate, UICol
         if model.type == 4 || model.type == 5 {
             // 番剧类似tableview的样式
             let cell: VideoTableCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "tableCell", for: indexPath) as! VideoTableCollectionViewCell
-            cell.titleLab.text = model.name
-            cell.titleLab.alignTop()
-            cell.leftImg.kf.setImage(with: URL.init(string: model.picUrl), placeholder: UIImage.init(named: "placeholder.jpg"), options: nil, completionHandler: nil)
-            if model.type == 5 {
-                cell.numLab.text = "播放到：\(model.serialName as String)"
-            } else {
-                cell.numLab.text = model.num
-            }
+            cell.model = model
             if is_collect {
                 let longTap = UILongPressGestureRecognizer.init()
                 cell.addGestureRecognizer(longTap)
@@ -71,18 +64,7 @@ class VideoListCollectionView: UICollectionView, UICollectionViewDelegate, UICol
         } else {
             // 本地和相册,线上模式
             let cell: VideoListCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! VideoListCollectionViewCell
-            cell.titleLab.text = model.name
-            if model.type == 3 {
-                print(model.picUrl)
-                let modifier = AnyModifier { request in
-                    var r = request
-                    r.setValue(urlArr[model.webType], forHTTPHeaderField: "Referer")
-                    return r
-                }
-                cell.picImage.kf.setImage(with: URL.init(string: model.picUrl), options: [.requestModifier(modifier)], completionHandler: nil)
-            } else {
-                cell.picImage.image = model.pic
-            }
+            cell.model = model
             return cell
         }
     }

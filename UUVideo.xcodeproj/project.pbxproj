@@ -59,6 +59,7 @@
 		A960D89A272FBCD500B7C0BC /* DownloadTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A960D898272FBCD500B7C0BC /* DownloadTableViewCell.xib */; };
 		A9621AB129861365006983A2 /* SearchIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621AB029861364006983A2 /* SearchIndexViewController.swift */; };
 		A9621AB3298614A2006983A2 /* SearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9621AB2298614A2006983A2 /* SearchListViewController.swift */; };
+		A96D526F2A8F3BFF00A63983 /* UnKnownSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96D526E2A8F3BFF00A63983 /* UnKnownSide.swift */; };
 		A9771B8C296D0AF1004F317B /* CircuitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9771B8B296D0AF1004F317B /* CircuitModel.swift */; };
 		A97CFDA426D5E65700CC72B4 /* WBPopCoverBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97CFDA326D5E65700CC72B4 /* WBPopCoverBackgroundView.swift */; };
 		A97F52032537EC93008B872A /* CategoryChooseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97F52022537EC93008B872A /* CategoryChooseViewController.swift */; };
@@ -161,6 +162,7 @@
 		A960D898272FBCD500B7C0BC /* DownloadTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DownloadTableViewCell.xib; sourceTree = "<group>"; };
 		A9621AB029861364006983A2 /* SearchIndexViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIndexViewController.swift; sourceTree = "<group>"; };
 		A9621AB2298614A2006983A2 /* SearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewController.swift; sourceTree = "<group>"; };
+		A96D526E2A8F3BFF00A63983 /* UnKnownSide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnKnownSide.swift; sourceTree = "<group>"; };
 		A9771B8B296D0AF1004F317B /* CircuitModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircuitModel.swift; sourceTree = "<group>"; };
 		A97CFDA326D5E65700CC72B4 /* WBPopCoverBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBPopCoverBackgroundView.swift; sourceTree = "<group>"; };
 		A97F52022537EC93008B872A /* CategoryChooseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryChooseViewController.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				F15C917B31A4495CA564B2CB /* Qiqi.swift */,
 				F15C95933E90D933D09DCC96 /* AvMenu.swift */,
 				A9D240B32A8DA63C00904750 /* KanYing.swift */,
+				A96D526E2A8F3BFF00A63983 /* UnKnownSide.swift */,
 			);
 			path = "网站配置";
 			sourceTree = "<group>";
@@ -667,6 +670,7 @@
 				144DFD4871DD0F3EE223D4B1 /* WebsiteBaseModel.swift in Sources */,
 				144DFC7785BA981A298D4B2B /* Halihali.swift in Sources */,
 				144DF2DFA22E2DCF380E9066 /* IndexModel.swift in Sources */,
+				A96D526F2A8F3BFF00A63983 /* UnKnownSide.swift in Sources */,
 				144DFBE0637E9A23BD770FE0 /* HeiHD.swift in Sources */,
 				F15C9F32BAF76328ADB66FD0 /* AvBro.swift in Sources */,
 				F15C9188B067402F66F3C66C /* Qiqi.swift in Sources */,

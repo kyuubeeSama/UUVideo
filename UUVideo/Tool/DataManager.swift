@@ -72,6 +72,8 @@ class DataManager: NSObject {
                 array = AvMenu.init().getIndexData()
             case .kanying:
                 array = KanYing.init().getIndexData()
+            case .unknownside:
+                array = UnKnownSide.init().getIndexData()
             }
             if array.isEmpty {
                 failure(XPathError.getContentFail)
@@ -124,6 +126,8 @@ class DataManager: NSObject {
             array = AvMenu.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .kanying:
             array = KanYing.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
+        case .unknownside:
+            array = UnKnownSide.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -176,6 +180,8 @@ class DataManager: NSObject {
             array = AvMenu.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         case .kanying:
             array = KanYing.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
+        case .unknownside:
+            array = UnKnownSide.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -228,6 +234,8 @@ class DataManager: NSObject {
             result = AvMenu.init().getVideoDetail(urlStr: urlStr)
         case .kanying:
             result = KanYing.init().getVideoDetail(urlStr: urlStr)
+        case .unknownside:
+            result = UnKnownSide.init().getVideoDetail(urlStr: urlStr)
         }
         if result.result == false {
             failure(XPathError.getContentFail)
@@ -274,6 +282,8 @@ class DataManager: NSObject {
             array = AvMenu.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .kanying:
             array = KanYing.init().getSearchData(pageNum: pageNum, keyword: keyword)
+        case .unknownside:
+            array = UnKnownSide.init().getSearchData(pageNum: pageNum, keyword: keyword)
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -320,6 +330,8 @@ class DataManager: NSObject {
             result = AvMenu.init().getVideoPlayerDetail(urlStr: urlStr)
         case .kanying:
             result = KanYing.init().getVideoPlayerDetail(urlStr: urlStr)
+        case .unknownside:
+            result = UnKnownSide.init().getVideoPlayerDetail(urlStr: urlStr)
         }
         if result.result == false {
             failure(XPathError.getContentFail)

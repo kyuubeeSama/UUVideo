@@ -7,12 +7,27 @@
 //
 
 import UIKit
-
+import Kingfisher
 class VideoListCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var picImage: UIImageView!
     @IBOutlet weak var titleLab: UILabel!
-
+    public var model:VideoModel = VideoModel.init(){
+        didSet{
+            titleLab.text = model.name.deleteOtherChar()
+            if model.type == 3 {
+                print(model.picUrl)
+                let modifier = AnyModifier { request in
+                    var r = request
+                    r.setValue(urlArr[self.model.webType], forHTTPHeaderField: "Referer")
+                    return r
+                }
+                picImage.kf.setImage(with: URL.init(string: model.picUrl), options: [.requestModifier(modifier)], completionHandler: nil)
+            } else {
+                picImage.image = model.pic
+            }
+        }
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

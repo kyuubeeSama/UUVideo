@@ -77,5 +77,11 @@ extension String {
         }
         return returnStr.replacingOccurrences(of: "\\r\\n", with: "\n")
     }
-    
+    func deleteOtherChar()->String{
+        var string = self.replacingOccurrences(of: " ", with: "")
+        string = string.replacingOccurrences(of: "\n", with: "")
+        string = string.replacingOccurrences(of: "\r", with: "")
+        string = string.replacingOccurrences(of: "\t", with: "")
+        return string
+    }
 }
