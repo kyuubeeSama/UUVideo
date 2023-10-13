@@ -88,6 +88,22 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
                     self.view.bringSubviewToFront(self.YklunliView)
                 case .sixMovie:
                     self.view.bringSubviewToFront(self.sixMovieView)
+                case .sese:
+                    self.view.bringSubviewToFront(self.sese)
+                case .thotsflix:
+                    self.view.bringSubviewToFront(self.thotsflix)
+                case .HeiHD:
+                    self.view.bringSubviewToFront(self.heiHD)
+                case .avbro:
+                    self.view.bringSubviewToFront(self.avBro)
+                case .qiqi:
+                    self.view.bringSubviewToFront(self.qiqi)
+                case .avmenu:
+                    self.view.bringSubviewToFront(self.avMenu)
+                case .kanying:
+                    self.view.bringSubviewToFront(self.kanying)
+                case .unknownside:
+                    self.view.bringSubviewToFront(self.unknownSide)
                 default:
                     self.view.bringSubviewToFront(self.lawyering)
                 }
@@ -157,6 +173,46 @@ class PadIndexViewController: BaseViewController, UISearchBarDelegate {
     lazy var sixMovieView: UIView = {
         let VC = NetVideoIndexViewController.init()
         VC.webType = .sixMovie
+        return getView(controller: VC)
+    }()
+    lazy var sese: UIView = {
+        let VC = NetVideoIndexViewController.init()
+        VC.webType = .sese
+        return getView(controller: VC)
+    }()
+    lazy var thotsflix: UIView = {
+        let VC = NetVideoIndexViewController.init()
+        VC.webType = .thotsflix
+        return getView(controller: VC)
+    }()
+    lazy var heiHD: UIView = {
+        let VC = NetVideoIndexViewController.init()
+        VC.webType = .HeiHD
+        return getView(controller: VC)
+    }()
+    lazy var avBro: UIView = {
+        let VC = NetVideoIndexViewController.init()
+        VC.webType = .avbro
+        return getView(controller: VC)
+    }()
+    lazy var qiqi: UIView = {
+        let VC = NetVideoIndexViewController.init()
+        VC.webType = .qiqi
+        return getView(controller: VC)
+    }()
+    lazy var avMenu: UIView = {
+        let VC = NetVideoIndexViewController.init()
+        VC.webType = .avmenu
+        return getView(controller: VC)
+    }()
+    lazy var kanying: UIView = {
+        let VC = NetVideoIndexViewController.init()
+        VC.webType = .kanying
+        return getView(controller: VC)
+    }()
+    lazy var unknownSide: UIView = {
+        let VC = NetVideoIndexViewController.init()
+        VC.webType = .unknownside
         return getView(controller: VC)
     }()
 

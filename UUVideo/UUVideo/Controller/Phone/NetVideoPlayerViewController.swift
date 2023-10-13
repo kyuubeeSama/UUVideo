@@ -184,7 +184,7 @@ class NetVideoPlayerViewController: BaseViewController, DLNADelegate {
                 var data = Data.init()
                 do {
                     data = try NSData.init(contentsOf: URL.init(string: model.picUrl)!) as Data
-                    return UIImage.init(data: data)!
+                    return UIImage.init(data: data) ?? UIImage.init()
                 } catch  {
                     return UIImage.init()
                 }

@@ -67,7 +67,7 @@ class AvMenu: WebsiteBaseModel, WebsiteProtocol {
         listModel.more = false
         listModel.list = []
         let titleXpath = "//*[@id=\"app\"]/div/div[2]/div[2]/div/div/div/div/div/a/div/img/@alt"
-        let urlXpath = "//*[@id=\"app\"]/div/div[2]/div[2]/div/div/div/div/div/a/@href"
+        let urlXpath = "//*[@id=\"app\"]/div/div[2]/div[2]/div/div/div/div[position()>1]/div/a/@href"
         let imgXpath = "//*[@id=\"app\"]/div/div[2]/div[2]/div/div/div/div/div/a/div/img/@data-src"
         let titleNodeArr = jiDoc?.xPath(titleXpath)
         let urlNodeArr = jiDoc?.xPath(urlXpath)

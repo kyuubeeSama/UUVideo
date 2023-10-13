@@ -86,7 +86,7 @@ class NetVideoListViewController: BaseViewController {
                 menu.menuWidth = screenW * 0.9
                 present(menu, animated: true, completion: nil)
             } else {
-                VC.view.bounds = CGRect(x: 0, y: 0, width: Tool.isPad() ? screenW - 80 : 500, height: 500);
+                VC.view.bounds = CGRect(x: 0, y: 0, width: 500, height: 500);
                 view.window?.QY_ShowPopView(popStyle: .center, popView: VC.view, offset: CGPoint(x: 0, y: 0), dismissWhenClickCoverView: true, isBlur: false, alpha: 0.3)
             }
             VC.sureBtnReturn = { [self] resultArr in

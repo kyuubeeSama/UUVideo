@@ -14,7 +14,7 @@ import Alamofire
 class Halihali: WebsiteBaseModel, WebsiteProtocol {
     required override init() {
         super.init()
-        webUrlStr = "http://halihali14.com/"
+        webUrlStr = "http://halihali23.com/"
         websiteName = "哈哩哈哩"
         valueArr = [ "acg", "tv", "mov", "zongyi"]
     }
@@ -125,11 +125,11 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
                     let detailUrl = urlNodeArr![index].content
                     let detailUrlArr = detailUrl?.components(separatedBy: "/")
                     if item == 1 {
-                        categoryModel.value = detailUrlArr![5]
+                        categoryModel.value = detailUrlArr![2]
                     } else if item == 2 {
-                        categoryModel.value = detailUrlArr![4]
+                        categoryModel.value = detailUrlArr![1]
                     } else {
-                        categoryModel.value = detailUrlArr![6]
+                        categoryModel.value = detailUrlArr![3]
                     }
                     listModel.list.append(categoryModel)
                 }
@@ -156,7 +156,7 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
             let picurl: String = videoPicNodeArr![0].content!
             videoModel.picUrl = Tool.checkUrl(urlStr: picurl, domainUrlStr: baseUrl)
         }
-        let jsXPath = "/html/body/div[2]/script[2]/@src"
+        let jsXPath = "/html/body/div[2]/script[3]/@src"
         let jsNodeArr = jiDoc?.xPath(jsXPath)
         let playarrNameArr = [
             (jsvalue: "", value: "", title: "主线"),
@@ -405,7 +405,7 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
     }
     // 获取新番数据
     func getBanggumiData(dayIndex: Int) -> [VideoModel] {
-        let jiDoc = Ji(htmlURL: URL.init(string: "http://halihali2.com/zhougen/")!)
+        let jiDoc = Ji(htmlURL: URL.init(string: "http://halihali23.com/zhougen/")!)
         if (jiDoc == nil) {
             return []
         } else {
@@ -434,7 +434,7 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
                     var model = VideoModel.init()
                     model.name = title
                     let detailUrl: String = urlNode.content!
-                    model.detailUrl = Tool.checkUrl(urlStr: detailUrl, domainUrlStr: "http://halihali2.com")
+                    model.detailUrl = Tool.checkUrl(urlStr: detailUrl, domainUrlStr: "http://halihali23.com")
                     model.num = update
                     model.type = 4
                     model.picUrl = ""

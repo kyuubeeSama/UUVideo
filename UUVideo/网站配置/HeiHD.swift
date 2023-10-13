@@ -44,7 +44,7 @@ class HeiHD: WebsiteBaseModel, WebsiteProtocol {
                         let detailUrl: String = urlNodeArr![i].content!
                         videoModel.detailUrl = Tool.checkUrl(urlStr: detailUrl, domainUrlStr: webUrlStr)
                         var picUrl: String = imgNodeArr![i].content!
-                        videoModel.detailUrl = Tool.checkUrl(urlStr: picUrl, domainUrlStr: webUrlStr)
+                        videoModel.picUrl = Tool.checkUrl(urlStr: picUrl, domainUrlStr: webUrlStr)
                         videoModel.num = updateNodeArr![i].content!
                         videoModel.type = 3
                         listModel.list.append(videoModel)
