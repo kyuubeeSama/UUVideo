@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,7 @@
 		144DFC7785BA981A298D4B2B /* Halihali.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144DF59A43D6EE17747DB123 /* Halihali.swift */; };
 		144DFD4871DD0F3EE223D4B1 /* WebsiteBaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144DF260AB9E4879AA42ED66 /* WebsiteBaseModel.swift */; };
 		2F9B63EA24655CD73BDC047E /* Pods_UUVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9FA3DBEFB82D2160BCC81BE /* Pods_UUVideo.framework */; };
+		4AEA3C792AF771CF00865EE8 /* Huoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEA3C782AF771CF00865EE8 /* Huoji.swift */; };
 		A906DB0C24EA575700C070E4 /* PadIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB0B24EA575700C070E4 /* PadIndexViewController.swift */; };
 		A906DB0E24EA680B00C070E4 /* BangumiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB0D24EA680B00C070E4 /* BangumiViewController.swift */; };
 		A906DB1224EB7E5C00C070E4 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB1124EB7E5C00C070E4 /* DataManager.swift */; };
@@ -111,6 +112,7 @@
 		144DF971A9493EC8A5B001CF /* IndexModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexModel.swift; sourceTree = "<group>"; };
 		144DFE6BD10316CE83C36D9B /* HeiHD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeiHD.swift; sourceTree = "<group>"; };
 		2B8785959F9D24685D39BCEB /* Pods-UUVideo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UUVideo.debug.xcconfig"; path = "Target Support Files/Pods-UUVideo/Pods-UUVideo.debug.xcconfig"; sourceTree = "<group>"; };
+		4AEA3C782AF771CF00865EE8 /* Huoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Huoji.swift; sourceTree = "<group>"; };
 		A873C20C17BCF9F74FB8D914 /* Pods-UUVideo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UUVideo.release.xcconfig"; path = "Target Support Files/Pods-UUVideo/Pods-UUVideo.release.xcconfig"; sourceTree = "<group>"; };
 		A906DB0B24EA575700C070E4 /* PadIndexViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadIndexViewController.swift; sourceTree = "<group>"; };
 		A906DB0D24EA680B00C070E4 /* BangumiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BangumiViewController.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				F15C95933E90D933D09DCC96 /* AvMenu.swift */,
 				A9D240B32A8DA63C00904750 /* KanYing.swift */,
 				A96D526E2A8F3BFF00A63983 /* UnKnownSide.swift */,
+				4AEA3C782AF771CF00865EE8 /* Huoji.swift */,
 			);
 			path = "网站配置";
 			sourceTree = "<group>";
@@ -663,6 +666,7 @@
 				A906DB0E24EA680B00C070E4 /* BangumiViewController.swift in Sources */,
 				A906DB1524EBB08300C070E4 /* VideoTableCollectionViewCell.swift in Sources */,
 				A92AC00C25529D28001EBD12 /* NetVideoDetailCollectionView.swift in Sources */,
+				4AEA3C792AF771CF00865EE8 /* Huoji.swift in Sources */,
 				A960D896272FBC1D00B7C0BC /* DownloadTableView.swift in Sources */,
 				A950E2C024E67356000CBB92 /* FileTool.swift in Sources */,
 				A9F44FE1253D379700224DA5 /* SearchResultViewController.swift in Sources */,

@@ -37,7 +37,8 @@ var indexArr:[(title:String,list:[IndexModel])] {
         IndexModel.init(title: "HeiHD",type: 1,webType: .HeiHD),
         IndexModel.init(title: "兄弟", type: 1, webType: .avbro),
         IndexModel.init(title: "AVMenu", type: 1, webType: .avmenu),
-        IndexModel.init(title: "unknownSide", type: 1, webType: .unknownside)
+        IndexModel.init(title: "unknownSide", type: 1, webType: .unknownside),
+        IndexModel.init(title: "火鸡影视", type: 1, webType: .huoji),
      ]),
      (title:"个人中心",list:[
         IndexModel.init(title: "历史记录"),
@@ -63,7 +64,8 @@ let urlArr = [
     Qiqi.init().webUrlStr,
     AvMenu.init().webUrlStr,
     KanYing.init().webUrlStr,
-    UnKnownSide.init().webUrlStr
+    UnKnownSide.init().webUrlStr,
+    Huoji.init().webUrlStr
 ]
 enum XPathError: Error {
     case getContentFail
@@ -88,4 +90,5 @@ enum websiteType: Int {
     case avmenu = 15
     case kanying = 16
     case unknownside = 17
+    case huoji = 18
 }

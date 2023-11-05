@@ -74,6 +74,8 @@ class DataManager: NSObject {
                 array = KanYing.init().getIndexData()
             case .unknownside:
                 array = UnKnownSide.init().getIndexData()
+            case .huoji:
+                array = Huoji.init().getIndexData()
             }
             if array.isEmpty {
                 failure(XPathError.getContentFail)
@@ -128,6 +130,10 @@ class DataManager: NSObject {
             array = KanYing.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .unknownside:
             array = UnKnownSide.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
+        case .huoji:
+            array = Huoji.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
+        default:
+            array = []
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -182,6 +188,8 @@ class DataManager: NSObject {
             array = KanYing.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         case .unknownside:
             array = UnKnownSide.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
+        default:
+            array = []
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -236,6 +244,10 @@ class DataManager: NSObject {
             result = KanYing.init().getVideoDetail(urlStr: urlStr)
         case .unknownside:
             result = UnKnownSide.init().getVideoDetail(urlStr: urlStr)
+        case .huoji:
+            result = Huoji.init().getVideoDetail(urlStr: urlStr)
+        default:
+            result = (result:false,model:VideoModel())
         }
         if result.result == false {
             failure(XPathError.getContentFail)
@@ -284,6 +296,10 @@ class DataManager: NSObject {
             array = KanYing.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .unknownside:
             array = UnKnownSide.init().getSearchData(pageNum: pageNum, keyword: keyword)
+        case .huoji:
+            array = Huoji.init().getSearchData(pageNum: pageNum, keyword: keyword)
+        default:
+            array = []
         }
         if array.isEmpty {
             failure(XPathError.getContentFail)
@@ -332,6 +348,10 @@ class DataManager: NSObject {
             result = KanYing.init().getVideoPlayerDetail(urlStr: urlStr)
         case .unknownside:
             result = UnKnownSide.init().getVideoPlayerDetail(urlStr: urlStr)
+        case .huoji:
+            result = Huoji.init().getVideoPlayerDetail(urlStr: urlStr)
+        default:
+            result = (result:false,model:VideoModel())
         }
         if result.result == false {
             failure(XPathError.getContentFail)
