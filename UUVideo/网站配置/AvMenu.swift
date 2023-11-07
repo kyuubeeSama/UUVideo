@@ -6,7 +6,7 @@
 import Foundation
 import Ji
 
-class AvMenu: WebsiteBaseModel, WebsiteProtocol {
+class AvMenu: WebsiteBaseModel {
     override init() {
         super.init()
         websiteName = "AVMenu"
@@ -14,7 +14,7 @@ class AvMenu: WebsiteBaseModel, WebsiteProtocol {
         valueArr = ["fc2", "censored", "uncensored", "western"]
     }
 
-    func getIndexData() -> [ListModel] {
+    override func getIndexData() -> [ListModel] {
         let idArr = [5, 1, 3, 4]
         let titleArr = ["最新FC", "今日更新", "最新无码", "最新欧美"]
         var resultArr: [ListModel] = []
@@ -54,7 +54,7 @@ class AvMenu: WebsiteBaseModel, WebsiteProtocol {
         }
         return resultArr
     }
-    func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
+    override func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
         let videoType = valueArr[videoTypeIndex]
         let urlStr = webUrlStr + "\(videoType)?sort=online&page=\(pageNum)"
         let newUrlStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
@@ -89,11 +89,11 @@ class AvMenu: WebsiteBaseModel, WebsiteProtocol {
         }
         return [listModel]
     }
-    func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
+    override func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
         []
     }
 
-    func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
+    override func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return (result: false, model: VideoModel.init())
@@ -140,7 +140,7 @@ class AvMenu: WebsiteBaseModel, WebsiteProtocol {
         return (result: true, model: videoModel)
     }
 
-    func getVideoPlayerDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
+    override func getVideoPlayerDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return (result: false, model: VideoModel.init())
@@ -198,7 +198,7 @@ class AvMenu: WebsiteBaseModel, WebsiteProtocol {
         }
     }
 
-    func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
+    override func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
         let urlStr = webUrlStr + "search?wd=\(keyword)&page=\(pageNum)"
         let listModel = ListModel.init()
         listModel.title = "搜索关键字:" + keyword

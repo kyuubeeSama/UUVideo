@@ -9,14 +9,14 @@
 import UIKit
 import Ji
 
-class Sakura: WebsiteBaseModel, WebsiteProtocol {
+class Sakura: WebsiteBaseModel {
     required override init() {
         super.init()
         webUrlStr = "http://www.yinghuavideo.com/"
         websiteName = "樱花动漫"
         valueArr = ["japan", "china", "american", "movie"]
     }
-    func getIndexData() -> [ListModel] {
+    override func getIndexData() -> [ListModel] {
         let jiDoc = Ji.init(htmlURL: URL.init(string: webUrlStr)!)
         if jiDoc == nil {
             return []
@@ -50,7 +50,7 @@ class Sakura: WebsiteBaseModel, WebsiteProtocol {
         }
         return resultArr
     }
-    func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
+    override func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
         var pageInfo = ""
         if pageNum > 1 {
             pageInfo = "\(pageNum).html"
@@ -98,7 +98,7 @@ class Sakura: WebsiteBaseModel, WebsiteProtocol {
         }
         return [listModel]
     }
-    func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
+    override func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
         let titleArr = ["年代","地区","类型"]
         let valueArr = [
             ["2021","2020","2019","2018","2017","2016","2015","2014","2013","2012"],
@@ -124,7 +124,7 @@ class Sakura: WebsiteBaseModel, WebsiteProtocol {
         }
         return resultArr
     }
-    func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
+    override func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return (result: false, model: VideoModel.init())
@@ -181,7 +181,7 @@ class Sakura: WebsiteBaseModel, WebsiteProtocol {
         }
         return (result: true, model: videoModel)
     }
-    func getVideoPlayerDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
+    override func getVideoPlayerDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return (result: false, model: VideoModel.init())
@@ -242,7 +242,7 @@ class Sakura: WebsiteBaseModel, WebsiteProtocol {
             return (result: true, model: videoModel)
         }
     }
-    func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
+    override func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
         let urlStr = webUrlStr + "search/\(keyword)/?page=\(pageNum)"
         let listModel = ListModel.init()
         listModel.title = "搜索关键字:" + keyword

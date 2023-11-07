@@ -6,7 +6,7 @@ import Foundation
 import Ji
 import ReactiveCocoa
 
-class Shark: WebsiteBaseModel, WebsiteProtocol {
+class Shark: WebsiteBaseModel {
     override init() {
         super.init()
         websiteName = "鲨鱼资源"
@@ -30,7 +30,7 @@ class Shark: WebsiteBaseModel, WebsiteProtocol {
         }
         return videoArr
     }
-    func getIndexData() -> [ListModel] {
+    override func getIndexData() -> [ListModel] {
         let titleArr = ["国产情色", "日本无码", "AV明星", "中文字幕", "成人动漫", "欧美情色", "国模私拍", "长腿丝袜", "邻家人妻", "韩国伦理", "香港伦理", "精品推荐"]
         var resultArr: [ListModel] = []
         for _ in titleArr {
@@ -71,7 +71,7 @@ class Shark: WebsiteBaseModel, WebsiteProtocol {
         semaphore.wait()
         return resultArr
     }
-    func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
+    override func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
         let videoType = valueArr[videoTypeIndex]
         let listModel = ListModel.init()
         let semaphore = DispatchSemaphore(value: 0)
@@ -96,10 +96,10 @@ class Shark: WebsiteBaseModel, WebsiteProtocol {
         semaphore.wait()
         return [listModel]
     }
-    func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
+    override func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
         []
     }
-    func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
+    override func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
         let urlDic = Tool.getKeyValueFromUrl(urlStr: urlStr)
         var videoModel = VideoModel.init()
         videoModel.detailUrl = urlStr
@@ -141,7 +141,7 @@ class Shark: WebsiteBaseModel, WebsiteProtocol {
         semaphore.wait()
         return (result: boolResult, model: videoModel)
     }
-    func getVideoPlayerDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
+    override func getVideoPlayerDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
         let urlDic = Tool.getKeyValueFromUrl(urlStr: urlStr)
         var videoModel = VideoModel.init()
         videoModel.detailUrl = urlStr
@@ -183,7 +183,7 @@ class Shark: WebsiteBaseModel, WebsiteProtocol {
         semaphore.wait()
         return (result: boolResult, model: videoModel)
     }
-    func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
+    override func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
         let listModel = ListModel.init()
         listModel.title = "搜索关键字:" + keyword
         listModel.more = false

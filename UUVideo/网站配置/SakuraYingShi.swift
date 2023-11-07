@@ -8,7 +8,7 @@
 
 import UIKit
 import Ji
-class SakuraYingShi: WebsiteBaseModel,WebsiteProtocol {
+class SakuraYingShi: WebsiteBaseModel {
     override init() {
         super.init()
         websiteName = "樱花影视"
@@ -16,7 +16,7 @@ class SakuraYingShi: WebsiteBaseModel,WebsiteProtocol {
         valueArr = ["电视剧", "电影", "动漫", "综艺"]
     }
     
-    func getIndexData() -> [ListModel] {
+    override func getIndexData() -> [ListModel] {
         let jiDoc = Ji.init(htmlURL: URL.init(string: webUrlStr)!)
         if jiDoc == nil {
             return []
@@ -54,7 +54,7 @@ class SakuraYingShi: WebsiteBaseModel,WebsiteProtocol {
         return resultArr
     }
     
-    func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
+    override func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
         let videoType = valueArr[videoTypeIndex]
         var urlStr = webUrlStr + "v/type/\(videoType)-\(category.area)-\(category.year)-\(category.videoCategory)-----0-24.html?order=&page=\(pageNum - 1)&size=24"
         urlStr = urlStr.replacingOccurrences(of: " ", with: "")
@@ -89,7 +89,7 @@ class SakuraYingShi: WebsiteBaseModel,WebsiteProtocol {
         }
         return [listModel]
     }
-    func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
+    override func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
         let urlStr = webUrlStr + "v/type/--------0-24.html"
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
@@ -135,7 +135,7 @@ class SakuraYingShi: WebsiteBaseModel,WebsiteProtocol {
         }
     }
     
-    func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
+    override func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return (result: false, model: VideoModel.init())
@@ -207,7 +207,7 @@ class SakuraYingShi: WebsiteBaseModel,WebsiteProtocol {
         return (result: true, model: videoModel)
     }
     
-    func getVideoPlayerDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
+    override func getVideoPlayerDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return (result: false, model: VideoModel.init())
@@ -220,7 +220,7 @@ class SakuraYingShi: WebsiteBaseModel,WebsiteProtocol {
             let iframeStr = "//*[@id=\"re-playframe\"]/iframe/@src"
             let iframeNodeArr = jiDoc?.xPath(iframeStr)
             if iframeNodeArr!.count>0{
-                var iframeItem = iframeNodeArr![0].content!
+                let iframeItem = iframeNodeArr![0].content!
                 let dic = Tool.getKeyValueFromUrl(urlStr: iframeItem)
                 videoModel.videoUrl = dic["url"]!
             }else{
@@ -277,7 +277,7 @@ class SakuraYingShi: WebsiteBaseModel,WebsiteProtocol {
         }
     }
     
-    func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
+    override func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
         let urlStr = webUrlStr + "search?kw=\(keyword)&page=\(pageNum - 1)"
         let listModel = ListModel.init()
         listModel.title = "搜索关键字:" + keyword

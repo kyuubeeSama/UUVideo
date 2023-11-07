@@ -7,7 +7,7 @@ import Foundation
 import Ji
 import Alamofire
 
-class AvBro: WebsiteBaseModel, WebsiteProtocol {
+class AvBro: WebsiteBaseModel {
     required override init() {
         super.init()
         webUrlStr = "https://avbro.me/"
@@ -15,7 +15,7 @@ class AvBro: WebsiteBaseModel, WebsiteProtocol {
         valueArr = ["1", "10", "12", "20", "5", "67"]
     }
 
-    func getIndexData() -> [ListModel] {
+    override func getIndexData() -> [ListModel] {
         let idArr = [1, 10, 12, 20, 5, 67]
         let titleArr = ["日本", "中文", "无码", "卡通", "欧美", "国产"]
         var resultArr: [ListModel] = []
@@ -56,7 +56,7 @@ class AvBro: WebsiteBaseModel, WebsiteProtocol {
         }
         return resultArr
     }
-    func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
+    override func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
         let videoType = valueArr[videoTypeIndex]
         let urlStr = webUrlStr + "index.php/vod/show/id/\(videoType)/page/\(pageNum).html"
         let newUrlStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
@@ -90,11 +90,11 @@ class AvBro: WebsiteBaseModel, WebsiteProtocol {
         }
         return [listModel]
     }
-    func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
+    override func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
         []
     }
 
-    func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
+    override func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return (result: false, model: VideoModel.init())
@@ -149,7 +149,7 @@ class AvBro: WebsiteBaseModel, WebsiteProtocol {
         return (result: true, model: videoModel)
     }
 
-    func getVideoPlayerDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
+    override func getVideoPlayerDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return (result: false, model: VideoModel.init())
@@ -212,7 +212,7 @@ class AvBro: WebsiteBaseModel, WebsiteProtocol {
         }
     }
 
-    func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
+    override func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
         let urlStr = webUrlStr + "index.php/vod/search/page/\(pageNum)/wd/\(keyword).html"
         let listModel = ListModel.init()
         listModel.title = "搜索关键字:" + keyword

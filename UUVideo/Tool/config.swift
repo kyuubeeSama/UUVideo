@@ -45,28 +45,28 @@ var indexArr: [(title: String, list: [IndexModel])] {
             IndexModel.init(title: "我的收藏")
         ])]
 }
-// 站点地址
-let urlArr = [
-    Halihali.init().webUrlStr,
-    Laikuaibo.init().webUrlStr,
-    Sakura.init().webUrlStr,
-    Juzhixiao.init().webUrlStr,
-    Mianfei.init().webUrlStr,
-    Qihaolou.init().webUrlStr,
-    SakuraYingShi.init().webUrlStr,
-    Yklunli.init().webUrlStr,
-    SixMovie.init().webUrlStr,
-    Lawyering.init().webUrlStr,
-    SeSe.init().webUrlStr,
-    Thotsflix.init().webUrlStr,
-    HeiHD.init().webUrlStr,
-    AvBro.init().webUrlStr,
-    Qiqi.init().webUrlStr,
-    AvMenu.init().webUrlStr,
-    KanYing.init().webUrlStr,
-    UnKnownSide.init().webUrlStr,
-    Huoji.init().webUrlStr,
-    Shark.init().webUrlStr
+
+let websiteModelArr = [
+    Halihali.init(),
+    Laikuaibo.init(),
+    Sakura.init(),
+    Juzhixiao.init(),
+    Mianfei.init(),
+    Qihaolou.init(),
+    SakuraYingShi.init(),
+    Yklunli.init(),
+    SixMovie.init(),
+    Lawyering.init(),
+    SeSe.init(),
+    Thotsflix.init(),
+    HeiHD.init(),
+    AvBro.init(),
+    Qiqi.init(),
+    AvMenu.init(),
+    KanYing.init(),
+    UnKnownSide.init(),
+    Huoji.init(),
+    Shark.init()
 ]
 enum XPathError: Error {
     case getContentFail

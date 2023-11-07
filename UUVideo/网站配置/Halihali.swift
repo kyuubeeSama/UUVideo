@@ -11,14 +11,14 @@ import Ji
 import SwiftyJSON
 import Alamofire
 
-class Halihali: WebsiteBaseModel, WebsiteProtocol {
+class Halihali: WebsiteBaseModel {
     required override init() {
         super.init()
         webUrlStr = "http://halihali23.com/"
         websiteName = "哈哩哈哩"
         valueArr = [ "acg", "tv", "mov", "zongyi"]
     }
-    func getIndexData() -> [ListModel] {
+    override func getIndexData() -> [ListModel] {
         let jiDoc = Ji.init(htmlURL: URL.init(string: webUrlStr)!)
         if jiDoc == nil {
             return []
@@ -55,7 +55,7 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
         }
         return resultArr
     }
-    func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
+    override func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
         let videoType = valueArr[videoTypeIndex]
         var area = ""
         if !category.area.isEmpty {
@@ -101,7 +101,7 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
         }
         return [listModel]
     }
-    func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
+    override func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
         let videoType = valueArr[videoTypeIndex]
         let urlStr = webUrlStr + "\(videoType)/0/0/all/1.html"
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
@@ -138,7 +138,7 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
             return listArr
         }
     }
-    func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
+    override func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return (result: false, model: VideoModel.init())
@@ -240,7 +240,7 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
         }
         return (result: true, model: videoModel)
     }
-    func getVideoPlayerDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
+    override func getVideoPlayerDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return (result: false, model: VideoModel.init())
@@ -254,7 +254,6 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
             // 从js中获取视频信息，组装剧集model
             let jsXPath = "/html/script/@src"
             let jsNodeArr = jiDoc?.xPath(jsXPath)
-            let circuitModel = CircuitModel.init()
             if jsNodeArr!.count > 0 {
                 // 获取播放地址等内容
                 //                    获取js内容
@@ -371,7 +370,7 @@ class Halihali: WebsiteBaseModel, WebsiteProtocol {
             return (result: true, model: videoModel)
         }
     }
-    func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
+    override func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
         let urlStr = webUrlStr + "search.php"
         let listModel = ListModel.init()
         listModel.title = "搜索关键字:" + keyword

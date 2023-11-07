@@ -7,14 +7,14 @@ import Ji
 import SwiftyJSON
 import Alamofire
 
-class HeiHD: WebsiteBaseModel, WebsiteProtocol {
+class HeiHD: WebsiteBaseModel {
     required override init() {
         super.init()
         webUrlStr = "https://www.heihd.com/"
         websiteName = "HeiHD"
         valueArr = ["new", "hot", "like", "tags/100001"]
     }
-    func getIndexData() -> [ListModel] {
+    override func getIndexData() -> [ListModel] {
         let idArr = ["new", "hot", "like", "tags/100001"]
         let titleArr = ["最新", "热门", "推荐", "无码"]
         var resultArr: [ListModel] = []
@@ -43,7 +43,7 @@ class HeiHD: WebsiteBaseModel, WebsiteProtocol {
                         videoModel.webType = websiteType.HeiHD.rawValue
                         let detailUrl: String = urlNodeArr![i].content!
                         videoModel.detailUrl = Tool.checkUrl(urlStr: detailUrl, domainUrlStr: webUrlStr)
-                        var picUrl: String = imgNodeArr![i].content!
+                        let picUrl: String = imgNodeArr![i].content!
                         videoModel.picUrl = Tool.checkUrl(urlStr: picUrl, domainUrlStr: webUrlStr)
                         videoModel.num = updateNodeArr![i].content!
                         videoModel.type = 3
@@ -55,7 +55,7 @@ class HeiHD: WebsiteBaseModel, WebsiteProtocol {
         }
         return resultArr
     }
-    func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
+    override func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
         let videoType = valueArr[videoTypeIndex]
         let urlStr = webUrlStr + "\(videoType)-\(pageNum).html"
         let newUrlStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
@@ -89,10 +89,10 @@ class HeiHD: WebsiteBaseModel, WebsiteProtocol {
         }
         return [listModel]
     }
-    func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
+    override func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
         []
     }
-    func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
+    override func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return (result: false, model: VideoModel.init())
@@ -138,7 +138,7 @@ class HeiHD: WebsiteBaseModel, WebsiteProtocol {
         }
         return (result: true, model: videoModel)
     }
-    func getVideoPlayerDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
+    override func getVideoPlayerDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return (result: false, model: VideoModel.init())
@@ -201,7 +201,7 @@ class HeiHD: WebsiteBaseModel, WebsiteProtocol {
         videoModel.videoUrl = videoModel.videoUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         return (result: true, model: videoModel)
     }
-    func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
+    override func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
         []
     }
 }

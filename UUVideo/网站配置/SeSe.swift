@@ -8,7 +8,7 @@
 
 import UIKit
 import Ji
-class SeSe: WebsiteBaseModel,WebsiteProtocol {
+class SeSe: WebsiteBaseModel {
     override init() {
         super.init()
         websiteName = "未命名"
@@ -16,7 +16,7 @@ class SeSe: WebsiteBaseModel,WebsiteProtocol {
         valueArr = ["4", "5", "6", "7", "8", "9", "16", "17", "18", "19", "20", "21", "22"]
     }
     
-    func getIndexData() -> [ListModel] {
+    override func getIndexData() -> [ListModel] {
         let idArr = [4,5,6,7,8,9,16,17,18,19,20,21,22]
         let titleArr = ["精品推荐","主播秀色","日本有码","日本无码","中文字幕","强奸乱伦","三级伦理","卡通动漫","丝袜OL","自拍偷拍","传媒系列","女同人妖","国产精品"]
         var resultArr: [ListModel] = []
@@ -60,7 +60,7 @@ class SeSe: WebsiteBaseModel,WebsiteProtocol {
         }
         return resultArr
     }
-    func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
+    override func getVideoList(videoTypeIndex: Int, category: (area: String, year: String, videoCategory: String), pageNum: Int) -> [ListModel] {
         let videoType = valueArr[videoTypeIndex]
         let urlStr = webUrlStr + "/vodtype/\(videoType)-\(pageNum).html"
         let newUrlStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
@@ -97,11 +97,11 @@ class SeSe: WebsiteBaseModel,WebsiteProtocol {
         }
         return [listModel]
     }
-    func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
+    override func getVideoCategory(videoTypeIndex: Int) -> [CategoryListModel] {
         []
     }
     
-    func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
+    override func getVideoDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return (result: false, model: VideoModel.init())
@@ -151,7 +151,7 @@ class SeSe: WebsiteBaseModel,WebsiteProtocol {
         return (result: true, model: videoModel)
     }
     
-    func getVideoPlayerDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
+    override func getVideoPlayerDetail(urlStr: String) -> (result: Bool, model: VideoModel) {
         let jiDoc = Ji(htmlURL: URL.init(string: urlStr)!)
         if jiDoc == nil {
             return (result: false, model: VideoModel.init())
@@ -214,7 +214,7 @@ class SeSe: WebsiteBaseModel,WebsiteProtocol {
         }
     }
     
-    func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
+    override func getSearchData(pageNum: Int, keyword: String) -> [ListModel] {
         let urlStr = webUrlStr + "vodsearch/\(keyword)----------\(pageNum)---.html"
         let listModel = ListModel.init()
         listModel.title = "搜索关键字:" + keyword

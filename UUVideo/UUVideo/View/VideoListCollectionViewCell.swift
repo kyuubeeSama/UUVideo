@@ -19,7 +19,7 @@ class VideoListCollectionViewCell: UICollectionViewCell {
                 print(model.picUrl)
                 let modifier = AnyModifier { request in
                     var r = request
-                    r.setValue(urlArr[self.model.webType], forHTTPHeaderField: "Referer")
+                    r.setValue(websiteModelArr[self.model.webType].webUrlStr, forHTTPHeaderField: "Referer")
                     return r
                 }
                 picImage.kf.setImage(with: URL.init(string: model.picUrl), options: [.requestModifier(modifier)], completionHandler: nil)

@@ -25,7 +25,7 @@ class NetVideoListViewController: BaseViewController {
     // 排序
     var order: String = ""
     private var urlStr: String {
-        urlArr[webType.rawValue]
+        websiteModelArr[webType.rawValue].webUrlStr
     }
     private var listArr: [ListModel] = []
     private var categoryListArr: [CategoryListModel] = []

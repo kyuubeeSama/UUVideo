@@ -36,49 +36,8 @@ class DataManager: NSObject {
     ///   - failure: 失败
     /// - Returns: nil
     func getWebsiteIndexData(type: websiteType, success: @escaping (_ listData: [ListModel]) -> (), failure: @escaping (_ error: Error) -> ()) {
-            var array:[ListModel] = []
-            switch type{
-            case .halihali:
-                array = Halihali.init().getIndexData()
-            case .sakura:
-                array = Sakura.init().getIndexData()
-            case .laikuaibo:
-                array = Laikuaibo.init().getIndexData()
-            case .juzhixiao:
-                array = Juzhixiao.init().getIndexData()
-            case .mianfei:
-                array = Mianfei.init().getIndexData()
-            case .qihaolou:
-                array = Qihaolou.init().getIndexData()
-            case .SakuraYingShi:
-                array = SakuraYingShi.init().getIndexData()
-            case .Yklunli:
-                array = Yklunli.init().getIndexData()
-            case .sixMovie:
-                array = SixMovie.init().getIndexData()
-            case .lawyering:
-                array = Lawyering.init().getIndexData()
-            case .sese:
-                array = SeSe.init().getIndexData()
-            case .thotsflix:
-                array = Thotsflix.init().getIndexData()
-            case .HeiHD:
-                array = HeiHD.init().getIndexData()
-            case .avbro:
-                array = AvBro.init().getIndexData()
-            case .qiqi:
-                array = Qiqi.init().getIndexData()
-            case .avmenu:
-                array = AvMenu.init().getIndexData()
-            case .kanying:
-                array = KanYing.init().getIndexData()
-            case .unknownside:
-                array = UnKnownSide.init().getIndexData()
-            case .huoji:
-                array = Huoji.init().getIndexData()
-            case .shark:
-                array = Shark.init().getIndexData()
-            }
+        let model:WebsiteBaseModel = websiteModelArr[type.rawValue]
+        let array = model.getIndexData()
             if array.isEmpty {
                 failure(XPathError.getContentFail)
             }else{
@@ -94,49 +53,8 @@ class DataManager: NSObject {
     ///   - failure: 失败
     /// - Returns: nil
     func getVideoListData(videoTypeIndex:Int, category:(area:String, year:String, videoCategory:String), type: websiteType, pageNum:Int, success: @escaping (_ listData: [ListModel]) -> (), failure: @escaping (_ error: Error) -> ()) {
-        var array:[ListModel] = []
-        switch type{
-        case .halihali:
-            array = Halihali.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
-        case .laikuaibo:
-            array = Laikuaibo.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
-        case .sakura:
-            array = Sakura.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
-        case .juzhixiao:
-            array = Juzhixiao.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
-        case .mianfei:
-            array = Mianfei.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
-        case .qihaolou:
-            array = Qihaolou.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
-        case .SakuraYingShi:
-            array = SakuraYingShi.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
-        case .Yklunli:
-            array = Yklunli.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
-        case .sixMovie:
-            array = SixMovie.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
-        case .sese:
-            array = SeSe.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
-        case .thotsflix:
-            array = Thotsflix.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
-        case .HeiHD:
-            array = HeiHD.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
-        case .avbro:
-            array = AvBro.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
-        case .qiqi:
-            array = Qiqi.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
-        case .avmenu:
-            array = AvMenu.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
-        case .kanying:
-            array = KanYing.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
-        case .unknownside:
-            array = UnKnownSide.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
-        case .huoji:
-            array = Huoji.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
-        case .shark:
-            array = Shark.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
-        default:
-            array = []
-        }
+        let model:WebsiteBaseModel = websiteModelArr[type.rawValue]
+        let array:[ListModel] = model.getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         if array.isEmpty {
             failure(XPathError.getContentFail)
         }else{
@@ -152,45 +70,8 @@ class DataManager: NSObject {
     ///   - failure: 失败返回
     /// - Returns: 空
     func getWebsiteCategoryData(videoTypeIndex:Int, type: websiteType, success: @escaping (_ listData: [CategoryListModel]) -> (), failure: @escaping (_ error: Error) -> ()) {
-        var array:[CategoryListModel] = []
-        switch type{
-        case .halihali:
-            array = Halihali.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
-        case .laikuaibo:
-            array = Laikuaibo.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
-        case .sakura:
-            array = Sakura.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
-        case .juzhixiao:
-            array = Juzhixiao.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
-        case .mianfei:
-            array = Mianfei.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
-        case .qihaolou:
-            array = Qihaolou.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
-        case .SakuraYingShi:
-            array = SakuraYingShi.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
-        case .Yklunli:
-            array = Yklunli.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
-        case .sixMovie:
-            array = SixMovie.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
-        case .sese:
-            array = SeSe.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
-        case .thotsflix:
-            array = Thotsflix.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
-        case .HeiHD:
-            array = HeiHD.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
-        case .avbro:
-            array = AvBro.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
-        case .qiqi:
-            array = Qiqi.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
-        case .avmenu:
-            array = AvMenu.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
-        case .kanying:
-            array = KanYing.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
-        case .unknownside:
-            array = UnKnownSide.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
-        default:
-            array = []
-        }
+        let model:WebsiteBaseModel = websiteModelArr[type.rawValue]
+        let array:[CategoryListModel] = model.getVideoCategory(videoTypeIndex: videoTypeIndex)
         if array.isEmpty {
             failure(XPathError.getContentFail)
         }else{
@@ -206,49 +87,8 @@ class DataManager: NSObject {
     ///   - failure:
     /// - Returns: listArr:[videoModel]
     func getVideoDetailData(urlStr: String, type: websiteType, success: @escaping (_ VideoModel: VideoModel) -> (), failure: @escaping (_ error: Error) -> ()) {
-        var result:(result:Bool,model:VideoModel)
-        switch type{
-        case .halihali:
-            result = Halihali.init().getVideoDetail(urlStr: urlStr)
-        case .laikuaibo:
-            result = Laikuaibo.init().getVideoDetail(urlStr: urlStr)
-        case .sakura:
-            result = Sakura.init().getVideoDetail(urlStr: urlStr)
-        case .juzhixiao:
-            result = Juzhixiao.init().getVideoDetail(urlStr: urlStr)
-        case .mianfei:
-            result = Mianfei.init().getVideoDetail(urlStr: urlStr)
-        case .qihaolou:
-            result = Qihaolou.init().getVideoDetail(urlStr: urlStr)
-        case .SakuraYingShi:
-            result = SakuraYingShi.init().getVideoDetail(urlStr: urlStr)
-        case .Yklunli:
-            result = Yklunli.init().getVideoDetail(urlStr: urlStr)
-        case .sixMovie:
-            result = SixMovie.init().getVideoDetail(urlStr: urlStr)
-        case .sese:
-            result = SeSe.init().getVideoDetail(urlStr: urlStr)
-        case .thotsflix:
-            result = Thotsflix.init().getVideoDetail(urlStr: urlStr)
-        case .HeiHD:
-            result = HeiHD.init().getVideoDetail(urlStr: urlStr)
-        case .avbro:
-            result = AvBro.init().getVideoDetail(urlStr: urlStr)
-        case .qiqi:
-            result = Qiqi.init().getVideoDetail(urlStr: urlStr)
-        case .avmenu:
-            result = AvMenu.init().getVideoDetail(urlStr: urlStr)
-        case .kanying:
-            result = KanYing.init().getVideoDetail(urlStr: urlStr)
-        case .unknownside:
-            result = UnKnownSide.init().getVideoDetail(urlStr: urlStr)
-        case .huoji:
-            result = Huoji.init().getVideoDetail(urlStr: urlStr)
-        case .shark:
-            result = Shark.init().getVideoDetail(urlStr: urlStr)
-        default:
-            result = (result:false,model:VideoModel())
-        }
+        let model:WebsiteBaseModel = websiteModelArr[type.rawValue]
+        let result:(result:Bool,model:VideoModel) = model.getVideoDetail(urlStr: urlStr)
         if result.result == false {
             failure(XPathError.getContentFail)
         }else{
@@ -258,49 +98,8 @@ class DataManager: NSObject {
 
     // MARK: 搜索数据
     func getSearchData(pageNum: Int, keyword: String, website: websiteType, success: @escaping (_ searchData: [ListModel]) -> (), failure: @escaping (_ error: Error) -> ()) {
-        var array:[ListModel] = []
-        switch website{
-        case .halihali:
-            array = Halihali.init().getSearchData(pageNum: pageNum, keyword: keyword)
-        case .laikuaibo:
-            array = Laikuaibo.init().getSearchData(pageNum: pageNum, keyword: keyword)
-        case .sakura:
-            array = Sakura.init().getSearchData(pageNum: pageNum, keyword: keyword)
-        case .juzhixiao:
-            array = Juzhixiao.init().getSearchData(pageNum: pageNum, keyword: keyword)
-        case .mianfei:
-            array = Mianfei.init().getSearchData(pageNum: pageNum, keyword: keyword)
-        case .qihaolou:
-            array = Qihaolou.init().getSearchData(pageNum: pageNum, keyword: keyword)
-        case .SakuraYingShi:
-            array = SakuraYingShi.init().getSearchData(pageNum: pageNum, keyword: keyword)
-        case .Yklunli:
-            array = Yklunli.init().getSearchData(pageNum: pageNum, keyword: keyword)
-        case .sixMovie:
-            array = SixMovie.init().getSearchData(pageNum: pageNum, keyword: keyword)
-        case .sese:
-            array = SeSe.init().getSearchData(pageNum: pageNum, keyword: keyword)
-        case .thotsflix:
-            array = Thotsflix.init().getSearchData(pageNum: pageNum, keyword: keyword)
-        case .HeiHD:
-            array = HeiHD.init().getSearchData(pageNum: pageNum, keyword: keyword)
-        case .avbro:
-            array = AvBro.init().getSearchData(pageNum: pageNum, keyword: keyword)
-        case .qiqi:
-            array = Qiqi.init().getSearchData(pageNum: pageNum, keyword: keyword)
-        case .avmenu:
-            array = AvMenu.init().getSearchData(pageNum: pageNum, keyword: keyword)
-        case .kanying:
-            array = KanYing.init().getSearchData(pageNum: pageNum, keyword: keyword)
-        case .unknownside:
-            array = UnKnownSide.init().getSearchData(pageNum: pageNum, keyword: keyword)
-        case .huoji:
-            array = Huoji.init().getSearchData(pageNum: pageNum, keyword: keyword)
-        case .shark:
-            array = Shark.init().getSearchData(pageNum: pageNum, keyword: keyword)
-        default:
-            array = []
-        }
+        let model:WebsiteBaseModel = websiteModelArr[website.rawValue]
+        var array:[ListModel] = model.getSearchData(pageNum: pageNum, keyword: keyword)
         if array.isEmpty {
             failure(XPathError.getContentFail)
         }else{
@@ -310,49 +109,8 @@ class DataManager: NSObject {
 
     //MARK: 获取播放界面
     func getVideoPlayerData(urlStr: String, website: websiteType, success: @escaping (_ videoModel: VideoModel) -> (), failure: @escaping (_ error: Error) -> ()) {
-        var result:(result:Bool,model:VideoModel)
-        switch website{
-        case .halihali:
-            result = Halihali.init().getVideoPlayerDetail(urlStr: urlStr)
-        case .laikuaibo:
-            result = Laikuaibo.init().getVideoPlayerDetail(urlStr: urlStr)
-        case .sakura:
-            result = Sakura.init().getVideoPlayerDetail(urlStr: urlStr)
-        case .juzhixiao:
-            result = Juzhixiao.init().getVideoPlayerDetail(urlStr: urlStr)
-        case .mianfei:
-            result = Mianfei.init().getVideoPlayerDetail(urlStr: urlStr)
-        case .qihaolou:
-            result = Qihaolou.init().getVideoPlayerDetail(urlStr: urlStr)
-        case .SakuraYingShi:
-            result = SakuraYingShi.init().getVideoPlayerDetail(urlStr: urlStr)
-        case .Yklunli:
-            result = Yklunli.init().getVideoPlayerDetail(urlStr: urlStr)
-        case .sixMovie:
-            result = SixMovie.init().getVideoPlayerDetail(urlStr: urlStr)
-        case .sese:
-            result = SeSe.init().getVideoPlayerDetail(urlStr: urlStr)
-        case .thotsflix:
-            result = Thotsflix.init().getVideoPlayerDetail(urlStr: urlStr)
-        case .HeiHD:
-            result = HeiHD.init().getVideoPlayerDetail(urlStr: urlStr)
-        case .avbro:
-            result = AvBro.init().getVideoPlayerDetail(urlStr: urlStr)
-        case .qiqi:
-            result = Qiqi.init().getVideoPlayerDetail(urlStr: urlStr)
-        case .avmenu:
-            result = AvMenu.init().getVideoPlayerDetail(urlStr: urlStr)
-        case .kanying:
-            result = KanYing.init().getVideoPlayerDetail(urlStr: urlStr)
-        case .unknownside:
-            result = UnKnownSide.init().getVideoPlayerDetail(urlStr: urlStr)
-        case .huoji:
-            result = Huoji.init().getVideoPlayerDetail(urlStr: urlStr)
-        case .shark:
-            result = Shark.init().getVideoPlayerDetail(urlStr: urlStr)
-        default:
-            result = (result:false,model:VideoModel())
-        }
+        let model:WebsiteBaseModel = websiteModelArr[website.rawValue]
+        var result:(result:Bool,model:VideoModel) = model.getVideoPlayerDetail(urlStr: urlStr)
         if result.result == false {
             failure(XPathError.getContentFail)
         }else{
