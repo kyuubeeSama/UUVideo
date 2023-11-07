@@ -8,9 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		144DF2DFA22E2DCF380E9066 /* IndexModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144DF971A9493EC8A5B001CF /* IndexModel.swift */; };
+		144DFA3372A561184D5E6BA9 /* NetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144DF7AFD9CACDC8FA4C617B /* NetManager.swift */; };
+		144DFBC96677F1810D290FDF /* CaiJiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144DFE35817A2FBC5D21BC3B /* CaiJiModel.swift */; };
 		144DFBE0637E9A23BD770FE0 /* HeiHD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144DFE6BD10316CE83C36D9B /* HeiHD.swift */; };
 		144DFC7785BA981A298D4B2B /* Halihali.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144DF59A43D6EE17747DB123 /* Halihali.swift */; };
 		144DFD4871DD0F3EE223D4B1 /* WebsiteBaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144DF260AB9E4879AA42ED66 /* WebsiteBaseModel.swift */; };
+		144DFEDF104F5D5AE5C24D7F /* Shark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144DF607E01092777BFC56FA /* Shark.swift */; };
 		2F9B63EA24655CD73BDC047E /* Pods_UUVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9FA3DBEFB82D2160BCC81BE /* Pods_UUVideo.framework */; };
 		4AEA3C792AF771CF00865EE8 /* Huoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEA3C782AF771CF00865EE8 /* Huoji.swift */; };
 		A906DB0C24EA575700C070E4 /* PadIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906DB0B24EA575700C070E4 /* PadIndexViewController.swift */; };
@@ -46,7 +49,6 @@
 		A950E2B724E6733F000CBB92 /* UIColor+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2AE24E6733F000CBB92 /* UIColor+extension.swift */; };
 		A950E2B824E6733F000CBB92 /* UIButton+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2AF24E6733F000CBB92 /* UIButton+extension.swift */; };
 		A950E2BE24E67356000CBB92 /* Tool.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2BA24E67356000CBB92 /* Tool.swift */; };
-		A950E2BF24E67356000CBB92 /* QYRequestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2BB24E67356000CBB92 /* QYRequestData.swift */; };
 		A950E2C024E67356000CBB92 /* FileTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2BC24E67356000CBB92 /* FileTool.swift */; };
 		A950E2C124E67356000CBB92 /* config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2BD24E67356000CBB92 /* config.swift */; };
 		A950E2C424E6736F000CBB92 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950E2C324E6736F000CBB92 /* BaseViewController.swift */; };
@@ -92,7 +94,6 @@
 		A9DF207027118E91004C1263 /* PadVideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DF206F27118E90004C1263 /* PadVideoPlayerViewController.swift */; };
 		A9DF7C9029F77AA10074EF08 /* SixMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DF7C8F29F77AA10074EF08 /* SixMovie.swift */; };
 		A9DFBD9A2680297000BBA638 /* Array+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DFBD992680296F00BBA638 /* Array+extension.swift */; };
-		A9F0302326003F100095EC83 /* UUWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F0302226003F100095EC83 /* UUWebView.swift */; };
 		A9F03026260097B60095EC83 /* NetVideoIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F03025260097B60095EC83 /* NetVideoIndexViewController.swift */; };
 		A9F03029260098280095EC83 /* NetVideoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F03028260098280095EC83 /* NetVideoListViewController.swift */; };
 		A9F44FDE253D277700224DA5 /* CategoryBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F44FDD253D277700224DA5 /* CategoryBottomView.swift */; };
@@ -109,7 +110,10 @@
 /* Begin PBXFileReference section */
 		144DF260AB9E4879AA42ED66 /* WebsiteBaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebsiteBaseModel.swift; sourceTree = "<group>"; };
 		144DF59A43D6EE17747DB123 /* Halihali.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Halihali.swift; sourceTree = "<group>"; };
+		144DF607E01092777BFC56FA /* Shark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shark.swift; sourceTree = "<group>"; };
+		144DF7AFD9CACDC8FA4C617B /* NetManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetManager.swift; sourceTree = "<group>"; };
 		144DF971A9493EC8A5B001CF /* IndexModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexModel.swift; sourceTree = "<group>"; };
+		144DFE35817A2FBC5D21BC3B /* CaiJiModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaiJiModel.swift; sourceTree = "<group>"; };
 		144DFE6BD10316CE83C36D9B /* HeiHD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeiHD.swift; sourceTree = "<group>"; };
 		2B8785959F9D24685D39BCEB /* Pods-UUVideo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UUVideo.debug.xcconfig"; path = "Target Support Files/Pods-UUVideo/Pods-UUVideo.debug.xcconfig"; sourceTree = "<group>"; };
 		4AEA3C782AF771CF00865EE8 /* Huoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Huoji.swift; sourceTree = "<group>"; };
@@ -150,7 +154,6 @@
 		A950E2AE24E6733F000CBB92 /* UIColor+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+extension.swift"; sourceTree = "<group>"; };
 		A950E2AF24E6733F000CBB92 /* UIButton+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+extension.swift"; sourceTree = "<group>"; };
 		A950E2BA24E67356000CBB92 /* Tool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tool.swift; sourceTree = "<group>"; };
-		A950E2BB24E67356000CBB92 /* QYRequestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QYRequestData.swift; sourceTree = "<group>"; };
 		A950E2BC24E67356000CBB92 /* FileTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileTool.swift; sourceTree = "<group>"; };
 		A950E2BD24E67356000CBB92 /* config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = config.swift; sourceTree = "<group>"; };
 		A950E2C324E6736F000CBB92 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -200,7 +203,6 @@
 		A9DF206F27118E90004C1263 /* PadVideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadVideoPlayerViewController.swift; sourceTree = "<group>"; };
 		A9DF7C8F29F77AA10074EF08 /* SixMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SixMovie.swift; sourceTree = "<group>"; };
 		A9DFBD992680296F00BBA638 /* Array+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+extension.swift"; sourceTree = "<group>"; };
-		A9F0302226003F100095EC83 /* UUWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUWebView.swift; sourceTree = "<group>"; };
 		A9F03025260097B60095EC83 /* NetVideoIndexViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoIndexViewController.swift; sourceTree = "<group>"; };
 		A9F03028260098280095EC83 /* NetVideoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetVideoListViewController.swift; sourceTree = "<group>"; };
 		A9F44FDD253D277700224DA5 /* CategoryBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBottomView.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 				A9D240B32A8DA63C00904750 /* KanYing.swift */,
 				A96D526E2A8F3BFF00A63983 /* UnKnownSide.swift */,
 				4AEA3C782AF771CF00865EE8 /* Huoji.swift */,
+				144DF607E01092777BFC56FA /* Shark.swift */,
 			);
 			path = "网站配置";
 			sourceTree = "<group>";
@@ -345,10 +348,11 @@
 			children = (
 				A950E2BD24E67356000CBB92 /* config.swift */,
 				A950E2BC24E67356000CBB92 /* FileTool.swift */,
-				A950E2BB24E67356000CBB92 /* QYRequestData.swift */,
 				A950E2BA24E67356000CBB92 /* Tool.swift */,
 				A906DB1124EB7E5C00C070E4 /* DataManager.swift */,
 				A9CCBF8B2608A16100427C47 /* SqlTool.swift */,
+				144DF7AFD9CACDC8FA4C617B /* NetManager.swift */,
+				144DFE35817A2FBC5D21BC3B /* CaiJiModel.swift */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -432,7 +436,6 @@
 				A98794EA2553983B00DD62EE /* VideoInfoCollectionViewCell.swift */,
 				A98794EB2553983B00DD62EE /* VideoInfoCollectionViewCell.xib */,
 				A928D21F2567917A003BF719 /* NetVideoPlayerCollectionView.swift */,
-				A9F0302226003F100095EC83 /* UUWebView.swift */,
 				A9B898662716C736006889C3 /* padVideoDetailCollectionView.swift */,
 				A9FEB1282721634D00BA70F6 /* PageView.swift */,
 				A960D895272FBC1D00B7C0BC /* DownloadTableView.swift */,
@@ -617,7 +620,6 @@
 				A985BE122970F2D400A64CBF /* Qihaolou.swift in Sources */,
 				A928D2202567917A003BF719 /* NetVideoPlayerCollectionView.swift in Sources */,
 				A950E2B224E6733F000CBB92 /* UIImage+extension.swift in Sources */,
-				A9F0302326003F100095EC83 /* UUWebView.swift in Sources */,
 				A9DFBD9A2680297000BBA638 /* Array+extension.swift in Sources */,
 				A997538725666B9600179FCB /* NetVideoPlayerViewController.swift in Sources */,
 				A950E2B824E6733F000CBB92 /* UIButton+extension.swift in Sources */,
@@ -670,7 +672,6 @@
 				A960D896272FBC1D00B7C0BC /* DownloadTableView.swift in Sources */,
 				A950E2C024E67356000CBB92 /* FileTool.swift in Sources */,
 				A9F44FE1253D379700224DA5 /* SearchResultViewController.swift in Sources */,
-				A950E2BF24E67356000CBB92 /* QYRequestData.swift in Sources */,
 				144DFD4871DD0F3EE223D4B1 /* WebsiteBaseModel.swift in Sources */,
 				144DFC7785BA981A298D4B2B /* Halihali.swift in Sources */,
 				144DF2DFA22E2DCF380E9066 /* IndexModel.swift in Sources */,
@@ -679,6 +680,9 @@
 				F15C9F32BAF76328ADB66FD0 /* AvBro.swift in Sources */,
 				F15C9188B067402F66F3C66C /* Qiqi.swift in Sources */,
 				F15C9AA61461012EFC4D99C9 /* AvMenu.swift in Sources */,
+				144DFEDF104F5D5AE5C24D7F /* Shark.swift in Sources */,
+				144DFA3372A561184D5E6BA9 /* NetManager.swift in Sources */,
+				144DFBC96677F1810D290FDF /* CaiJiModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

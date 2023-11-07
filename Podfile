@@ -9,6 +9,7 @@ target 'UUVideo' do
   pod 'MRDLNA'
   pod 'Popover.OC'
   pod 'UICollectionViewLeftAlignedLayout'
+  pod 'MBProgressHUD'
 
   use_frameworks!
   #  网络请求

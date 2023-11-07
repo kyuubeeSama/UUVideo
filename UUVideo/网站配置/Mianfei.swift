@@ -9,10 +9,9 @@
 import UIKit
 import Ji
 class Mianfei: WebsiteBaseModel,WebsiteProtocol {
-    //TODO: 更新新的xpath
     override init() {
         super.init()
-        webUrlStr = "http://ylsm5.com/"
+        webUrlStr = "https://ylsm6.com/"
         websiteName = "免费电影"
         valueArr = ["dy", "tv", "zy", "dm"]
     }

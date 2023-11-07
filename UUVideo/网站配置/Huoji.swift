@@ -28,7 +28,7 @@ class Huoji:WebsiteBaseModel,WebsiteProtocol {
             let listModel = ListModel.init()
             let titleXpath = "/html/body/div[1]/div/div[\(item)]/ul/li/h4/a"
             let urlXpath = "/html/body/div[1]/div/div[\(item)]/ul/li/h4/a/@href"
-            let imgXpath = "/html/body/div[1]/div/div[4]/ul/li/a/@data-original"
+            let imgXpath = "/html/body/div[1]/div/div[\(item)]/ul/li/a/@data-original"
             let titleNodeArr = jiDoc?.xPath(titleXpath)
             let urlNodeArr = jiDoc?.xPath(urlXpath)
             let imgNodeArr = jiDoc?.xPath(imgXpath)

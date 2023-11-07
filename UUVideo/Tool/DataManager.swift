@@ -76,6 +76,8 @@ class DataManager: NSObject {
                 array = UnKnownSide.init().getIndexData()
             case .huoji:
                 array = Huoji.init().getIndexData()
+            case .shark:
+                array = Shark.init().getIndexData()
             }
             if array.isEmpty {
                 failure(XPathError.getContentFail)
@@ -112,8 +114,6 @@ class DataManager: NSObject {
             array = Yklunli.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .sixMovie:
             array = SixMovie.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
-        case .lawyering:
-            array = Lawyering.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .sese:
             array = SeSe.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .thotsflix:
@@ -132,6 +132,8 @@ class DataManager: NSObject {
             array = UnKnownSide.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         case .huoji:
             array = Huoji.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
+        case .shark:
+            array = Shark.init().getVideoList(videoTypeIndex: videoTypeIndex, category: category, pageNum: pageNum)
         default:
             array = []
         }
@@ -170,8 +172,6 @@ class DataManager: NSObject {
             array = Yklunli.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         case .sixMovie:
             array = SixMovie.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
-        case .lawyering:
-            array = Lawyering.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         case .sese:
             array = SeSe.init().getVideoCategory(videoTypeIndex: videoTypeIndex)
         case .thotsflix:
@@ -226,8 +226,6 @@ class DataManager: NSObject {
             result = Yklunli.init().getVideoDetail(urlStr: urlStr)
         case .sixMovie:
             result = SixMovie.init().getVideoDetail(urlStr: urlStr)
-        case .lawyering:
-            result = Lawyering.init().getVideoDetail(urlStr: urlStr)
         case .sese:
             result = SeSe.init().getVideoDetail(urlStr: urlStr)
         case .thotsflix:
@@ -246,6 +244,8 @@ class DataManager: NSObject {
             result = UnKnownSide.init().getVideoDetail(urlStr: urlStr)
         case .huoji:
             result = Huoji.init().getVideoDetail(urlStr: urlStr)
+        case .shark:
+            result = Shark.init().getVideoDetail(urlStr: urlStr)
         default:
             result = (result:false,model:VideoModel())
         }
@@ -278,8 +278,6 @@ class DataManager: NSObject {
             array = Yklunli.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .sixMovie:
             array = SixMovie.init().getSearchData(pageNum: pageNum, keyword: keyword)
-        case .lawyering:
-            array = Lawyering.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .sese:
             array = SeSe.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .thotsflix:
@@ -298,6 +296,8 @@ class DataManager: NSObject {
             array = UnKnownSide.init().getSearchData(pageNum: pageNum, keyword: keyword)
         case .huoji:
             array = Huoji.init().getSearchData(pageNum: pageNum, keyword: keyword)
+        case .shark:
+            array = Shark.init().getSearchData(pageNum: pageNum, keyword: keyword)
         default:
             array = []
         }
@@ -330,8 +330,6 @@ class DataManager: NSObject {
             result = Yklunli.init().getVideoPlayerDetail(urlStr: urlStr)
         case .sixMovie:
             result = SixMovie.init().getVideoPlayerDetail(urlStr: urlStr)
-        case .lawyering:
-            result = Lawyering.init().getVideoPlayerDetail(urlStr: urlStr)
         case .sese:
             result = SeSe.init().getVideoPlayerDetail(urlStr: urlStr)
         case .thotsflix:
@@ -350,6 +348,8 @@ class DataManager: NSObject {
             result = UnKnownSide.init().getVideoPlayerDetail(urlStr: urlStr)
         case .huoji:
             result = Huoji.init().getVideoPlayerDetail(urlStr: urlStr)
+        case .shark:
+            result = Shark.init().getVideoPlayerDetail(urlStr: urlStr)
         default:
             result = (result:false,model:VideoModel())
         }
